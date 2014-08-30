@@ -8,6 +8,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   },
 
 
+
   initialize: function(params) {
 
     // ## INSTANTIATE REGION MANAGERS ##
@@ -22,13 +23,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('login', false);
 
 
-    // ## MOCK DATA ##
 
-    //let's assume we have some of the nicely tailored data I've been dreaming
-    //of coming from the server, including the application state properties
-    //I want to tack on somehow (expansion/contraction of topics, upvotes)
+
+
+
+
+    // ### MOCK DATA ###
     
-    var topicsCollection = new Agora.Collections.TopicsCollection([{ id: 1,
+    var topicsCollection = [{ id: 1,
       headline: 'Defaults are desecrets',
       type: 'Topic',
       poster: 'thalonius want',
@@ -64,9 +66,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             contents: 'Just the one.'
         }]
       }] 
-    }]);
+    }];
 
-    var groupsCollection = new Agora.Collections.GroupsCollection([{
+    var groupsCollection = [{
       id: 0,
       type: 'Group',
       name: 'The Fourth International',
@@ -80,9 +82,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       place: 'World/Japan/Tokyo',
       description: 'Too cool for you',
       size: 44
-    }]);
+    }];
 
-    var searchCollection = new Agora.Collections.DataCollection([{
+    var searchCollection = [{
       id: 0,
       type: 'Group',
       name: 'The Fourth International',
@@ -134,14 +136,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       longitude: 122.4167,
       reputation: 42,
       city: 'San Francisco'
-    }]);
+    }];
 
-    //going to start using these as well:
-    var groupTopicsCollection = new Agora.Collections.GroupTopicsCollection({ url: '/groupTopics' });
-    var subgroupsCollection = new Agora.Collections.SubgroupsCollection({ url: '/subgroups' });
-    var subgroupTopicsCollection = new Agora.Collections.SubgroupTopicsCollection({ url: '/subgroupTopics' });
 
-    var messagesCollection = new Agora.Collections.MessagesCollection([{
+    var messagesCollection = [{
       id: 0,
       type: 'Message',
       sender: 'noahcharris',
@@ -153,9 +151,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       sender: 'noahcharris',
       recipient: 'spw',
       contents: 'wooo'
-    }]);
+    }];
 
-    var usersCollection = new Agora.Collections.UsersCollection([{
+    var usersCollection = [{
       id: 0,
       type: 'User',
       name: 'Noah Harris',
@@ -165,29 +163,28 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       type: 'User',
       name: 'Noah Harris',
       origin: 'Seattle'
-    }]);
+    }];
 
 
 
     // ## VIEW AND MODELS ##
 
 
-    var topbarModel = new Agora.Models.TopbarModel();
+    var topbarModel = { user: 'noahcharris'};
     var topbarView = new Agora.Views.TopbarView({ model: topbarModel });
 
     $('#topbarWrapper').append(topbarView.$el);
 
-    topbarModel.set('user', 'noah');
     topbarView.render();
 
 
 
+    //possible removal in agora2
+    // var dropdownView = new Agora.Views.DropdownView(this);
+    // this.set('dropdownView', dropdownView);
+    // $('#topbarWrapper').append(dropdownView.$el);
 
-    var dropdownView = new Agora.Views.DropdownView(this);
-    this.set('dropdownView', dropdownView);
-    $('#topbarWrapper').append(dropdownView.$el);
-
-    dropdownView.render();
+    // dropdownView.render();
 
 
 
@@ -296,6 +293,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+
+    //####################################################################################
+    //####################################################################################
+    //####################################################################################
+
+
+
     //COLLECTION REFRESHING EVENTS
 
 
@@ -379,6 +383,17 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }
       });
     });
+
+
+
+
+    //####################################################################################
+    //####################################################################################
+    //####################################################################################
+
+
+
+  
 
     //this will take in parameters: location, group, name
     mapController.on('reloadSubgroupSidebar', function(params) {
