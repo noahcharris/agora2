@@ -1,0 +1,776 @@
+@font-face {
+  font-family: 'clearSans';
+  src: url('TTF/ClearSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'clearBold';
+  src: url('TTF/ClearSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'clearThin';
+  src: url('TTF/ClearSans-Thin.ttf');
+}
+
+body {
+  font-family: 'clearSans';
+  margin: 0px;
+}
+
+#content1 {
+  display: inline;
+}
+
+#content2 {
+  display: inline;
+}
+
+
+
+
+
+/****************/
+/***  TOPBAR  ***/
+/****************/
+
+#topbarWrapper {
+  width: 100%;
+  height: 100px;
+}
+
+#topbar1 {
+  padding: 14px;
+  height: 42px;
+  background-color: #f8f8f8;
+}
+
+#title {
+  cursor: pointer;
+  position: relative;
+  bottom: 7px;
+  font-family: 'clearSans';
+  color: #333333;
+  display: inline;
+}
+
+.topbarIcon {
+  cursor: pointer;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+.topbarSearchIcon {
+  cursor: pointer;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+.username {
+  display: none;
+  position: relative;
+  float: right;
+  bottom: 1000px;
+  margin-right: 40px;
+}
+
+
+#searchInput {
+  display: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 12px;
+}
+
+#topbar2 {
+  width: 100%;
+  height: 30px;
+  background-color: #57646D;
+}
+
+#hello {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  color: #f8f8f8;
+}
+
+.pathWrapper {
+  color: #f8f8f8;
+  position: relative;
+  top: 4px;
+}
+
+.pathName {
+  cursor: pointer;
+  color: #f8f8f8;
+  text-decoration: none;
+}
+
+/***  content  ***/
+
+#mainWrapper {
+
+}
+
+/*  map  */
+
+#map {
+  height: 600px;
+  width: 950px;
+  right:0px;
+  margin: 0px;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:1s;
+}
+
+
+/****************/
+/*** DROPDOWN ***/
+/****************/
+
+#dropdownView {
+  overflow: hidden;
+  background-color: #57646D;
+  position: absolute;
+  z-index: 1000;
+  height: 0px;
+  width: 100%;
+  border-width: 2px;
+  border-style: solid;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:1s;
+}
+
+
+
+
+
+
+/****************/
+/*** SIDEBAR  ***/
+/****************/
+
+#sidebarContainer {
+
+/* width definted in appController*/
+/* height of this and map used to be 625 */
+  height: 600px;
+  left: 0px;
+  background-color: #f8f8f8;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:0.4s;
+
+}
+
+.sidebarView {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  left: 0px;
+  position: relative;
+  display: inline-block;
+  /*-webkit-transition-duration:0.7s;
+  -moz-transition-duration:0.7s;*/
+}
+
+.sidebarEntryView {
+  background-color: #f8f8f8;
+  position: relative;
+  left: 0px;
+  width: 97%;
+  border-color: #E8E8E8;
+  border-bottom-style: solid;
+  border-width: 2px;
+  padding: 10px 5px;
+  z-index: 50;
+  /*-webkit-transition-duration:0.7s;
+  -moz-transition-duration:0.7s;*/
+}
+
+.authorString {
+  font-family: 'clearThin';
+  width:100%;
+  font-size: 12px;
+  margin: 0px;
+}
+
+.sidebarEntryContent {
+  font-family: 'clearThin';
+  width:90%;
+  position: relative;
+  left: 7%;
+  margin: 0px;
+}
+
+.sidebarEntryTopicOrigin {
+  width:90%;
+  position: relative;
+  left: 7%;
+  font-size: 11px;
+  margin: 0px;
+}
+
+.sidebarInnerList {
+  position: relative;
+  list-style:none;
+  padding-left:0;
+  margin: 0px;
+  overflow: scroll;
+  height: 84%;
+}
+
+
+.leftButton {
+  position: relative;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  left:0px;
+  background-color: #f8f8f8;
+  display: inline-block;
+}
+
+.rightButton {
+  position: absolute;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  right:0px;
+  background-color: #E8E8E8;
+  display: inline-block;
+}
+
+.tabLabel {
+  position: relative;
+  left: 26px;
+  top: 10px;
+}
+
+#creationButton {
+  background-color: #E9573F;
+  color: white;
+  font-family: "clearBold";
+  position: absolute;
+  overflow: hidden;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 8%;
+  z-index: 200;
+  border-radius: 2px;
+}
+
+.createLabel {
+  position: relative;
+  left: 32%;
+  top: 10px;
+}
+
+
+
+
+
+
+/****************/
+/*** DETAIL   ***/
+/****************/
+
+.detailView {
+  /*width is set dynamically*/
+  width: 510px;
+  height: 100%;
+  position: relative;
+  float: right;
+  overflow: hidden;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  background-color: #f8f8f8;
+}
+
+.detailInnerList {
+  margin: 0px;
+  list-style:none;
+  padding-left:0;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.detailEntryItem {
+  background-color: #f8f8f8;
+  overflow: hidden;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
+  position: relative;
+  width: 97%;
+  padding-top: 10px;
+  z-index: 0;
+}
+
+
+
+.detailHeaderEntry {
+}
+
+
+
+/* GROUP DETAIL ENTRY */
+
+#groupProfilePicture {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  float: left;
+  border-style: solid;
+  border-width: 1px;
+  display: inline-block;
+}
+
+#groupBox {
+  width: 100%;
+  height: 530px;
+}
+
+#groupBox h1 {
+  margin: 10px;
+}
+
+#groupBox p {
+  margin: 0px;
+}
+
+#detailGroupEntryStar {
+  display: inline-block;
+}
+
+#detailGroupEntryName {
+  display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.x {
+  height: 20px;
+  width: 20px;
+  position:absolute;
+  right: 6px;
+  top: 2px;
+  z-index:100;
+}
+
+/* REPONSE BOX */
+.responseBox {
+  background-color: #57646D;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
+  position: absolute;
+  overflow: hidden;
+  bottom: 0px;
+  height: 0px;
+  width: 100%;
+  z-index: 1000;
+  -webkit-transition-duration:0.3s;
+  -moz-transition-duration:0.3s;
+}
+
+#responseBoxButton {
+  cursor: pointer;
+  position: absolute;
+  right: 10%;
+  top: 9px;
+  height: 75px;
+  width: 40px;
+  background-color: #E9573F;
+}
+
+#responseBoxButton span {
+  position: relative;
+  top: 15px;
+  left: 3px;
+  color: white;
+}
+
+#responseHeadlineTextArea {
+  position: relative;
+  left: 9%;
+  top: 8px;
+  height: 15px;
+  width: 70%;
+}
+
+#responseTextArea {
+  position: relative;
+  left: 9%;
+  top: 8px;
+  height: 44px;
+  width: 70%;
+}
+
+.creationInput {
+  resize: none;
+  width: 300px;
+  height: 200px;
+  position: relative;
+  left: 20px;
+  top: 30px;
+}
+
+
+.replyButton {
+  cursor: pointer;
+  position: relative;
+  float: left;
+  height: 25px;
+  width: 57px;
+  margin: 10px 0px;
+  background-color: #E9573F;
+  border-radius: 2px;
+  color: white;
+  font-family: "clearBold";
+}
+
+.replyLabel {
+  padding: 6px;
+}
+
+.yolo {
+  float: left;
+  margin-left: 15px;
+  margin-top: 12px;
+}
+
+
+/* TOPICS */
+.topicBox {
+  position: relative;
+  width: 100%;
+}
+
+.topicUpvoteBox {
+  position: relative;
+  left: 10px;
+  float:left;
+  width:10%;
+
+}
+
+.topicContentBox {
+  float: left;
+  width: 90%;
+}
+
+.topicHeader {
+  font-size: 20px;
+}
+
+.topic {
+  font-family: 'clearThin';
+  margin-bottom: 0px;
+}
+
+/* COMMENTS */
+.commentBox {
+/*  border-style: solid;
+  border-width: 1px;
+  border-color: #E8E8E8;*/
+  position: relative;
+  float:right;
+  width: 90%;
+}
+
+.commentUpvoteBox {
+  position: relative;
+  float: left;
+  left: 10px;
+  width: 10%;
+}
+
+.commentContentBox {
+  float: left;
+  width: 90%;
+}
+
+.commentHeader {
+  font-size: 20px;
+}
+
+.comment {
+  font-family: 'clearThin';
+  padding: 0px;
+  margin:0px;
+}
+
+
+/* REPLIES */
+.replyBox {
+/*  border-style: solid;
+  border-width: 1px;
+  border-bottom-width: 0px;*/
+  border-color: #E8E8E8;
+  position: relative;
+  float: right;
+  width: 83%;
+}
+
+.replyUpvoteBox {
+  position: relative;
+  float: left;
+  left: 10px;
+  width: 10%;
+}
+
+.replyContentBox {
+  float: left;
+  width: 90%;
+}
+
+.replyHeader {
+  font-size: 20px;
+}
+
+.reply {
+  font-family: 'clearThin';
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+/* EXPANSION/CONTRACTION */
+.commentResizeButton {
+  position: absolute;
+  left: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.replyResizeButton {
+  position: absolute;
+  left: 54px;
+  height: 20px;
+  width: 20px;
+}
+
+.outerbox {
+  width:100%;
+  overflow: hidden;
+}
+
+.innerbox {
+  width: 100%;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* for group and subgroup detail entries */
+
+
+#placeBox {
+  width: 100%;
+  height: 530px;
+}
+
+
+
+
+
+
+
+textarea {
+  resize:none;
+}
+
+
+.loading {
+  padding: 220px;
+}
+
+
+
+.highlight {
+  background-color: white;
+}
+
+
+
+.signup {
+  padding: 20px;
+}
+
+.login {
+  padding: 20px;
+}
+
+
+
+.pathView {
+
+}
+
+
+.alertView {
+  position: absolute;
+  z-index:300;
+  float: right;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background-color: white;
+  border-style: solid;
+}
+
+.creationView {
+  position: relative;
+  float: right;
+  width: 500px;
+  height: 570px;
+  right: 10px;
+  top: 17px;
+  background-color: white;
+  border-style: solid;
+}
+
+.placementView {
+  width: 250px;
+  height: 570px;
+  overflow: hidden;
+  background-color: white;
+  border-style: solid;
+  left: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.topicView {
+  
+}
+
+.registrationView {
+}
+
+.placeView {
+
+}
+
+.userView {
+}
+
+
+
+
+/* ## SETTINGS ## */
+
+.settingsView {
+
+}
+
+#settingsViewList {
+  list-style: none;
+}
+
+
+/* ## TOPIC CREATION ##*/
+
+.topicCreationView {
+
+}
+
+#topicCreationHeadline {
+  width: 83%;
+  position: relative;
+  left: 3%;
+}
+
+#topicCreationLink {
+  width: 83%;
+  position: relative;
+  left: 3%;
+}
+
+#topicCreationContent {
+  width: 83%;
+  height: 30%;
+  position: relative;
+  left: 3%;
+}
+
+
+/* ## GROUP CREATION ## */
+
+.groupCreationView {
+
+}
+
+
+
+
+
+.subgroupCreationView {
+
+}
+
+
+.signupViewOne {
+
+}
+
+.signupViewTwo {
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

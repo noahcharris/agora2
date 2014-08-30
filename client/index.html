@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Agora</title>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"></link>
+     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+     <link rel='stylesheet' href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' />
+      <link rel='stylesheet' src='bower_components/leaflet.markercluster/dist/MarkerCluster.css'></link>
+     <link rel="stylesheet" href="myStyles.css"></link>
+  </head>
+  <body>
+
+    <!-- Scripts may be placed anywhere on a page. But FYI, they block rendering of elements
+     below them until after the scripts load-->
+
+
+
+     <!-- ### TEMPLATES ### -->
+
+     <!--<button id="boundsButton">Get Bounds!</button>-->
+    <script id="topbarTemplate" type="text/template">
+    <div id="topbar1">
+     <h1 id="title">agora</h1>
+     <img id="registrationButton" class="topbarIcon" src="/media/registration.png" height="20px" width="20px"></img>
+     <img id="settingsButton" class="topbarIcon" src="/media/settings.png" height="20px" width="20px"></img>
+     <img id="messagingButton" class="topbarIcon" src="/media/messaging.png" height="20px" width="20px"></img>
+     <img id="notificationsButton" class="topbarIcon" src="/media/notifications.png" height="20px" width="20px"></img>
+     <p class="username"><%= user %></p>
+     <img id="searchButton" class="topbarSearchIcon" src="/media/search.png" height="20px" width="20px"></img>
+     <input id="searchInput" type="text"></input>
+     </div>
+     <div id="topbar2">
+    </div>
+    </script>
+
+
+    <!--Sidebar Entry Views-->
+
+    <script id="sidebarTopicEntryTemplate" type="text/template">
+     <p class="authorString">&nbsp(<%= reputation %>) <strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
+     <p class="sidebarEntryContent"><%= headline %></p>
+     <p class="sidebarEntryTopicOrigin">Posted in: <%= location %></p>
+    </script>
+
+    <script id="sidebarGroupEntryTemplate" type="text/template">
+     <p class="authorString">&nbsp(<%= size %>) <strong>
+     <%= description %>
+     </strong></p>
+     <p class="sidebarEntryContent"><%= name %></p>
+     <p class="sidebarEntryTopicOrigin">Posted in: <%= location %></p>
+    </script>
+
+    <script id="sidebarSubgroupEntryTemplate" type="text/template">
+      <strong> SIDEBAR SUBGROUP ENTRY TEMPLATE </strong>
+    </script>
+
+    <script id="sidebarPlaceEntryTemplate" type="text/template">
+     <%= reputation %>-<strong> <%= name %> </strong>
+    </script>
+
+    <script id="sidebarUserEntryTemplate" type="text/template">
+      <p class="sidebarEntryContent"><%= name %></p>
+      <p class="sidebarEntryTopicOrigin">Origin: <%= origin %></p>
+    </script>
+
+    <script id="sidebarMessageEntryTemplate" type="text/template">
+      <p class="authorString">Sender:<%= sender %></p>
+      <p class="sidebarEntryContent"><%= contents %></p>
+      <p class="sidebarEntryTopicOrigin">Recipient:<%= recipient %></p>
+    </script>
+
+
+    <!--DETAIL ENTRY VIEWS/INCLUDES CONVERSATION SYSTEM-->
+
+    <script id="detailTopicEntryTemplate" type="text/template">
+     <div class="topicBox">
+      <div class="topicUpvoteBox">
+       <img src="media/upvote.png" height="20px" width="20px"></img>
+       <div><%= reputation %></div>
+      </div>
+      <div class="topicContentBox">
+       <p class="authorString">&nbsp(<%= reputation %>) <strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
+       <p class="topicHeader"> <%= headline %> </p>
+       <p class="topic"> <%= contents %> </p>
+      </div>
+     </div>
+    </script>
+
+    <script id="detailCommentEntryTemplate" type="text/template">
+     <div class="commentBox">
+      <div class="commentUpvoteBox">
+        <img src="media/upvote.png" height="20px" width="20px"></img>
+        <div>42</div>
+      </div>
+      <div class="commentContentBox">
+        <p class="authorString">&nbsp<strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
+        <p class="commentHeader"> <%= headline %> </p>
+        <p class="comment"> <%= contents %> </p>
+      </div>
+     </div>
+    </script>
+
+    <script id="detailReplyEntryTemplate" type="text/template">
+     <div class="replyBox">
+      <div class="replyUpvoteBox">
+       <img src="media/upvote.png" height="20px" width="20px"></img>
+       <div>42</div>
+      </div>
+      <div class="replyContentBox">
+       <p class="authorString">&nbsp<strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
+       <p class="replyHeader"> <%= headline %> </p>
+       <p class="reply"> <%= contents %> </p>
+      </div>
+     </div>
+    </script>
+
+    <script id="responseBoxTemplate" type="text/template">
+      <div class="responseBox">
+       <textarea id="responseHeadlineTextArea" placeholder="Headline"></textarea>
+       <br/>
+       <textarea id="responseTextArea" placeholder="Content"></textarea>
+       <div id="responseBoxButton"><span>Post</span></div>
+      </div>
+    </script>
+
+    <script id="detailGroupEntryTemplate" type="text/template">
+      <div id="groupBox">
+        <img src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
+        <h1 id="detailGroupEntryName"> Anonymous </h1>
+        <img id="detailGroupEntryStar" src="media/star.png"></img>
+
+        <p> <%= description %>rrrrrrrrrrrrrr </p>
+        <p> Public - Open </p>
+        <p> Members: 127 </p>
+        <p> Created: August 4, 2014 </p>
+
+        <button> Join Group </button>
+
+        <h3> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the wo </h3>
+
+        <h5> DO NOT CONTACT US </h5>
+
+      </div>
+    </script>
+
+    <script id="detailSubgroupEntryTemplate" type="text/template">
+      <div id="subgroupBox">
+        <strong> DETAIL SUBGROUP ENTRY TEMPLATE </strong>
+      </div>
+    </script>
+
+    <script id="detailPlaceEntryTemplate" type="text/template">
+      <div id="placeBox">
+        <h1> <%= name %> </h1>
+        <%= latitude %>
+        <%= longitude %>
+        <br/><br/><br/><br/>
+      </div>
+    </script>
+
+    <script id="detailUserEntryTemplate" type="text/template">
+      <img src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
+      <h1 class="detailHeaderEntry"> <%= name %> </h1>
+      <br/>
+    </script>
+
+    <script id="detailMessageEntryTemplate" type="text/template">
+      <p class="authorString">From:<%= sender %></p>
+      <p class="authorString">To:<%= recipient %></p>
+      <h1 class="detailHeaderEntry"> <%= contents %> </h1>
+    </script>
+
+
+    <!--Topic Creation-->
+    <script id="topicCreationTemplate" type="text/template">
+      <br/>
+      <input id="topicCreationHeadline" placeholder="Headline"></input>
+      <br/><br/>
+      <input id="topicCreationLink" placeholder="Link"></input>
+      <br/><br/>
+      <textarea id="topicCreationContent" placeholder="Content"></textarea>
+      <p>Image upload</p>
+      <p>other options</p>
+    </script>
+
+
+
+    <!--Group Creation-->
+    <script id="groupCreationTemplate" type="text/template">
+      <br/>
+      <input placeholder="Group Name"></input>
+      <br/><br/>
+      This group is 
+      <input id="radioPublic" type="radio" name="public" value="public" checked>Public</input>
+      <input type="radio" name="public" value="private">Private</input>
+      <br/><br/>
+      <textarea placeholder="Description" style="width: 200px; height: 100px;"></textarea>
+      <br/>
+      <input placeholder="Address"></input><br/>
+      <input placeholder="City"></input><br/>
+      <input placeholder="State"></input><br/>
+      <input placeholder="Country"></input><br/>
+      <button>Next</button>
+    </script>
+
+    <script id="placementViewTemplate" type="text/template">
+    Place a point! Click Done when finished.
+    <br/>
+    <br/>
+    <br/>
+    <button id="pointPlacedButton">Done!</button>
+    </script>
+
+    <script id="emailInviteViewTemplate" type="text/template">
+    </script>
+
+
+    
+
+
+
+
+    <script id="registrationViewTemplate" type="text/template">
+    <div class="login">
+     <h2>REGISTRATION TEMPLATE</h2>
+     <input id="loginUsernameInput" type="text" placeholder="username"></input>
+     <br/> <input id="loginPasswordInput" type="password" placeholder="password"></input>
+     <button id="loginButton">Login!</button>
+    </div>
+    <hr>
+    <div class="signup">
+     <h2>SIGNUP</h2>
+     <button id="signupButton" type="text">Signup</button>
+    </div>
+    </script>
+
+    <script id="signupOneTemplate" type="text/template">
+      SIGNUP ONE
+      <br/>
+      <input placeholder="email" id="signupEmailInput"></input>
+      <br/><br/>
+      <input placeholder="username" id="signupUsernameInput"></input>
+      <br/>
+      <input type="password" placeholder="password" id="signupPasswordInput"></input>
+      <br/>
+      <input type="password" placeholder="confirm password" id="signupConfirmPasswordInput"></input>
+      <br/><br/>
+      <input placeholder="origin" id="signupOriginInput"></input>
+      <br/>
+      <input placeholder="about" id="signupAboutInput"></input>
+      <br/>
+      <p> PLACES SELECTION </p>
+      <p> INSTITUTIONS </p>
+      <p> INTERESTS </p>
+      <br/>
+      <button>PAGE 2</button>
+    </script>
+
+    <script id="signupTwoTemplate" type="text/template">
+      SELECT GROUPS
+      <br/><br/><br/><br/>
+      <button> FINISH </button>
+    </script>
+
+
+
+    <script id="alertSearchTemplate" type="text/template">
+    <h2 class="loading">LOADING...</h2>
+    </script>
+
+    <script id="alertFollowupSuccessTemplate" type="text/template">
+    followup success template
+    </script>
+
+    <script id="alertFollowupFailureTemplate" type="text/template">
+    followup failure template
+    </script>
+
+    <script id="alertGroupCreationSuccessTemplate" type="text/template">
+    Group creation success
+    </script>
+
+    <script id="alertGroupCreationFailureTemplate" type="text/template">
+    Group creation failure
+    </script>
+
+
+    <script id="placeTemplate" type="text/template">
+      <br/>
+      Name:&nbsp<%= name %>
+      <br/>
+      Description:&nbsp<%= description %>
+      <br/>
+      Population:&nbsp<%= population %>
+    </script>
+
+    <!--for use with pathing to unique users-->
+    <script id="userTemplate" type="text/template">
+      USER TEMPLATE
+    </script>
+
+
+    <script id="settingsViewTemplate" type="text/template">
+      <h1> Settings and Account Management </h1>
+      <ul id="settingsViewList">
+        <li> username: noahcharris </li>
+        <li> <button id="editProfileButton">Edit Profile</button> </li>
+        <li> <button>Change Email </li>
+        <li> <button>Change Password </li>
+      </ul>
+    </script>
+
+
+
+    <!-- ### DEPENDENCIES ### -->
+
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+
+    <!--<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>-->
+    <!--<script src="leaflet.js"></script>-->
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
+
+    <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
+    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    
+    <script src="us-states.js"></script>
+    <script src="newCountries.js"></script>
+    <script src="cities.js"></script>
+
+    <script src="controllers/AppController.js"></script>
+    <script src="controllers/MapController.js"></script>
+
+    <script src="models/DataModel.js"></script>
+    <script src="models/TopicModel.js"></script>
+    <script src="models/GroupModel.js"></script>
+    <script src="models/SubgroupModel.js"></script>
+    <script src="models/PlaceModel.js"></script>
+    <script src="models/TopbarModel.js"></script>
+    <script src="models/UserModel.js"></script>
+    <script src="models/MessageModel.js"></script>
+
+    <script src="collections/TopicsCollection.js"></script>
+    <script src="collections/GroupsCollection.js"></script>
+    <script src="collections/SubgroupsCollection.js"></script>
+    <script src="collections/DataCollection.js"></script>
+    <script src="collections/GroupTopicsCollection.js"></script>
+    <script src="collections/SubgroupTopicsCollection.js"></script>
+    <script src="collections/MessagesCollection.js"></script>
+    <script src="collections/UsersCollection.js"></script>
+
+    <script src="views/SidebarEntryView.js"></script>
+    <script src="views/SidebarView.js"></script>
+    <script src="views/TopbarView.js"></script>
+    <script src="views/DropdownView.js"></script>
+    <script src="views/DetailView.js"></script>
+    <script src="views/DetailTopicEntryView.js"></script>
+    <script src="views/DetailGroupEntryView.js"></script>
+    <script src="views/DetailSubgroupEntryView.js"></script>
+    <script src="views/DetailPlaceEntryView.js"></script>
+    <script src="views/DetailUserEntryView.js"></script>
+    <script src="views/DetailMessageEntryView.js"></script>
+    <script src="views/PlaceView.js"></script>
+    <script src="views/PathView.js"></script>
+    <script src="views/SettingsView.js"></script>
+    <script src="views/EditProfileView.js"></script>
+    <script src="views/RegistrationView.js"></script>
+    <script src="views/SignupViewOne.js"></script>
+    <script src="views/SignupViewTwo.js"></script>
+    <script src="views/AlertView.js"></script>
+    <script src="views/TopicCreationView.js"></script>
+    <script src="views/GroupCreationView.js"></script>
+    <script src="views/PlacementView.js"></script>
+    <script src="views/EmailInviteView.js"></script>
+    <script src="views/SubgroupCreationView.js"></script>
+    <script src="views/UserView.js"></script>
+    <script src="views/TopicView.js"></script>
+
+
+    <script src="router.js"></script>
+    <!--<script src="dist/output.js"></script>-->
+
+
+    <!-- ### PAGE SKELETON ### -->
+
+    <div id="wrapper">
+      <div id="topbarWrapper" class="topbar">
+      </div>
+
+      <div id="mainWrapper">
+        <div id="map">
+        </div>
+    
+        <div id="sidebarContainer">
+          <div id="content1">
+          </div>
+          <div id="content2">
+          </div>
+        </div>
+      </div>
+
+    </div>
+      
+
+
+    <!-- ### KICKOFF -->
+      
+    <script>
+      $(function(){
+
+        var params = {};
+
+        var appController = new Agora.Controllers.AppController(params);
+
+      });
+    </script>
+
+
+  </body>
+</html>
