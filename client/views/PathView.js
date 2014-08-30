@@ -26,20 +26,20 @@ Agora.Views.PathView = Backbone.View.extend({
       var group = this.model.get('group').split('/');
     }
 
-    var $dropButton = $('<button>DROP</button>');
-    var collapsed = true;
-    $dropButton.on('click', function() {
-      if (collapsed) {
-        that.app.get('dropdownView').show();
-        collapsed = false;
-      } else {
-        that.app.get('dropdownView').hide();
-        collapsed = true;
-      }
-    });
+    // var $dropButton = $('<button>DROP</button>');
+    // var collapsed = true;
+    // $dropButton.on('click', function() {
+    //   if (collapsed) {
+    //     that.app.get('dropdownView').show();
+    //     collapsed = false;
+    //   } else {
+    //     that.app.get('dropdownView').hide();
+    //     collapsed = true;
+    //   }
+    // });
 
-    this.$el.html( $dropButton );
-    this.$el.append( $('<span id="hello">Hello:</span>') );
+    //this.$el.html( $dropButton );
+    this.$el.html( $('<span id="hello">&nbsp&nbspHello:</span>') );
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
 
     var $world = $('<span class="pathName">World</span>')
