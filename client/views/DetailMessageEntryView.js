@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
-  model: Agora.Models.MessageModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
@@ -14,7 +12,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
+    this.$el.html(this.template(this.model));
   },
 
   close: function() {

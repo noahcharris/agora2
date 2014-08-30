@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailGroupEntryView = Backbone.View.extend({
 
-  model: Agora.Models.GroupModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
@@ -14,7 +12,7 @@ Agora.Views.DetailGroupEntryView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
+    this.$el.html(this.template(this.model));
     //click handler is set in DetailView
     this.$el.children('div#groupBox').append('<button class="visitButton">Visit '+this.model.get('name')+'</button>');
   },

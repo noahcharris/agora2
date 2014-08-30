@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailPlaceEntryView = Backbone.View.extend({
 
-  model: Agora.Models.PlaceModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
@@ -15,7 +13,7 @@ Agora.Views.DetailPlaceEntryView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html( this.template(this.model.toJSON()) );
+    this.$el.html( this.template(this.model) );
   },
 
   close: function() {

@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailSubgroupEntryView = Backbone.View.extend({
 
-  model: Agora.Models.SubgroupModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
@@ -15,7 +13,7 @@ Agora.Views.DetailSubgroupEntryView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
+    this.$el.html(this.template(this.model));
     this.$el.append('<button class="visitButton">Visit '+this.model.get('name')+'</button>');
   },
 

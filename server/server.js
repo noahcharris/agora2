@@ -72,7 +72,7 @@ app.post('/createUser', routes.createUser);
 app.use(favicon(__dirname + '/../client/media/favicon.png'));
 
 
-app.use(express.static(__dirname + '/../client'));  //hope this works
+app.use(express.static(__dirname + '/../client'));
 app.listen(app.get('port'));
 console.log('express server listening on port %s', app.get('port'));
 

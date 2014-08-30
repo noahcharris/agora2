@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
-  model: Agora.Models.TopicModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
@@ -42,8 +40,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //append buttons beneath the topic
     var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
     this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
-    $starIcon = $('<img class="yolo" height="20px" width="20px" src="media/star.png"></img>');
-    $shareIcon = $('<img class="yolo" height="20px" width="20px" src="media/share.png"></img>');
+    $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
+    $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
     this.$el.children('div.topicBox').children('div.topicContentBox').append($starIcon);
     this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
 
@@ -69,11 +67,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $outerButton.on('click', function(e) {
       if (outerCollapsed) {
         $(e.target).parent().css('height', 'auto');
-        $(e.target).attr('src', 'media/contract.png');
+        $(e.target).attr('src', 'resources/images/contract.png');
         outerCollapsed = false;
       } else if (!outerCollapsed) {
         $(e.target).parent().css('height', '150px');
-        $(e.target).attr('src', 'media/expand.png');
+        $(e.target).attr('src', 'resources/images/expand.png');
         outerCollapsed = true;
       }
     });
@@ -107,14 +105,14 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var $comment = $(this.commentTemplate(comments[i]));
       $comment.children('div.commentContentBox').append($commentReplyButton);
       //stars and shares for comments
-      $starIcon = $('<img class="yolo" height="20px" width="20px" src="media/star.png"></img>');
-      $shareIcon = $('<img class="yolo" height="20px" width="20px" src="media/share.png"></img>');
+      $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
+      $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
       $comment.children('div.commentContentBox').append($starIcon);
       $comment.children('div.commentContentBox').append($shareIcon);
 
       $outerbox.append( $comment );
       var $innerbox = $('<div class="innerbox">');
-      var $innerButton = $('<img src="media/contract.png" class="replyResizeButton"></img>');
+      var $innerButton = $('<img src="resources/images/contract.png" class="replyResizeButton"></img>');
       $innerbox.append($innerButton);
 
       //$commentUpvote = $('<img src="upvote.jpeg" height="20px" width="20px"></img>');
@@ -127,11 +125,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $innerButton.on('click', function(e) {
           if (!innerCollapsed) {
             $(e.target).parent().css('height', '20px');
-            $(e.target).attr('src', 'media/expand.png');
+            $(e.target).attr('src', 'resources/images/expand.png');
             innerCollapsed = true;
           } else if (innerCollapsed) {
             $(e.target).parent().css('height', 'auto');
-            $(e.target).attr('src', 'media/contract.png');
+            $(e.target).attr('src', 'resources/images/contract.png');
             innerCollapsed = false;
           }
         });
@@ -172,8 +170,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         var $comment = $(this.replyTemplate(comments[i].replies[j]));
         $comment.children('div.replyContentBox').append($replyReplyButton);
 
-        $starIcon = $('<img class="yolo" height="20px" width="20px" src="media/star.png"></img>');
-        $shareIcon = $('<img class="yolo" height="20px" width="20px" src="media/share.png"></img>');
+        $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
+        $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
         $comment.children('div.replyContentBox').append($starIcon);
         $comment.children('div.replyContentBox').append($shareIcon);
   

@@ -33,7 +33,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     });
     this.subViews = [];
 
-    this.$el.append($('<img src="media/x.png" class="x"></img>'));
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
@@ -122,7 +122,7 @@ Agora.Views.DetailView = Backbone.View.extend({
         }
       });
 
-      this.$el.children('.responseBox').append($('<img src="media/x.png" class="x"></img>'));
+      this.$el.children('.responseBox').append($('<img src="resources/images/x.png" class="x"></img>'));
       this.$el.children('.responseBox').children('img.x').on('click', function() {
         that.closeResponseBox();
       });

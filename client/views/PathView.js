@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.PathView = Backbone.View.extend({
 
-  model: Agora.Models.mapController,
-
   tagName: 'div',
 
   className: 'pathView',

@@ -3,8 +3,6 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
-  model: Agora.Models.UserModel,
-
   tagName: 'li',
 
   className: 'detailEntryItem',
