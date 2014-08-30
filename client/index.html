@@ -22,12 +22,12 @@
     <script id="topbarTemplate" type="text/template">
     <div id="topbar1">
      <h1 id="title">agora</h1>
-     <img id="registrationButton" class="topbarIcon" src="/media/registration.png" height="20px" width="20px"></img>
-     <img id="settingsButton" class="topbarIcon" src="/media/settings.png" height="20px" width="20px"></img>
-     <img id="messagingButton" class="topbarIcon" src="/media/messaging.png" height="20px" width="20px"></img>
-     <img id="notificationsButton" class="topbarIcon" src="/media/notifications.png" height="20px" width="20px"></img>
+     <img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>
+     <img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>
+     <img id="messagingButton" class="topbarIcon" src="/resources/images/messaging.png" height="20px" width="20px"></img>
+     <img id="notificationsButton" class="topbarIcon" src="/resources/images/notifications.png" height="20px" width="20px"></img>
      <p class="username"><%= user %></p>
-     <img id="searchButton" class="topbarSearchIcon" src="/media/search.png" height="20px" width="20px"></img>
+     <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
      </div>
      <div id="topbar2">
@@ -76,7 +76,7 @@
     <script id="detailTopicEntryTemplate" type="text/template">
      <div class="topicBox">
       <div class="topicUpvoteBox">
-       <img src="media/upvote.png" height="20px" width="20px"></img>
+       <img src="/resources/images/upvote.png" height="20px" width="20px"></img>
        <div><%= reputation %></div>
       </div>
       <div class="topicContentBox">
@@ -90,7 +90,7 @@
     <script id="detailCommentEntryTemplate" type="text/template">
      <div class="commentBox">
       <div class="commentUpvoteBox">
-        <img src="media/upvote.png" height="20px" width="20px"></img>
+        <img src="/resources/images/upvote.png" height="20px" width="20px"></img>
         <div>42</div>
       </div>
       <div class="commentContentBox">
@@ -104,7 +104,7 @@
     <script id="detailReplyEntryTemplate" type="text/template">
      <div class="replyBox">
       <div class="replyUpvoteBox">
-       <img src="media/upvote.png" height="20px" width="20px"></img>
+       <img src="/resources/images/upvote.png" height="20px" width="20px"></img>
        <div>42</div>
       </div>
       <div class="replyContentBox">
@@ -128,7 +128,7 @@
       <div id="groupBox">
         <img src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
         <h1 id="detailGroupEntryName"> Anonymous </h1>
-        <img id="detailGroupEntryStar" src="media/star.png"></img>
+        <img id="detailGroupEntryStar" src="/resources/images/star.png"></img>
 
         <p> <%= description %>rrrrrrrrrrrrrr </p>
         <p> Public - Open </p>
@@ -315,9 +315,9 @@
 
     <!-- ### DEPENDENCIES ### -->
 
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="dependencies/jquery/jquery.js"></script>
+    <script src="dependencies/underscore/underscore.js"></script>
+    <script src="dependencies/backbone/backbone.js"></script>
 
     <!--<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>-->
     <!--<script src="leaflet.js"></script>-->
@@ -326,30 +326,13 @@
     <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
     <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     
-    <script src="us-states.js"></script>
-    <script src="newCountries.js"></script>
-    <script src="cities.js"></script>
+    <script src="/resources/us-states.js"></script>
+    <script src="/resources/newCountries.js"></script>
+    <script src="/resources/cities.js"></script>
 
     <script src="controllers/AppController.js"></script>
     <script src="controllers/MapController.js"></script>
-
-    <script src="models/DataModel.js"></script>
-    <script src="models/TopicModel.js"></script>
-    <script src="models/GroupModel.js"></script>
-    <script src="models/SubgroupModel.js"></script>
-    <script src="models/PlaceModel.js"></script>
-    <script src="models/TopbarModel.js"></script>
-    <script src="models/UserModel.js"></script>
-    <script src="models/MessageModel.js"></script>
-
-    <script src="collections/TopicsCollection.js"></script>
-    <script src="collections/GroupsCollection.js"></script>
-    <script src="collections/SubgroupsCollection.js"></script>
-    <script src="collections/DataCollection.js"></script>
-    <script src="collections/GroupTopicsCollection.js"></script>
-    <script src="collections/SubgroupTopicsCollection.js"></script>
-    <script src="collections/MessagesCollection.js"></script>
-    <script src="collections/UsersCollection.js"></script>
+    <script src="controllers/router.js"></script>
 
     <script src="views/SidebarEntryView.js"></script>
     <script src="views/SidebarView.js"></script>
@@ -377,9 +360,6 @@
     <script src="views/SubgroupCreationView.js"></script>
     <script src="views/UserView.js"></script>
     <script src="views/TopicView.js"></script>
-
-
-    <script src="router.js"></script>
     <!--<script src="dist/output.js"></script>-->
 
 
