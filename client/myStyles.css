@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'clearSans';
-  src: url('TTF/ClearSans-Light.ttf');
+  src: url('resources/TTF/ClearSans-Light.ttf');
 }
 
 @font-face {
   font-family: 'clearBold';
-  src: url('TTF/ClearSans-Bold.ttf');
+  src: url('resources/TTF/ClearSans-Bold.ttf');
 }
 
 @font-face {
   font-family: 'clearThin';
-  src: url('TTF/ClearSans-Thin.ttf');
+  src: url('resources/TTF/ClearSans-Thin.ttf');
 }
 
 body {
