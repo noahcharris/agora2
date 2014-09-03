@@ -117,11 +117,11 @@ body {
 
 }
 
-/*  map  */
+/*  map 950px  */
 
 #map {
   height: 600px;
-  width: 950px;
+  width: 70%;
   right:0px;
   margin: 0px;
   position: absolute;
