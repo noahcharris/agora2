@@ -13,6 +13,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     // ## INSTANTIATE REGION MANAGERS ##
     this.set('expanded', false);
+    this.set('mobile', false);
     content1 = this.RegionManager1('#content1');
     content2 = this.RegionManager2('#content2');
     this.set('content1', content1);
@@ -527,23 +528,43 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //
 
     $(window).on('resize', function() {
-      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-      var sidebarWidth = $(window).width() - mapWidth;
 
-      if (!that.get('expanded')) {  
-        $('#sidebarContainer').css('-webkit-transition-duration', '0s');
-        $('#sidebarContainer').css('width', sidebarWidth+'px');
 
-        $('.sidebarView').css('width', sidebarWidth+'px');
+      if ($(window).width() > 500) {
+
+        this.set('mobile', false);
+        $('#sidebarContainer').show();
+        $('#map').css('width', '70%');
+
+        var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+        var sidebarWidth = $(window).width() - mapWidth;
+
+        if (!that.get('expanded')) {  
+          $('#sidebarContainer').css('-webkit-transition-duration', '0s');
+          $('#sidebarContainer').css('width', sidebarWidth+'px');
+
+          $('.sidebarView').css('width', sidebarWidth+'px');
+
+        } else {
+          $('.sidebarView').css('width', sidebarWidth+'px');
+          //need the extra -2 for borders?
+          $('.detailView').css('width', ($(window).width() * 0.75) - sidebarWidth - 5);
+          //maybe turn off animations here
+          $('#sidebarContainer').css('-webkit-transition-duration', '0s');
+          $('#sidebarContainer').css('width', $(window).width() * 0.75);
+        }
 
       } else {
-        $('.sidebarView').css('width', sidebarWidth+'px');
-        //need the extra -2 for borders?
-        $('.detailView').css('width', ($(window).width() * 0.75) - sidebarWidth - 5);
-        //maybe turn off animations here
-        $('#sidebarContainer').css('-webkit-transition-duration', '0s');
-        $('#sidebarContainer').css('width', $(window).width() * 0.75);
+
+        this.set('mobile', true);
+        $('#sidebarContainer').hide();
+        $('#map').css('width', '100%');
+
+
+        console.log('nooo');
+
       }
+
     });
     
 
