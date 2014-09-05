@@ -27,10 +27,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //$topicUpvote.on('click', function(e) {
       //console.log('topic upvote');
     //});
-    this.$el.append( this.topicTemplate(this.model.toJSON()) );
+    this.$el.append( this.topicTemplate(this.model) );
 
 
-    var comments = this.model.get('comments');
+    var comments = this.model.comments;
 
     var $outerbox = $('<div class="outerbox">');
     //need to switch the image on click..
@@ -53,7 +53,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         type: 'Topic',
         location: that.app.get('mapController').get('location'),
         group: that.app.get('mapController').get('group'),
-        topic: that.model.get('id')
+        topic: that.model.id
       }
 
       that.app.get('detailView').openResponseBox(responseParams);
@@ -93,7 +93,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             type: 'Comment',
             location: that.app.get('mapController').get('location'),
             group: that.app.get('mapController').get('group'),
-            topic: that.model.get('id'),
+            topic: that.id,
             comment: comments[x].id
           }
           that.app.get('detailView').openResponseBox(responseParams);
@@ -158,7 +158,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               type: 'Reply',
               location: that.app.get('mapController').get('location'),
               group: that.app.get('mapController').get('group'),
-              topic: that.model.get('id'),
+              topic: that.model.id,
               comment: comments[x].id,
               username: comments[x].replies[y].poster
             }

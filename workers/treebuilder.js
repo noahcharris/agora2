@@ -155,7 +155,8 @@ module.exports.buildWorld = function(cb) {
 
 module.exports.buildCountry = function(country) {
 
-  console.log('executing treeBuilder for country: ', country);
+  console.log('executing build sequence');
+  //console.log('executing treeBuilder for country: ', country);
 
   var count = 0;
   var topics, comments, replies;
@@ -216,7 +217,8 @@ module.exports.buildCountry = function(country) {
 
 module.exports.buildCity = function(city) {
 
-  console.log('executing treeBuilder for city: ', country);
+  console.log('executing build sequence');
+  //console.log('executing treeBuilder for city: ', country);
 
   var count = 0;
   var topics, comments, replies;
@@ -275,7 +277,8 @@ module.exports.buildCity = function(city) {
 
 module.exports.buildState = function(state) {
 
-  console.log('executing treeBuilder for state: ', state);
+  console.log('executing build sequence');
+  //console.log('executing treeBuilder for state: ', state);
 
   var count = 0;
   var topics, comments, replies;
@@ -349,7 +352,8 @@ module.exports.buildState = function(state) {
 
 buildSequence = function(topics, comments, replies, path, cb) {
 
-  console.log('executing buildSequence with topics: ', topics);
+  console.log('executing build sequence');
+  //console.log('executing buildSequence with topics: ', topics);
 
   //Step 1, Build the SortedLinkedList representation of the tree
   var resultLinkedList = new SortedLinkedList();

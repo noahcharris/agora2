@@ -210,13 +210,13 @@ Agora.Views.DetailView = Backbone.View.extend({
 
           if (model.get('type') === 'Topic') {
             entryViewType = Agora.Views.DetailTopicEntryView;
-          } else if (model.get('type') === 'Group') {
+          } else if (model.type === 'Group') {
             entryViewType = Agora.Views.DetailGroupEntryView;
-          } else if (model.get('type') === 'Subgroup') {
+          } else if (model.type === 'Subgroup') {
             entryViewType = Agora.Views.DetailSubgroupEntryView;
-          } else if (model.get('type') === 'Place') {
+          } else if (model.type === 'Place') {
             entryViewType = Agora.Views.DetailPlaceEntryView;
-          } else if (model.get('type') === 'User') {
+          } else if (model.type === 'User') {
             entryViewType = Agora.Views.DetailUserEntryView;
           }
 
@@ -363,7 +363,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     var models = renderCollection.models;
     var count = 0;
     for (var i=0;i<models.length;i++) {
-      if (models[i].get('type') === type && models[i].get('id') === id) {
+      if (models[i].type === type && models[i].id === id) {
         break;
       }
       count++;

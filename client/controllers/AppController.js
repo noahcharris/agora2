@@ -11,9 +11,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   initialize: function(params) {
 
-    // ## INSTANTIATE REGION MANAGERS ##
     this.set('expanded', false);
+    //whether we are displaying sidebar and map side-by-side or in lieu of each other
     this.set('mobile', false);
+    //whether in 'mobile' mode, whether it is displaying map or topics
+    this.set('mobilemap', true);
+    // ## INSTANTIATE REGION MANAGERS ##
     content1 = this.RegionManager1('#content1');
     content2 = this.RegionManager2('#content2');
     this.set('content1', content1);
@@ -299,6 +302,41 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     pathView.setHandlers();
 
 
+    mapController.on('reloadSidebar', function(location) {
+      console.log('hi');
+      $.ajax({
+        url: 'http://localhost:8080/topics',
+        data: {
+          location: location
+        },
+        crossDomain: true,
+        success: function(data) {
+          console.log(data);
+          console.log('hoho');
+
+          for (var i=0;i<data.length;i++) {
+            data[i].type = 'Topic';
+            data[i].reputation = 0;
+          }
+          topicsCollection = data;
+          //need to deal with this .models bullshit 
+          //need to deal with DetailView as a whole in many ways
+          sidebarView.collection.models = topicsCollection;
+            content1.show(sidebarView);
+            //take detailView into account while moving around
+            if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
+              content2.show(that.get('detailView'));
+            }
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+
+      
+    });
+
+
 
 
     //####################################################################################
@@ -532,9 +570,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       if ($(window).width() > 500) {
 
-        this.set('mobile', false);
+        that.set('mobile', false);
         $('#sidebarContainer').show();
         $('#map').css('width', '70%');
+        $('#mobileSelectionBarWrapper').css('height', '0px');
+
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sidebarWidth = $(window).width() - mapWidth;
@@ -556,7 +596,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       } else {
 
-        this.set('mobile', true);
+        that.set('mobile', true);
+        $('#mobileSelectionBarWrapper').css('height', '40px');
+
+        //need a variable which determines whether topics or map is selected if 'mobile'
+
         $('#sidebarContainer').hide();
         $('#map').css('width', '100%');
 

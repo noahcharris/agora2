@@ -143,19 +143,20 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.subViews = [];
 
       _.each(renderCollection.models, function(model) {
+        console.log(model);
 
         //the only difference between these is the type of entryView instantiated
-        if (model.get('type') === 'Topic') {
+        if (model.type === 'Topic') {
           entryViewMethod = 'renderTopic';
-        } else if (model.get('type') === 'Group') {
+        } else if (model.type === 'Group') {
           entryViewMethod = 'renderGroup';
-        } else if (model.get('type') === 'Subgroup') {
+        } else if (model.type === 'Subgroup') {
           entryViewMethod = 'renderSubgroup';
-        } else if (model.get('type') === 'Place') {
+        } else if (model.type === 'Place') {
           entryViewMethod = 'renderPlace';
-        } else if (model.get('type') === 'Message') {
+        } else if (model.type === 'Message') {
           entryViewMethod = 'renderMessage';
-        } else if (model.get('type') === 'User') {
+        } else if (model.type === 'User') {
           entryViewMethod = 'renderUser';
         }
 
