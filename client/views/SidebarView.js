@@ -158,8 +158,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
             //#############################################
             //this is where we set content2 to a single display for the sidebar item type
 
-            if (!that.app.get('expanded'))
+            if (!that.app.get('expanded')) {
               that.app.get('content2').show(that.app.get('detailView'));
+            }
 
             that.app.get('detailView')[entryViewMethod](model);
           });
@@ -191,10 +192,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
     $('#topButton').on('click', function() {
       if (that.topicFilter !== 'Top') {
 
+        //need to trigger a reload here 
         that.topicFilter = 'Top';
         that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
       }
       $('.leftButton').css('background-color', '#f8f8f8');
       $('.rightButton').css('background-color', '#E8E8E8');
@@ -203,10 +203,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
     $('#newButton').on('click', function() {
       if (that.topicFilter !== 'New') {
 
+        //need to trigger a reload here 
         that.topicFilter = 'New';
         that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
       }
       $('.leftButton').css('background-color', '#E8E8E8');
       $('.rightButton').css('background-color', '#f8f8f8');
@@ -214,10 +213,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     $('#hotButton').on('click', function() {
       if (that.topicFilter !== 'Hot') {
+
+        //need to trigger a reload here 
         that.topicFilter = 'Hot';
         that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
       }
 
 

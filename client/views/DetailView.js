@@ -28,16 +28,18 @@ Agora.Views.DetailView = Backbone.View.extend({
     var that = this;
 
     this.$el.empty();
+    
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+      console.log('closing detailview');
+    });
 
     _.each(this.subViews, function(subView) {
       subView.close();
     });
     this.subViews = [];
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    this.$el.children('img.x').on('click', function() {
-      that.app.get('content2').hide();
-    });
 
     this.$el.append($('<ul class="detailInnerList"></ul>'));
 
