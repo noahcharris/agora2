@@ -1,6 +1,7 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
+//maybe I should keep detailView and just have it act as a wrapper around the entryViews?
 
 Agora.Views.DetailView = Backbone.View.extend({
 
@@ -253,36 +254,6 @@ Agora.Views.DetailView = Backbone.View.extend({
       }
     }
 
-
-
-
-
-    // CALCULATING HEIGHT AND SENDING IT TO SIDEBARVIEW
-    this.interval = setInterval(function() {
-      var currentHeight = that.$el.children('ul').scrollTop();
-      //need to iterate through all the children, 
-      //get their height, compare it to scrollTop, and send it through
-      //with the trigger
-      var totalHeight = 0;
-      var count = 0;
-      finalCount = 0;
-      var reached = false;
-      that.$el.children('ul').children('li').each(function() {
-        totalHeight += $(this).height();
-        //little tweak here for now..
-        //WHAT AM I SUPPOSED TO DO HERE
-        totalHeight -= 10;
-        //this reached business but I don't know how else to deal with this jquery iteration..
-        if (totalHeight >= currentHeight && !reached) {
-          //console.log('currentHeight: ', currentHeight, ' totalHeight: ', totalHeight, ' count: ', count);
-          reached = true;
-          //fix this..
-          finalCount = count;
-        }
-        count++;
-      });
-      that.trigger('scrolling', finalCount);
-    }, 100);
   },
 
   //###################################
@@ -337,48 +308,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   },
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  scrollToId: function(id, type) {
-
-    var renderCollection;
-    if (this.app.get('sidebarView').displayed === 'Topics') {
-      renderCollection = this.collection;
-    } else if (this.app.get('sidebarView').displayed === 'Groups') {
-      renderCollection = this.groupsCollection;
-    } else if (this.app.get('sidebarView').displayed === 'GroupTopics') {
-      renderCollection = this.groupTopicsCollection;
-    } else if (this.app.get('sidebarView').displayed === 'Subgroups') {
-      renderCollection = this.subgroupsCollection;
-    } else if (this.app.get('sidebarView').displayed === 'SubgroupTopics') {
-      renderCollection = this.subgroupTopicsCollection;
-    } else if (this.app.get('sidebarView').displayed === 'All') {
-      renderCollection = this.searchCollection;
-    }
-
-    var models = renderCollection.models;
-    var count = 0;
-    for (var i=0;i<models.length;i++) {
-      if (models[i].type === type && models[i].id === id) {
-        break;
-      }
-      count++;
-    }
-    
-
-    var totalHeight = 0;
-    var count2 = 0;
-    this.$el.children('ul').children('li').each(function() {
-      if (count > count2)
-        totalHeight += $(this).height();
-      count2++;
-    });
-    this.$el.children('ul').scrollTop(totalHeight);
-
-  },
 
 });

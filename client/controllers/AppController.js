@@ -284,10 +284,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     //sets up the highlighting interaction between sidebarView and detailView
-    detailView.on('scrolling', function(offset) {
-      sidebarView.highlightCell(offset);
-    });
-
     mapController.on('change:location', function() {
       pathView.render();
       pathView.setHandlers();
@@ -301,6 +297,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     pathView.render();
     pathView.setHandlers();
 
+
+
+
+    //need alot more of these methods, topics-top, topics-new
 
     mapController.on('reloadSidebar', function(location) {
 
@@ -334,6 +334,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       
     });
+
 
 
 

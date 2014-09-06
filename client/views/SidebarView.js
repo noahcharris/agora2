@@ -65,8 +65,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div class="leftButton" id="topicsButton"><span class="tabLabel">Top</span></div>'));
-      this.$el.append($('<div class="rightButton" id="groupsButton"><span class="tabLabel">New</span></div>'));
+      this.$el.append($('<div class="leftButton" id="topButton"><span class="tabLabel">Top</span></div>'));
+      this.$el.append($('<div class="rightButton" id="newButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
 
@@ -149,20 +149,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
           //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
             console.log('clicked sidebar entryView with id: ', id, 'type: ', type);
-            if (!that.app.get('expanded')) {
-              $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
-                //this is madness
-                setTimeout(function() { that.app.get('detailView').scrollToId(id, type); },20);
-                console.log('hey');
-              });
-            }
-
+  
             //#############################################
             //this is where we set content2 to a single display for the sidebar item type
 
-
             that.app.get('content2').show(that.app.get('detailView'));
-            that.app.get('detailView').scrollToId(id, type);
           });
 
         that.$el.children('ul').append(entryView.$el);
@@ -185,11 +176,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
     //can't just call this.render, have to put self through content1
 
     var that = this;
-    $('#topicsButton').on('click', function() {
-      if (that.displayed !== 'Topics') {
+    $('#topButton').on('click', function() {
+      if (that.topicFilter !== 'Top') {
 
-
-        that.displayed = 'Topics';
+        that.topicFilter = 'Top';
         that.app.get('content1').show(that);
         if (that.app.get('expanded'))
           that.app.get('content2').show(that.app.get('detailView'));
@@ -198,11 +188,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
       $('.rightButton').css('background-color', '#E8E8E8');
     });
 
-    $('#groupsButton').on('click', function() {
-      if (that.displayed !== 'Groups') {
+    $('#newButton').on('click', function() {
+      if (that.topicFilter !== 'New') {
 
-
-        that.displayed = 'Groups';
+        that.topicFilter = 'New';
         that.app.get('content1').show(that);
         if (that.app.get('expanded'))
           that.app.get('content2').show(that.app.get('detailView'));
@@ -211,42 +200,15 @@ Agora.Views.SidebarView = Backbone.View.extend({
       $('.rightButton').css('background-color', '#f8f8f8');
     });
 
-    $('#groupTopicsButton').on('click', function() {
-      if (that.displayed !== 'GroupTopics') {
-        that.displayed = 'GroupTopics';
+    $('#hotButton').on('click', function() {
+      if (that.topicFilter !== 'Hot') {
+        that.topicFilter = 'Hot';
         that.app.get('content1').show(that);
         if (that.app.get('expanded'))
           that.app.get('content2').show(that.app.get('detailView'));
       }
-      $('.leftButton').css('background-color', '#f8f8f8');
-      $('.rightButton').css('background-color', '#E8E8E8');
-    });
 
-    $('#subgroupsButton').on('click', function() {
-      if (that.displayed !== 'Subgroups') {
-        that.displayed = 'Subgroups';
-        that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
-      }
-      $('.leftButton').css('background-color', '#E8E8E8');
-      $('.rightButton').css('background-color', '#f8f8f8');
-    });
 
-    //do i need to hit one of the reloads here??
-    $('#backButton').on('click', function() {
-      if (that.displayed !== 'Subgroups') {
-        that.displayed = 'Subgroups';
-        //need to reset the url and path
-        var group = that.app.get('mapController').get('group').split('/')[0]
-        that.app.get('mapController').router.navigate('World/'+that.app.get('mapController').get('location')+'~'+group, { trigger: false });
-        that.app.get('mapController').set('group', group);
-
-        that.app.get('mapController').trigger('reloadGroupSidebar', {
-          location: that.app.get('mapController').get('location'),
-          group: group
-        });
-      }
     });
 
 
@@ -272,6 +234,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
       $('.leftButton').css('background-color', '#E8E8E8');
       $('.rightButton').css('background-color', '#f8f8f8');
     });
+
+
+
+
+
+
+
 
     //UNDER CONSTRUCTION
 
