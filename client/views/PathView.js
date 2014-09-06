@@ -39,7 +39,7 @@ Agora.Views.PathView = Backbone.View.extend({
     // });
 
     //this.$el.html( $dropButton );
-    this.$el.html( $('<span id="hello">&nbsp&nbspPath:&nbsp</span>') );
+    this.$el.html( $('<span id="pathPrefix">&nbsp&nbspPath:&nbsp</span>') );
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
 
     var $world = $('<span class="pathName">World</span>')
