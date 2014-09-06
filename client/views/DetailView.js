@@ -23,6 +23,10 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   render: function() {
     console.log('something called render on DetailView, but this method doesn\'t do jack');
+    // this.$el.empty();
+    // if (this.view) {
+    //   this.view.close();
+    // }
     //wow so I guess backbone defaults to renderTopic if 
     //render() is called and there is no render method
   },
@@ -31,11 +35,13 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   renderTopic: function(model) {
 
-    console.log('renderTopic called');
+    console.log('rendering detail topic');
 
     var that = this;
-
     this.$el.empty();
+    if (this.view) {
+      this.view.close();
+    }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
@@ -43,20 +49,12 @@ Agora.Views.DetailView = Backbone.View.extend({
       console.log('closing detailview');
     });
 
-    if (this.view) {
-      this.view.close();
-    }
-
-
     this.$el.append($('<ul class="detailInnerList"></ul>'));
-
-
 
       // ## RESPONSE BOX ##
       //console.log('appending response box in render responding: ',this.responding);
       //USE this.responseData here so users won't lose their changes
       this.$el.append(this.responseBoxTemplate());
-
 
       //##############################
       //####### RESPONSE BOX #########
@@ -119,7 +117,6 @@ Agora.Views.DetailView = Backbone.View.extend({
         }
       });
 
-
       this.$el.children('.responseBox').append($('<img src="resources/images/x.png" class="x"></img>'));
       this.$el.children('.responseBox').children('img.x').on('click', function() {
         that.closeResponseBox();
@@ -130,47 +127,61 @@ Agora.Views.DetailView = Backbone.View.extend({
         this.$el.children('div.responseBox').css('height', '100px');
       }
 
-      var entryView = new Agora.Views.DetailTopicEntryView();
+      var entryView = new Agora.Views.DetailTopicEntryView(this.app);
       entryView.model = model;
       entryView.render();
-      that.$el.children('ul').append(entryView.$el);
-      that.view = entryView;
-
-
+      this.$el.children('ul').append(entryView.$el);
+      this.view = entryView;
   }, 
-
-
 
 
 
 
   renderMessage: function(model) {
 
-    var entryView = new Agora.Views.DetailMessageEntryView();
+    var that = this;
+    this.$el.empty();
+    if (this.view) {
+      this.view.close();
+    }
+
+    var entryView = new Agora.Views.DetailMessageEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    that.$el.children('ul').append(entryView.$el);
-    that.view = entryView;
+    this.$el.children('ul').append(entryView.$el);
+    this.view = entryView;
   
   },
 
   renderUser: function(model) {
 
-    var entryView = new Agora.Views.DetailUserEntryView();
+    var that = this;
+    this.$el.empty();
+    if (this.view) {
+      this.view.close();
+    }
+
+    var entryView = new Agora.Views.DetailUserEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    that.$el.children('ul').append(entryView.$el);
-    that.view = entryView;
+    this.$el.children('ul').append(entryView.$el);
+    this.view = entryView;
 
   },
 
   renderPlace: function(model) {
 
-    var entryView = new Agora.Views.DetailPlaceEntryView();
+    var that = this;
+    this.$el.empty();
+    if (this.view) {
+      this.view.close();
+    }
+
+    var entryView = new Agora.Views.DetailPlaceEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    that.$el.children('ul').append(entryView.$el);
-    that.view = entryView;
+    this.$el.children('ul').append(entryView.$el);
+    this.view = entryView;
 
   },
 

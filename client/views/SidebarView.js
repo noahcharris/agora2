@@ -65,9 +65,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div class="leftButton" id="topButton"><span class="tabLabel">Top</span></div>'));
-      this.$el.append($('<div class="middleButton" id="newButton"><span class="tabLabel">New</span></div>'));
-      this.$el.append($('<div class="rightButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
+      this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top</span></div>'));
+      this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
+      this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
 
@@ -76,15 +76,15 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //display 'results:'?
 
     } else if (this.displayed === 'Messages') {
-      this.$el.append($('<div class="leftButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
-      this.$el.append($('<div class="rightButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
+      this.$el.append($('<div class="leftHalfButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Contacts') {
-      this.$el.append($('<div class="leftButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
-      this.$el.append($('<div class="rightButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.children('div.leftButton').css('background-color','#E8E8E8');
-      this.$el.children('div.rightButton').css('background-color','#f8f8f8');
+      this.$el.append($('<div class="leftHalfButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
+      this.$el.children('div.leftHalfButton').css('background-color','#E8E8E8');
+      this.$el.children('div.rightHalfButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
@@ -141,6 +141,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
+          //#######################################
+          //####### ENTRYVIEW CLICK EVENT #########
+          //#######################################
+
+
 
           //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
@@ -193,9 +198,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.topicFilter = 'Top';
         that.app.get('content1').show(that);
       }
-      $('.leftButton').css('background-color', '#f8f8f8');
-      $('.middleButton').css('background-color', '#E8E8E8');
-      $('.rightButton').css('background-color', '#E8E8E8');
+      $('.leftThirdButton').css('background-color', '#f8f8f8');
+      $('.middleThirdButton').css('background-color', '#E8E8E8');
+      $('.rightThirdButton').css('background-color', '#E8E8E8');
     });
 
     $('#newButton').on('click', function() {
@@ -206,9 +211,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.topicFilter = 'New';
         that.app.get('content1').show(that);
       }
-      $('.leftButton').css('background-color', '#E8E8E8');
-      $('.middleButton').css('background-color', '#f8f8f8');
-      $('.rightButton').css('background-color', '#E8E8E8');
+      $('.leftThirdButton').css('background-color', '#E8E8E8');
+      $('.middleThirdButton').css('background-color', '#f8f8f8');
+      $('.rightThirdButton').css('background-color', '#E8E8E8');
     });
 
     $('#hotButton').on('click', function() {
@@ -219,9 +224,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.topicFilter = 'Hot';
         that.app.get('content1').show(that);
       }
-      $('.leftButton').css('background-color', '#E8E8E8');
-      $('.middleButton').css('background-color', '#E8E8E8');
-      $('.rightButton').css('background-color', '#f8f8f8');
+      $('.leftThirdButton').css('background-color', '#E8E8E8');
+      $('.middleThirdButton').css('background-color', '#E8E8E8');
+      $('.rightThirdButton').css('background-color', '#f8f8f8');
     });
 
 
@@ -231,8 +236,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.displayed = 'Messages';
         that.app.get('content1').show(that);
       }
-      $('.leftButton').css('background-color', '#f8f8f8');
-      $('.rightButton').css('background-color', '#E8E8E8');
+      $('.leftHalfButton').css('background-color', '#f8f8f8');
+      $('.rightHalfButton').css('background-color', '#E8E8E8');
     });
 
     $('#contactsButton').on('click', function() {
@@ -240,8 +245,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.displayed = 'Contacts';
         that.app.get('content1').show(that);
       }
-      $('.leftButton').css('background-color', '#E8E8E8');
-      $('.rightButton').css('background-color', '#f8f8f8');
+      $('.leftHalfButton').css('background-color', '#E8E8E8');
+      $('.rightHalfButton').css('background-color', '#f8f8f8');
     });
 
 

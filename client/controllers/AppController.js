@@ -32,7 +32,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-    // ### MOCK DATA ###
+    //#######################################
+    //#########  MOCK DATA  #################
+    //#######################################
     
     var topicsCollection = [{ id: 1,
       headline: 'Defaults are desecrets',
@@ -172,15 +174,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-    //Setting the groups on sidebarView and detailView (need to add groupTopics and subgroupTopics)
-
-
-    //NEED TO ADD:
-    //groupsTopicsCollection
-    //subgroupsCollection
-    //subgroupTopics
-
     var sidebarView = new Agora.Views.SidebarView(this); //collection from TopicsCollection
     sidebarView.collection = topicsCollection;
     sidebarView.searchCollection = searchCollection;
@@ -242,10 +235,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     setTimeout(function() { Backbone.history.start(); }, 10);
 
 
-
-
-
-    // ## EVENTING ##
+    // ## PATHVIEW EVENTING ##
 
     var that = this;
 
@@ -262,6 +252,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     pathView.render();
     pathView.setHandlers();
+
 
 
 
@@ -449,6 +440,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
     //#########  BUTTON EVENTS  #############
     //#######################################
+
+    //WILL NEED TO HAVE MOBILE AND REGULAR BUTTON LOGICS,
+    //BECAUSE THE LAYOUT CHANGES REQUIRE DIFFERENT BEHAVIOR
 
 
     $('#boundsButton').on('click', function() {

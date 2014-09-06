@@ -239,8 +239,32 @@ body {
   height: 84%;
 }
 
+.leftHalfButton {
+  position: relative;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  left:0px;
+  background-color: #f8f8f8;
+  display: inline-block;
+}
 
-.leftButton {
+.rightHalfButton {
+  position: absolute;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  right:0px;
+  background-color: #f8f8f8;
+  display: inline-block;
+}
+
+
+.leftThirdButton {
   position: relative;
   cursor: pointer;
 /*  border-style: solid;
@@ -252,7 +276,7 @@ body {
   display: inline-block;
 }
 
-.middleButton {
+.middleThirdButton {
   position: relative;
   cursor: pointer;
  /* border-style: solid;
@@ -264,7 +288,7 @@ body {
 
 }
 
-.rightButton {
+.rightThirdButton {
   position: absolute;
   cursor: pointer;
 /*  border-style: solid;
