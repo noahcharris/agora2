@@ -58,7 +58,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
     });
     this.subViews = [];
 
-      console.log('rendering sidebarView');
+      console.log('rendering sidebarView for collection type: ', this.displayed);
     
     //GOING TO USE goToPath TO BREAK OUT OF SEARCH ('All')
     if (this.displayed === 'Topics' ) {
@@ -66,7 +66,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
       this.$el.append($('<div class="leftButton" id="topButton"><span class="tabLabel">Top</span></div>'));
-      this.$el.append($('<div class="rightButton" id="newButton"><span class="tabLabel">New</span></div>'));
+      this.$el.append($('<div class="middleButton" id="newButton"><span class="tabLabel">New</span></div>'));
+      this.$el.append($('<div class="rightButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
 
@@ -120,6 +121,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.subViews = [];
 
       _.each(renderCollection.models, function(model) {
+
+        console.log('model: ', model);
 
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;
@@ -180,6 +183,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     //can't just call this.render, have to put self through content1
 
+    //TOP/NEW/HOT
     var that = this;
     $('#topButton').on('click', function() {
       if (that.topicFilter !== 'Top') {
@@ -190,6 +194,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.app.get('content1').show(that);
       }
       $('.leftButton').css('background-color', '#f8f8f8');
+      $('.middleButton').css('background-color', '#E8E8E8');
       $('.rightButton').css('background-color', '#E8E8E8');
     });
 
@@ -202,7 +207,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.app.get('content1').show(that);
       }
       $('.leftButton').css('background-color', '#E8E8E8');
-      $('.rightButton').css('background-color', '#f8f8f8');
+      $('.middleButton').css('background-color', '#f8f8f8');
+      $('.rightButton').css('background-color', '#E8E8E8');
     });
 
     $('#hotButton').on('click', function() {
@@ -213,17 +219,17 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.topicFilter = 'Hot';
         that.app.get('content1').show(that);
       }
-
-
+      $('.leftButton').css('background-color', '#E8E8E8');
+      $('.middleButton').css('background-color', '#E8E8E8');
+      $('.rightButton').css('background-color', '#f8f8f8');
     });
+
 
     //MESSAGES/CONTACTS
     $('#messagesButton').on('click', function() {
       if (that.displayed !== 'Messages') {
         that.displayed = 'Messages';
         that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
       }
       $('.leftButton').css('background-color', '#f8f8f8');
       $('.rightButton').css('background-color', '#E8E8E8');
@@ -233,8 +239,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.displayed !== 'Contacts') {
         that.displayed = 'Contacts';
         that.app.get('content1').show(that);
-        if (that.app.get('expanded'))
-          that.app.get('content2').show(that.app.get('detailView'));
       }
       $('.leftButton').css('background-color', '#E8E8E8');
       $('.rightButton').css('background-color', '#f8f8f8');

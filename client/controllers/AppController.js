@@ -72,50 +72,44 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }] 
     }];
 
-    var searchCollection = [{
-      id: 0,
-      type: 'Group',
-      name: 'The Fourth International',
-      place: 'World',
-      description: 'Dedicated to dedicating...',
-      size: 1
-    }, { id: 1,
-      headline: 'Defaults are desecrets',
-      type: 'Topic',
-      poster: 'thalonius want',
-      contents: 'Unce more breach. Twice too many.',
-      upvoted: false,
-      expanded: false,
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      comments: [{
-        id: 22,
-        poster: 'J-aldrean',
-        contents: 'This dream, no more a dream than waking',
+    var searchCollection = [
+      { id: 1,
+        headline: 'Defaults are desecrets',
+        type: 'Topic',
+        poster: 'thalonius want',
+        contents: 'Unce more breach. Twice too many.',
         upvoted: false,
         expanded: false,
-        replies: [{
-            poster: 'Mr. Bean',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
+        city: 'Oregon',
+        area: 'Hack Reactor',
+        reputation: 42,
+        comments: [{
+          id: 22,
+          poster: 'J-aldrean',
+          contents: 'This dream, no more a dream than waking',
+          upvoted: false,
+          expanded: false,
+          replies: [{
+              poster: 'Mr. Bean',
+              contents: 'You sir, are a ruffian.',
+              upvoted: false,
+          }, {
+              poster: 'Mr. Bean',
+              contents: 'I mean it..',
+              upvoted: false,
+          }]
         }, {
-            poster: 'Mr. Bean',
-            contents: 'I mean it..',
-            upvoted: false,
-        }]
-      }, {
-        id:87,
-        poster: 'Jason Aldean',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        replies: [{
-            poster: 'Heckles',
-            contents: 'Just the one.',
-            upvoted: false,
-        }]
-      }] 
+          id:87,
+          poster: 'Jason Aldean',
+          contents: 'Ok, but how about them yanks?',
+          upvoted: false,
+          expanded: false,
+          replies: [{
+              poster: 'Heckles',
+              contents: 'Just the one.',
+              upvoted: false,
+          }]
+        }] 
     }, {
       id: 3,
       type: 'Place',

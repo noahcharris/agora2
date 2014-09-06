@@ -15,10 +15,15 @@ Agora.Views.DetailView = Backbone.View.extend({
   initialize: function(appController) {
     this.responseBoxTemplate = _.template( $('#responseBoxTemplate').html() );
     this.app = appController;
-    this.subViews = [];
 
     //response box variables
     this.responding = false;
+  },
+
+  render: function() {
+    console.log('something called render on DetailView, but this method doesn\'t do jack');
+    //wow so I guess backbone defaults to renderTopic if 
+    //render() is called and there is no render method
   },
 
 
@@ -176,14 +181,8 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   close: function() {
     this.app.get('sidebarView').removeHighlights();
-    _.each(this.subViews, function(subView) {
-      subView.close();
-    });
-    this.subViews = [];
-    //close the response box
     //this.closeResponseBox();
     this.remove();
-    clearInterval(this.interval);
   },
 
   openResponseBox: function(data) {
