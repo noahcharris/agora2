@@ -20,7 +20,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
 
-  render: function() {
+  renderTopic: function(model) {
 
     //NEED TO ADD USERVIEW
 
@@ -43,18 +43,15 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
     //TOPICS
-    if (this.app.get('sidebarView').displayed === 'Topics'
-        || this.app.get('sidebarView').displayed === 'GroupTopics'
-        || this.app.get('sidebarView').displayed === 'SubgroupTopics')  {
 
-      var renderCollection;
-      if (this.app.get('sidebarView').displayed === 'Topics') {
-        renderCollection = this.collection;
-      } else if (this.app.get('sidebarView').displayed === 'GroupTopics') {
-        renderCollection = this.groupTopicsCollection;
-      } else if (this.app.get('sidebarView').displayed === 'SubgroupTopics') {
-        renderCollection = this.subgroupTopicsCollection;
-      }
+      // var renderCollection;
+      // if (this.app.get('sidebarView').displayed === 'Topics') {
+      //   renderCollection = this.collection;
+      // } else if (this.app.get('sidebarView').displayed === 'GroupTopics') {
+      //   renderCollection = this.groupTopicsCollection;
+      // } else if (this.app.get('sidebarView').displayed === 'SubgroupTopics') {
+      //   renderCollection = this.subgroupTopicsCollection;
+      // }
 
       // ## RESPONSE BOX ##
       //console.log('appending response box in render responding: ',this.responding);
@@ -123,6 +120,7 @@ Agora.Views.DetailView = Backbone.View.extend({
         }
       });
 
+
       this.$el.children('.responseBox').append($('<img src="resources/images/x.png" class="x"></img>'));
       this.$el.children('.responseBox').children('img.x').on('click', function() {
         that.closeResponseBox();
@@ -133,106 +131,37 @@ Agora.Views.DetailView = Backbone.View.extend({
         this.$el.children('div.responseBox').css('height', '100px');
       }
 
-      _.each(renderCollection.models, function(topic) {
-        var entryView = new Agora.Views.DetailTopicEntryView(that.app);
-        //setting the model here so that we can pass a reference to detailView
-        entryView.model = topic;
-        entryView.render();
-        that.$el.children('ul').append(entryView.$el);
-        that.subViews.push(entryView);
-      });   
+
+      //what is the new rendering flow??
+
+      var entryView = new Agora.Views.DetailTopicEntryView();
+      entryView.model = model;
+      entryView.render();
+      that.$el.children('ul').append(entryView.$el);
+      that.subViews.push(entryView);
 
 
-    //GROUPS
+      // _.each(renderCollection.models, function(topic) {
+      //   var entryView = new Agora.Views.DetailTopicEntryView(that.app);
+      //   //setting the model here so that we can pass a reference to detailView
+      //   entryView.model = topic;
+      //   entryView.render();
+      //   that.$el.children('ul').append(entryView.$el);
+      //   that.subViews.push(entryView);
+      // }); 
 
-    //can these responsibilities be relegated to
-    //DetailGroupEntryView and DetailSubgroupEntryView ???
 
-    } else if (this.app.get('sidebarView').displayed === 'Groups') {
-      if (this.groupsCollection) {
-        _.each(this.groupsCollection.models, function(group) {
-          var entryView = new Agora.Views.DetailGroupEntryView(this.app);
-          entryView.model = group;
-          entryView.render();
-          that.$el.children('ul').append(entryView.$el);
-          entryView.$el.children('div').children('button').on('click', function(e) {
-
-            // ## LISENERS FOR THE 'VISIT' BUTTON ##
-            //OK THIS IS SOME CRAZY SHIT
-            //might as well just always trigger through mapController.....
-            that.app.get('sidebarView').displayed = 'GroupTopics';
-            that.app.get('mapController').router.navigate('World/'+group.get('location')+'~'+group.get('name'), { trigger: false });
-            that.app.get('mapController').set('group', group.get('name'));
-            that.app.get('mapController').trigger('reloadGroupSidebar', {
-              location: group.get('location'),
-              group: group.get('name')
-            });
-
-          });
-          that.subViews.push(entryView);
-        });    
-      }
-    } else if (this.app.get('sidebarView').displayed === 'Subgroups') {
-
-      if (this.subgroupsCollection) {
-        _.each(this.subgroupsCollection.models, function(subgroup) {
-          var entryView = new Agora.Views.DetailSubgroupEntryView(this.app);
-          entryView.model = subgroup;
-          entryView.render();
-          //need to set handlers on the entryView for going to the proper group
-          that.$el.children('ul').append(entryView.$el);
-          entryView.$el.children('button').on('click', function(e) {
-
-            // ## LISENERS FOR THE 'VISIT' BUTTON ##
-            //OK THIS IS SOME CRAZY SHIT
-            //might as well just always trigger through mapController.....
-            that.app.get('sidebarView').displayed = 'SubgroupTopics';
-            //this is how we will represent subgroups for now, need to change goToPath()..
-            that.app.get('mapController').trigger('reloadSubgroupSidebar', {
-              location: subgroup.get('location'),
-              group: subgroup.get('agroup'),
-              name: subgroup.get('name')
-            });
-
-          });
-          that.subViews.push(entryView);
-        });
-      }
+  }, 
 
 
 
-      // SEARCH
 
-      //need to add user here
-    } else if (this.app.get('sidebarView').displayed === 'All') {
 
-      if (this.searchCollection) {
-        _.each(this.searchCollection.models, function(model) {
 
-          if (model.get('type') === 'Topic') {
-            entryViewType = Agora.Views.DetailTopicEntryView;
-          } else if (model.type === 'Group') {
-            entryViewType = Agora.Views.DetailGroupEntryView;
-          } else if (model.type === 'Subgroup') {
-            entryViewType = Agora.Views.DetailSubgroupEntryView;
-          } else if (model.type === 'Place') {
-            entryViewType = Agora.Views.DetailPlaceEntryView;
-          } else if (model.type === 'User') {
-            entryViewType = Agora.Views.DetailUserEntryView;
-          }
-
-          var entryView = new entryViewType(this.app);
-          entryView.model = model;
-          entryView.render();
-          that.$el.children('ul').append(entryView.$el);
-          that.subViews.push(entryView);
-        });
-      }
-
+  renderMessage: function() {
 
     //MESSAGES
 
-    } else if (this.app.get('sidebarView').displayed === 'Messages') {
       if (this.messagesCollection) {
         _.each(this.messagesCollection.models, function(model) {
           var entryView = new Agora.Views.DetailMessageEntryView();
@@ -242,7 +171,8 @@ Agora.Views.DetailView = Backbone.View.extend({
           that.subViews.push(entryView);
         });
       }
-    } else if (this.app.get('sidebarView').displayed === 'Contacts') {
+
+
       if (this.usersCollection) {
         _.each(this.usersCollection.models, function(model) {
           var entryView = new Agora.Views.DetailUserEntryView();
@@ -252,24 +182,12 @@ Agora.Views.DetailView = Backbone.View.extend({
           that.subViews.push(entryView);
         });
       }
-    }
 
+  
   },
 
+
   //###################################
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

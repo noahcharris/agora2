@@ -130,6 +130,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       _.each(renderCollection.models, function(model) {
 
         //the only difference between these is the type of entryView instantiated
+        var entryViewMethod;
         if (model.type === 'Topic') {
           entryViewMethod = 'renderTopic';
         } else if (model.type === 'Group') {
@@ -146,6 +147,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           var entryView = new Agora.Views.SidebarEntryView({ model: model });
           entryView[entryViewMethod]();
+
+
+
+
           //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
             console.log('clicked sidebar entryView with id: ', id, 'type: ', type);
@@ -153,8 +158,15 @@ Agora.Views.SidebarView = Backbone.View.extend({
             //#############################################
             //this is where we set content2 to a single display for the sidebar item type
 
-            that.app.get('content2').show(that.app.get('detailView'));
+            if (!that.app.get('expanded'))
+              that.app.get('content2').show(that.app.get('detailView'));
+
+            that.app.get('detailView')[entryViewMethod](model);
           });
+
+
+
+
 
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);
