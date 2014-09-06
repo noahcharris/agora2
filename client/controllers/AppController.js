@@ -555,8 +555,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#########  RESIZING  ##################
     //#######################################
 
-    $(window).on('resize', function() {
-
+    var throttledResize = _.throttle(function() {
 
       if ($(window).width() > 500) {
 
@@ -596,7 +595,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       }
 
-    });
+      //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+    }, 100);
+
+    $(window).on('resize', throttledResize);
     
 
     var mapWidth = $(mapController.get('map').getContainer()).width();
