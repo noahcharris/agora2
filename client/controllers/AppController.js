@@ -493,7 +493,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         // TODO
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+        //guess i need to change this classname?
         if ($('#content2').children()[0].className === 'fjkdla;fajlk') {
           content2.hide();
         } else {

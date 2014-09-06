@@ -18,6 +18,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
     //response box variables
     this.responding = false;
+    this.view = null;
   },
 
   render: function() {
@@ -30,6 +31,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   renderTopic: function(model) {
 
+    console.log('renderTopic called');
 
     var that = this;
 
@@ -41,10 +43,9 @@ Agora.Views.DetailView = Backbone.View.extend({
       console.log('closing detailview');
     });
 
-    _.each(this.subViews, function(subView) {
-      subView.close();
-    });
-    this.subViews = [];
+    if (this.view) {
+      this.view.close();
+    }
 
 
     this.$el.append($('<ul class="detailInnerList"></ul>'));
@@ -133,7 +134,7 @@ Agora.Views.DetailView = Backbone.View.extend({
       entryView.model = model;
       entryView.render();
       that.$el.children('ul').append(entryView.$el);
-      that.subViews.push(entryView);
+      that.view = entryView;
 
 
   }, 
@@ -149,7 +150,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     entryView.model = model;
     entryView.render();
     that.$el.children('ul').append(entryView.$el);
-    that.subViews.push(entryView);
+    that.view = entryView;
   
   },
 
@@ -159,7 +160,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     entryView.model = model;
     entryView.render();
     that.$el.children('ul').append(entryView.$el);
-    that.subViews.push(entryView);
+    that.view = entryView;
 
   },
 
@@ -169,7 +170,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     entryView.model = model;
     entryView.render();
     that.$el.children('ul').append(entryView.$el);
-    that.subViews.push(entryView);
+    that.view = entryView;
 
   },
 
@@ -182,7 +183,11 @@ Agora.Views.DetailView = Backbone.View.extend({
   close: function() {
     this.app.get('sidebarView').removeHighlights();
     //this.closeResponseBox();
+    if (this.view) {
+      this.view.close();
+    }
     this.remove();
+    this.unbind();
   },
 
   openResponseBox: function(data) {
