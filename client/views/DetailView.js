@@ -22,7 +22,8 @@ Agora.Views.DetailView = Backbone.View.extend({
   },
 
   render: function() {
-    console.log('something called render on DetailView, but this method doesn\'t do jack');
+    console.log('something called render on DetailView, but all this does is draw a closed button');
+
     // this.$el.empty();
     // if (this.view) {
     //   this.view.close();
@@ -46,7 +47,6 @@ Agora.Views.DetailView = Backbone.View.extend({
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
-      console.log('closing detailview');
     });
 
     this.$el.append($('<ul class="detailInnerList"></ul>'));
@@ -145,6 +145,12 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.view.close();
     }
 
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+      console.log('closing detailview');
+    });
+
     var entryView = new Agora.Views.DetailMessageEntryView(this.app);
     entryView.model = model;
     entryView.render();
@@ -161,6 +167,12 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.view.close();
     }
 
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+      console.log('closing detailview');
+    });
+
     var entryView = new Agora.Views.DetailUserEntryView(this.app);
     entryView.model = model;
     entryView.render();
@@ -176,6 +188,12 @@ Agora.Views.DetailView = Backbone.View.extend({
     if (this.view) {
       this.view.close();
     }
+
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+      console.log('closing detailview');
+    });
 
     var entryView = new Agora.Views.DetailPlaceEntryView(this.app);
     entryView.model = model;
@@ -194,11 +212,11 @@ Agora.Views.DetailView = Backbone.View.extend({
   close: function() {
     this.app.get('sidebarView').removeHighlights();
     //this.closeResponseBox();
+    console.log('closing detailView');
     if (this.view) {
       this.view.close();
     }
-    this.remove();
-    this.unbind();
+    this.$el.empty();
   },
 
   openResponseBox: function(data) {

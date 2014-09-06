@@ -647,9 +647,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   },
 
   RegionManager2: function(id) {
-    var currentView;
     var el = id;
     var region = {};
+    var currentView = null;
     var that = this;
 
     var closeView = function(view) {
@@ -662,6 +662,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //cases like response box
     region.show = function(view, cb) {
       if (that.get('expanded')) {
+
+        console.log('content2 showing view: ', view, ' current view is: ', currentView);
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
@@ -687,8 +689,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         //as long as I don't have any other listeners on the sidebarContainer this will work
         //$('#sidebarContainer').unbind();
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
-          if (currentView && currentView.close) {
-            currentView.close();
+          if (currentView) {
+            currentView.close();  
           }
           currentView = view;
           if (view) {
@@ -704,7 +706,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             cb();
 
             //trying this inside to aid sidebarView/detailView stuff
-            $('#sidebarContainer').unbind();
+            //$('#sidebarContainer').unbind();
 
           }
 

@@ -201,6 +201,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
   },
 
   close: function() {
+    console.log('closing DetailTopicEntryView');
+    this.$el.empty();
     this.remove();
     this.unbind();
   }

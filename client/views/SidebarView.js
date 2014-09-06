@@ -157,11 +157,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
             that.removeHighlights();
             console.log($(this)); 
             this.$el.addClass('highlight');
-
-            if (!that.app.get('expanded')) {
-              that.app.get('content2').show(that.app.get('detailView'));
-            }
-
+            that.app.get('content2').show(that.app.get('detailView'));
             that.app.get('detailView')[entryViewMethod](model);
           });
 
