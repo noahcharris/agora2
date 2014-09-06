@@ -221,6 +221,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     pathView.render();
     $('#topbar2').append(pathView.$el);
 
+    var channelView = new Agora.Views.ChannelView({ model: mapController });
+    channelView.app = this;
+    channelView.router = router;
+    channelView.render();
+    $('#topbar2').append(channelView.$el);
+
     var registrationView = new Agora.Views.RegistrationView(this);
     this.set('registrationView', registrationView);
 
@@ -592,19 +598,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     throttledResize();
     
-
-    // var mapWidth = $(mapController.get('map').getContainer()).width();
-    // var sidebarWidth = $(window).width() - mapWidth;
-    // $('#sidebarContainer').css('-webkit-transition-duration', '0s');
-    // $('#sidebarContainer').css('width', sidebarWidth+'px');
-
-    // $('.sidebarView').css('width', sidebarWidth+'px');
-
-
-
   },
-
-
 
 
 
@@ -750,8 +744,42 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     };
 
     return region;
+  },
+
+
+
+  //#######################################
+  //#########  HISTORY MANAGERS  ##########
+  //#######################################
+
+  //keep
+
+  //Agora caching, let's say caching occurs over 15 second (to start, for topics) seconds
+
+  //longer cache for users, places, 
+
+  //if we have the collection in cache, use that instead of making ajax call,
+  //unless the time period is up, at which point grab a new one, replace and delete the old one
+
+  
+  CacheManager: function() {
+    var manager = {};
+
+    manager.addTopicsCollection = function() {
+      console.log('adding topics to cache');
+    };
+
+
+
+    return manager;
+
   }
 
+
+
+
 });
+
+
 
 
