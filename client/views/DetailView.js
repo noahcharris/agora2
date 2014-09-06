@@ -1,7 +1,9 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
-//maybe I should keep detailView and just have it act as a wrapper around the entryViews?
+//the detail view now occupies the role of wrapping the 'core' detail entry view
+//less frequented views (login, place creation, etc..) will not be wrapped by the detail view,
+//those entry views will be loaded into content2 directly in AppController
 
 Agora.Views.DetailView = Backbone.View.extend({
 
@@ -23,8 +25,6 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   renderTopic: function(model) {
 
-    //NEED TO ADD USERVIEW
-
 
     var that = this;
 
@@ -45,16 +45,6 @@ Agora.Views.DetailView = Backbone.View.extend({
     this.$el.append($('<ul class="detailInnerList"></ul>'));
 
 
-    //TOPICS
-
-      // var renderCollection;
-      // if (this.app.get('sidebarView').displayed === 'Topics') {
-      //   renderCollection = this.collection;
-      // } else if (this.app.get('sidebarView').displayed === 'GroupTopics') {
-      //   renderCollection = this.groupTopicsCollection;
-      // } else if (this.app.get('sidebarView').displayed === 'SubgroupTopics') {
-      //   renderCollection = this.subgroupTopicsCollection;
-      // }
 
       // ## RESPONSE BOX ##
       //console.log('appending response box in render responding: ',this.responding);
@@ -134,24 +124,11 @@ Agora.Views.DetailView = Backbone.View.extend({
         this.$el.children('div.responseBox').css('height', '100px');
       }
 
-
-      //what is the new rendering flow??
-
       var entryView = new Agora.Views.DetailTopicEntryView();
       entryView.model = model;
       entryView.render();
       that.$el.children('ul').append(entryView.$el);
       that.subViews.push(entryView);
-
-
-      // _.each(renderCollection.models, function(topic) {
-      //   var entryView = new Agora.Views.DetailTopicEntryView(that.app);
-      //   //setting the model here so that we can pass a reference to detailView
-      //   entryView.model = topic;
-      //   entryView.render();
-      //   that.$el.children('ul').append(entryView.$el);
-      //   that.subViews.push(entryView);
-      // }); 
 
 
   }, 
@@ -161,39 +138,33 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
 
-  renderMessage: function() {
+  renderMessage: function(model) {
 
-    //MESSAGES
-
-      if (this.messagesCollection) {
-        _.each(this.messagesCollection.models, function(model) {
-          var entryView = new Agora.Views.DetailMessageEntryView();
-          entryView.model = model;
-          entryView.render();
-          that.$el.children('ul').append(entryView.$el);
-          that.subViews.push(entryView);
-        });
-      }
-
-
-      if (this.usersCollection) {
-        _.each(this.usersCollection.models, function(model) {
-          var entryView = new Agora.Views.DetailUserEntryView();
-          entryView.model = model;
-          entryView.render();
-          that.$el.children('ul').append(entryView.$el);
-          that.subViews.push(entryView);
-        });
-      }
-
+    var entryView = new Agora.Views.DetailMessageEntryView();
+    entryView.model = model;
+    entryView.render();
+    that.$el.children('ul').append(entryView.$el);
+    that.subViews.push(entryView);
   
   },
 
-  renderUser: function() {
+  renderUser: function(model) {
+
+    var entryView = new Agora.Views.DetailUserEntryView();
+    entryView.model = model;
+    entryView.render();
+    that.$el.children('ul').append(entryView.$el);
+    that.subViews.push(entryView);
 
   },
 
-  renderPlace: function() {
+  renderPlace: function(model) {
+
+    var entryView = new Agora.Views.DetailPlaceEntryView();
+    entryView.model = model;
+    entryView.render();
+    that.$el.children('ul').append(entryView.$el);
+    that.subViews.push(entryView);
 
   },
 
