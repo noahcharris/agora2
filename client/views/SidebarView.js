@@ -104,14 +104,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
     //this code is brilliant, I need to use this more often
     if (this.displayed === 'Topics') {
       renderCollection = this.collection;
-    } else if (this.displayed === 'Groups') {
-      renderCollection = this.groupsCollection;
-    } else if (this.displayed === 'GroupTopics') {
-      renderCollection = this.groupTopicsCollection;
-    } else if (this.displayed === 'Subgroups') {
-      renderCollection = this.subgroupsCollection;
-    } else if (this.displayed === 'SubgroupTopics') {
-      renderCollection = this.subgroupTopicsCollection;
     } else if (this.displayed === 'All') {
       renderCollection = this.searchCollection;
     } else if (this.displayed === 'Messages') {
@@ -133,10 +125,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
         var entryViewMethod;
         if (model.type === 'Topic') {
           entryViewMethod = 'renderTopic';
-        } else if (model.type === 'Group') {
-          entryViewMethod = 'renderGroup';
-        } else if (model.type === 'Subgroup') {
-          entryViewMethod = 'renderSubgroup';
         } else if (model.type === 'Place') {
           entryViewMethod = 'renderPlace';
         } else if (model.type === 'Message') {

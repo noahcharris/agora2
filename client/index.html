@@ -43,18 +43,6 @@
      <p class="sidebarEntryTopicOrigin">Posted in: <%= location %></p>
     </script>
 
-    <script id="sidebarGroupEntryTemplate" type="text/template">
-     <p class="authorString">&nbsp(<%= size %>) <strong>
-     <%= description %>
-     </strong></p>
-     <p class="sidebarEntryContent"><%= name %></p>
-     <p class="sidebarEntryTopicOrigin">Posted in: <%= location %></p>
-    </script>
-
-    <script id="sidebarSubgroupEntryTemplate" type="text/template">
-      <strong> SIDEBAR SUBGROUP ENTRY TEMPLATE </strong>
-    </script>
-
     <script id="sidebarPlaceEntryTemplate" type="text/template">
      <%= reputation %>-<strong> <%= name %> </strong>
     </script>
@@ -121,32 +109,6 @@
        <br/>
        <textarea id="responseTextArea" placeholder="Content"></textarea>
        <div id="responseBoxButton"><span>Post</span></div>
-      </div>
-    </script>
-
-    <script id="detailGroupEntryTemplate" type="text/template">
-      <div id="groupBox">
-        <img src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
-        <h1 id="detailGroupEntryName"> Anonymous </h1>
-        <img id="detailGroupEntryStar" src="/resources/images/star.png"></img>
-
-        <p> <%= description %>rrrrrrrrrrrrrr </p>
-        <p> Public - Open </p>
-        <p> Members: 127 </p>
-        <p> Created: August 4, 2014 </p>
-
-        <button> Join Group </button>
-
-        <h3> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the wo </h3>
-
-        <h5> DO NOT CONTACT US </h5>
-
-      </div>
-    </script>
-
-    <script id="detailSubgroupEntryTemplate" type="text/template">
-      <div id="subgroupBox">
-        <strong> DETAIL SUBGROUP ENTRY TEMPLATE </strong>
       </div>
     </script>
 
@@ -341,8 +303,6 @@
     <script src="views/DropdownView.js"></script>
     <script src="views/DetailView.js"></script>
     <script src="views/DetailTopicEntryView.js"></script>
-    <script src="views/DetailGroupEntryView.js"></script>
-    <script src="views/DetailSubgroupEntryView.js"></script>
     <script src="views/DetailPlaceEntryView.js"></script>
     <script src="views/DetailUserEntryView.js"></script>
     <script src="views/DetailMessageEntryView.js"></script>

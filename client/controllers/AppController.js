@@ -72,22 +72,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }] 
     }];
 
-    var groupsCollection = [{
-      id: 0,
-      type: 'Group',
-      name: 'The Fourth International',
-      place: 'World',
-      description: 'Dedicated to dedicating...',
-      size: 1
-    }, {
-      id: 1,
-      type: 'Group',
-      name: 'Monkey Business',
-      place: 'World/Japan/Tokyo',
-      description: 'Too cool for you',
-      size: 44
-    }];
-
     var searchCollection = [{
       id: 0,
       type: 'Group',
@@ -209,10 +193,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     var sidebarView = new Agora.Views.SidebarView(this); //collection from TopicsCollection
     sidebarView.collection = topicsCollection;
-    sidebarView.groupsCollection = groupsCollection;
-    sidebarView.groupTopicsCollection = groupTopicsCollection;
-    sidebarView.subgroupsCollection = subgroupsCollection;
-    sidebarView.subgroupTopicsCollection = subgroupTopicsCollection;
     sidebarView.searchCollection = searchCollection;
     sidebarView.messagesCollection = messagesCollection;
     sidebarView.usersCollection = usersCollection;
@@ -220,10 +200,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     var detailView = new Agora.Views.DetailView(this);
     detailView.collection = topicsCollection;
-    detailView.groupsCollection = groupsCollection;
-    detailView.groupTopicsCollection = groupTopicsCollection;
-    detailView.subgroupsCollection = subgroupsCollection;
-    detailView.subgroupTopicsCollection = subgroupTopicsCollection;
     detailView.searchCollection = searchCollection;
     detailView.messagesCollection = messagesCollection;
     detailView.usersCollection = usersCollection;
