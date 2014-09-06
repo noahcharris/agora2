@@ -34,7 +34,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     var $outerbox = $('<div class="outerbox">');
     //need to switch the image on click..
-    var $outerButton = $('<img src="media/expand.png" class="commentResizeButton"></img>');
+    var $outerButton = $('<img src="/resources/images/expand.png" class="commentResizeButton"></img>');
     $outerbox.append($outerButton);
 
     //append buttons beneath the topic

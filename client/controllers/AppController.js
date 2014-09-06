@@ -303,7 +303,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     mapController.on('reloadSidebar', function(location) {
-      console.log('hi');
+
       $.ajax({
         url: 'http://localhost:8080/topics',
         data: {
@@ -312,7 +312,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         crossDomain: true,
         success: function(data) {
           console.log(data);
-          console.log('hoho');
 
           for (var i=0;i<data.length;i++) {
             data[i].type = 'Topic';
@@ -603,9 +602,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
         $('#sidebarContainer').hide();
         $('#map').css('width', '100%');
-
-
-        console.log('nooo');
 
       }
 

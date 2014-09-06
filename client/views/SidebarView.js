@@ -14,9 +14,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
     this.subViews = [];     //store subviews in here so we can close them on navigation
-    //NEED TO CHANGE this.topics everywhere to an enumeration of
-    //topics/groups/all
-    this.displayed = 'Topics'
+    //indicates what model type is being displayed
+    this.displayed = 'Topics';
+    //indicates how we are displaying topics in topic mode
+    this.topicFilter = 'Top';
+    //indicates whether messages or contacts are being displayed in inbox mode
+    this.inboxFilter = 'Messages';
     this.highlighted = 0;
   },
 
@@ -55,44 +58,22 @@ Agora.Views.SidebarView = Backbone.View.extend({
     });
     this.subViews = [];
 
-      console.log('render sidebarView with: ', this.displayed);
+      console.log('rendering sidebarView');
     
     //GOING TO USE goToPath TO BREAK OUT OF SEARCH ('All')
     if (this.displayed === 'Topics' ) {
-      this.$el.append($('<div class="leftButton" id="topicsButton"><span class="tabLabel">Topics</span></div>'));
-      this.$el.append($('<div class="rightButton" id="groupsButton"><span class="tabLabel">Groups</span></div>'));
+
+      //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
+      //should we have like topics-hot, topics-new... for the this.displayed values?
+      this.$el.append($('<div class="leftButton" id="topicsButton"><span class="tabLabel">Top</span></div>'));
+      this.$el.append($('<div class="rightButton" id="groupsButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
-    } else if (this.displayed === 'Groups') {
-      this.$el.append($('<div class="leftButton" id="topicsButton"><span class="tabLabel">Topics</span></div>'));
-      this.$el.append($('<div class="rightButton" id="groupsButton"><span class="tabLabel">Groups</span></div>'));
-      //change the colors here if starting out with groups selected
-      this.$el.children('div.leftButton').css('background-color','#E8E8E8');
-      this.$el.children('div.rightButton').css('background-color','#f8f8f8');
-      this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Group</span></div>'));
+
     } else if (this.displayed === 'All') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //display 'results:'?
-    } else if (this.displayed === 'GroupTopics') {
-      this.$el.append($('<div class="leftButton" id="groupTopicsButton"><span class="tabLabel">Topics</span></div>'));
-      this.$el.append($('<div class="rightButton" id="subgroupsButton"><span class="tabLabel">Subgroups</span></div>'));
-      this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
-    } else if (this.displayed === 'Subgroups') {
-      this.$el.append($('<div class="leftButton" id="groupTopicsButton"><span class="tabLabel">Topics</span></div>'));
-      this.$el.append($('<div class="rightButton" id="subgroupsButton"><span class="tabLabel">Subgroups</span></div>'));
-      //change the colors here if starting out with groups selected
-      this.$el.children('div.leftButton').css('background-color','#E8E8E8');
-      this.$el.children('div.rightButton').css('background-color','#f8f8f8');
-      this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Subgroup</span></div>'));
-    } else if (this.displayed === 'SubgroupTopics') {
-      this.$el.append($('<div class="leftButton" id="backButton"><span class="tabLabel">Back</span></div>'));
-      //set the backbutton color like this because we want it to look unclicked
-      this.$el.children('div.leftButton').css('background-color','#E8E8E8');
-      this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
+
     } else if (this.displayed === 'Messages') {
       this.$el.append($('<div class="leftButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
       this.$el.append($('<div class="rightButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
@@ -106,6 +87,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
+
+
+    //########################################################
+    //GOING TO TRANSITION TO THIS
 
 
 
@@ -143,7 +128,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.subViews = [];
 
       _.each(renderCollection.models, function(model) {
-        console.log(model);
 
         //the only difference between these is the type of entryView instantiated
         if (model.type === 'Topic') {
@@ -164,7 +148,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryView[entryViewMethod]();
           //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
-            console.log('clicked through with id: ', id, 'type: ', type);
+            console.log('clicked sidebar entryView with id: ', id, 'type: ', type);
             if (!that.app.get('expanded')) {
               $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
                 //this is madness
@@ -172,6 +156,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 console.log('hey');
               });
             }
+
+            //#############################################
+            //this is where we set content2 to a single display for the sidebar item type
+
+
             that.app.get('content2').show(that.app.get('detailView'));
             that.app.get('detailView').scrollToId(id, type);
           });
