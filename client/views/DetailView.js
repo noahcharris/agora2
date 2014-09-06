@@ -9,6 +9,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   className: 'detailView',
 
+
   initialize: function(appController) {
     this.responseBoxTemplate = _.template( $('#responseBoxTemplate').html() );
     this.app = appController;

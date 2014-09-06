@@ -153,10 +153,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       origin: 'Seattle'
     }];
 
-    var groupTopicsCollection = [];
-    var subgroupTopicsCollection = [];
-    var subgroupsCollection = [];
-
 
 
 
@@ -312,6 +308,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
 
+    //ok word I will just trigger on app model to avoid the awkward interaction with mapmodel,
+    //all non map model related events trigger on app model
+
+    this.on('whoa', function() { console.log('hey'); });
+
+
 
 
 
@@ -408,43 +410,51 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-    //####################################################################################
-    //####################################################################################
-    //####################################################################################
-
+   
 
 
   
 
     //this will take in parameters: location, group, name
-    mapController.on('reloadSubgroupSidebar', function(params) {
-      subgroupTopicsCollection.fetch({
-          data: {
-            location: params.location,
-            group: params.group,
-            name: params.name
+    // mapController.on('reloadSubgroupSidebar', function(params) {
+    //   subgroupTopicsCollection.fetch({
+    //       data: {
+    //         location: params.location,
+    //         group: params.group,
+    //         name: params.name
 
-          },
-          success: function(data) {
-            console.log('reloadSubgroupSidebar receiving ', data);
-            content1.show(sidebarView);
+    //       },
+    //       success: function(data) {
+    //         console.log('reloadSubgroupSidebar receiving ', data);
+    //         content1.show(sidebarView);
 
-            //have to remember that this is here
-            that.get('mapController').router.navigate('World/'+params.location+'~'+params.group+'/'+params.name, { trigger: false });
-            that.get('mapController').set('group', params.group+'/'+params.name);
+    //         //have to remember that this is here
+    //         that.get('mapController').router.navigate('World/'+params.location+'~'+params.group+'/'+params.name, { trigger: false });
+    //         that.get('mapController').set('group', params.group+'/'+params.name);
 
-            if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-              content2.show(that.get('detailView'));
-            }
+    //         if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
+    //           content2.show(that.get('detailView'));
+    //         }
 
-          },
-          error: function() {
-            //flash error, failed to find subgroup
-          }
-        });
-    });
+    //       },
+    //       error: function() {
+    //         //flash error, failed to find subgroup
+    //       }
+    //     });
+    // });
 
 
+
+ //####################################################################################
+    //####################################################################################
+    //####################################################################################
+
+
+
+
+    //#######################################
+    //#########  BUTTON EVENTS  #############
+    //#######################################
 
 
     $('#boundsButton').on('click', function() {
@@ -536,10 +546,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     
 
-    // CSS EVENTING
 
-    //!! have to check if sidebarContainer is expanded, if it is, resize it as well,
-    //
+
+
+
+
+    //#######################################
+    //#########  RESIZING  ##################
+    //#######################################
 
     $(window).on('resize', function() {
 
@@ -607,7 +621,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-  // ## REGION MANAGERS ##
+  //#######################################
+  //#########  REGION MANAGERS  ###########
+  //#######################################
 
   RegionManager1: function(id) {
     var currentView;

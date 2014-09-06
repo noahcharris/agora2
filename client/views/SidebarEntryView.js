@@ -13,7 +13,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
   initialize: function() {
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
-    this.subgroupTemplate = _.template( $('#sidebarSubgroupEntryTemplate').html() );
     this.placeTemplate = _.template( $('#sidebarPlaceEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
     this.messageTemplate = _.template( $('#sidebarMessageEntryTemplate').html() );

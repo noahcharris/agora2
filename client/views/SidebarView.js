@@ -181,6 +181,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.topicFilter !== 'Top') {
 
         //need to trigger a reload here 
+        that.app.trigger('whoa');
         that.topicFilter = 'Top';
         that.app.get('content1').show(that);
       }
@@ -192,6 +193,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.topicFilter !== 'New') {
 
         //need to trigger a reload here 
+        that.app.trigger('whoa');
         that.topicFilter = 'New';
         that.app.get('content1').show(that);
       }
@@ -203,13 +205,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.topicFilter !== 'Hot') {
 
         //need to trigger a reload here 
+        that.app.trigger('whoa');
         that.topicFilter = 'Hot';
         that.app.get('content1').show(that);
       }
 
 
     });
-
 
     //MESSAGES/CONTACTS
     $('#messagesButton').on('click', function() {
