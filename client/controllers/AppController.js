@@ -279,8 +279,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //need to deal with DetailView as a whole in many ways
           sidebarView.collection.models = topicsCollection;
             content1.show(sidebarView);
+            console.log($('#content2'));
             //take detailView into account while moving around
             if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
+              console.log('fuck me');
               content2.show(that.get('detailView'));
             }
         },
@@ -587,14 +589,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     }, 100);
 
     $(window).on('resize', throttledResize);
+
+    throttledResize();
     
 
-    var mapWidth = $(mapController.get('map').getContainer()).width();
-    var sidebarWidth = $(window).width() - mapWidth;
-    $('#sidebarContainer').css('-webkit-transition-duration', '0s');
-    $('#sidebarContainer').css('width', sidebarWidth+'px');
+    // var mapWidth = $(mapController.get('map').getContainer()).width();
+    // var sidebarWidth = $(window).width() - mapWidth;
+    // $('#sidebarContainer').css('-webkit-transition-duration', '0s');
+    // $('#sidebarContainer').css('width', sidebarWidth+'px');
 
-    $('.sidebarView').css('width', sidebarWidth+'px');
+    // $('.sidebarView').css('width', sidebarWidth+'px');
 
 
 
@@ -720,6 +724,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
 
         //this is where content2 changes the size of the sidebarcontainer
+        console.log('expanding sidebar');
         $('#sidebarContainer').css('width', $(window).width() * 0.75);
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
