@@ -111,7 +111,7 @@ body {
 /*what we set as width here will dictate the maximum characters allowed for paths and channels*/
 .pathView {
   display: inline-block;
-  width: 370px;
+  width: 420px;
 }
 
 .pathWrapper {

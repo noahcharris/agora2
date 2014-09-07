@@ -283,16 +283,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             data[i].reputation = 0;
           }
           topicsCollection = data;
-          //need to deal with this .models bullshit 
-          //need to deal with DetailView as a whole in many ways
+          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
           sidebarView.collection.models = topicsCollection;
-            content1.show(sidebarView);
-            console.log($('#content2'));
-            //take detailView into account while moving around
-            if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-              console.log('fuck me');
-              content2.show(that.get('detailView'));
-            }
+          content1.show(sidebarView);
+          console.log($('#content2'));
+          //take detailView into account while moving around
+          //pretty sure I don't need this stuff if I want detailview to close on navigation
+          // if (that.get('expanded')) {
+          //   if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
+          //     content2.show(that.get('detailView'));
+          //   }
+          // }
+
         },
         error: function(data) {
           console.log(data);

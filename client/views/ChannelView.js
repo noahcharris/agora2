@@ -23,8 +23,8 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     var channel = this.app.get('channel');
     console.log('rendering channelView with channel: ', channel);
-    this.$el.append($('<span class="channelName">Channel:&nbsp' + channel + '&nbsp</span>'));
-    
+    this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp' + channel + '&nbsp</span>'));
+
   }
 
 
