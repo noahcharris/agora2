@@ -21,6 +21,9 @@ Agora.Views.PathView = Backbone.View.extend({
   render: function() {
     var that = this;
 
+    //TODO- Preston's suggestion, give it click interaction with searchability
+    
+
     var path = this.model.get('location').split('/');
     if (this.model.get('group')) {
       var group = this.model.get('group').split('/');

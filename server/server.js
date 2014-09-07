@@ -45,13 +45,13 @@ app.get('/dance', routes.danceParty);
 
 app.get('/points', routes.getPoints);
 app.get('/topics', routes.getTopics);
-app.get('/group', routes.getGroupForPath);
-app.get('/groups', routes.getGroups);
-app.get('/groupTopics', routes.getGroupTopics);
-app.get('/subgroups', routes.getSubgroups);
-app.get('/subgroupTopics', routes.getSubgroupTopics);
 app.get('/place', routes.getPlace);
 app.get('/user', routes.getUser);
+
+//new topics routes with the three filters
+app.get('/topics-top', routes.getTopTopics);
+app.get('/topics-new', routes.getNewTopics);
+app.get('/topics-hot', routes.getHotTopics);
 
 //TODO
 //will messages and registration be http??
@@ -62,8 +62,6 @@ app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 
 app.post('/createTopic', routes.createTopic);
-app.post('/createGroupTopic', routes.createGroupTopic);
-app.post('/createSubgroupTopic', routes.createSubgroupTopic);
 app.post('/createComment', routes.createComment);
 app.post('/createReply', routes.createReply);
 app.post('/createGroup', routes.createGroup);

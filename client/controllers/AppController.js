@@ -16,6 +16,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('mobile', false);
     //whether in 'mobile' mode, whether it is displaying map or topics
     this.set('mobilemap', true);
+    //keep track of channel here, could be somewhere else probably
+    this.set('channel', 'General');
     // ## INSTANTIATE REGION MANAGERS ##
     content1 = this.RegionManager1('#content1');
     content2 = this.RegionManager2('#content2');

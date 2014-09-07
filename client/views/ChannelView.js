@@ -18,8 +18,13 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
   render: function() {
     var that = this;
-    console.log('rendering channelView');
-    this.$el.append($('<span class="channelName">Channel:&nbsp</span>'));
+
+    //TODO- Preston's suggestion, give it click interaction with searchability
+
+    var channel = this.app.get('channel');
+    console.log('rendering channelView with channel: ', channel);
+    this.$el.append($('<span class="channelName">Channel:&nbsp' + channel + '&nbsp</span>'));
+    
   }
 
 

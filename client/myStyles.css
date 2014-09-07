@@ -47,14 +47,6 @@ body {
   background-color: #f8f8f8;
 }
 
-#topbar2 {
-  position: relative;
-  width: 100%;
-  height: auto;
-  background-color: #57646D;
-}
-
-
 
 
 #title {
@@ -98,10 +90,16 @@ body {
   margin-right: 12px;
 }
 
+#topbar2 {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #57646D;
+}
 
-
-
-
+/***********************************/
+/***  PATH AND CHANNEL VIEWS     ***/
+/***********************************/
 
 /* I think there's a better way to organize these 6 */
 #pathPrefix {
@@ -110,9 +108,10 @@ body {
   color: #f8f8f8;
 }
 
+/*what we set as width here will dictate the maximum characters allowed for paths and channels*/
 .pathView {
   display: inline-block;
-  width: 300px;
+  width: 370px;
 }
 
 .pathWrapper {
@@ -130,15 +129,16 @@ body {
 
 .channelView {
   display: inline-block;
-  width: 300px;
+  width: 370px;
   position: relative;
   /*display: inline-block;*/
-  width: 50%;
 }
 
 .channelName {
   color: #f8f8f8;
 }
+
+
 
 
 #mobileSelectionBarWrapper {
@@ -166,12 +166,12 @@ body {
 
 
 
-
+/*might be removing this in agora2*/
 /****************/
 /*** DROPDOWN  ***/
 /****************/
 
-#dropdownView {
+/*#dropdownView {
   overflow: hidden;
   background-color: #57646D;
   position: absolute;
@@ -184,7 +184,7 @@ body {
   -moz-transition-duration:1s;
 }
 
-
+*/
 
 
 
@@ -358,7 +358,7 @@ body {
 
 
 
-
+/* !!!!! THIS FILE IS PRETTY UNORGANIZED AFTER THIS POINT !!!!*/
 
 /****************/
 /*** DETAIL   ***/
@@ -400,18 +400,8 @@ body {
 }
 
 
-
 .detailHeaderEntry {
 }
-
-
-
-
-
-
-
-
-
 
 
 .x {
@@ -422,6 +412,12 @@ body {
   top: 2px;
   z-index:100;
 }
+
+
+/***************************/
+/*** DETAIL-TOPIC VIEW *****/
+/***************************/
+
 
 /* REPONSE BOX */
 .responseBox {
@@ -633,11 +629,6 @@ body {
 
 
 
-
-
-
-
-/* for group and subgroup detail entries */
 
 
 #placeBox {

@@ -64,9 +64,6 @@ setInterval(memcachedTimers, 100000);
 
 
 
-
-
-
 module.exports.danceParty = function(request, response) {
   //console.log('dance, dance, dance', request.session.email);
   //request.session.email = 'hello';
@@ -87,31 +84,135 @@ module.exports.getPoints = function(request, response) {
 };
 
 
-module.exports.getGroupForPath = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  console.log('going to look up ', queryArgs.group, ' at ', queryArgs.location);
-  postgres.getGroupForPath(queryArgs.location, queryArgs.group, function(data) {
-    response.json(data);
-  });
+/********************************************/
+/***  NEW TOPICS WITH FILTERS METHODS     ***/
+/********************************************/
+
+module.exports.getTopTopics = function(request, response) {
+  var topicsCollection = [{ id: 1,
+      headline: 'Defaults are desecrets',
+      type: 'Topic',
+      poster: 'robert',
+      contents: 'Unce more breach. Twice too many.',
+      city: 'Oregon',
+      area: 'Hack Reactor',
+      reputation: 42,
+      upvoted: true,
+      expanded: true,   //this is for the outer expansion/contraction button
+      comments: [{
+        id: 22,
+        poster: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of replies
+        replies: [{
+            poster: 'Mr. Bean',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+        }, {
+            poster: 'Mr. Bean',
+            contents: 'I mean it..',
+            upvoted: false,
+        }]
+      }, {
+        id: 87,
+        poster: 'Jason Aldean',
+        contents: 'Ok, but how about them yanks?',
+        upvoted: false,
+        expanded: false,
+        replies: [{
+            poster: 'Heckles',
+            contents: 'Just the one.'
+        }]
+      }] 
+    }];
+
+    response.json(topicsCollection);
 };
 
+module.exports.getNewTopics = function(request, response) {
+  var topicsCollection = [{ id: 1,
+      headline: 'Defaults are desecrets',
+      type: 'Topic',
+      poster: 'thalonius want',
+      contents: 'Unce more breach. Twice too many.',
+      city: 'Oregon',
+      area: 'Hack Reactor',
+      reputation: 42,
+      upvoted: true,
+      expanded: true,   //this is for the outer expansion/contraction button
+      comments: [{
+        id: 22,
+        poster: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of replies
+        replies: [{
+            poster: 'Mr. Bean',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+        }, {
+            poster: 'Mr. Bean',
+            contents: 'I mean it..',
+            upvoted: false,
+        }]
+      }, {
+        id: 87,
+        poster: 'Jason Aldean',
+        contents: 'Ok, but how about them yanks?',
+        upvoted: false,
+        expanded: false,
+        replies: [{
+            poster: 'Heckles',
+            contents: 'Just the one.'
+        }]
+      }] 
+    }];
 
-
-module.exports.getGroups = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrieveGroups(queryArgs.location, function(data) {
-    response.json(data);
-  });
+    response.json(topicsCollection);
 };
 
-module.exports.getSubgroups = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrieveSubgroups(queryArgs.location, queryArgs.group, function(data) {
-    console.log('sending subgroups to client');
-    response.json(data);
-  });
-};
+module.exports.getHotTopics = function(request, response) {
+  var topicsCollection = [{ id: 1,
+      headline: 'Defaults are desecrets',
+      type: 'Topic',
+      poster: 'nyeah',
+      contents: 'Unce more breach. Twice too many.',
+      city: 'Oregon',
+      area: 'Hack Reactor',
+      reputation: 42,
+      upvoted: true,
+      expanded: true,   //this is for the outer expansion/contraction button
+      comments: [{
+        id: 22,
+        poster: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of replies
+        replies: [{
+            poster: 'Mr. Bean',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+        }, {
+            poster: 'Mr. Bean',
+            contents: 'I mean it..',
+            upvoted: false,
+        }]
+      }, {
+        id: 87,
+        poster: 'Jason Aldean',
+        contents: 'Ok, but how about them yanks?',
+        upvoted: false,
+        expanded: false,
+        replies: [{
+            poster: 'Heckles',
+            contents: 'Just the one.'
+        }]
+      }] 
+    }];
 
+    response.json(topicsCollection);
+};
 
 
 
@@ -169,21 +270,6 @@ module.exports.getTopics = function(request, response) {
 
 };
 
-module.exports.getGroupTopics = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrieveGroupTopics(queryArgs.location, queryArgs.group, function(data) {
-    console.log('sending group topics to client');
-    response.json(data);
-  });
-};
-
-module.exports.getSubgroupTopics = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrieveSubgroupTopics(queryArgs.location, queryArgs.group, queryArgs.name, function(data) {
-    console.log('sending subgroup topics to client');
-    response.json(data);
-  });
-};
 
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -286,33 +372,6 @@ module.exports.createTopic = function(request, response) {
 
 };
 
-
-module.exports.createGroupTopic = function(request, response) {
-  console.log('REQUEST.BODY',request.body);
-  //call accepts true or false depending on whether the request failed or not
-  postgres.createGroupTopic(request.body.headline, request.body.link, 
-    request.body.content, request.body.location, 
-    request.body.group, function(success) {
-    if (success) {
-      response.end('group topic successfully created');
-    } else {
-      response.end('error inserting into topics');
-    }
-  });
-};
-
-module.exports.createSubgroupTopic = function(request, response) {
-  console.log('REQUEST.BODY',request.body);
-  postgres.createSubgroupTopic(request.body.headline, request.body.link, 
-    request.body.content, request.body.location, request.body.group, 
-    request.body.subgroup, function(success) {
-    if (success) {
-      response.end('subgroup topic successfully created');
-    } else {
-      response.end('error inserting into topics');
-    }
-  });
-};
 
 module.exports.createGroup = function(request, response) {
   postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
