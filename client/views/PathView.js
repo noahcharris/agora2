@@ -140,8 +140,6 @@ Agora.Views.PathView = Backbone.View.extend({
 
 
     $('.pathWrapper').on('click', function(e) {
-      console.log('hey');
-      console.log(e);
       $(e.target).empty();
       $(e.target).append($('<input id="pathInput"></input>'));
       $('#pathInput').focus();
@@ -155,6 +153,7 @@ Agora.Views.PathView = Backbone.View.extend({
       $('#pathInput').on('keyup', function(e) {
         console.log($('#pathInput').val());
         //AJAX CALL FOR SEARCH SUGGESTIONS
+        //throttle this ajax call
       });
     });
 

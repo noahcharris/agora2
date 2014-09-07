@@ -101,7 +101,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       };
       a();
 
-
       var $comment = $(this.commentTemplate(comments[i]));
       $comment.children('div.commentContentBox').append($commentReplyButton);
       //stars and shares for comments
@@ -166,7 +165,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           });
         };
         b();
-  
         var $comment = $(this.replyTemplate(comments[i].replies[j]));
         $comment.children('div.replyContentBox').append($replyReplyButton);
 

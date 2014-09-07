@@ -165,8 +165,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
             //#############################################
             //this is where we set content2 to a single display for the sidebar item type
 
-            that.app.get('content2').show(that.app.get('detailView'));
-            that.app.get('detailView')[entryViewMethod](model);
+            console.log('whaup');
+            console.log('model: ', model);
+            that.app.get('content2').show(that.app.get('detailView'), model);
+            //that.app.get('detailView')[entryViewMethod](model);
             that.removeHighlights();
             this.$el.addClass('highlight');
           });

@@ -13,7 +13,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
   initialize: function(appController) {
-    this.responseBoxTemplate = _.template( $('#responseBoxTemplate').html() );
+    this.responseBox = _.template( $('#responseBoxTemplate').html() );
     this.app = appController;
 
     //response box variables
@@ -45,93 +45,102 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    console.log('applying click handler on: ', this.$el.children('img.x'));
     this.$el.children('img.x').on('click', function() {
+      console.log('hello');
       that.app.get('content2').hide();
     });
 
+    //WOW WELL I GUESS THIS WAY IS MORE RELIABLE THAN JQUERY, GO FIGURE
+
+    this.$el.children('img.x')[0].onclick = function() {
+      that.app.get('content2').hide();
+    }
+
     this.$el.append($('<ul class="detailInnerList"></ul>'));
 
-      // ## RESPONSE BOX ##
-      //console.log('appending response box in render responding: ',this.responding);
-      //USE this.responseData here so users won't lose their changes
-      this.$el.append(this.responseBoxTemplate());
+    // ## RESPONSE BOX ##
+    //console.log('appending response box in render responding: ',this.responding);
+    //USE this.responseData here so users won't lose their changes
 
-      //##############################
-      //####### RESPONSE BOX #########
-      //##############################
+    //this.$el.append(this.responseBoxTemplate());
 
-      //MESSAGE BOX DOESN'T POST WITHIN GROUPS YET
-      this.$el.children('div.responseBox').children('div#responseBoxButton').on('click', function(e) {
+    //##############################
+    //####### RESPONSE BOX #########
+    //##############################
 
-        var headline = that.$el.children('div.responseBox').children('textarea#responseHeadlineTextArea').val();
-        var content = that.$el.children('div.responseBox').children('textarea#responseTextArea').val();
-        var location = that.app.get('mapController').get('location');
-        that.$el.children('div.responseBox').children('textarea').val('');
-        console.log(that.responseData);
+    //MESSAGE BOX DOESN'T POST WITHIN GROUPS YET
+    this.$el.children('div.responseBox').children('div#responseBoxButton').on('click', function(e) {
 
-        if (that.responseData.type === 'Topic') {
-          $.ajax({
-            url: 'createComment',
-            method: 'POST',
-            data: {
-              location: that.responseData.location,
-              group: that.responseData.group,
-              topic: that.responseData.topic,
-              headline: headline,
-              content: content
-            },
-            success: function(data) {
-              alert(data);
-              //append their comment anyways?
-              that.app.get('mapController').trigger('reloadSidebar', location);
-            },
-            error: function() {
-              //TODO
-            }
-          });
-        } else if (that.responseData.type === 'Comment' ||
-          that.responseData.type === 'Reply') {
+      var headline = that.$el.children('div.responseBox').children('textarea#responseHeadlineTextArea').val();
+      var content = that.$el.children('div.responseBox').children('textarea#responseTextArea').val();
+      var location = that.app.get('mapController').get('location');
+      that.$el.children('div.responseBox').children('textarea').val('');
+      console.log(that.responseData);
 
-          $.ajax({
-            url: 'createReply',
-            method: 'POST',
-            data: {
-              location: that.responseData.location,
-              group: that.responseData.group,
-              topic: that.responseData.topic,
-              comment: that.responseData.comment,
-              headline: headline,
-              content: content
-            },
-            success: function(data) {
-              alert(data);
-              //append their reply
-              //reload the proper sidebar
-              that.app.get('mapController').trigger('reloadSidebar', location);
-            },
-            error: function() {
-              //TODO
-            }
-          });
+      if (that.responseData.type === 'Topic') {
+        $.ajax({
+          url: 'createComment',
+          method: 'POST',
+          data: {
+            location: that.responseData.location,
+            group: that.responseData.group,
+            topic: that.responseData.topic,
+            headline: headline,
+            content: content
+          },
+          success: function(data) {
+            alert(data);
+            //append their comment anyways?
+            that.app.get('mapController').trigger('reloadSidebar', location);
+          },
+          error: function() {
+            //TODO
+          }
+        });
+      } else if (that.responseData.type === 'Comment' ||
+        that.responseData.type === 'Reply') {
 
-        }
-      });
+        $.ajax({
+          url: 'createReply',
+          method: 'POST',
+          data: {
+            location: that.responseData.location,
+            group: that.responseData.group,
+            topic: that.responseData.topic,
+            comment: that.responseData.comment,
+            headline: headline,
+            content: content
+          },
+          success: function(data) {
+            alert(data);
+            //append their reply
+            //reload the proper sidebar
+            that.app.get('mapController').trigger('reloadSidebar', location);
+          },
+          error: function() {
+            //TODO
+          }
+        });
 
-      this.$el.children('.responseBox').append($('<img src="resources/images/x.png" class="x"></img>'));
-      this.$el.children('.responseBox').children('img.x').on('click', function() {
-        that.closeResponseBox();
-      });
-
-      if (this.responding) {
-        //why do I need to use this selector?
-        this.$el.children('div.responseBox').css('height', '100px');
       }
+    });
 
-      var entryView = new Agora.Views.DetailTopicEntryView(this.app);
-      entryView.model = model;
-      entryView.render();
-      this.$el.children('ul').append(entryView.$el);
-      this.view = entryView;
+    this.$el.children('.responseBox').append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('.responseBox').children('img.x').on('click', function() {
+      that.closeResponseBox();
+    });
+
+    if (this.responding) {
+      //why do I need to use this selector?
+      this.$el.children('div.responseBox').css('height', '100px');
+    }
+
+    var entryView = new Agora.Views.DetailTopicEntryView(this.app);
+    entryView.model = model;
+    entryView.render();
+    this.$el.children('ul').append(entryView.$el);
+    this.view = entryView;
   }, 
 
 

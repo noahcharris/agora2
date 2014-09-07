@@ -30,11 +30,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
   setHandlers: function() {
 
     var that = this;
-    console.log('mah dick');
-    console.log($('.channelView'));
     $('.channelView').on('click', function(e) {
-      console.log('hey');
-      console.log(e);
       that.$el.empty();
       that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp<input id="channelInput"></input></span>'));
       $('#channelInput').focus();
@@ -48,6 +44,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
       $('#channelInput').on('keyup', function(e) {
         console.log($('#channelInput').val());
         //AJAX CALL FOR SEARCH SUGGESTIONS
+        //throttle the ajax call here
       });
     });
 

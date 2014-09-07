@@ -699,7 +699,29 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //I'm going to put a callback into content2.show for
     //cases like response box
-    region.show = function(view, cb) {
+    region.show = function(view, model) {
+
+
+      var renderMethod;
+
+      switch (that.get('sidebarView').displayed) {
+        case 'Topics-Top':
+          renderMethod = 'renderTopic'
+          break;
+        case 'Topics-New':
+          renderMethod = 'renderTopic'
+          break;
+        case 'Topics-Hot':
+          renderMethod = 'renderTopic'
+          break;
+        default:
+          renderMethod = 'render';
+          break;
+      }
+
+
+
+
       if (that.get('expanded')) {
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
@@ -711,7 +733,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }
         currentView = view;
         if (view) {
-          view.render();
+          view[renderMethod](model);
           $(el).html(view.el);
           if (view.onShow)
             view.onShow();
@@ -730,19 +752,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           }
           currentView = view;
           if (view) {
-            view.render();
+            view[renderMethod](model);
             $(el).html(view.el);
             if (view.onShow)
               view.onShow();
             if (view.setHandlers)
               view.setHandlers();
-
-            //CALLBACK
-            cb = cb || function() {};
-            cb();
-
-            //trying this inside to aid sidebarView/detailView stuff
-            //$('#sidebarContainer').unbind();
 
           }
 
