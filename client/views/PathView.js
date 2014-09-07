@@ -22,7 +22,7 @@ Agora.Views.PathView = Backbone.View.extend({
     var that = this;
 
     //TODO- Preston's suggestion, give it click interaction with searchability
-    
+
 
     var path = this.model.get('location').split('/');
     if (this.model.get('group')) {
@@ -113,6 +113,7 @@ Agora.Views.PathView = Backbone.View.extend({
 
   setHandlers: function() {
     var that = this;
+
     $('#hello').on('click', function() {
       $.ajax({
         url: 'place',
@@ -133,13 +134,32 @@ Agora.Views.PathView = Backbone.View.extend({
             }
           }
         },
-      })
+      });
+
+    });
+
+
+    $('.pathWrapper').on('click', function(e) {
+      console.log('hey');
+      console.log(e);
+      $(e.target).empty();
+      $(e.target).append($('<input id="pathInput"></input>'));
+      $('#pathInput').focus();
+      $('#pathInput').focusout(function() {
+        //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
+        $('.pathWrapper').empty();
+        that.render();
+        that.setHandlers();
+      });
+      $('#pathInput').on('keyup', function(e) {
+        console.log($('#pathInput').val());
+      });
+    });
 
 
       //will have to retrieve location data and then load up the placeview
       //use a lockout variable so only one request is sent
 
-    });
   },
 
   close: function() {
