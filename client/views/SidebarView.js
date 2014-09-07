@@ -16,7 +16,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
     this.subViews = [];     //store subviews in here so we can close them on navigation
     //indicates what model type is being displayed
     this.displayed = 'Topics-Top';
-    console.log('Topics-Top"wdfdsfa');
     //indicates how we are displaying topics in topic mode
     this.topicFilter = 'Top';
     //indicates whether messages or contacts are being displayed in inbox mode

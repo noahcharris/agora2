@@ -473,11 +473,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.set('location', e.target.city);
           that.router.navigate('World/'+e.target.city, { trigger:false });
           if (!that.placing) {
-            if (this.app.get('sidebarView').displayed !== 'Topics'
-              && this.app.get('sidebarView').displayed !== 'Topics-Top'
-              && this.app.get('sidebarView').displayed !== 'Topics-New'
-              && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
-                this.app.get('sidebarView').displayed = 'Topics-Top';
+            if (that.app.get('sidebarView').displayed !== 'Topics'
+              && that.app.get('sidebarView').displayed !== 'Topics-Top'
+              && that.app.get('sidebarView').displayed !== 'Topics-New'
+              && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
+                that.app.get('sidebarView').displayed = 'Topics-Top';
               } 
             that.set('group', undefined);
             that.trigger('reloadSidebar', e.target.city);
@@ -551,11 +551,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.app.get('content2').hide();
 
 
-          if (this.app.get('sidebarView').displayed !== 'Topics'
-            && this.app.get('sidebarView').displayed !== 'Topics-Top'
-            && this.app.get('sidebarView').displayed !== 'Topics-New'
-            && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
-              this.app.get('sidebarView').displayed = 'Topics-Top';
+          if (that.app.get('sidebarView').displayed !== 'Topics'
+            && that.app.get('sidebarView').displayed !== 'Topics-Top'
+            && that.app.get('sidebarView').displayed !== 'Topics-New'
+            && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
+              that.app.get('sidebarView').displayed = 'Topics-Top';
             }
           that.set('group', undefined);
 
@@ -656,11 +656,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.app.get('content2').hide();
 
 
-          if (this.app.get('sidebarView').displayed !== 'Topics'
-            && this.app.get('sidebarView').displayed !== 'Topics-Top'
-            && this.app.get('sidebarView').displayed !== 'Topics-New'
-            && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
-              this.app.get('sidebarView').displayed = 'Topics-Top';
+          if (that.app.get('sidebarView').displayed !== 'Topics'
+            && that.app.get('sidebarView').displayed !== 'Topics-Top'
+            && that.app.get('sidebarView').displayed !== 'Topics-New'
+            && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
+              that.app.get('sidebarView').displayed = 'Topics-Top';
             }
           that.set('group', undefined);
 

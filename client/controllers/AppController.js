@@ -286,7 +286,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
           sidebarView.collection.models = topicsCollection;
           content1.show(sidebarView);
-          console.log($('#content2'));
+          
           //take detailView into account while moving around
           //pretty sure I don't need this stuff if I want detailview to close on navigation
           // if (that.get('expanded')) {
@@ -334,7 +334,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         },
         crossDomain: true,
         success: function(data) {
-          console.log('received these top topics: ',data);
           topicsCollection = data;
           //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
           sidebarView.collection.models = topicsCollection;
