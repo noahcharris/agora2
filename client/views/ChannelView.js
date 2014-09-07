@@ -23,7 +23,33 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     var channel = this.app.get('channel');
     console.log('rendering channelView with channel: ', channel);
-    this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp' + channel + '&nbsp</span>'));
+    this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp<strong>' + channel + '</strong>&nbsp</span>'));
+
+  },
+
+  setHandlers: function() {
+
+    var that = this;
+    console.log('mah dick');
+    console.log($('.channelView'));
+    $('.channelView').on('click', function(e) {
+      console.log('hey');
+      console.log(e);
+      that.$el.empty();
+      that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp<input id="channelInput"></input></span>'));
+      $('#channelInput').focus();
+      $('#channelInput').focusout(function() {
+        //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
+        $('.channelView').empty();
+        that.render();
+        that.setHandlers();
+      });
+      //keyup is the best way to get all the keys, not ideal
+      $('#channelInput').on('keyup', function(e) {
+        console.log($('#channelInput').val());
+        //AJAX CALL FOR SEARCH SUGGESTIONS
+      });
+    });
 
   }
 

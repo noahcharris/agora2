@@ -126,6 +126,11 @@ body {
   text-decoration: none;
 }
 
+#pathInput {
+  position:absolute;
+  width: 350px;
+}
+
 .channelView {
   display: inline-block;
   width: 370px;
@@ -135,6 +140,11 @@ body {
 
 .channelName {
   color: #f8f8f8;
+}
+
+#channelInput {
+  position: absolute;
+  width: 250px;
 }
 
 

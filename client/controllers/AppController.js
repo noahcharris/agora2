@@ -228,6 +228,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     channelView.router = router;
     channelView.render();
     $('#topbar2').append(channelView.$el);
+    channelView.setHandlers();
 
     var registrationView = new Agora.Views.RegistrationView(this);
     this.set('registrationView', registrationView);
