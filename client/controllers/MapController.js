@@ -344,12 +344,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     if (!this.placing && !groupMode) {
       if (this.app.get('sidebarView').displayed !== 'Topics'
-      && this.app.get('sidebarView').displayed !== 'Groups') {
-        this.app.get('sidebarView').displayed = 'Topics';
-        this.set('group', undefined);
+      && this.app.get('sidebarView').displayed !== 'Topics-Top'
+      && this.app.get('sidebarView').displayed !== 'Topics-New'
+      && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
+        this.app.get('sidebarView').displayed = 'Topics-Top';
       }
       this.app.get('content2').hide();
-      this.trigger('reloadSidebar', path);
+      this.app.trigger('reloadSidebarTopics', path);
     }
 
   },
@@ -472,10 +473,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.set('location', e.target.city);
           that.router.navigate('World/'+e.target.city, { trigger:false });
           if (!that.placing) {
-            if (that.app.get('sidebarView').displayed !== 'Topics'
-             && that.app.get('sidebarView').displayed !== 'Groups') {
-              that.app.get('sidebarView').displayed = 'Topics';
-            } 
+            if (this.app.get('sidebarView').displayed !== 'Topics'
+              && this.app.get('sidebarView').displayed !== 'Topics-Top'
+              && this.app.get('sidebarView').displayed !== 'Topics-New'
+              && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
+                this.app.get('sidebarView').displayed = 'Topics-Top';
+              } 
             that.set('group', undefined);
             that.trigger('reloadSidebar', e.target.city);
           }
@@ -548,10 +551,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.app.get('content2').hide();
 
 
-          if (that.app.get('sidebarView').displayed !== 'Topics'
-           && that.app.get('sidebarView').displayed !== 'Groups') {
-            that.app.get('sidebarView').displayed = 'Topics';
-          };
+          if (this.app.get('sidebarView').displayed !== 'Topics'
+            && this.app.get('sidebarView').displayed !== 'Topics-Top'
+            && this.app.get('sidebarView').displayed !== 'Topics-New'
+            && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
+              this.app.get('sidebarView').displayed = 'Topics-Top';
+            }
           that.set('group', undefined);
 
 
@@ -651,10 +656,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.app.get('content2').hide();
 
 
-          if (that.app.get('sidebarView').displayed !== 'Topics'
-           && that.app.get('sidebarView').displayed !== 'Groups') {
-            that.app.get('sidebarView').displayed = 'Topics';
-          ;}
+          if (this.app.get('sidebarView').displayed !== 'Topics'
+            && this.app.get('sidebarView').displayed !== 'Topics-Top'
+            && this.app.get('sidebarView').displayed !== 'Topics-New'
+            && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
+              this.app.get('sidebarView').displayed = 'Topics-Top';
+            }
           that.set('group', undefined);
 
         }
