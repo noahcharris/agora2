@@ -102,26 +102,31 @@ module.exports.getTopTopics = function(request, response) {
       comments: [{
         id: 22,
         poster: 'J-aldrean',
+        headline: 'sick',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
         expanded: false,    //these are for each group of replies
         replies: [{
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
         }, {
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'I mean it..',
             upvoted: false,
         }]
       }, {
         id: 87,
         poster: 'Jason Aldean',
+        headline: 'sick',
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
         replies: [{
             poster: 'Heckles',
+            headline: 'wow',
             contents: 'Just the one.'
         }]
       }] 
@@ -144,26 +149,31 @@ module.exports.getNewTopics = function(request, response) {
       comments: [{
         id: 22,
         poster: 'J-aldrean',
+        headline: 'suck it',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
         expanded: false,    //these are for each group of replies
         replies: [{
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
         }, {
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'I mean it..',
             upvoted: false,
         }]
       }, {
         id: 87,
         poster: 'Jason Aldean',
+        headline: 'suck it',
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
         replies: [{
             poster: 'Heckles',
+            headline: 'wow',
             contents: 'Just the one.'
         }]
       }] 
@@ -186,26 +196,31 @@ module.exports.getHotTopics = function(request, response) {
       comments: [{
         id: 22,
         poster: 'J-aldrean',
+        headline: 'suck it',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
         expanded: false,    //these are for each group of replies
         replies: [{
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
         }, {
             poster: 'Mr. Bean',
+            headline: 'my dick',
             contents: 'I mean it..',
             upvoted: false,
         }]
       }, {
         id: 87,
         poster: 'Jason Aldean',
+        headline: 'suck it',
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
         replies: [{
             poster: 'Heckles',
+            headline: 'wow',
             contents: 'Just the one.'
         }]
       }] 

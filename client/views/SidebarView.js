@@ -15,7 +15,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
     this.app = appController;
     this.subViews = [];     //store subviews in here so we can close them on navigation
     //indicates what model type is being displayed
-    this.displayed = 'Topics';
+    this.displayed = 'Topics-Top';
+    console.log('Topics-Top"wdfdsfa');
     //indicates how we are displaying topics in topic mode
     this.topicFilter = 'Top';
     //indicates whether messages or contacts are being displayed in inbox mode
@@ -57,11 +58,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
       subView.close();
     });
     this.subViews = [];
-
-      console.log('rendering sidebarView for collection type: ', this.displayed);
     
     //GOING TO USE goToPath TO BREAK OUT OF SEARCH ('All')
-    if (this.displayed === 'Topics' ) {
+    if (this.displayed === 'Topics' 
+      || this.displayed === 'Topics-Top'
+      || this.displayed === 'Topics-New'
+      || this.displayed === 'Topics-Hot') {
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
@@ -70,6 +72,14 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
+      //Set the correct button lighter
+      if (this.displayed === 'Topics-Top') {
+        this.$el.children('div.leftThirdButton').css('background-color','#f8f8f8');
+      } else if (this.displayed === 'Topics-New') {
+        this.$el.children('div.middleThirdButton').css('background-color','#f8f8f8');
+      } else if (this.displayed === 'Topics-Hot') {
+        this.$el.children('div.rightThirdButton').css('background-color','#f8f8f8');
+      }
 
     } else if (this.displayed === 'All') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
@@ -103,7 +113,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
     var entryViewType;
 
     //this code is brilliant, I need to use this more often
-    if (this.displayed === 'Topics') {
+    if (this.displayed === 'Topics' 
+      || this.displayed === 'Topics-Top'
+      || this.displayed === 'Topics-New'
+      || this.displayed === 'Topics-Hot') {
       renderCollection = this.collection;
     } else if (this.displayed === 'All') {
       renderCollection = this.searchCollection;
@@ -122,7 +135,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       _.each(renderCollection.models, function(model) {
 
-        console.log('model: ', model);
 
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;
@@ -186,11 +198,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
     //TOP/NEW/HOT
     var that = this;
     $('#topButton').on('click', function() {
-      if (that.topicFilter !== 'Top') {
+      if (that.displayed !== 'Topics-Top') {
 
-        //need to trigger a reload here 
-        that.app.trigger('whoa');
-        that.topicFilter = 'Top';
+        that.displayed = 'Topics-Top';
+        that.app.trigger('reloadSidebarTopics');
+        //this call might be unecessary
         that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#f8f8f8');
@@ -201,9 +213,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
     $('#newButton').on('click', function() {
       if (that.topicFilter !== 'New') {
 
-        //need to trigger a reload here 
-        that.app.trigger('whoa');
-        that.topicFilter = 'New';
+        that.displayed = 'Topics-New';
+        that.app.trigger('reloadSidebarTopics');
         that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#E8E8E8');
@@ -214,9 +225,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
     $('#hotButton').on('click', function() {
       if (that.topicFilter !== 'Hot') {
 
-        //need to trigger a reload here 
-        that.app.trigger('whoa');
-        that.topicFilter = 'Hot';
+        that.displayed = 'Topics-Hot';
+        that.app.trigger('reloadSidebarTopics');
         that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#E8E8E8');

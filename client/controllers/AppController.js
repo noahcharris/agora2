@@ -264,7 +264,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
+    //OLD TRIGGER (NO FILTERS)
     //need alot more of these methods, topics-top, topics-new
 
     mapController.on('reloadSidebar', function(location) {
@@ -304,11 +304,48 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       
     });
 
+    //NEW TRIGGGER
+    //switch between topic filters, need to include this kind of stuff in the method above as well
 
-    //ok word I will just trigger on app model to avoid the awkward interaction with mapmodel,
-    //all non map model related events trigger on app model
+    this.on('reloadSidebarTopics', function() { 
 
-    this.on('whoa', function() { console.log('hey'); });
+      //TODO Go through cache manager here
+
+      var urlPath;
+      switch(that.get('sidebarView').displayed) {
+        case 'Topics-Top':
+          urlPath = '/topics-top';
+          break;
+        case 'Topics-New':
+          urlPath = '/topics-new';
+          break;
+        case 'Topics-Hot':
+          urlPath = '/topics-hot';
+          break;
+        default:
+          urlPath = '';
+          break;
+      }
+
+      $.ajax({
+        url: 'http://localhost:8080' + urlPath,
+        data: {
+
+        },
+        crossDomain: true,
+        success: function(data) {
+          console.log('received these top topics: ',data);
+          topicsCollection = data;
+          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+          sidebarView.collection.models = topicsCollection;
+          content1.show(sidebarView);
+        }
+
+      })
+
+
+
+    });
 
 
 
@@ -664,9 +701,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //cases like response box
     region.show = function(view, cb) {
       if (that.get('expanded')) {
-
-        console.log('content2 showing view: ', view, ' current view is: ', currentView);
-
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
         //TODO

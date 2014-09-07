@@ -4,8 +4,7 @@ window.Agora.Controllers = window.Agora.Controllers || {};
 Agora.Controllers.MapController = Backbone.Model.extend({
 
 
-  // ## mapController stores current location and current group
-  //make sure to update them when switching between
+  //MAP CONTROLLER NEEDS TO HAVE GROUPS REMOVED
 
 
   defaults: {
@@ -175,19 +174,19 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     var worldBounds = L.latLngBounds(southWest, northEast);
 
     // !! to break out of anything that's not topics or groups mode
-    if (this.app.get('sidebarView').displayed !== 'Topics'
-      && this.app.get('sidebarView').displayed !== 'Groups') {
-      this.app.get('sidebarView').displayed = 'Topics';
-      //that.app.get('sidebarView').render();
+    if (this.app.get('sidebarView').displayed !== 'Topics-Top'
+      && this.app.get('sidebarView').displayed !== 'Topics-New'
+      && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
+      this.app.get('sidebarView').displayed = 'Topics-Top';
     }
-    this.set('group', undefined);
 
     this.get('map').fitBounds(worldBounds);
     this.set('location', '');   //location is set to '' for world, which is automatically added by pathview
     this.router.navigate('World', { trigger:false });
     if (!this.placing) {
       this.app.get('content2').hide();
-      this.trigger('reloadSidebar', '');
+      //remember to switch this to the new system
+      this.app.trigger('reloadSidebarTopics', '');
     }
   },
 
