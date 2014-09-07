@@ -64,7 +64,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //console.log('model expansion value ', this.model.get('expanded'));
     //these model properties (upvoted, expanded) are available for use
     var outerCollapsed = true;
-    $outerButton.on('click', function(e) {
+    console.log($outerButton);
+    $outerButton[0].onclick = function(e) {
       if (outerCollapsed) {
         $(e.target).parent().css('height', 'auto');
         $(e.target).attr('src', 'resources/images/contract.png');
@@ -74,7 +75,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $(e.target).attr('src', 'resources/images/expand.png');
         outerCollapsed = true;
       }
-    });
+    };
 
     for (var i=0;i<comments.length;i++) {
       
