@@ -83,6 +83,14 @@ module.exports.getPoints = function(request, response) {
   });
 };
 
+module.exports.getPathSearchResults = function(request, response) {
+  //TODO
+};
+
+module.exports.getChannelSearchResults = function(request, response) {
+  //TODO
+};
+
 
 /********************************************/
 /***  NEW TOPICS WITH FILTERS METHODS     ***/

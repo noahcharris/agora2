@@ -57,6 +57,11 @@ app.get('/topics-hot', routes.getHotTopics);
 //will messages and registration be http??
 //app.get('/messages')
 
+//could I do some of this on the client (static location?)
+//or maybe the cache manager keeps track of all the 
+//locations and channels?? (there will be too many ..)
+app.get('/pathSearch', routes.getPathSearchResults);
+app.get('/channelSearch', routes.getChannelSearchResults);
 
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);

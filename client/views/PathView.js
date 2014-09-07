@@ -151,8 +151,10 @@ Agora.Views.PathView = Backbone.View.extend({
         that.render();
         that.setHandlers();
       });
+      //keyup is the best way to get all the keys, not ideal
       $('#pathInput').on('keyup', function(e) {
         console.log($('#pathInput').val());
+        //AJAX CALL FOR SEARCH SUGGESTIONS
       });
     });
 
