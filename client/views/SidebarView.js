@@ -88,12 +88,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
     } else if (this.displayed === 'Messages') {
       this.$el.append($('<div class="leftHalfButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
       this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
+      this.$el.children('div.leftHalfButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Contacts') {
       this.$el.append($('<div class="leftHalfButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
       this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.children('div.leftHalfButton').css('background-color','#E8E8E8');
       this.$el.children('div.rightHalfButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
