@@ -85,10 +85,21 @@ module.exports.getPoints = function(request, response) {
 
 module.exports.getPathSearchResults = function(request, response) {
   //TODO
+  response.json([{
+    text: 'waterBoyz'
+  },{
+    text: 'woohohoh'
+  }]);
 };
 
 module.exports.getChannelSearchResults = function(request, response) {
   //TODO
+  response.json([{
+    text: 'waterBoyz'
+  },{
+    text: 'woohohoh'
+  }]);
+
 };
 
 

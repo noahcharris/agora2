@@ -24,13 +24,13 @@ Agora.Views.ChannelView = Backbone.View.extend({
     var channel = this.app.get('channel');
     console.log('rendering channelView with channel: ', channel);
     this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')); //<strong>' + channel + '</strong>&nbsp</span>'));
-    var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="10px" height="10px"></img>');
+    var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
       that.$el.empty();
       that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));
 
-      var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="10px" height="10px"></img>');
+      var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
       searchButton.on('click', function() { alert('mah dick'); });
       that.$el.append(searchButton);
@@ -46,12 +46,32 @@ Agora.Views.ChannelView = Backbone.View.extend({
       });
       //keyup is the best way to get all the keys, not ideal
       $('#channelInput').on('keyup', function(e) {
-        console.log($('#channelInput').val());
+
+        var searchParameter = $('#channelInput').val();
+        $.ajax({
+          url: 'http://localhost:8080/channelSearch',
+          data: {
+            query: searchParameter
+          },
+          crossDomain: true,
+          success: function(data) {
+            console.log(data);
+            $('#channelSearchResultList').remove();
+            if ($('#channelInput').val() != '') {
+              that.$el.append($('<div id="channelSearchResultList">WOOOOOO</div>'));
+            }
+          }
+        });
+
+
+
+
         //AJAX CALL FOR SEARCH SUGGESTIONS
         //throttle the ajax call here
        });
     });
     this.$el.append(searchButton);
+    this.$el.append($('<span class="channelName"><strong>' + channel + '</strong></span>'));
   },
 
   setHandlers: function() {

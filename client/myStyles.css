@@ -147,6 +147,13 @@ body {
   width: 250px;
 }
 
+#channelSearchResultList {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  z-index: 9999;
+}
+
 
 
 
@@ -170,8 +177,6 @@ body {
   -webkit-transition-duration:0.4s;
   -moz-transition-duration:1s;
 }
-
-
 
 
 
