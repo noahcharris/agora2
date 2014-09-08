@@ -364,7 +364,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-
+  //why isn't this stopping sidebar from reloading anymore??
 
   // ## PLACING POINTS ##
 
