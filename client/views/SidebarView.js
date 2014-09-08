@@ -260,61 +260,14 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
-
-
-
-
-    //UNDER CONSTRUCTION
-
     $('#creationButton').on('click', function() {
-       if (that.app.get('sidebarView').displayed === 'Topics-Top'
-        || that.app.get('sidebarView').displayed === 'Topics-New'
-        || that.app.get('sidebarView').displayed === 'Topics-Hot') {
+      if (that.app.get('sidebarView').displayed === 'Topics-Top'
+       || that.app.get('sidebarView').displayed === 'Topics-New'
+       || that.app.get('sidebarView').displayed === 'Topics-Hot') {
 
         var topicCreation = new Agora.Views.TopicCreationView(that.app);
-
         that.app.get('detailView').displayed = 'TopicCreation';
-
-        if (!that.app.get('expanded')) {
-
-          //Using callback with content2
-          that.app.get('content2').show(topicCreation, function() {
-            console.log('clicked create, topics mode');
-          });
-        } else {
-
-          //assuming that if it's expanded it has a classname
-          if ($('#content2').children()[0].className !== 'topicCreationView') {
-
-            that.app.get('content2').show(topicCreation);
-          }
-          console.log('clicked create, topics mode');
-        }
-
-      } else if (that.app.get('sidebarView').displayed === 'Groups') {
-
-        //careful with instantiating these on demand, make sure they are being GC'd
-        var groupCreation = new Agora.Views.GroupCreationView(that.app);
-
-        if (!that.app.get('expanded')) {
-
-          that.app.get('content2').show(groupCreation, function() {
-            //that.app.get('content2').show(groupCreation);
-            console.log('hey');
-          });
-        } else {
-
-          //assuming that if it's expanded it has a classname
-          if ($('#content2').children()[0].className !== 'groupCreationView') {
-
-            that.app.get('content2').show(groupCreation);
-          }
-          console.log('clicked create, groups mode');
-        }
-
-
-      } else if (that.app.get('sidebarView').displayed === 'Subgroups') {
-        alert('create subgroup!');
+        that.app.get('content2').show(topicCreation); 
       }
     });
 

@@ -258,6 +258,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+    //#######################################
+    //#########  TOPIC RETRIEVAL AJAX  ######
+    //#######################################
 
     //OLD TRIGGER (NO FILTERS)
     //need alot more of these methods, topics-top, topics-new
@@ -340,147 +343,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     });
-
-
-
-
-
-    //####################################################################################
-    //####################################################################################
-    //####################################################################################
-
-
-
-    //COLLECTION REFRESHING EVENTS
-
-
-    //THREE DIFFERENT RELOADING SCHEMES FOR THE SIDEBAR
-    //REMEMBER THAT THESE ONLY RENDER
-
-    //I need to closely limit and remember what I place in these callbacks.
-
-    
-    // mapController.on('reloadSidebar', function(location) {
-    //   topicsCollection.fetch({
-    //       data: {
-    //         location: location
-    //       },
-    //       success: function(data) {
-    //         sidebarView.collection = topicsCollection;
-    //         content1.show(sidebarView);
-    //         //take detailView into account while moving around
-    //         if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //           content2.show(that.get('detailView'));
-    //         }
-
-    //       },
-    //       error: function() {
-    //         console.log('topicsCollection failed to retrieve models from server');
-    //         content1.show(sidebarView); 
-    //       }
-    //     });
-    //     groupsCollection.fetch({
-    //       data: {
-    //         location: location
-    //       },
-    //       success: function(data) {
-    //         content1.show(sidebarView);
-    //         if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //           content2.show(that.get('detailView'));
-    //         }
-    //       },
-    //       error: function() {
-    //         console.log('groupsCollection failed to retrieve models from server');
-    //         content1.show(sidebarView); 
-    //       }
-    //     });
-    // });
-
-    // //groupTopics and subgroups
-    // mapController.on('reloadGroupSidebar', function(params) {
-    //   groupTopicsCollection.fetch({
-    //     data: {
-    //       location: params.location,
-    //       group: params.group
-    //     },
-    //     success: function(data) {
-    //       console.log('groupTopicsCollection received: ', data);
-    //       content1.show(sidebarView);
-    //       //take detailView into account while moving around
-    //       if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //         content2.show(that.get('detailView'));
-    //       }
-    //     },
-    //     error: function() {
-    //       console.log('groupTopicsCollection failed to retrieve models from the server')
-    //       content1.show(sidebarView); 
-    //     }
-    //   });
-    //   subgroupsCollection.fetch({
-    //     data: {
-    //       location: params.location,
-    //       group: params.group
-    //     },
-    //     success: function(data) {
-    //       console.log('subgroupsCollection received data: ', data);
-    //       content1.show(sidebarView);
-    //       if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //         content2.show(that.get('detailView'));
-    //       }
-    //     },
-    //     error: function() {
-    //       console.log('subgroupsCollection failed to retrieve models from the server')
-    //       content1.show(sidebarView); 
-    //     }
-    //   });
-    // });
-
-
-
-
-   
-
-
-  
-
-    //this will take in parameters: location, group, name
-    // mapController.on('reloadSubgroupSidebar', function(params) {
-    //   subgroupTopicsCollection.fetch({
-    //       data: {
-    //         location: params.location,
-    //         group: params.group,
-    //         name: params.name
-
-    //       },
-    //       success: function(data) {
-    //         console.log('reloadSubgroupSidebar receiving ', data);
-    //         content1.show(sidebarView);
-
-    //         //have to remember that this is here
-    //         that.get('mapController').router.navigate('World/'+params.location+'~'+params.group+'/'+params.name, { trigger: false });
-    //         that.get('mapController').set('group', params.group+'/'+params.name);
-
-    //         if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //           content2.show(that.get('detailView'));
-    //         }
-
-    //       },
-    //       error: function() {
-    //         //flash error, failed to find subgroup
-    //       }
-    //     });
-    // });
-
-
-
- //####################################################################################
-    //####################################################################################
-    //####################################################################################
-
-
-
-    
-
 
 
 
