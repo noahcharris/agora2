@@ -51,6 +51,11 @@ Agora.Views.RegistrationView = Backbone.View.extend({
           if (data === 'True') {
             alert('login succeeded');
             that.app.set('login', true);
+
+            that.app.get('topbarView').model.user = username;
+            that.app.get('topbarView').render();
+            that.app.get('content2').hide();
+
           } else {
             alert('login failed');
             that.app.set('login', false);

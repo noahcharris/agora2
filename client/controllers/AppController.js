@@ -25,7 +25,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('content2', content2);
 
     //not logged in initially
-    //BUT NEED TO ASK SERVER INITIALLY WHETHER WE ARE OR NOT
+    //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
     this.set('login', false);
 
 
@@ -158,10 +158,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     // ## VIEW AND MODELS ##
 
 
-    var topbarModel = { user: 'noahcharris'};
+    var topbarModel = { user: 'default'};
     var topbarView = new Agora.Views.TopbarView({ model: topbarModel });
 
-    $('#topbarWrapper').append(topbarView.$el);
+    $('#topbar1').append(topbarView.$el);
+    this.set('topbarView', topbarView);
 
     topbarView.render();
 

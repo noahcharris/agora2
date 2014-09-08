@@ -8,7 +8,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
   },
 
   render: function() {
-      
+    
     this.$el.html( this.template(this.model) );
     
   }
