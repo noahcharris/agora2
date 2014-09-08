@@ -107,6 +107,14 @@ module.exports.getContacts = function(request, response) {
 
 };
 
+module.exports.sendMessage = function(request, response) {
+
+};
+
+module.exports.getProfile = function(request, response) {
+
+};
+
 
 /********************************************/
 /***  NEW TOPICS WITH FILTERS METHODS     ***/

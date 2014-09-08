@@ -44,10 +44,11 @@ app.get('/', function(request, response) {
 app.get('/dance', routes.danceParty);
 
 app.get('/points', routes.getPoints);
-app.get('/topics', routes.getTopics);
 app.get('/place', routes.getPlace);
 app.get('/user', routes.getUser);
 
+
+app.get('/topics', routes.getTopics);
 //new topics routes with the three filters
 app.get('/topics-top', routes.getTopTopics);
 app.get('/topics-new', routes.getNewTopics);
@@ -57,6 +58,10 @@ app.get('/topics-hot', routes.getHotTopics);
 //this will return a 'conversation' (replacing the idea of 'messages') for each user
 //users should only be able to have like 150 contacts or smthn before they have to pay
 app.get('/contacts', routes.getContacts);
+app.post('/sendMessage', routes.sendMessage);
+
+
+app.get('/profile', routes.getProfile);
 
 //could I do some of this on the client (static location?)
 //or maybe the cache manager keeps track of all the 
@@ -70,7 +75,6 @@ app.get('/logout', routes.logout);
 app.post('/createTopic', routes.createTopic);
 app.post('/createComment', routes.createComment);
 app.post('/createReply', routes.createReply);
-app.post('/createGroup', routes.createGroup);
 app.post('/createUser', routes.createUser);
 
 app.use(favicon(__dirname + '/../client/media/favicon.png'));
