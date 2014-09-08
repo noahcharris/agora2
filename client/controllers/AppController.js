@@ -500,6 +500,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     $('#registrationButton').on('click', function() {
+      that.get('detailView').displayed = 'Registration';
       if (!that.get('expanded')) {
         content2.show(that.get('registrationView'));
       } else {
@@ -512,6 +513,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
     $('#settingsButton').on('click', function() {
+      that.get('detailView').displayed = 'Settings';
       if (!that.get('expanded')) {
         content2.show(settingsView);
       } else {
@@ -529,6 +531,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     $('#messagingButton').on('click', function() {
       that.get('sidebarView').displayed = 'Messages';
+      that.get('detailView').displayed = 'Messages';
       content1.show(sidebarView);
       if (!that.get('expanded')) {
         content2.show(detailView);
@@ -704,19 +707,23 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       var renderMethod;
 
-      switch (that.get('sidebarView').displayed) {
-        case 'Topics-Top':
-          renderMethod = 'renderTopic'
-          break;
-        case 'Topics-New':
-          renderMethod = 'renderTopic'
-          break;
-        case 'Topics-Hot':
-          renderMethod = 'renderTopic'
-          break;
-        default:
-          renderMethod = 'render';
-          break;
+      if (that.get('detailView').displayed === 'Topics') {
+        switch (that.get('sidebarView').displayed) {
+          case 'Topics-Top':
+            renderMethod = 'renderTopic'
+            break;
+          case 'Topics-New':
+            renderMethod = 'renderTopic'
+            break;
+          case 'Topics-Hot':
+            renderMethod = 'renderTopic'
+            break;
+          default:
+            renderMethod = 'render';
+            break;
+        }
+      } else {
+        renderMethod = 'render';
       }
 
 

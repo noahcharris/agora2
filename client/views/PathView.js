@@ -114,48 +114,48 @@ Agora.Views.PathView = Backbone.View.extend({
   setHandlers: function() {
     var that = this;
 
-    $('#hello').on('click', function() {
-      $.ajax({
-        url: 'place',
-        method: 'GET',
-        data: {
-          location: that.app.get('mapController').get('location')
-        },
-        success: function(data) {
-          console.log(data);
-          that.app.get('placeView').model = data[0];
-          if (!that.app.get('expanded')) {
-            that.app.get('content2').show(that.app.get('placeView'));
-          } else {
-            if ($('#content2').children()[0].className === 'placeView') {
-              content2.hide();
-            } else {
-              content2.show(that.app.get('placeView'));
-            }
-          }
-        },
-      });
+    // $('#hello').on('click', function() {
+    //   $.ajax({
+    //     url: 'place',
+    //     method: 'GET',
+    //     data: {
+    //       location: that.app.get('mapController').get('location')
+    //     },
+    //     success: function(data) {
+    //       console.log(data);
+    //       that.app.get('placeView').model = data[0];
+    //       if (!that.app.get('expanded')) {
+    //         that.app.get('content2').show(that.app.get('placeView'));
+    //       } else {
+    //         if ($('#content2').children()[0].className === 'placeView') {
+    //           content2.hide();
+    //         } else {
+    //           content2.show(that.app.get('placeView'));
+    //         }
+    //       }
+    //     },
+    //   });
 
-    });
+    // });
 
 
-    $('.pathWrapper').on('click', function(e) {
-      $(e.target).empty();
-      $(e.target).append($('<input id="pathInput"></input>'));
-      $('#pathInput').focus();
-      $('#pathInput').focusout(function() {
-        //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
-        $('.pathWrapper').empty();
-        that.render();
-        that.setHandlers();
-      });
-      //keyup is the best way to get all the keys, not ideal
-      $('#pathInput').on('keyup', function(e) {
-        console.log($('#pathInput').val());
-        //AJAX CALL FOR SEARCH SUGGESTIONS
-        //throttle this ajax call
-      });
-    });
+    // $('.pathWrapper').on('click', function(e) {
+    //   $(e.target).empty();
+    //   $(e.target).append($('<input id="pathInput"></input>'));
+    //   $('#pathInput').focus();
+    //   $('#pathInput').focusout(function() {
+    //     //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
+    //     $('.pathWrapper').empty();
+    //     that.render();
+    //     that.setHandlers();
+    //   });
+    //   //keyup is the best way to get all the keys, not ideal
+    //   $('#pathInput').on('keyup', function(e) {
+    //     console.log($('#pathInput').val());
+    //     //AJAX CALL FOR SEARCH SUGGESTIONS
+    //     //throttle this ajax call
+    //   });
+    // });
 
 
       //will have to retrieve location data and then load up the placeview

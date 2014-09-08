@@ -138,6 +138,47 @@ module.exports.getTopTopics = function(request, response) {
             contents: 'Just the one.'
         }]
       }] 
+    }, { id: 2,
+      headline: 'eyo',
+      type: 'Topic',
+      poster: 'robert',
+      contents: 'Unce more breach. Twice too many.',
+      city: 'Oregon',
+      area: 'Hack Reactor',
+      reputation: 42,
+      upvoted: true,
+      expanded: true,   //this is for the outer expansion/contraction button
+      comments: [{
+        id: 22,
+        poster: 'J-aldrean',
+        headline: 'sick',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of replies
+        replies: [{
+            poster: 'Mr. Bean',
+            headline: 'my dick',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+        }, {
+            poster: 'Mr. Bean',
+            headline: 'my dick',
+            contents: 'I mean it..',
+            upvoted: false,
+        }]
+      }, {
+        id: 87,
+        poster: 'Jason Aldean',
+        headline: 'sick',
+        contents: 'Ok, but how about them yanks?',
+        upvoted: false,
+        expanded: false,
+        replies: [{
+            poster: 'Heckles',
+            headline: 'wow',
+            contents: 'Just the one.'
+        }]
+      }] 
     }];
 
     response.json(topicsCollection);

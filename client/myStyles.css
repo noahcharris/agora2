@@ -273,7 +273,8 @@ body {
   list-style:none;
   padding-left:0;
   margin: 0px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 84%;
 }
 

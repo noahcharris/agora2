@@ -160,6 +160,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
+
+            that.app.get('detailView').displayed = 'Topics';
             console.log('clicked sidebar entryView with id: ', id, 'type: ', type);
   
             //#############################################

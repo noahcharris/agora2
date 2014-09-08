@@ -16,6 +16,9 @@ Agora.Views.DetailView = Backbone.View.extend({
     this.responseBox = _.template( $('#responseBoxTemplate').html() );
     this.app = appController;
 
+    //!!!!!hopefully this will help to solve the problems with rendering detailView shit
+    this.displayed = 'Topics';
+
     //response box variables
     this.responding = false;
     this.view = null;
@@ -46,7 +49,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     console.log('applying click handler on: ', this.$el.children('img.x'));
-    this.$el.children('img.x').on('click', function() {
+    this.$el.children('img.x').click(function() {
       console.log('hello');
       that.app.get('content2').hide();
     });
