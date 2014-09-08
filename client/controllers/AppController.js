@@ -158,7 +158,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     // ## VIEW AND MODELS ##
 
 
-    var topbarModel = { user: 'default'};
+    var topbarModel = { user: 'not logged in'};
     var topbarView = new Agora.Views.TopbarView({ model: topbarModel });
 
     $('#topbar1').append(topbarView.$el);
@@ -196,18 +196,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-    //getting rid of creationView
-    // var creationView = new Agora.Views.CreationView(this);
-    // creationView.collection = topicsCollection;
-    // this.set('creationView', creationView);
 
     var settingsView = new Agora.Views.SettingsView(this);
 
-    var userView = new Agora.Views.UserView(this);
-    this.set('userView', userView);
-
-    var placeView = new Agora.Views.PlaceView(this);
-    this.set('placeView', placeView);
 
     // THE MAP 
     //putting this above the sidebar stuff fucks up the map?
