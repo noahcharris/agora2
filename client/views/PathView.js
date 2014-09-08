@@ -43,7 +43,51 @@ Agora.Views.PathView = Backbone.View.extend({
 
     //this.$el.html( $dropButton );
     this.$el.html( $('<span id="pathPrefix">&nbsp&nbspPath:&nbsp</span>') );
+    var searchButton = $('<img id="searchPathButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+
+    searchButton.on('click', function() { 
+      that.$el.empty();
+      that.$el.append($('<span class="channelName">&nbsp&nbspPath:&nbsp</span>'));
+
+      var searchButton = $('<img id="searchPathButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+
+      searchButton.on('click', function() { alert('mah dick'); });
+      that.$el.append(searchButton);
+
+      that.$el.append($('<input id="pathInput"></input>'));
+
+      $('#pathInput').focus();
+      $('#pathInput').focusout(function() {
+        //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
+        that.$el.empty();
+        that.render();
+        that.setHandlers();
+      });
+      //keyup is the best way to get all the keys, not ideal
+      $('#pathInput').on('keyup', function(e) {
+
+        var searchParameter = $('#pathInput').val();
+        $.ajax({
+          url: 'http://localhost:8080/channelSearch',
+          data: {
+            query: searchParameter
+          },
+          crossDomain: true,
+          success: function(data) {
+            console.log(data);
+            $('#pathSearchResultList').remove();
+            if ($('#pathInput').val() != '') {
+              that.$el.append($('<div id="pathSearchResultList">WOOOOOO</div>'));
+            }
+          }
+        });
+
+      });
+    });
+    this.$el.append(searchButton);
+
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
+
 
     var $world = $('<span class="pathName">World</span>')
     $world.on('click', function() {

@@ -131,6 +131,13 @@ body {
   width: 350px;
 }
 
+#pathSearchResultList {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  z-index: 9999;
+}
+
 .channelView {
   display: inline-block;
   width: 370px;
