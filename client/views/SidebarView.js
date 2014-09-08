@@ -267,11 +267,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
     //UNDER CONSTRUCTION
 
     $('#creationButton').on('click', function() {
-       if (that.app.get('sidebarView').displayed === 'Topics'
-        || that.app.get('sidebarView').displayed === 'GroupTopics'
-        || that.app.get('sidebarView').displayed === 'SubgroupTopics') {
+       if (that.app.get('sidebarView').displayed === 'Topics-Top'
+        || that.app.get('sidebarView').displayed === 'Topics-New'
+        || that.app.get('sidebarView').displayed === 'Topics-Hot') {
 
         var topicCreation = new Agora.Views.TopicCreationView(that.app);
+
+        that.app.get('detailView').displayed = 'TopicCreation';
 
         if (!that.app.get('expanded')) {
 

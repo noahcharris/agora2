@@ -21,7 +21,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.empty();
     this.$el.html( this.template() );
 
-    this.$el.append($('<img src="media/x.png" class="x"></img>'));
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
