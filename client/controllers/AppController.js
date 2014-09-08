@@ -159,7 +159,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     var topbarModel = { user: 'not logged in'};
-    var topbarView = new Agora.Views.TopbarView({ model: topbarModel });
+    var topbarView = new Agora.Views.TopbarView(this);
+    topbarView.model = topbarModel;
 
     $('#topbar1').append(topbarView.$el);
     this.set('topbarView', topbarView);
@@ -198,6 +199,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     var settingsView = new Agora.Views.SettingsView(this);
+    this.set('settingsView', settingsView);
 
 
     // THE MAP 
@@ -474,105 +476,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
  //####################################################################################
     //####################################################################################
     //####################################################################################
-
-
-
-
-    //#######################################
-    //#########  BUTTON EVENTS  #############
-    //#######################################
-
-    //WILL NEED TO HAVE MOBILE AND REGULAR BUTTON LOGICS,
-    //BECAUSE THE LAYOUT CHANGES REQUIRE DIFFERENT BEHAVIOR
-
-
-    $('#boundsButton').on('click', function() {
-      mapController.logBounds();
-    });
-
-
-    $('#registrationButton').on('click', function() {
-      that.get('detailView').displayed = 'Registration';
-      if (!that.get('expanded')) {
-        content2.show(that.get('registrationView'));
-      } else {
-        if ($('#content2').children()[0].className === 'registrationView detailView') {
-          content2.hide();
-        } else {
-          content2.show(that.get('registrationView'));
-        }
-      }
-    });
-
-    $('#settingsButton').on('click', function() {
-      that.get('detailView').displayed = 'Settings';
-      if (!that.get('expanded')) {
-        content2.show(settingsView);
-      } else {
-        console.log($('#content2').children());
-        if ($('#content2').children()[0].className === 'settingsView detailView') {
-        console.log('hey');
-          content2.hide();
-        } else {
-          content2.show(settingsView);
-        }
-      }
-    });
-
-    //event listener on the "hello:" is set by pathView
-
-    $('#messagingButton').on('click', function() {
-      that.get('sidebarView').displayed = 'Messages';
-      that.get('detailView').displayed = 'Messages';
-      content1.show(sidebarView);
-      if (!that.get('expanded')) {
-        content2.show(detailView);
-      } else {
-        // TODO
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //guess i need to change this classname?
-        if ($('#content2').children()[0].className === 'fjkdla;fajlk') {
-          content2.hide();
-        } else {
-          content2.show(detailView);
-        }
-      }
-    });
-
-    $('#notificationsButton').on('click', function() {
-      alert('notifications');
-    });
-
-
-    //pressing enter should trigger search
-    var searching = false;
-    $('#searchButton').on('click', function() {
-      if (!searching) {
-        searching = true;
-        $('#searchInput').val('');
-        alertView.mode = 'Search';
-        content2.show(alertView);
-        //to simulate search time
-        setTimeout(function() {
-          //if failed, display the search failed template on alertView
-
-          //if successful, load the search results setup
-          //updated the search collection AND then:
-          that.get('sidebarView').displayed = 'All';
-          content2.show(that.get('detailView'));
-          content1.show(that.get('sidebarView'));
-          searching = false;
-        },2000);
-        
-      }
-    });
-
-
-    $('#title').on('click', function() {
-      console.log('hi');
-      that.get('mapController').showWorld();
-    });
 
 
 
