@@ -67,7 +67,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         if ($('#content2').children()[0].className === 'fjkdla;fajlk') {
           that.app.get('content2').hide();
         } else {
-          that.app.get('content2').show(detailView);
+          that.app.get('content2').show(that.app.get('detailView'));
         }
       }
     });

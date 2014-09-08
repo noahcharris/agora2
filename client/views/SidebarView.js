@@ -58,7 +58,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
     });
     this.subViews = [];
     
-    //GOING TO USE goToPath TO BREAK OUT OF SEARCH ('All')
     if (this.displayed === 'Topics' 
       || this.displayed === 'Topics-Top'
       || this.displayed === 'Topics-New'
@@ -89,23 +88,18 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
       this.$el.children('div.leftHalfButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
+      //do I need this? might just move the message kickoff to user detail view but i'm not sure
+      //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Contacts') {
       this.$el.append($('<div class="leftHalfButton" id="messagesButton"><span class="tabLabel">Messages</span></div>'));
       this.$el.append($('<div class="rightHalfButton" id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
       this.$el.children('div.rightHalfButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
+      //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
 
 
-    //########################################################
-    //GOING TO TRANSITION TO THIS
-
-
-
     // INCLUDE PAGINATION HERE
-
 
 
     var renderCollection;
@@ -134,7 +128,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       _.each(renderCollection.models, function(model) {
 
-
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;
         if (model.type === 'Topic') {
@@ -150,39 +143,23 @@ Agora.Views.SidebarView = Backbone.View.extend({
           var entryView = new Agora.Views.SidebarEntryView({ model: model });
           entryView[entryViewMethod]();
 
-
-
           //#######################################
           //####### ENTRYVIEW CLICK EVENT #########
           //#######################################
 
-
-
-          //clicking entryView affects contetn2
           entryView.on('click', function(id, type) {
 
             that.app.get('detailView').displayed = 'Topics';
-            console.log('clicked sidebar entryView with id: ', id, 'type: ', type);
-  
-            //#############################################
-            //this is where we set content2 to a single display for the sidebar item type
-
-            console.log('whaup');
-            console.log('model: ', model);
             that.app.get('content2').show(that.app.get('detailView'), model);
             //that.app.get('detailView')[entryViewMethod](model);
             that.removeHighlights();
             this.$el.addClass('highlight');
           });
 
-
-
-
-
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);
+        
       });
-
     };
 
   },

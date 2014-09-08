@@ -17,8 +17,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     var that = this;
     
     this.$el.empty();
-    this.$el.append($('<p class="x">X</p>'));
-    this.$el.children('p.x').on('click', function() {
+    this.$el.append( $('<img src="resources/images/x.png" class="x"></img>') );
+    this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
     this.$el.append( this.template() );
