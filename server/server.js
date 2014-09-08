@@ -60,15 +60,19 @@ app.get('/topics-hot', routes.getHotTopics);
 app.get('/contacts', routes.getContacts);
 app.post('/sendMessage', routes.sendMessage);
 
-
-app.get('/profile', routes.getProfile);
-
 //could I do some of this on the client (static location?)
 //or maybe the cache manager keeps track of all the 
 //locations and channels?? (there will be too many ..)
 app.get('/pathSearch', routes.getPathSearchResults);
 app.get('/channelSearch', routes.getChannelSearchResults);
 
+app.get('/search', routes.search);
+
+//this is how users will change their settings/public profile
+app.post('/updateProfile', routes.updateProfile);
+
+//the login route will return a users 'profile', this will be used by the cache manager,
+//contains the user's settings, vote profile, etc.....
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 

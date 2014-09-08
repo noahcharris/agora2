@@ -68,7 +68,7 @@ module.exports.danceParty = function(request, response) {
   //console.log('dance, dance, dance', request.session.email);
   //request.session.email = 'hello';
   //postgres.setupPostGIS();
-    postgres.createTables();
+  postgres.createTables();
   //postgres.populateSubgroups();
   //postgres.populateGroups();
   //postgres.populateTopics();
@@ -102,6 +102,9 @@ module.exports.getChannelSearchResults = function(request, response) {
 
 };
 
+module.exports.search = function(request, response) {
+
+};
 
 module.exports.getContacts = function(request, response) {
 
@@ -111,7 +114,7 @@ module.exports.sendMessage = function(request, response) {
 
 };
 
-module.exports.getProfile = function(request, response) {
+module.exports.updateProfile = function(request, response) {
 
 };
 
