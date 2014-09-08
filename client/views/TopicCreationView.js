@@ -52,8 +52,9 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
             },
             success: function(msg) {
               alert(msg);
+              //some weird shit going on here with detailView
               that.app.get('content2').show(that.app.get('detailView'));
-              that.app.get('mapController').trigger('reloadSidebar',
+              that.app.get('mapController').trigger('reloadSidebar', 
                 that.app.get('mapController').get('location'));
             },
             error: function() {

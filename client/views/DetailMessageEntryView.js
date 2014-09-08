@@ -1,6 +1,8 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
+//MORE LIKE A 'CONVERSATION VIEW', think facebook
+
 Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   tagName: 'li',

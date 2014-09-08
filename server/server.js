@@ -54,8 +54,9 @@ app.get('/topics-new', routes.getNewTopics);
 app.get('/topics-hot', routes.getHotTopics);
 
 //TODO
-//will messages and registration be http??
-//app.get('/messages')
+//this will return a 'conversation' (replacing the idea of 'messages') for each user
+//users should only be able to have like 150 contacts or smthn before they have to pay
+app.get('/contacts', routes.getContacts);
 
 //could I do some of this on the client (static location?)
 //or maybe the cache manager keeps track of all the 

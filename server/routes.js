@@ -103,6 +103,11 @@ module.exports.getChannelSearchResults = function(request, response) {
 };
 
 
+module.exports.getContacts = function(request, response) {
+
+};
+
+
 /********************************************/
 /***  NEW TOPICS WITH FILTERS METHODS     ***/
 /********************************************/
