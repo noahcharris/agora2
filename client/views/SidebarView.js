@@ -77,12 +77,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
       this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top'
+        //MAYBE LEAVE THIS OUT FOR MVP??
         +'<div id="timeframeSelect"><select>'
-          +'<option value="volvo">Today</option>'
-          +'<option value="saab">This Week</option>'
-          +'<option value="opel">This Month</option>'
-          +'<option value="audi">This Year</option>'
-          +'<option value="audi">All Time</option>'
+          +'<option value="Today">Today</option>'
+          +'<option value="This Week">This Week</option>'
+          +'<option value="This Month">This Month</option>'
+          +'<option value="This Year">This Year</option>'
+          +'<option value="All Time">All Time</option>'
         +'</select></div>'
         +'</span></div>'));
       this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
@@ -144,8 +145,16 @@ Agora.Views.SidebarView = Backbone.View.extend({
         subView.close();
       });
       this.subViews = [];
+      console.log(renderCollection);
 
       _.each(renderCollection.models, function(model) {
+
+        console.log(model);
+        console.log('hi');
+
+        //wtf need to add this in server
+        model.type = 'Topic';
+        model.reputation = 0;
 
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;

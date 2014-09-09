@@ -305,9 +305,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //NEW TRIGGGER
     //switch between topic filters, need to include this kind of stuff in the method above as well
 
-    this.on('reloadSidebarTopics', function() { 
+    this.on('reloadSidebarTopics', function(location) { 
 
       //TODO Go through cache manager here
+
+      var location = location || that.get('mapController').get('location');
 
       var urlPath;
       switch(that.get('sidebarView').displayed) {
@@ -331,6 +333,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
         },
         crossDomain: true,
+        data: {
+          location: location
+        },
         success: function(data) {
           topicsCollection = data;
           //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S

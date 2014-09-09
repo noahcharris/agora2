@@ -50,7 +50,8 @@ app.get('/user', routes.getUser);
 
 app.get('/topics', routes.getTopics);
 //new topics routes with the three filters
-app.get('/topics-top', routes.getTopTopics);
+//CHANGE THIS BACK TO getTopTopics, THIS IS FOR TESTING
+app.get('/topics-top', routes.getTopics);
 app.get('/topics-new', routes.getNewTopics);
 app.get('/topics-hot', routes.getHotTopics);
 
