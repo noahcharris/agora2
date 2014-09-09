@@ -63,9 +63,28 @@ Agora.Views.SidebarView = Backbone.View.extend({
       || this.displayed === 'Topics-New'
       || this.displayed === 'Topics-Hot') {
 
+
+      //here is the dropdown code
+      // <select>
+      //   <option value="volvo">Volvo</option>
+      //   <option value="saab">Saab</option>
+      //   <option value="opel">Opel</option>
+      //   <option value="audi">Audi</option>
+      // </select>
+
+
+
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top</span></div>'));
+      this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top'
+        +'<div id="timeframeSelect"><select>'
+          +'<option value="volvo">Today</option>'
+          +'<option value="saab">This Week</option>'
+          +'<option value="opel">This Month</option>'
+          +'<option value="audi">This Year</option>'
+          +'<option value="audi">All Time</option>'
+        +'</select></div>'
+        +'</span></div>'));
       this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));

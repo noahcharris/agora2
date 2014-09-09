@@ -327,6 +327,12 @@ body {
   display: inline-block;
 }
 
+#timeframeSelect {
+  position: absolute;
+  top: 15px;
+  left: -20px;
+}
+
 .middleThirdButton {
   position: relative;
   cursor: pointer;
