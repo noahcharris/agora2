@@ -6,8 +6,6 @@ var amqp = require('amqplib');
 var when = require('when');
 var bcrypt = require('bcrypt');
 
-var tb = require('./../workers/treebuilder.js');
-
 
 
 
@@ -36,25 +34,25 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 //am i creating zombies when I make all these brief connections with memcached?? Need to research.
 
-function memcachedTimers() {
+// function memcachedTimers() {
 
-  connection.then(function(conn) {
-    var ok = conn.createChannel();
-    ok = ok.then(function(ch) {
-      ch.assertQueue(q);
-      // Here we are sending the tree:<path>:<filter> command
-      var msg = 'Tree:';
-      ch.sendToQueue(q, new Buffer('Tree:'));
-      ch.sendToQueue(q, new Buffer('Tree:France'));
-      //console.log(" [x] Sent '%s'", msg);
-    });
-    return ok;
-  }).then(null, console.warn);
+//   connection.then(function(conn) {
+//     var ok = conn.createChannel();
+//     ok = ok.then(function(ch) {
+//       ch.assertQueue(q);
+//       // Here we are sending the tree:<path>:<filter> command
+//       var msg = 'Tree:';
+//       ch.sendToQueue(q, new Buffer('Tree:'));
+//       ch.sendToQueue(q, new Buffer('Tree:France'));
+//       //console.log(" [x] Sent '%s'", msg);
+//     });
+//     return ok;
+//   }).then(null, console.warn);
 
-}
+// }
 
-memcachedTimers();
-setInterval(memcachedTimers, 100000);
+// memcachedTimers();
+// setInterval(memcachedTimers, 100000);
 
 //#####################################
 
@@ -119,97 +117,45 @@ module.exports.updateProfile = function(request, response) {
 };
 
 
+
+
 /********************************************/
 /***  NEW TOPICS WITH FILTERS METHODS     ***/
 /********************************************/
 
 module.exports.getTopTopics = function(request, response) {
-  var topicsCollection = [{ id: 1,
-      headline: 'Defaults are desecrets',
-      type: 'Topic',
-      poster: 'robert',
-      contents: 'Unce more breach. Twice too many.',
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      upvoted: true,
-      expanded: true,   //this is for the outer expansion/contraction button
-      comments: [{
-        id: 22,
-        poster: 'J-aldrean',
-        headline: 'sick',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of replies
-        replies: [{
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'I mean it..',
-            upvoted: false,
-        }]
-      }, {
-        id: 87,
-        poster: 'Jason Aldean',
-        headline: 'sick',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        replies: [{
-            poster: 'Heckles',
-            headline: 'wow',
-            contents: 'Just the one.'
-        }]
-      }] 
-    }, { id: 2,
-      headline: 'eyo',
-      type: 'Topic',
-      poster: 'robert',
-      contents: 'Unce more breach. Twice too many.',
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      upvoted: true,
-      expanded: true,   //this is for the outer expansion/contraction button
-      comments: [{
-        id: 22,
-        poster: 'J-aldrean',
-        headline: 'sick',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of replies
-        replies: [{
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'I mean it..',
-            upvoted: false,
-        }]
-      }, {
-        id: 87,
-        poster: 'Jason Aldean',
-        headline: 'sick',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        replies: [{
-            poster: 'Heckles',
-            headline: 'wow',
-            contents: 'Just the one.'
-        }]
-      }] 
-    }];
+  var queryArgs = url.parse(request.url, true).query;
 
-    response.json(topicsCollection);
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  //testing memcached !!!!!!!!!!!!!!!!!
+  if (queryArgs.location === '')
+    location = 'World';
+
+
+  var keyString = location + '~' + channel + '~TopTopics';
+
+  console.log('attempting to retrieve topics from: '+keyString);
+  memcached.get(keyString, function (err, data) {
+    if (data) {
+      console.log('sending data from memcached to client');
+      console.log(data[0]);
+      response.json(data);
+    } else {    
+      console.log('memcached returned false for ', keyString);
+      response.json(false);
+    }
+
+  });
 };
+
+
+
+
+
+
+
 
 module.exports.getNewTopics = function(request, response) {
   var topicsCollection = [{ id: 1,
@@ -310,58 +256,6 @@ module.exports.getHotTopics = function(request, response) {
 
 
 
-module.exports.getTopics = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-
-  var location = queryArgs.location;
-
-  //testing memcached !!!!!!!!!!!!!!!!!
-  if (queryArgs.location === '')
-    location = 'World';
-
-  //will have to use string replace in memcache queries
-  // location = location.replace(' ','#');
-
-  console.log('pulling out of memcached to send to client')
-  memcached.get(location, function (err, data) {
-    if (err) {
-      console.log('error pulling tree out of memcache for ', location);
-      console.log(err);
-      tb.build(queryArgs.location, function(data) {
-          console.log('sending data back to client after building it');
-          response.json(data);
-      });
-
-    } else {    
-
-      if (data) {
-        console.log('sending data from memcached to client');
-        response.json(data);
-      } else {
-
-        console.log('could not find topic trees in memcached, proceeding to build from postgres');
-        //need to build the trees either here or client side if there is an error
-
-        // callback to get the data from tree builder after it inserts into memcached
-        tb.build(queryArgs.location, function(data) {
-          console.log('sending data back to client after building it');
-          response.json(data);
-        });
-
-
-
-        // postgres.retrieveTopics(queryArgs.location, function(data) {
-        //   response.json(data);
-        // });
-      }
-
-    }
-
-  });
-
-};
-
-
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   postgres.retrieveUser(queryArgs.username, function(data) {
@@ -431,8 +325,6 @@ module.exports.createTopic = function(request, response) {
   //AUTHENTICATION HERE
   if (request.session.login) {
 
-    console.log(request.body);
-
     //call accepts true or false depending on whether the request failed or not
     postgres.createTopic(request.body.headline, request.body.link,
      request.body.content, request.body.location, function(success) {
@@ -443,18 +335,27 @@ module.exports.createTopic = function(request, response) {
           var ok = conn.createChannel();
           ok = ok.then(function(ch) {
             ch.assertQueue(q);
-            // Here we are sending the tree:<path>:<filter> command
-            var msg = 'Tree:'+request.body.location;
+
+
+
+            // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
+            var msg = 'Tree~'+request.body.location+'~'+request.body.channel;
+
+
+
             ch.sendToQueue(q, new Buffer(msg));
             console.log(" [x] Sent '%s'", msg);
           });
           return ok;
         }).then(null, console.warn);
+
         response.end('topic successfully created, sent message to queue');
 
       } else {
         response.end('error inserting into topics');
       }
+
+
     });
   } else {
     response.end('you can\'t submit a message if you are not logged in');

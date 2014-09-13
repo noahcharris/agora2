@@ -48,7 +48,8 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
               headline: that.$el.children('input#topicCreationHeadline').val(),
               link: that.$el.children('input#topicCreationLink').val(),
               content: that.$el.children('textarea#topicCreationContent').val(),
-              location: that.app.get('mapController').get('location')
+              location: that.app.get('mapController').get('location'),
+              channel: that.app.get('channel')
             },
             success: function(msg) {
               alert(msg);

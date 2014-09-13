@@ -145,12 +145,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
         subView.close();
       });
       this.subViews = [];
+      
       console.log(renderCollection);
 
       _.each(renderCollection.models, function(model) {
 
         console.log(model);
-        console.log('hi');
 
         //wtf need to add this in server
         model.type = 'Topic';

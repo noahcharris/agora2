@@ -47,11 +47,9 @@ app.get('/points', routes.getPoints);
 app.get('/place', routes.getPlace);
 app.get('/user', routes.getUser);
 
-
-app.get('/topics', routes.getTopics);
 //new topics routes with the three filters
 //CHANGE THIS BACK TO getTopTopics, THIS IS FOR TESTING
-app.get('/topics-top', routes.getTopics);
+app.get('/topics-top', routes.getTopTopics);
 app.get('/topics-new', routes.getNewTopics);
 app.get('/topics-hot', routes.getHotTopics);
 

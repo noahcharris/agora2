@@ -30,17 +30,7 @@ var amqp = require('amqplib');
 var tb = require('./treebuilder.js');
 var vt = require('./voteTalley.js');
 
-
-
-
-
-
-
-
-
-
 //LISTENING TO THE QUEUE
-
 amqp.connect('amqp://localhost').then(function(conn) {
   conn.once('SIGINT', function() { conn.close(); });
   return conn.createChannel().then(function(ch) {
@@ -74,36 +64,35 @@ amqp.connect('amqp://localhost').then(function(conn) {
 
       //WOULD USE PATHPARSER HERE
 
-      if (body.split(':')[0] === 'Tree') {
+      if (body.split('~')[0] === 'Tree') {
         
-        if (body.split(':')[1] === '') {
-          tb.buildWorld();
-        } else if (body.split(':')[1].split('/').length === 1) { 
-          tb.buildCountry(body.split(':')[1]);
-        } else if (body.split(':')[1].split('/').length === 2
-        && body.split(':')[1].split('/')[1] !== 'United States') {
-          tb.buildCity(body.split(':')[1]);
+        if (body.split('~')[1] === '') {
+          tb.buildWorld(body.split('~')[2]);
+          console.log('building world tree on channel: ', body.split('~')[2]);
+        } else if (body.split('~')[1].split('/').length === 1) { 
+          tb.buildCountry(body.split('~')[1]);
+          console.log('building '+body.split('~')[1]+' tree on channel '+body.split('~')[2]);
+        } else if (body.split('~')[1].split('/').length === 2
+        && body.split('~')[1].split('/')[1] !== 'United States') {
+          tb.buildCity(body.split('~')[1]);
         } else { 
-          tb.build(body.split(':')[1]);
+          tb.build(body.split('~')[1]);
         }
-
-
-
-
-        //THIS DOESNT WORK, NEED TO PASS OBJECTS ALONG OR SOMETHING LIKE THAT
-        //i'm going to pass along a callback
-        ch.ack(msg);
-        console.log(' [x] Done');
-      } else if (body.split(':')[0] === 'Vote') {
         
-        vt.buildProfile(body.split(':')[1]);
+        //need to pass this along in a callback
+        ch.ack(msg);
+      } else if (body.split('~')[0] === 'Vote') {
+        
+        vt.buildProfile(body.split('~')[1]);
         ch.ack(msg);
         console.log(' [x] Done');
 
-      } else if (body.split(':')[0] === 'Feed') {
+      } else if (body.split('~')[0] === 'Feed') {
         //TODO
-      } else if (body.split(':')[0] === 'Search') {
+      } else if (body.split('~')[0] === 'Search') {
         //TODO
+      } else {
+        ch.ack(msg);
       }
 
 

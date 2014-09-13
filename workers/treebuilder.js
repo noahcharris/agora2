@@ -23,6 +23,17 @@ var amqp = require('amqplib');
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 module.exports.build = function(path, cb) {
 
   console.log('executing treeBuilder');
@@ -87,7 +98,22 @@ module.exports.build = function(path, cb) {
 
 
 
-module.exports.buildWorld = function(cb) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports.buildWorld = function(channel) {
 
 
   console.log('executing treeBuilder (BUILDING WORLD)');
@@ -107,12 +133,12 @@ module.exports.buildWorld = function(cb) {
         console.log('error selecting topics');
         console.log(err);
       } else {
-        console.log('\nTOPICS');
-        console.log(result.rows);
+        //console.log('\nTOPICS');
+        //console.log(result.rows);
         topics = result.rows;
         count++;
         if (count === 3) {
-          buildSequence(topics, comments, replies, '');
+          buildSequence(topics, comments, replies, '', channel);
         }
       }
   });
@@ -128,7 +154,7 @@ module.exports.buildWorld = function(cb) {
         comments = result.rows;
         count++;
         if (count === 3) {
-          buildSequence(topics, comments, replies, '');
+          buildSequence(topics, comments, replies, '', channel);
         }
       }
   });
@@ -144,11 +170,29 @@ module.exports.buildWorld = function(cb) {
         replies = result.rows;
         count++;
         if (count === 3) {
-          buildSequence(topics, comments, replies, '');
+          buildSequence(topics, comments, replies, '', channel);
         }
       }
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -215,6 +259,25 @@ module.exports.buildCountry = function(country) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports.buildCity = function(city) {
 
   console.log('executing build sequence');
@@ -274,6 +337,25 @@ module.exports.buildCity = function(city) {
       }
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports.buildState = function(state) {
 
@@ -350,10 +432,12 @@ module.exports.buildState = function(state) {
 
 
 
-buildSequence = function(topics, comments, replies, path, cb) {
+
+
+
+buildSequence = function(topics, comments, replies, path, channel) {
 
   console.log('executing build sequence');
-  //console.log('executing buildSequence with topics: ', topics);
 
   //Step 1, Build the SortedLinkedList representation of the tree
   var resultLinkedList = new SortedLinkedList();
@@ -363,30 +447,31 @@ buildSequence = function(topics, comments, replies, path, cb) {
     resultLinkedList.insert(topics[i]);
   }
 
-  for (var i=0;i<comments.length;i++) {
-    //have to pass in head to searchRecurse right now, not very clean
-    var topic = resultLinkedList.searchRecurse(resultLinkedList._head, comments[i].topic);
-    if (topic && !topic.comments) {
-      topic.comments = new SortedLinkedList();
-    }
-    //when does this become a problem though?
-    if (topic) {
-      topic.comments.insert(comments[i]);
-    }
-  }
+  // for (var i=0;i<comments.length;i++) {
+  //   //have to pass in head to searchRecurse right now, not very clean
+  //   var topic = resultLinkedList.searchRecurse(resultLinkedList._head, comments[i].topic);
+  //   if (topic && !topic.comments) {
+  //     topic.comments = new SortedLinkedList();
+  //     console.log('created new linked list for holding comments');
+  //   }
+  //   //when does this become a problem though?
+  //   if (topic) {
+  //     topic.comments.insert(comments[i]);
+  //   }
+  // }
 
-  for (var i=0;i<replies.length;i++) {
-    //have to pass in head to searchRecurse right now, not very clean
-    var topic = resultLinkedList.searchRecurse(resultLinkedList._head, replies[i].topic);
-    var comment = topic.comments.searchRecurse(topic.comments._head, replies[i].comment);
-    if (comment && !comment.replies) {
-      comment.replies = new SortedLinkedList();
-    }
-    //when does this become a problem though??
-    if (comment) {
-      comment.replies.insert(replies[i]);
-    }
-  }
+  // for (var i=0;i<replies.length;i++) {
+  //   //have to pass in head to searchRecurse right now, not very clean
+  //   var topic = resultLinkedList.searchRecurse(resultLinkedList._head, replies[i].topic);
+  //   var comment = topic.comments.searchRecurse(topic.comments._head, replies[i].comment);
+  //   if (comment && !comment.replies) {
+  //     comment.replies = new SortedLinkedList();
+  //   }
+  //   //when does this become a problem though??
+  //   if (comment) {
+  //     comment.replies.insert(replies[i]);
+  //   }
+  // }
 
 
   //Step 2, Build the JSON representation of the tree
@@ -441,21 +526,22 @@ buildSequence = function(topics, comments, replies, path, cb) {
   //have to have an exception for world because of my foolish naming
   if (path === '')
     path = 'World';
-  memcached.set(path, result, 100, function (err, result) {
+
+  var keyString = path+'~'+channel+'~TopTopics';
+  memcached.set(keyString, result, 1000, function (err, result) {
     if (err) {
       console.log(err);
     } else {
-      console.log('successfully inserted data');
-      console.log('treeBuilder complete');
-
+      console.log('successfully inserted data into: ', keyString);
     }
   });
 
 
   //callback for use in routes
-  if (cb) {
-    cb(result);
-  }
+  // if (cb) {
+  //   console.log('calling callback in build sequence');
+  //   cb(result);
+  // }
 
 
 

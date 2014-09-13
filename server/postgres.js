@@ -141,12 +141,6 @@ module.exports.createTopic = function(headline, link, contents, location, cb) {
     country = location
   }
 
-
-  //NEED TO WRITE SOME KIND OF PATHPARSER THAT I CAN USE IN
-  //VARIOUS PLACES AROUND THE APP
-
-  //needs to pass through group and subgroup
-  console.log('trying to insert', contents);
   //need to sanitize the sql parameters
   client.query("INSERT INTO topics (headline, link, contents, location, rank, "
     +"country, state, city) "

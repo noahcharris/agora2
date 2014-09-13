@@ -256,8 +256,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     pathView.render();
     pathView.setHandlers();
 
-
-
+    
     //#######################################
     //#########  TOPIC RETRIEVAL AJAX  ######
     //#######################################
@@ -266,11 +265,31 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //need alot more of these methods, topics-top, topics-new
 
     mapController.on('reloadSidebar', function(location) {
+      console.log('mapController event: reloadSidebar');
 
+
+      var urlPath;
+      switch(that.get('sidebarView').displayed) {
+        case 'Topics-Top':
+          urlPath = '/topics-top';
+          break;
+        case 'Topics-New':
+          urlPath = '/topics-new';
+          break;
+        case 'Topics-Hot':
+          urlPath = '/topics-hot';
+          break;
+        default:
+          urlPath = '';
+          break;
+      }
+
+      console.log('ajax request to: ', urlPath);
       $.ajax({
-        url: 'http://localhost:8080/topics',
+        url: 'http://localhost:8080'+urlPath,
         data: {
-          location: location
+          location: location,
+          channel: that.get('channel')
         },
         crossDomain: true,
         success: function(data) {
@@ -308,6 +327,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.on('reloadSidebarTopics', function(location) { 
 
       //TODO Go through cache manager here
+      console.log('AppController event: reloadSidebarTopics');
 
       var location = location || that.get('mapController').get('location');
 
@@ -327,20 +347,27 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           break;
       }
 
+      console.log('ajax request to: ', urlPath);
       $.ajax({
         url: 'http://localhost:8080' + urlPath,
-        data: {
-
-        },
         crossDomain: true,
         data: {
-          location: location
+          location: location,
+          channel: that.get('channel')
         },
         success: function(data) {
-          topicsCollection = data;
-          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-          sidebarView.collection.models = topicsCollection;
-          content1.show(sidebarView);
+          console.log('wooo');
+          if (data) {
+            topicsCollection = data;
+            console.log(data);
+            //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+            sidebarView.collection.models = topicsCollection;
+            content1.show(sidebarView); 
+          } else {
+            //nothing there I guess..
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
         }
 
       })
