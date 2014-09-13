@@ -48,8 +48,6 @@ amqp.connect('amqp://localhost').then(function(conn) {
 
       console.log(" [x] Received '%s'", body);
 
-      console.log('split up ', body.split(':'));
-
       // memcached.set(body, 'PLACEHOLDER', 10, function (err, result) {
       //   if (err) {
       //     console.log(err);
@@ -64,32 +62,32 @@ amqp.connect('amqp://localhost').then(function(conn) {
 
       //WOULD USE PATHPARSER HERE
 
-      if (body.split('~')[0] === 'Tree') {
+      if (body.split(':')[0] === 'Trees') {
         
-        if (body.split('~')[1] === '') {
-          tb.buildWorld(body.split('~')[2]);
-          console.log('building world tree on channel: ', body.split('~')[2]);
-        } else if (body.split('~')[1].split('/').length === 1) { 
-          tb.buildCountry(body.split('~')[1]);
-          console.log('building '+body.split('~')[1]+' tree on channel '+body.split('~')[2]);
-        } else if (body.split('~')[1].split('/').length === 2
-        && body.split('~')[1].split('/')[1] !== 'United States') {
-          tb.buildCity(body.split('~')[1]);
+        if (body.split(':')[1] === '') {
+          tb.buildWorld(body.split(':')[2]);
+          console.log('building world tree on channel: ', body.split(':')[2]);
+        } else if (body.split(':')[1].split('/').length === 1) { 
+          tb.buildCountry(body.split(':')[1]);
+          console.log('building '+body.split(':')[1]+' tree on channel '+body.split(':')[2]);
+        } else if (body.split(':')[1].split('/').length === 2
+        && body.split(':')[1].split('/')[1] !== 'United States') {
+          tb.buildCity(body.split(':')[1]);
         } else { 
-          tb.build(body.split('~')[1]);
+          tb.build(body.split(':')[1]);
         }
-        
+
         //need to pass this along in a callback
         ch.ack(msg);
-      } else if (body.split('~')[0] === 'Vote') {
+      } else if (body.split(':')[0] === 'Vote') {
         
         vt.buildProfile(body.split('~')[1]);
         ch.ack(msg);
         console.log(' [x] Done');
 
-      } else if (body.split('~')[0] === 'Feed') {
+      } else if (body.split(':')[0] === 'Feed') {
         //TODO
-      } else if (body.split('~')[0] === 'Search') {
+      } else if (body.split(':')[0] === 'Search') {
         //TODO
       } else {
         ch.ack(msg);

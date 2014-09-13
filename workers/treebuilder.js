@@ -447,31 +447,33 @@ buildSequence = function(topics, comments, replies, path, channel) {
     resultLinkedList.insert(topics[i]);
   }
 
-  // for (var i=0;i<comments.length;i++) {
-  //   //have to pass in head to searchRecurse right now, not very clean
-  //   var topic = resultLinkedList.searchRecurse(resultLinkedList._head, comments[i].topic);
-  //   if (topic && !topic.comments) {
-  //     topic.comments = new SortedLinkedList();
-  //     console.log('created new linked list for holding comments');
-  //   }
-  //   //when does this become a problem though?
-  //   if (topic) {
-  //     topic.comments.insert(comments[i]);
-  //   }
-  // }
+  for (var i=0;i<comments.length;i++) {
+    //have to pass in head to searchRecurse right now, not very clean
+    var topic = resultLinkedList.searchRecurse(resultLinkedList._head, comments[i].topic);
+    if (topic && !topic.comments) {
+      topic.comments = new SortedLinkedList();
+      console.log('created new linked list for holding comments');
+    }
+    //when does this become a problem though?
+    if (topic) {
+      topic.comments.insert(comments[i]);
+    }
+  }
 
-  // for (var i=0;i<replies.length;i++) {
-  //   //have to pass in head to searchRecurse right now, not very clean
-  //   var topic = resultLinkedList.searchRecurse(resultLinkedList._head, replies[i].topic);
-  //   var comment = topic.comments.searchRecurse(topic.comments._head, replies[i].comment);
-  //   if (comment && !comment.replies) {
-  //     comment.replies = new SortedLinkedList();
-  //   }
-  //   //when does this become a problem though??
-  //   if (comment) {
-  //     comment.replies.insert(replies[i]);
-  //   }
-  // }
+  for (var i=0;i<replies.length;i++) {
+    //have to pass in head to searchRecurse right now, not very clean
+    var topic = resultLinkedList.searchRecurse(resultLinkedList._head, replies[i].topic);
+    if (topic) {
+      var comment = topic.comments.searchRecurse(topic.comments._head, replies[i].comment);
+    }
+    if (comment && !comment.replies) {
+      comment.replies = new SortedLinkedList();
+    }
+    //when does this become a problem though??
+    if (comment) {
+      comment.replies.insert(replies[i]);
+    }
+  }
 
 
   //Step 2, Build the JSON representation of the tree
@@ -536,12 +538,6 @@ buildSequence = function(topics, comments, replies, path, channel) {
     }
   });
 
-
-  //callback for use in routes
-  // if (cb) {
-  //   console.log('calling callback in build sequence');
-  //   cb(result);
-  // }
 
 
 

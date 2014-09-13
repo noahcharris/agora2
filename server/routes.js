@@ -339,7 +339,7 @@ module.exports.createTopic = function(request, response) {
 
 
             // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
-            var msg = 'Tree~'+request.body.location+'~'+request.body.channel;
+            var msg = 'Trees:'+request.body.location+':'+request.body.channel;
 
 
 
