@@ -43,18 +43,12 @@ Agora.Views.DetailView = Backbone.View.extend({
 
     var that = this;
     this.$el.empty();
-    if (this.view) {
-      this.view.close();
-    }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    console.log('applying click handler on: ', this.$el.children('img.x'));
     this.$el.children('img.x').click(function() {
       console.log('hello');
       that.app.get('content2').hide();
     });
-
-    //WOW WELL I GUESS THIS WAY IS MORE RELIABLE THAN JQUERY, GO FIGURE
 
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
@@ -138,6 +132,10 @@ Agora.Views.DetailView = Backbone.View.extend({
       //why do I need to use this selector?
       this.$el.children('div.responseBox').css('height', '100px');
     }
+
+
+
+
 
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);
     entryView.model = model;

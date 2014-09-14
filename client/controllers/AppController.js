@@ -38,7 +38,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#########  MOCK DATA  #################
     //#######################################
     
-    var topicsCollection = [{ id: 1,
+    var defaultCollection = [{ id: 1,
       headline: 'Defaults are desecrets',
       type: 'Topic',
       poster: 'thalonius want',
@@ -179,17 +179,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     var sidebarView = new Agora.Views.SidebarView(this); //collection from TopicsCollection
-    sidebarView.collection = topicsCollection;
+    sidebarView.collection = defaultCollection;
     sidebarView.searchCollection = searchCollection;
     sidebarView.messagesCollection = messagesCollection;
     sidebarView.usersCollection = usersCollection;
     this.set('sidebarView', sidebarView);
 
     var detailView = new Agora.Views.DetailView(this);
-    detailView.collection = topicsCollection;
-    detailView.searchCollection = searchCollection;
-    detailView.messagesCollection = messagesCollection;
-    detailView.usersCollection = usersCollection;
     this.set('detailView', detailView);
 
 
@@ -364,7 +360,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             sidebarView.collection.models = topicsCollection;
             content1.show(sidebarView); 
           } else {
-            //nothing there I guess..
+            console.log('memcached returned false');
+            sidebarView.collection.models = defaultCollection;
+            content1.show(sidebarView);
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -567,7 +565,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
 
         //this is where content2 changes the size of the sidebarcontainer
-        console.log('expanding sidebar');
         $('#sidebarContainer').css('width', $(window).width() * 0.75);
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();

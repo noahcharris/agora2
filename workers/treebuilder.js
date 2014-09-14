@@ -521,7 +521,7 @@ buildSequence = function(topics, comments, replies, path, channel) {
 
   buildTopicsRecurse(resultLinkedList._head, result);
 
-  console.log('RESULT JSON: ', result);
+  //console.log('RESULT JSON: ', result);
 
   //Step 3, Store JSON in memcached
 

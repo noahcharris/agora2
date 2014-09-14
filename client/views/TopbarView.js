@@ -34,6 +34,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       if (!that.app.get('expanded')) {
         that.app.get('content2').show(that.app.get('settingsView'));
       } else {
+        //this doesn't work
         if ($('#content2').children()[0].className === 'settingsView detailView') {
           that.app.get('content2').hide();
         } else {

@@ -35,7 +35,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     var $outerbox = $('<div class="outerbox">');
     //need to switch the image on click..
     var $outerButton = $('<img src="/resources/images/expand.png" class="commentResizeButton"></img>');
-    $outerbox.append($outerButton);
+    //$outerbox.append($outerButton);
 
     //append buttons beneath the topic
     var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
@@ -64,18 +64,17 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //console.log('model expansion value ', this.model.get('expanded'));
     //these model properties (upvoted, expanded) are available for use
     var outerCollapsed = true;
-    console.log($outerButton);
-    $outerButton[0].onclick = function(e) {
-      if (outerCollapsed) {
-        $(e.target).parent().css('height', 'auto');
-        $(e.target).attr('src', 'resources/images/contract.png');
-        outerCollapsed = false;
-      } else if (!outerCollapsed) {
-        $(e.target).parent().css('height', '150px');
-        $(e.target).attr('src', 'resources/images/expand.png');
-        outerCollapsed = true;
-      }
-    };
+    // $outerButton[0].onclick = function(e) {
+    //   if (outerCollapsed) {
+    //     $(e.target).parent().css('height', 'auto');
+    //     $(e.target).attr('src', 'resources/images/contract.png');
+    //     outerCollapsed = false;
+    //   } else if (!outerCollapsed) {
+    //     $(e.target).parent().css('height', '150px');
+    //     $(e.target).attr('src', 'resources/images/expand.png');
+    //     outerCollapsed = true;
+    //   }
+    // };
 
     for (var i=0;i<comments.length;i++) {
       
@@ -113,35 +112,28 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       $outerbox.append( $comment );
       var $innerbox = $('<div class="innerbox">');
       var $innerButton = $('<img src="resources/images/contract.png" class="replyResizeButton"></img>');
-      $innerbox.append($innerButton);
 
       //$commentUpvote = $('<img src="upvote.jpeg" height="20px" width="20px"></img>');
       //$outerbox.append($commentUpvote);
 
       //Yo I am seriously proud of this, it keeps a new variable 
       //for each button using closure scope
-      var f = function() {
-        var innerCollapsed = false;
-        $innerButton.on('click', function(e) {
-          if (!innerCollapsed) {
-            $(e.target).parent().css('height', '20px');
-            $(e.target).attr('src', 'resources/images/expand.png');
-            innerCollapsed = true;
-          } else if (innerCollapsed) {
-            $(e.target).parent().css('height', 'auto');
-            $(e.target).attr('src', 'resources/images/contract.png');
-            innerCollapsed = false;
-          }
-        });
-
-        //need to set voted if user has already voted 
-        var voted = false;
-        //$commentUpvote.on('click', function(e) {
-        //  console.log('comment upvote');
-        //});
-
-      };
-      f();
+      var innerCollapsed = false;
+      console.log('putting click handler on innerbutton');
+      console.log($innerButton);
+      $innerButton.on('click', function(e) {
+        console.log('heheeh');
+        if (!innerCollapsed) {
+          $(e.target).parent().css('height', '20px');
+          $(e.target).attr('src', 'resources/images/expand.png');
+          innerCollapsed = true;
+        } else if (innerCollapsed) {
+          $(e.target).parent().css('height', 'auto');
+          $(e.target).attr('src', 'resources/images/contract.png');
+          innerCollapsed = false;
+        }
+      });
+      $innerbox.append($innerButton);
 
       for (var j=0;j<comments[i].replies.length;j++) {
 
@@ -189,9 +181,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         
       }
       $outerbox.append($innerbox);
-
-      //FOR DEMONSTRATION PURPOSES (starts out showing a comment)
-      $outerbox.css('height', '150px');
 
 
 

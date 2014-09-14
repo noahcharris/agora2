@@ -139,18 +139,16 @@ Agora.Views.SidebarView = Backbone.View.extend({
       renderCollection = this.usersCollection;
     }
 
-    if (renderCollection) {
+    if (renderCollection.models) {
 
       _.each(this.subViews, function(subView) {
         subView.close();
       });
       this.subViews = [];
-      
+
       console.log(renderCollection);
 
       _.each(renderCollection.models, function(model) {
-
-        console.log(model);
 
         //wtf need to add this in server
         model.type = 'Topic';
@@ -178,6 +176,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryView.on('click', function(id, type) {
 
             that.app.get('detailView').displayed = 'Topics';
+            console.log('showing detail view in content2 from within entryView click handler')
             that.app.get('content2').show(that.app.get('detailView'), model);
             //that.app.get('detailView')[entryViewMethod](model);
             that.removeHighlights();
