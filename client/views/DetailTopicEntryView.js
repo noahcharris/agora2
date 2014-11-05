@@ -14,6 +14,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     this.topicTemplate = _.template( $('#detailTopicEntryTemplate').html() );
     this.commentTemplate = _.template( $('#detailCommentEntryTemplate').html() );
+    this.responseTemplate = _.template( $('#detailResponseEntryTemplate').html() );
     this.replyTemplate = _.template( $('#detailReplyEntryTemplate').html() );
 
   },
@@ -22,25 +23,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     var that = this;
 
-    //need to set voted to true if already voted
-    var voted = false;
-      //$topicUpvote.on('click', function(e) {
-      //console.log('topic upvote');
-    //});
-
     //append topic box
     this.$el.append( this.topicTemplate(this.model) );
 
     var comments = this.model.comments;
 
-    var $outerbox = $('<div class="outerbox">');
-    //need to switch the image on click..
-    var $outerButton = $('<img src="/resources/images/expand.png" class="commentResizeButton"></img>');
-    //$outerbox.append($outerButton);
-
-    //append buttons beneath the topic
-    var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
-    this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
 
     //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
     //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
@@ -48,6 +35,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
 
 
+    var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
     //sending data to the response box
     $topicReplyButton.on('click', function() {
       
@@ -61,22 +49,18 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       that.app.get('detailView').openResponseBox(responseParams);
 
     });
+    this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
 
 
 
 
     for (var i=0;i<comments.length;i++) {
       
-
       var $commentReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
+
       //sending data to the response box
-
       var a = function() {
-
         var x = i;
-
-        //DO I NEED TO PASS SUBGROUP ALONG AS WELL???????????
-        //SUBGROUP NEEDS ITS OWN VARIABLE IN mapController METHINKS
         $commentReplyButton.on('click', function() {
           var responseParams = {
             type: 'Comment',
@@ -97,81 +81,74 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //$comment.children('div.commentContentBox').append($starIcon);
       //$comment.children('div.commentContentBox').append($shareIcon);
 
-      $outerbox.append( $comment );
-      var $innerbox = $('<div class="innerbox">');
-      var $innerButton = $('<img src="resources/images/contract.png" class="replyResizeButton"></img>');
+      //APPEND COMMENT TO OUTERBOX
+      this.$el.append( $comment );
 
-      //$commentUpvote = $('<img src="upvote.jpeg" height="20px" width="20px"></img>');
-      //$outerbox.append($commentUpvote);
+      var $commentExpansionBox = $('<div class="commentExpansionBox">');
+      var $expandCommentButton = $('<img src="resources/images/expand.png" class="expandCommentButton"></img>');
 
-      //Yo I am seriously proud of this, it keeps a new variable 
-      //for each button using closure scope
-      var innerCollapsed = false;
-      $innerButton.on('click', function(e) {
-        console.log('heheeh');
-        if (!innerCollapsed) {
-          $(e.target).parent().css('height', '20px');
+      var commentCollapsed = true;
+      console.log('setting click handler');
+      console.log($expandCommentButton);
+      $expandCommentButton.on('click', function(e) {
+        console.log('whaha');
+        if (!commentCollapsed) {
+
+          //TODO
+          $(e.target).parent().next().css('height', '0px');
           $(e.target).attr('src', 'resources/images/expand.png');
-          innerCollapsed = true;
-        } else if (innerCollapsed) {
-          $(e.target).parent().css('height', 'auto');
+          commentCollapsed = true;
+        } else if (commentCollapsed) {
+
+          //TODO
+          $(e.target).parent().next().css('height', 'auto');
           $(e.target).attr('src', 'resources/images/contract.png');
-          innerCollapsed = false;
+          commentCollapsed = false;
         }
       });
-      $innerbox.append($innerButton);
 
-      for (var j=0;j<comments[i].replies.length;j++) {
+      $comment.append($expandCommentButton);
+      this.$el.append($commentExpansionBox);
 
-        var $replyReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
+
+      for (var j=0;j<comments[i].responses.length;j++) {
+
+        var $responseReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
 
         //sending data to the response box
         var b = function() {
-
           var x = i;
           var y = j;
-
-          $replyReplyButton.on('click', function() {
+          $responseReplyButton.on('click', function() {
             var responseParams = {
               type: 'Reply',
               location: that.app.get('mapController').get('location'),
               group: that.app.get('mapController').get('group'),
               topic: that.model.id,
               comment: comments[x].id,
-              username: comments[x].replies[y].poster
+              username: comments[x].responses[y].poster
             }
             that.app.get('detailView').openResponseBox(responseParams);
           });
         };
         b();
-        var $comment = $(this.replyTemplate(comments[i].replies[j]));
-        $comment.children('div.replyContentBox').append($replyReplyButton);
+
+
+        var $response = $(this.responseTemplate(comments[i].responses[j]));
+        $response.append($responseReplyButton);
+
+        //$comment.children('div.replyContentBox').append($replyReplyButton);
 
         //$starIcon = $('<img height="20px" width="20px" src="resources/images/star.png"></img>');
         //$shareIcon = $('<img height="20px" width="20px" src="resources/images/share.png"></img>');
         //$comment.children('div.replyContentBox').append($starIcon);
         //$comment.children('div.replyContentBox').append($shareIcon);
   
-        $innerbox.append( $comment );
-
-        var f = function() {
-          
-          //need to set voted if already voted
-          var voted = false;
-          //$replyUpvote.on('click', function(e) {
-          //  console.log('reply upvote');
-          //});
-        };
-        f();
-        
-        
+        $commentExpansionBox.append($response);
+         
       }
-      $outerbox.append($innerbox);
-
-
 
     }
-    this.$el.append($outerbox);
   },
 
   close: function() {

@@ -19,11 +19,17 @@ body {
 }
 
 #content1 {
-  display: inline;
+  position: relative;
+  float: left;
+  height: 100%;
+  width: auto;
 }
 
 #content2 {
-  display: inline;
+  position: relative;
+  float: left;
+  height: auto;
+  width: auto;
 }
 
 
@@ -447,9 +453,10 @@ body {
 /*** DETAIL-TOPIC VIEW *****/
 /***************************/
 
+/* AHGHGHG FUCKING NAME CONFLICTS WITH THE RESPONSES IN THE DISCUSSION */
 
 /* REPONSE BOX */
-.responseBox {
+#responseBox {
   background-color: #57646D;
   border-style: solid;
   border-width: 2px;
@@ -578,6 +585,32 @@ body {
   margin:0px;
 }
 
+/* RESPONSES */
+.responseBox {
+  position: relative;
+  width: 100%;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: black;
+}
+.responseUpvoteBox {
+  position: relative;
+  left: 10px;
+  width: 10%;
+}
+.responseContentBox {
+  width: 100%;
+}
+.responseHeader {
+  font-size: 20px;
+}
+.response {
+  font-family: 'clearThin';
+  padding: 0px;
+  margin:0px;
+}
+
 
 /* REPLIES */
 .replyBox {
@@ -614,19 +647,23 @@ body {
 
 
 /* EXPANSION/CONTRACTION */
-.commentResizeButton {
-  position: absolute;
-  left: 10px;
+
+.expandCommentButton {
+  cursor: pointer;
+  position: relative;
   height: 20px;
   width: 20px;
 }
 
-.replyResizeButton {
-  position: absolute;
-  left: 54px;
-  height: 20px;
-  width: 20px;
+.commentExpansionBox {
+  position: relative;
+  width: 90%;
+  left: 10%;
+  height: 0px;
+  overflow: hidden;
 }
+
+
 
 .innerbox {
   width: 100%;

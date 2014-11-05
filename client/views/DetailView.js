@@ -96,7 +96,13 @@ Agora.Views.DetailView = Backbone.View.extend({
             //TODO
           }
         });
-      } else if (that.responseData.type === 'Comment' ||
+      } else if (that.responseData.type === 'Comment') {
+
+        //TODO
+        //send a response generating ajax request
+
+
+      } else if (that.responseData.type === 'Response' ||
         that.responseData.type === 'Reply') {
 
         $.ajax({
@@ -137,7 +143,7 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.$el.children('div.responseBox').css('height', '100px');
     }
 
-    
+
 
 
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);

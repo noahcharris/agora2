@@ -54,8 +54,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         poster: 'J-aldrean',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
-        expanded: false,    //these are for each group of replies
-        replies: [{
+        expanded: false,    //these are for each group of responses
+        responses: [{
             poster: 'Mr. Bean',
             headline: 'fuck off',
             contents: 'You sir, are a ruffian.',
@@ -73,7 +73,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
-        replies: [{
+        responses: [{
             poster: 'Heckles',
             headline: 'fuck off',
             contents: 'Just the one.'
@@ -98,7 +98,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           contents: 'This dream, no more a dream than waking',
           upvoted: false,
           expanded: false,
-          replies: [{
+          responses: [{
               poster: 'Mr. Bean',
               contents: 'You sir, are a ruffian.',
               upvoted: false,
@@ -113,7 +113,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           contents: 'Ok, but how about them yanks?',
           upvoted: false,
           expanded: false,
-          replies: [{
+          responses: [{
               poster: 'Heckles',
               contents: 'Just the one.',
               upvoted: false,
@@ -485,12 +485,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var currentView = null;
     var that = this;
 
-    var closeView = function(view) {
-      if (view && view.close) {
-        view.close();
-      }
-    };
-
     //I'm going to put a callback into content2.show for
     //cases like response box
     region.show = function(view, model) {
@@ -519,6 +513,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }
 
 
+      if (currentView && currentView.close) {
+        currentView.close();
+      }
 
 
       if (that.get('expanded')) {
@@ -527,9 +524,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         //TODO
         $('.sidebarView').css('width', sideWidth+'px');
 
-        if (currentView && currentView.close) {
-          currentView.close();
-        }
         currentView = view;
         if (view) {
           view[renderMethod](model);
@@ -540,15 +534,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             view.setHandlers();
         }
         $('.detailView').css('width', ($(window).width() * 0.75) - sideWidth - 5);
+
       } else {
 
         that.set('expanded', true);
         //as long as I don't have any other listeners on the sidebarContainer this will work
         //$('#sidebarContainer').unbind();
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
-          if (currentView) {
-            currentView.close();  
-          }
+
           currentView = view;
           if (view) {
             view[renderMethod](model);
@@ -566,6 +559,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('.sidebarView').css('width', sideWidth+'px');
           //need the extra -2 for borders?
           $('.detailView').css('width', ($(window).width() * 0.75) - sideWidth - 5);
+          $('#sidebarContainer').unbind();
         });
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
 
