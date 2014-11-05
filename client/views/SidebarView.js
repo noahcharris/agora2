@@ -146,7 +146,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       });
       this.subViews = [];
 
-      console.log(renderCollection);
+      console.log('rendering sidebar with collection: ', renderCollection);
 
       _.each(renderCollection.models, function(model) {
 
@@ -210,9 +210,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.displayed !== 'Topics-Top') {
 
         that.displayed = 'Topics-Top';
+        //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
-        //this call might be unecessary
-        that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#f8f8f8');
       $('.middleThirdButton').css('background-color', '#E8E8E8');
@@ -223,8 +222,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.topicFilter !== 'New') {
 
         that.displayed = 'Topics-New';
+        //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
-        that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#E8E8E8');
       $('.middleThirdButton').css('background-color', '#f8f8f8');
@@ -235,8 +234,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
       if (that.topicFilter !== 'Hot') {
 
         that.displayed = 'Topics-Hot';
+        //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
-        that.app.get('content1').show(that);
       }
       $('.leftThirdButton').css('background-color', '#E8E8E8');
       $('.middleThirdButton').css('background-color', '#E8E8E8');

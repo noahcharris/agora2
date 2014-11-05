@@ -22,7 +22,6 @@ Agora.Views.ChannelView = Backbone.View.extend({
     //TODO- Preston's suggestion, give it click interaction with searchability
 
     var channel = this.app.get('channel');
-    console.log('rendering channelView with channel: ', channel);
     this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')); //<strong>' + channel + '</strong>&nbsp</span>'));
     var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
@@ -77,7 +76,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
   setHandlers: function() {
 
     var that = this;
-    
+
     // $('.channelView').on('click', function(e) {
     //   that.$el.empty();
     //   that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));

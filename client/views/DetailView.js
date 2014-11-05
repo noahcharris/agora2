@@ -42,11 +42,9 @@ Agora.Views.DetailView = Backbone.View.extend({
     var that = this;
     this.$el.empty();
 
-    console.log('MODEL: ', model);
-
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    
     this.$el.children('img.x').click(function() {
-      console.log('hello');
       that.app.get('content2').hide();
     });
 
@@ -140,7 +138,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     this.$el.children('ul').append(entryView.$el);
     this.view = entryView;
 
-    
+
   }, 
 
 
@@ -221,7 +219,6 @@ Agora.Views.DetailView = Backbone.View.extend({
   close: function() {
     this.app.get('sidebarView').removeHighlights();
     //this.closeResponseBox();
-    console.log('closing detailView');
     if (this.view) {
       this.view.close();
     }

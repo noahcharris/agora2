@@ -120,8 +120,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //Yo I am seriously proud of this, it keeps a new variable 
       //for each button using closure scope
       var innerCollapsed = false;
-      console.log('putting click handler on innerbutton');
-      console.log($innerButton);
       $innerButton.on('click', function(e) {
         console.log('heheeh');
         if (!innerCollapsed) {

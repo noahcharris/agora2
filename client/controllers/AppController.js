@@ -160,7 +160,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-    // ## VIEW AND MODELS ##
+    //#######################################
+    //#########  VIEWS AND MODELS  ##########
+    //#######################################
 
 
     var topbarModel = { user: 'not logged in'};
@@ -254,6 +256,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     pathView.setHandlers();
 
     
+
+
     //#######################################
     //#########  TOPIC RETRIEVAL AJAX  ######
     //#######################################
@@ -355,7 +359,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         success: function(data) {
           if (data) {
             topicsCollection = data;
-            console.log(data);
+            console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
             sidebarView.collection.models = topicsCollection;
             content1.show(sidebarView); 
