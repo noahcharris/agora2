@@ -13,7 +13,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
   initialize: function(appController) {
-    this.responseBox = _.template( $('#responseBoxTemplate').html() );
+    this.responseBoxTemplate = _.template( $('#responseBoxTemplate').html() );
     this.app = appController;
 
     //!!!!!hopefully this will help to solve the problems with rendering detailView shit
@@ -43,14 +43,16 @@ Agora.Views.DetailView = Backbone.View.extend({
     this.$el.empty();
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    
-    this.$el.children('img.x').click(function() {
-      that.app.get('content2').hide();
-    });
 
+    // this.$el.children('img.x').click(function() {
+    //   that.app.get('content2').hide();
+    // });
+
+    //this one appears to work much better than the one above, why is that?
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
     }
+
 
     this.$el.append($('<ul class="detailInnerList"></ul>'));
 
@@ -58,6 +60,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     //console.log('appending response box in render responding: ',this.responding);
     //USE this.responseData here so users won't lose their changes
 
+    //!!!!!
     //this.$el.append(this.responseBoxTemplate());
 
     //##############################
@@ -126,10 +129,15 @@ Agora.Views.DetailView = Backbone.View.extend({
       that.closeResponseBox();
     });
 
+
+
+
     if (this.responding) {
       //why do I need to use this selector?
       this.$el.children('div.responseBox').css('height', '100px');
     }
+
+    
 
 
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);

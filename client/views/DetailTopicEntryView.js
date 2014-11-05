@@ -28,8 +28,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //console.log('topic upvote');
     //});
 
+    //append topic box
     this.$el.append( this.topicTemplate(this.model) );
-
 
     var comments = this.model.comments;
 
@@ -41,10 +41,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //append buttons beneath the topic
     var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
     this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
-    $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
-    $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
-    this.$el.children('div.topicBox').children('div.topicContentBox').append($starIcon);
-    this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
+
+    //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
+    //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
+    //this.$el.children('div.topicBox').children('div.topicContentBox').append($starIcon);
+    //this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
 
 
     //sending data to the response box
@@ -62,20 +63,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     });
 
 
-    //console.log('model expansion value ', this.model.get('expanded'));
-    //these model properties (upvoted, expanded) are available for use
-    var outerCollapsed = true;
-    // $outerButton[0].onclick = function(e) {
-    //   if (outerCollapsed) {
-    //     $(e.target).parent().css('height', 'auto');
-    //     $(e.target).attr('src', 'resources/images/contract.png');
-    //     outerCollapsed = false;
-    //   } else if (!outerCollapsed) {
-    //     $(e.target).parent().css('height', '150px');
-    //     $(e.target).attr('src', 'resources/images/expand.png');
-    //     outerCollapsed = true;
-    //   }
-    // };
+
 
     for (var i=0;i<comments.length;i++) {
       
@@ -104,11 +92,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       var $comment = $(this.commentTemplate(comments[i]));
       $comment.children('div.commentContentBox').append($commentReplyButton);
-      //stars and shares for comments
-      $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
-      $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
-      $comment.children('div.commentContentBox').append($starIcon);
-      $comment.children('div.commentContentBox').append($shareIcon);
+      //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
+      //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
+      //$comment.children('div.commentContentBox').append($starIcon);
+      //$comment.children('div.commentContentBox').append($shareIcon);
 
       $outerbox.append( $comment );
       var $innerbox = $('<div class="innerbox">');
@@ -160,10 +147,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         var $comment = $(this.replyTemplate(comments[i].replies[j]));
         $comment.children('div.replyContentBox').append($replyReplyButton);
 
-        $starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
-        $shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
-        $comment.children('div.replyContentBox').append($starIcon);
-        $comment.children('div.replyContentBox').append($shareIcon);
+        //$starIcon = $('<img height="20px" width="20px" src="resources/images/star.png"></img>');
+        //$shareIcon = $('<img height="20px" width="20px" src="resources/images/share.png"></img>');
+        //$comment.children('div.replyContentBox').append($starIcon);
+        //$comment.children('div.replyContentBox').append($shareIcon);
   
         $innerbox.append( $comment );
 

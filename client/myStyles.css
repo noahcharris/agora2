@@ -399,6 +399,10 @@ body {
   position: relative;
   float: right;
   overflow: hidden;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
   top: 0px;
   right: 0px;
   display: inline-block;
@@ -417,10 +421,6 @@ body {
 .detailEntryItem {
   background-color: #f8f8f8;
   overflow: hidden;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-width: 2px;
-  border-color: #E8E8E8;
   position: relative;
   width: 97%;
   padding-top: 10px;
@@ -507,10 +507,11 @@ body {
 }
 
 
+/* DISCUSSION TEMPLATES */  
+
 .replyButton {
   cursor: pointer;
   position: relative;
-  float: left;
   height: 25px;
   width: 57px;
   margin: 10px 0px;
@@ -524,36 +525,28 @@ body {
   padding: 6px;
 }
 
-.yolo {
-  float: left;
-  margin-left: 15px;
-  margin-top: 12px;
-}
-
 
 /* TOPICS */
 .topicBox {
   position: relative;
   width: 100%;
+  height: auto;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
-
 .topicUpvoteBox {
   position: relative;
   left: 10px;
   float:left;
   width:10%;
-
 }
-
 .topicContentBox {
-  float: left;
   width: 90%;
 }
-
 .topicHeader {
   font-size: 20px;
 }
-
 .topic {
   font-family: 'clearThin';
   margin-bottom: 0px;
@@ -561,30 +554,24 @@ body {
 
 /* COMMENTS */
 .commentBox {
-/*  border-style: solid;
-  border-width: 1px;
-  border-color: #E8E8E8;*/
   position: relative;
-  float:right;
-  width: 90%;
+  width: 100%;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
-
 .commentUpvoteBox {
   position: relative;
-  float: left;
   left: 10px;
   width: 10%;
 }
-
 .commentContentBox {
-  float: left;
-  width: 90%;
+  width: 100%;
 }
-
 .commentHeader {
   font-size: 20px;
 }
-
 .comment {
   font-family: 'clearThin';
   padding: 0px;
@@ -601,24 +588,23 @@ body {
   position: relative;
   float: right;
   width: 83%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
-
 .replyUpvoteBox {
   position: relative;
   float: left;
   left: 10px;
   width: 10%;
 }
-
 .replyContentBox {
   float: left;
   width: 90%;
 }
-
 .replyHeader {
   font-size: 20px;
 }
-
 .reply {
   font-family: 'clearThin';
   position: relative;
@@ -640,11 +626,6 @@ body {
   left: 54px;
   height: 20px;
   width: 20px;
-}
-
-.outerbox {
-  width:100%;
-  overflow: hidden;
 }
 
 .innerbox {
