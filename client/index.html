@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- this is supposed to help w/ mobile sizing problem -->
     <title>Agora</title>
      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"></link>
      <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
@@ -280,7 +279,6 @@
     <script src="dependencies/jquery/jquery.js"></script>
     <script src="dependencies/underscore/underscore.js"></script>
     <script src="dependencies/backbone/backbone.js"></script>
-    <script src="dependencies/underscore/underscore.js"></script>
 
     <!--<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>-->
     <!--<script src="leaflet.js"></script>-->
@@ -358,9 +356,7 @@
     <script>
       $(function(){
 
-        var params = {};
-
-        var appController = new Agora.Controllers.AppController(params);
+        var appController = new Agora.Controllers.AppController();
 
       });
     </script>

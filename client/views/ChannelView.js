@@ -77,7 +77,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
   setHandlers: function() {
 
     var that = this;
-    console.log('#searchChannelButton');
+    
     // $('.channelView').on('click', function(e) {
     //   that.$el.empty();
     //   that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));

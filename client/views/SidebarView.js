@@ -173,10 +173,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
           //####### ENTRYVIEW CLICK EVENT #########
           //#######################################
 
+          //need to use the above pattern with this detailView rendering shit
+
           entryView.on('click', function(id, type) {
 
             that.app.get('detailView').displayed = 'Topics';
-            console.log('showing detail view in content2 from within entryView click handler')
+            console.log('using region manager 2 to open up detailView and passing through model: ', model);
             that.app.get('content2').show(that.app.get('detailView'), model);
             //that.app.get('detailView')[entryViewMethod](model);
             that.removeHighlights();

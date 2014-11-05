@@ -25,7 +25,7 @@ Agora.Views.DetailView = Backbone.View.extend({
   },
 
   render: function() {
-    console.log('something called render on DetailView, but all this does is draw a closed button');
+    console.log('something called render on DetailView, but all this does is nothing');
 
     // this.$el.empty();
     // if (this.view) {
@@ -39,10 +39,10 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   renderTopic: function(model) {
 
-    console.log('rendering detail topic');
-
     var that = this;
     this.$el.empty();
+
+    console.log('MODEL: ', model);
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').click(function() {
@@ -134,14 +134,13 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
 
-
-
-
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);
     entryView.model = model;
     entryView.render();
     this.$el.children('ul').append(entryView.$el);
     this.view = entryView;
+
+    
   }, 
 
 

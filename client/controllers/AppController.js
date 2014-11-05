@@ -9,7 +9,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-  initialize: function(params) {
+  initialize: function() {
 
     this.set('expanded', false);
     //whether we are displaying sidebar and map side-by-side or in lieu of each other
@@ -50,27 +50,32 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       expanded: true,   //this is for the outer expansion/contraction button
       comments: [{
         id: 22,
+        headline: 'fuck off',
         poster: 'J-aldrean',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
         expanded: false,    //these are for each group of replies
         replies: [{
             poster: 'Mr. Bean',
+            headline: 'fuck off',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
         }, {
             poster: 'Mr. Bean',
+            headline: 'fuck off',
             contents: 'I mean it..',
             upvoted: false,
         }]
       }, {
         id: 87,
+        headline: 'fuck off',
         poster: 'Jason Aldean',
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
         replies: [{
             poster: 'Heckles',
+            headline: 'fuck off',
             contents: 'Just the one.'
         }]
       }] 
@@ -189,11 +194,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('detailView', detailView);
 
 
-
-
-
-
-
     var settingsView = new Agora.Views.SettingsView(this);
     this.set('settingsView', settingsView);
 
@@ -230,6 +230,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('placementView', placementView);
 
 
+    //WHAT THE FUCK??
     //need to use this setTimeout otherwise the cancelled tiles are loaded
     setTimeout(function() { Backbone.history.start(); }, 10);
 
@@ -352,7 +353,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           channel: that.get('channel')
         },
         success: function(data) {
-          console.log('wooo');
           if (data) {
             topicsCollection = data;
             console.log(data);
@@ -492,6 +492,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     region.show = function(view, model) {
 
 
+      //if we're showing a topic we have to do some dumb shit apparently
       var renderMethod;
 
       if (that.get('detailView').displayed === 'Topics') {
@@ -570,18 +571,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
         $('.sidebarView').css('width', sideWidth+'px');
-
-
-
       }
     };
+
+
+
+
 
     region.hide = function() {
       if (currentView && currentView.close) {
         currentView.close();
       }
       currentView = null;
-      $('#sidebarContainer').unbind();
       $('#sidebarContainer').css('-webkit-transition-duration', '1s');
       var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
       var sideWidth = $(window).width() - mapWidth;

@@ -27,6 +27,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //$topicUpvote.on('click', function(e) {
       //console.log('topic upvote');
     //});
+
     this.$el.append( this.topicTemplate(this.model) );
 
 
