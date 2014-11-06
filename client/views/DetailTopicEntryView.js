@@ -3,7 +3,7 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
-  tagName: 'li',
+  tagName: 'div',
 
   className: 'detailEntryItem',
 
@@ -88,9 +88,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var $expandCommentButton = $('<img src="resources/images/expand.png" class="expandCommentButton"></img>');
 
       var commentCollapsed = true;
-      console.log('setting click handler');
-      console.log($expandCommentButton);
-      $expandCommentButton.on('click', function(e) {
+
+      //this fixed the problem like in detailView, but why??
+      $expandCommentButton[0].onclick = function(e) {
         console.log('whaha');
         if (!commentCollapsed) {
 
@@ -105,9 +105,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           $(e.target).attr('src', 'resources/images/contract.png');
           commentCollapsed = false;
         }
-      });
+      };
 
       $comment.append($expandCommentButton);
+
       this.$el.append($commentExpansionBox);
 
 

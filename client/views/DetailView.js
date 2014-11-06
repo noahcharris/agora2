@@ -42,9 +42,13 @@ Agora.Views.DetailView = Backbone.View.extend({
     var that = this;
     this.$el.empty();
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    var $x = $('<img src="resources/images/x.png" class="x"></img>')
 
-    // this.$el.children('img.x').click(function() {
+
+    this.$el.append( $x );
+
+    // $x.on('click', function() {
+    //   console.log('ugh');
     //   that.app.get('content2').hide();
     // });
 
@@ -53,8 +57,22 @@ Agora.Views.DetailView = Backbone.View.extend({
       that.app.get('content2').hide();
     }
 
+    var slideIn = function() {
+      that.app.get('content2').hide(); 
+    }
 
-    this.$el.append($('<ul class="detailInnerList"></ul>'));
+
+    // document.getElementsByClassName('x').onclick = function() {
+    //   that.app.get('content2').hide();
+    // }
+
+    console.log(document.getElementsByClassName('x'));
+    // document.getElementsByClassName('x')[0].addEventListener('click', function() {
+    //   that.app.get('content2').hide();
+    // });
+
+
+    //console.log(' MAH SHIT ', this.$el.children('img.x')[0].onclick );
 
     // ## RESPONSE BOX ##
     //console.log('appending response box in render responding: ',this.responding);
@@ -149,7 +167,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    this.$el.children('ul').append(entryView.$el);
+    this.$el.append(entryView.$el);
     this.view = entryView;
 
 
@@ -174,8 +192,8 @@ Agora.Views.DetailView = Backbone.View.extend({
 
     var entryView = new Agora.Views.DetailMessageEntryView(this.app);
     entryView.model = model;
-    entryView.render();
     this.$el.children('ul').append(entryView.$el);
+    entryView.render();
     this.view = entryView;
   
   },

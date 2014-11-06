@@ -403,12 +403,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#sidebarContainer').css('-webkit-transition-duration', '0s');
           $('#sidebarContainer').css('width', sidebarWidth+'px');
 
-          $('.sidebarView').css('width', sidebarWidth+'px');
+          $('#content1').css('width', sidebarWidth+'px');
 
         } else {
-          $('.sidebarView').css('width', sidebarWidth+'px');
+          $('#content1').css('width', sidebarWidth+'px');
           //need the extra -2 for borders?
-          $('.detailView').css('width', ($(window).width() * 0.75) - sidebarWidth - 5);
+          $('#content2').css('width', ($(window).width() * 0.75) - sidebarWidth - 5);
           //maybe turn off animations here
           $('#sidebarContainer').css('-webkit-transition-duration', '0s');
           $('#sidebarContainer').css('width', $(window).width() * 0.75);
@@ -432,6 +432,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $(window).on('resize', throttledResize);
 
     throttledResize();
+
+    var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+    var sideWidth = $(window).width() - mapWidth;
+    $('#content1').css('width', sideWidth+'px');
+
+
     
   },
 
@@ -522,7 +528,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
         //TODO
-        $('.sidebarView').css('width', sideWidth+'px');
+        $('#content1').css('width', sideWidth+'px');
 
         currentView = view;
         if (view) {
@@ -533,7 +539,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (view.setHandlers)
             view.setHandlers();
         }
-        $('.detailView').css('width', ($(window).width() * 0.75) - sideWidth - 5);
+        $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
 
       } else {
 
@@ -556,9 +562,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //need to set the css for detailView after expansion
           var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
           var sideWidth = $(window).width() - mapWidth;
-          $('.sidebarView').css('width', sideWidth+'px');
+          $('#content1').css('width', sideWidth+'px');
           //need the extra -2 for borders?
-          $('.detailView').css('width', ($(window).width() * 0.75) - sideWidth - 5);
+          $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
           $('#sidebarContainer').unbind();
         });
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
@@ -568,7 +574,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
-        $('.sidebarView').css('width', sideWidth+'px');
+        $('#content1').css('width', sideWidth+'px');
       }
     };
 
@@ -577,6 +583,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     region.hide = function() {
+      //debugger;
       if (currentView && currentView.close) {
         currentView.close();
       }

@@ -18,20 +18,6 @@ body {
   margin: 0px;
 }
 
-#content1 {
-  position: relative;
-  float: left;
-  height: 100%;
-  width: auto;
-}
-
-#content2 {
-  position: relative;
-  float: left;
-  height: auto;
-  width: auto;
-}
-
 
 
 
@@ -193,27 +179,28 @@ body {
 
 
 
-/*might be removing this in agora2*/
-/****************/
-/*** DROPDOWN  ***/
-/****************/
 
-/*#dropdownView {
-  overflow: hidden;
-  background-color: #57646D;
-  position: absolute;
-  z-index: 1000;
-  height: 0px;
-  width: 100%;
-  border-width: 2px;
-  border-style: solid;
-  -webkit-transition-duration:0.4s;
-  -moz-transition-duration:1s;
+#content1 {
+  position: relative;
+  height: 100%;
+  width: auto;
 }
 
-*/
-
-
+#content2 {
+  position: absolute;
+  right: 0px;
+  width: 510px;
+  height: 600px;
+  position: absolute;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  background-color: #f8f8f8;
+}
 
 
 /****************/
@@ -400,11 +387,9 @@ body {
 
 .detailView {
   /*width is set dynamically*/
-  width: 510px;
+  width: 100%;
   height: 100%;
   position: relative;
-  float: right;
-  overflow: hidden;
   border-bottom-style: solid;
   border-left-style: solid;
   border-width: 2px;
@@ -415,20 +400,12 @@ body {
   background-color: #f8f8f8;
 }
 
-.detailInnerList {
-  margin: 0px;
-  list-style:none;
-  padding-left:0;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-}
-
 .detailEntryItem {
   background-color: #f8f8f8;
-  overflow: hidden;
+  overflow-y: scroll;
   position: relative;
   width: 97%;
+  height: 100%;
   padding-top: 10px;
   z-index: 0;
 }
@@ -442,10 +419,10 @@ body {
   cursor: pointer;
   height: 20px;
   width: 20px;
-  position:absolute;
+  position: absolute;
   right: 6px;
   top: 2px;
-  z-index:100;
+  z-index: 100;
 }
 
 
