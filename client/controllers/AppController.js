@@ -509,25 +509,30 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       //if we're showing a topic we have to do some dumb shit apparently
       var renderMethod;
 
-      if (that.get('detailView').displayed === 'Topics') {
-        switch (that.get('sidebarView').displayed) {
-          case 'Topics-Top':
-            renderMethod = 'renderTopic'
-            break;
-          case 'Topics-New':
-            renderMethod = 'renderTopic'
-            break;
-          case 'Topics-Hot':
-            renderMethod = 'renderTopic'
-            break;
-          default:
-            renderMethod = 'render';
-            break;
-        }
-      } else {
-        renderMethod = 'render';
+      switch (that.get('detailView').displayed) {
+        case 'Topics-Top':
+          renderMethod = 'renderTopic';
+          break;
+        case 'Topics-New':
+          renderMethod = 'renderTopic';
+          break;
+        case 'Topics-Hot':
+          renderMethod = 'renderTopic';
+          break;
+        case 'Topics':
+          renderMethod = 'renderTopic';
+          break;
+        case 'Messages':
+          renderMethod = 'renderMessage';
+          break;
+        case 'Users':
+          renderMethod = 'renderUser';
+          break;
+        default:
+          renderMethod = 'render';
+          break;
       }
-
+      console.log('render method: ', renderMethod);
 
       if (currentView && currentView.close) {
         currentView.close();

@@ -3,7 +3,7 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
-  tagName: 'li',
+  tagName: 'div',
 
   className: 'detailEntryItem',
 
@@ -12,10 +12,10 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
   },
 
   render: function() {
-    console.log(this.model.toJSON());
-    this.$el.html(this.template(this.model.toJSON()));
+    console.log(this.model);
+    this.$el.html( this.template(this.model) );
     var $messageButton = $('<button>SEND MESSAGE</button>');
-    messageButton.on('click', function(params) {
+    $messageButton.on('click', function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
     });

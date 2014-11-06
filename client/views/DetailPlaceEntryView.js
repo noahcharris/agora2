@@ -3,7 +3,7 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailPlaceEntryView = Backbone.View.extend({
 
-  tagName: 'li',
+  tagName: 'div',
 
   className: 'detailEntryItem',
 

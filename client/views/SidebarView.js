@@ -167,6 +167,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
           var entryView = new Agora.Views.SidebarEntryView({ model: model });
           entryView[entryViewMethod]();
 
+
+
+
+
+
           //#######################################
           //####### ENTRYVIEW CLICK EVENT #########
           //#######################################
@@ -175,7 +180,17 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           entryView.on('click', function(id, type) {
 
-            that.app.get('detailView').displayed = 'Topics';
+            //SOME BULSSLHIT RIGHT HURR
+            if (model.type === 'Topic')
+              that.app.get('detailView').displayed = 'Topics';
+            if (model.type === 'Message')
+              that.app.get('detailView').displayed = 'Messages';
+            if (model.type === 'User')
+              that.app.get('detailView').displayed = 'Users';
+
+              
+
+
             console.log('using region manager 2 to open up detailView and passing through model: ', model);
             that.app.get('content2').show(that.app.get('detailView'), model);
             //that.app.get('detailView')[entryViewMethod](model);

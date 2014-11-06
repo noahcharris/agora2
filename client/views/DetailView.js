@@ -57,11 +57,6 @@ Agora.Views.DetailView = Backbone.View.extend({
       that.app.get('content2').hide();
     }
 
-    var slideIn = function() {
-      that.app.get('content2').hide(); 
-    }
-
-
     // document.getElementsByClassName('x').onclick = function() {
     //   that.app.get('content2').hide();
     // }
@@ -179,6 +174,8 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   renderMessage: function(model) {
 
+    console.log('rendering message with model: ', model);
+
     var that = this;
     this.$el.empty();
     if (this.view) {
@@ -186,14 +183,14 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    this.$el.children('img.x').on('click', function() {
+    this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
-    });
+    };
 
     var entryView = new Agora.Views.DetailMessageEntryView(this.app);
     entryView.model = model;
-    this.$el.children('ul').append(entryView.$el);
+    this.$el.append(entryView.$el);
     entryView.render();
     this.view = entryView;
   
@@ -208,15 +205,15 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    this.$el.children('img.x').on('click', function() {
+    this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
-    });
+    };
 
     var entryView = new Agora.Views.DetailUserEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    this.$el.children('ul').append(entryView.$el);
+    this.$el.append(entryView.$el);
     this.view = entryView;
 
   },
@@ -238,7 +235,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     var entryView = new Agora.Views.DetailPlaceEntryView(this.app);
     entryView.model = model;
     entryView.render();
-    this.$el.children('ul').append(entryView.$el);
+    this.$el.append(entryView.$el);
     this.view = entryView;
 
   },

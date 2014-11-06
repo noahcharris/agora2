@@ -15,11 +15,12 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
     $('#registrationButton').on('click', function() {
+      var previousDisplayed = that.app.get('detailView').displayed;
       that.app.get('detailView').displayed = 'Registration';
       if (!that.app.get('expanded')) {
         that.app.get('content2').show(that.app.get('registrationView'));
       } else {
-        if ($('#content2').children()[0].className === 'registrationView detailView') {
+        if (previousDisplayed === 'Registration') {
           that.app.get('content2').hide();
         } else {
           that.app.get('content2').show(that.app.get('registrationView'));
@@ -30,12 +31,14 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
     $('#settingsButton').on('click', function() {
+      var previousDisplayed = that.app.get('detailView').displayed;
       that.app.get('detailView').displayed = 'Settings';
       if (!that.app.get('expanded')) {
         that.app.get('content2').show(that.app.get('settingsView'));
       } else {
         //this doesn't work
-        if ($('#content2').children()[0].className === 'settingsView detailView') {
+        console.log(that.app.get('detailView').displayed);
+        if (previousDisplayed === 'Settings') {
           that.app.get('content2').hide();
         } else {
           that.app.get('content2').show(that.app.get('settingsView'));
@@ -52,31 +55,39 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
+
+
+
     //event listener on the "hello:" is set by pathView
 
     $('#messagingButton').on('click', function() {
+
+      var previousDisplayed = that.app.get('detailView').displayed;
+
       that.app.get('sidebarView').displayed = 'Messages';
       that.app.get('detailView').displayed = 'Messages';
 
       //set messagesCollection?
       // that.app.get('sidebarView').collection.models = that.app.messagesCollection;
       // console.log(that.app.get('sidebarView').collection.models);
-      
+
       that.app.get('content1').show(that.app.get('sidebarView'));
       if (!that.app.get('expanded')) {
         that.app.get('content2').show(that.app.get('detailView'));
       } else {
-        // TODO
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //guess i need to change this classname?
-        if ($('#content2').children()[0].className === 'fjkdla;fajlk') {
+        if (previousDisplayed === 'Messages') {
           that.app.get('content2').hide();
         } else {
           that.app.get('content2').show(that.app.get('detailView'));
         }
       }
     });
+
+
+
+
+
 
     $('#notificationsButton').on('click', function() {
       alert('notifications');

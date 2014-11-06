@@ -5,7 +5,7 @@ window.Agora.Views = window.Agora.Views || {};
 
 Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
-  tagName: 'li',
+  tagName: 'div',
 
   className: 'detailEntryItem',
 
@@ -14,6 +14,12 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
   },
 
   render: function() {
+    this.model = this.model || {
+      sender: 'mock data',
+      recipient: 'mock data',
+      contents: 'mockingbirg'
+    };
+    
     this.$el.html(this.template(this.model));
   },
 
