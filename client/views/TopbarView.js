@@ -67,19 +67,24 @@ Agora.Views.TopbarView = Backbone.View.extend({
       that.app.get('sidebarView').displayed = 'Messages';
       that.app.get('detailView').displayed = 'Messages';
 
+
+      //WHAT SORT OF BEHAVIOR SHOULD THIS HAVE, OPEN ON SELECT?? BUT PEOPLE LIKE PRIVACY WHEN IT COMES
+      //TO MESSAGES IDK
+
+
       //set messagesCollection?
       // that.app.get('sidebarView').collection.models = that.app.messagesCollection;
       // console.log(that.app.get('sidebarView').collection.models);
 
       that.app.get('content1').show(that.app.get('sidebarView'));
       if (!that.app.get('expanded')) {
-        that.app.get('content2').show(that.app.get('detailView'));
+        that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
       } else {
 
         if (previousDisplayed === 'Messages') {
           that.app.get('content2').hide();
         } else {
-          that.app.get('content2').show(that.app.get('detailView'));
+          that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
         }
       }
     });
