@@ -658,10 +658,9 @@ body {
 
 
 
-
-.innerbox {
+.spacer {
   width: 100%;
-  overflow: hidden;
+  height: 40px;
 }
 
 

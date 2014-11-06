@@ -170,7 +170,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $response.append($expandResponseButton);
 
         $commentExpansionBox.append($response);
-        
+
         $commentExpansionBox.append($responseExpansionBox);
 
         for (var k=0;k<comments[i].responses[j].replies.length;k++) {
@@ -185,6 +185,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       }
 
     }
+
+    var $spacer = $('<div class="spacer"></div>');
+    this.$el.append($spacer);
+
+
   },
 
   close: function() {
