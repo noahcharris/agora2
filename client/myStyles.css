@@ -184,9 +184,11 @@ body {
   position: relative;
   height: 100%;
   width: auto;
+  z-index: 501;
 }
 
 #content2 {
+  z-index: 500;
   position: absolute;
   right: 0px;
   width: 510px;

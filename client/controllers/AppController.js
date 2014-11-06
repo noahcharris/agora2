@@ -32,8 +32,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-
     //#######################################
     //#########  MOCK DATA  #################
     //#######################################
@@ -523,59 +521,30 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         currentView.close();
       }
 
+      //TODO
+      $('#content1').css('width', sideWidth+'px');
 
-      if (that.get('expanded')) {
-        var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-        var sideWidth = $(window).width() - mapWidth;
-        //TODO
-        $('#content1').css('width', sideWidth+'px');
-
-        currentView = view;
-        if (view) {
-          view[renderMethod](model);
-          $(el).html(view.el);
-          if (view.onShow)
-            view.onShow();
-          if (view.setHandlers)
-            view.setHandlers();
-        }
-        $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
-
-      } else {
-
-        that.set('expanded', true);
-        //as long as I don't have any other listeners on the sidebarContainer this will work
-        //$('#sidebarContainer').unbind();
-        $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
-
-          currentView = view;
-          if (view) {
-            view[renderMethod](model);
-            $(el).html(view.el);
-            if (view.onShow)
-              view.onShow();
-            if (view.setHandlers)
-              view.setHandlers();
-
-          }
-
-          //need to set the css for detailView after expansion
-          var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-          var sideWidth = $(window).width() - mapWidth;
-          $('#content1').css('width', sideWidth+'px');
-          //need the extra -2 for borders?
-          $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
-          $('#sidebarContainer').unbind();
-        });
-        $('#sidebarContainer').css('-webkit-transition-duration', '1s');
-
-        //this is where content2 changes the size of the sidebarcontainer
-        $('#sidebarContainer').css('width', $(window).width() * 0.75);
-
-        var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-        var sideWidth = $(window).width() - mapWidth;
-        $('#content1').css('width', sideWidth+'px');
+      currentView = view;
+      if (view) {
+        view[renderMethod](model);
+        $(el).html(view.el);
+        if (view.onShow)
+          view.onShow();
+        if (view.setHandlers)
+          view.setHandlers();
       }
+
+
+      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+      var sideWidth = $(window).width() - mapWidth;
+      $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
+
+      $('#sidebarContainer').css('-webkit-transition-duration', '1s');
+
+      //this is where content2 changes the size of the sidebarcontainer
+      $('#sidebarContainer').css('width', $(window).width() * 0.75);
+      that.set('expanded', true);
+
     };
 
 
@@ -583,16 +552,28 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     region.hide = function() {
-      //debugger;
-      if (currentView && currentView.close) {
-        currentView.close();
+      if (that.get('expanded')) {
+        $('#sidebarContainer').css('-webkit-transition-duration', '1s');
+        $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
+          if (currentView && currentView.close) {
+            currentView.close();
+          }
+          currentView = null;
+        });
+        
+        var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+        var sideWidth = $(window).width() - mapWidth;
+        $('#sidebarContainer').css('width', sideWidth+'px');
+        that.set('expanded', false);
+        $('#sidebarContainer').unbind();
+      } else {
+        if (currentView && currentView.close) {
+          currentView.close();
+        }
+        currentView = null;
       }
-      currentView = null;
-      $('#sidebarContainer').css('-webkit-transition-duration', '1s');
-      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-      var sideWidth = $(window).width() - mapWidth;
-      $('#sidebarContainer').css('width', sideWidth+'px');
-      that.set('expanded', false);
+
+
     };
 
     return region;
