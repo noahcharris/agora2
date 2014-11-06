@@ -91,7 +91,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       //this fixed the problem like in detailView, but why??
       $expandCommentButton[0].onclick = function(e) {
-        console.log('whaha');
         if (!commentCollapsed) {
 
           //TODO
@@ -144,8 +143,44 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         //$shareIcon = $('<img height="20px" width="20px" src="resources/images/share.png"></img>');
         //$comment.children('div.replyContentBox').append($starIcon);
         //$comment.children('div.replyContentBox').append($shareIcon);
-  
+
+        var $responseExpansionBox = $('<div class="responseExpansionBox">');
+        var $expandResponseButton = $('<img src="resources/images/expand.png" class="expandResponseButton"></img>');
+
+        var responseCollapsed = true;
+
+        //this fixed the problem like in detailView, but why??
+        $expandResponseButton[0].onclick = function(e) {
+          console.log('whaha');
+          if (!responseCollapsed) {
+
+            //TODO
+            $(e.target).parent().next().css('height', '0px');
+            $(e.target).attr('src', 'resources/images/expand.png');
+            responseCollapsed = true;
+          } else if (responseCollapsed) {
+
+            //TODO
+            $(e.target).parent().next().css('height', 'auto');
+            $(e.target).attr('src', 'resources/images/contract.png');
+            responseCollapsed = false;
+          }
+        };
+
+        $response.append($expandResponseButton);
+
         $commentExpansionBox.append($response);
+        
+        $commentExpansionBox.append($responseExpansionBox);
+
+        for (var k=0;k<comments[i].responses[j].replies.length;k++) {
+
+          var $reply = $( this.replyTemplate(comments[i].responses[j].replies[k]) );
+          $responseExpansionBox.append($reply);
+
+        }
+
+
          
       }
 
@@ -153,7 +188,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('closing DetailTopicEntryView');
     this.$el.empty();
     this.remove();
     this.unbind();

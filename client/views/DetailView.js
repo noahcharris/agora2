@@ -66,13 +66,14 @@ Agora.Views.DetailView = Backbone.View.extend({
     //   that.app.get('content2').hide();
     // }
 
-    console.log(document.getElementsByClassName('x'));
     // document.getElementsByClassName('x')[0].addEventListener('click', function() {
     //   that.app.get('content2').hide();
     // });
 
 
-    //console.log(' MAH SHIT ', this.$el.children('img.x')[0].onclick );
+
+
+
 
     // ## RESPONSE BOX ##
     //console.log('appending response box in render responding: ',this.responding);

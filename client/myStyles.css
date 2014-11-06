@@ -569,6 +569,7 @@ body {
   position: relative;
   width: 100%;
   border-top-style: solid;
+  border-left-style: solid;
   border-bottom-style: solid;
   border-width: 1px;
   border-color: black;
@@ -598,8 +599,7 @@ body {
   border-bottom-width: 0px;*/
   border-color: #E8E8E8;
   position: relative;
-  float: right;
-  width: 83%;
+  width: 100%;
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -611,8 +611,7 @@ body {
   width: 10%;
 }
 .replyContentBox {
-  float: left;
-  width: 90%;
+  width: 100%;
 }
 .replyHeader {
   font-size: 20px;
@@ -627,13 +626,6 @@ body {
 
 /* EXPANSION/CONTRACTION */
 
-.expandCommentButton {
-  cursor: pointer;
-  position: relative;
-  height: 20px;
-  width: 20px;
-}
-
 .commentExpansionBox {
   position: relative;
   width: 90%;
@@ -641,6 +633,29 @@ body {
   height: 0px;
   overflow: hidden;
 }
+
+.expandCommentButton {
+  cursor: pointer;
+  position: relative;
+  height: 20px;
+  width: 20px;
+}
+
+.responseExpansionBox {
+  position: relative;
+  width: 90%;
+  left: 10%;
+  height: 0px;
+  overflow: hidden;
+}
+
+.expandResponseButton {
+  cursor: pointer;
+  position: relative;
+  height: 20px;
+  width: 20px;
+}
+
 
 
 

@@ -58,11 +58,19 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             headline: 'fuck off',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
         }, {
             poster: 'Mr. Bean',
             headline: 'fuck off',
             contents: 'I mean it..',
             upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
         }]
       }, {
         id: 87,
@@ -74,7 +82,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         responses: [{
             poster: 'Heckles',
             headline: 'fuck off',
-            contents: 'Just the one.'
+            contents: 'Just the one.',
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
         }]
       }] 
     }];
