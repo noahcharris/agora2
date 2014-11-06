@@ -100,7 +100,20 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         } else if (commentCollapsed) {
 
           //TODO
-          $(e.target).parent().next().css('height', 'auto');
+
+          //well, there it is. will have to also change parent values in the response expansion
+          var height = 0;
+          console.log($(e.target).parent().next().children());
+          $(e.target).parent().next().children().each(function(index) {
+            console.log($(this).height());
+            height += $(this).height();
+            console.log('hwhw', height);
+          });
+
+          console.log('height: ', height);
+
+          $(e.target).parent().next().css('height', height + 'px');
+
           $(e.target).attr('src', 'resources/images/contract.png');
           commentCollapsed = false;
         }
@@ -154,16 +167,48 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           console.log('whaha');
           if (!responseCollapsed) {
 
+            var x = $(e.target).parent().next().height();
+
             //TODO
             $(e.target).parent().next().css('height', '0px');
+
+            var y = $(e.target).parent().parent().height();
+            $(e.target).parent().parent().css('height', y - x + 'px');
+            console.log(y);
+
+
+
             $(e.target).attr('src', 'resources/images/expand.png');
             responseCollapsed = true;
           } else if (responseCollapsed) {
 
             //TODO
-            $(e.target).parent().next().css('height', 'auto');
+            // $(e.target).parent().next().css('height', 'auto');
+            // $(e.target).attr('src', 'resources/images/contract.png');
+            // responseCollapsed = false;
+
+
+            var height = 0;
+            console.log($(e.target).parent().next().children());
+            $(e.target).parent().next().children().each(function(index) {
+              console.log($(this).height());
+              height += $(this).height();
+              console.log('hwhw', height);
+            });
+
+            console.log('height: ', height);
+
+            $(e.target).parent().next().css('height', height + 'px');
+
+            //NEED TO CHANGE PARENT AS WELL, BECAUSE THEY ARE NESTED
+            var x = $(e.target).parent().parent().height();
+            $(e.target).parent().parent().css('height', x + height + 'px');
+            console.log(x);
+
+
             $(e.target).attr('src', 'resources/images/contract.png');
             responseCollapsed = false;
+
           }
         };
 

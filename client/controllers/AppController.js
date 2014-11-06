@@ -48,14 +48,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       expanded: true,   //this is for the outer expansion/contraction button
       comments: [{
         id: 22,
-        headline: 'fuck off',
+        headline: 'whither will these winds',
         poster: 'J-aldrean',
         contents: 'This dream, no more a dream than waking',
         upvoted: true,
         expanded: false,    //these are for each group of responses
         responses: [{
             poster: 'Mr. Bean',
-            headline: 'fuck off',
+            headline: 'whither will these winds',
             contents: 'You sir, are a ruffian.',
             upvoted: false,
             replies: [{
@@ -64,7 +64,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             }]
         }, {
             poster: 'Mr. Bean',
-            headline: 'fuck off',
+            headline: 'ok',
             contents: 'I mean it..',
             upvoted: false,
             replies: [{
@@ -74,14 +74,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }]
       }, {
         id: 87,
-        headline: 'fuck off',
+        headline: 'whither will these winds',
         poster: 'Jason Aldean',
         contents: 'Ok, but how about them yanks?',
         upvoted: false,
         expanded: false,
         responses: [{
             poster: 'Heckles',
-            headline: 'fuck off',
+            headline: 'whither will these winds',
             contents: 'Just the one.',
             replies: [{
               contents: 'woooooooo',

@@ -632,6 +632,8 @@ body {
   left: 10%;
   height: 0px;
   overflow: hidden;
+  -webkit-transition-duration:0.6s;
+  -moz-transition-duration:0.6s;
 }
 
 .expandCommentButton {
@@ -647,6 +649,8 @@ body {
   left: 10%;
   height: 0px;
   overflow: hidden;
+  -webkit-transition-duration:0.6s;
+  -moz-transition-duration:0.6s;
 }
 
 .expandResponseButton {
