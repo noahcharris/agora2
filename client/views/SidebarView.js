@@ -138,8 +138,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
     } else if (this.displayed === 'Contacts') {
       renderCollection = this.usersCollection;
     }
-
-    if (renderCollection.models) {
+    console.log(renderCollection);
+    if (renderCollection) {
+    console.log('blargh');
 
       _.each(this.subViews, function(subView) {
         subView.close();
@@ -148,11 +149,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       console.log('rendering sidebar with collection: ', renderCollection);
 
-      _.each(renderCollection.models, function(model) {
+      _.each(renderCollection, function(model) {
 
-        //wtf need to add this in server
-        model.type = 'Topic';
-        model.reputation = 0;
 
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;

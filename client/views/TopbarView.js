@@ -57,6 +57,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
     $('#messagingButton').on('click', function() {
       that.app.get('sidebarView').displayed = 'Messages';
       that.app.get('detailView').displayed = 'Messages';
+
+      //set messagesCollection?
+      // that.app.get('sidebarView').collection.models = that.app.messagesCollection;
+      // console.log(that.app.get('sidebarView').collection.models);
+      
       that.app.get('content1').show(that.app.get('sidebarView'));
       if (!that.app.get('expanded')) {
         that.app.get('content2').show(that.app.get('detailView'));
