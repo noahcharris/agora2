@@ -126,6 +126,8 @@ module.exports.updateProfile = function(request, response) {
 module.exports.getTopTopics = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
+  console.log('what the fuuuuuuck');
+
   var location = queryArgs.location;
   var channel = queryArgs.channel;
 
@@ -275,6 +277,9 @@ module.exports.getPlace = function(request, response) {
 
 
 module.exports.login = function(request, response) {
+
+  console.log('login!!!!!!');
+  response.setHeader('Access-Control-Allow-Origin', '*');
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {

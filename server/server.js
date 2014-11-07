@@ -1,6 +1,6 @@
   
 var http = require('http');
-var http = require('https');
+var https = require('https');
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
@@ -86,14 +86,15 @@ app.use(favicon(__dirname + '/../client/media/favicon.png'));
 
 app.use(express.static(__dirname + '/../client'));
 
+//console.log(fs.readFileSync(__dirname + '/server.pfx', {encoding: 'utf8'}));
 var options = {
   key: fs.readFileSync(__dirname + '/key.pem'),
-  cert: fs.readFileSync(__dirname + '/key-cert.pem')
+  cert: fs.readFileSync(__dirname + '/cert.pem'),
 };
 
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
-console.log('express server listening on ports 80 and 443');
+console.log('express server listening on ports 80 and 443');  
 
 
 

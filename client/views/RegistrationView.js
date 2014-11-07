@@ -42,6 +42,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
       $.ajax({
         url: 'https://localhost:443/login',
+        crossDomain: true,
         method: 'POST',
         data: {
           username: username,

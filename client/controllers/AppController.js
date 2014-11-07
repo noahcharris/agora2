@@ -297,7 +297,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log('ajax request to: ', urlPath);
       $.ajax({
-        url: 'http://localhost:8080'+urlPath,
+        url: 'http://localhost:80'+urlPath,
         data: {
           location: location,
           channel: that.get('channel')
@@ -360,7 +360,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log('ajax request to: ', urlPath);
       $.ajax({
-        url: 'http://localhost:8080' + urlPath,
+        url: 'http://localhost:80' + urlPath,
         crossDomain: true,
         data: {
           location: location,
@@ -450,12 +450,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //fucking around with mapController
 
-    console.log('layers: ', this.get('mapController').get('countries'));
-    this.get('mapController').highlightCountry('United States');
+    // console.log('layers: ', this.get('mapController').get('countries'));
+    // this.get('mapController').highlightCountry('United States');
 
-    $('body').on('click', function() {
-      that.get('mapController').removeHighlightCountry('United States');
-    });
+    // $('body').on('click', function() {
+    //   that.get('mapController').removeHighlightCountry('United States');
+    // });
 
 
 
