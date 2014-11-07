@@ -429,28 +429,29 @@ body {
 
 
 /***************************/
+/***************************/
 /*** DETAIL-TOPIC VIEW *****/
 /***************************/
+/***************************/
 
-/* AHGHGHG FUCKING NAME CONFLICTS WITH THE RESPONSES IN THE DISCUSSION */
 
-/* REPONSE BOX */
-#responseBox {
+/* INPUT BOX */
+#inputBox {
+  position: absolute;
   background-color: #57646D;
   border-style: solid;
   border-width: 2px;
   border-color: #E8E8E8;
-  position: absolute;
   overflow: hidden;
   bottom: 0px;
-  height: 0px;
+  height: 100px;
   width: 100%;
   z-index: 1000;
   -webkit-transition-duration:0.3s;
   -moz-transition-duration:0.3s;
 }
 
-#responseBoxButton {
+#inputBoxButton {
   cursor: pointer;
   position: absolute;
   right: 10%;
@@ -460,14 +461,14 @@ body {
   background-color: #E9573F;
 }
 
-#responseBoxButton span {
+#inputBoxButton span {
   position: relative;
   top: 15px;
   left: 3px;
   color: white;
 }
 
-#responseHeadlineTextArea {
+#inputHeadlineTextArea {
   position: relative;
   left: 9%;
   top: 8px;
@@ -475,7 +476,7 @@ body {
   width: 70%;
 }
 
-#responseTextArea {
+#inputTextArea {
   position: relative;
   left: 9%;
   top: 8px;
@@ -483,17 +484,10 @@ body {
   width: 70%;
 }
 
-.creationInput {
-  resize: none;
-  width: 300px;
-  height: 200px;
-  position: relative;
-  left: 20px;
-  top: 30px;
-}
 
-
-/* DISCUSSION TEMPLATES */  
+/* *  * * * * 8 * * 8*/
+/* DISCUSSION LAYOUT */
+/*∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆*/
 
 .replyButton {
   cursor: pointer;

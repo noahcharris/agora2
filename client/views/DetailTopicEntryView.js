@@ -16,12 +16,145 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.commentTemplate = _.template( $('#detailCommentEntryTemplate').html() );
     this.responseTemplate = _.template( $('#detailResponseEntryTemplate').html() );
     this.replyTemplate = _.template( $('#detailReplyEntryTemplate').html() );
+    this.inputBoxTemplate = _.template( $('#inputBoxTemplate').html() );
+
+    this.responding = null;
+    this.responseData = null;
 
   },
 
   render: function() {
 
     var that = this;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //∆∆∆∆∆∆∆∆∆∆∆∆ GOING TO MOVE ALL THIS code into detailTopicEntryView ∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂
+
+
+    // ## RESPONSE BOX ##
+    //console.log('appending response box in render responding: ',this.responding);
+    //USE this.responseData here so users won't lose their changes
+
+    //!!!!!
+
+    //##############################
+    //####### RESPONSE BOX #########
+    //##############################
+
+    //MESSAGE BOX DOESN'T POST WITHIN GROUPS YET
+    this.$el.append(this.inputBoxTemplate());
+    this.$el.children('div#inputBox').children('div#inputBoxButton').on('click', function(e) {
+
+      var headline = that.$el.children('div#inputBox').children('textarea#inputHeadlineTextArea').val();
+      var content = that.$el.children('div#inputBox').children('textarea#inputTextArea').val();
+      var location = that.app.get('mapController').get('location');
+      that.$el.children('div#inputBox').children('textarea').val('');
+
+      //wtf is this reponsedata shit
+      // if (that.responseData.type === 'Topic') {
+      //   $.ajax({
+      //     url: 'createComment',
+      //     method: 'POST',
+      //     data: {
+      //       location: that.responseData.location,
+      //       group: that.responseData.group,
+      //       topic: that.responseData.topic,
+      //       headline: headline,
+      //       content: content
+      //     },
+      //     success: function(data) {
+      //       alert(data);
+      //       //append their comment anyways?
+      //       that.app.get('mapController').trigger('reloadSidebar', location);
+      //     },
+      //     error: function() {
+      //       //TODO
+      //     }
+      //   });
+      // } else if (that.responseData.type === 'Comment') {
+
+      //   //TODO
+      //   //send a response generating ajax request
+
+
+      // } else if (that.responseData.type === 'Response' ||
+      //   that.responseData.type === 'Reply') {
+
+      //   $.ajax({
+      //     url: 'createReply',
+      //     method: 'POST',
+      //     data: {
+      //       location: that.responseData.location,
+      //       group: that.responseData.group,
+      //       topic: that.responseData.topic,
+      //       comment: that.responseData.comment,
+      //       headline: headline,
+      //       content: content
+      //     },
+      //     success: function(data) {
+      //       alert(data);
+      //       //append their reply
+      //       //reload the proper sidebar
+      //       that.app.get('mapController').trigger('reloadSidebar', location);
+      //     },
+      //     error: function() {
+      //       //TODO
+      //     }
+      //   });
+
+      // }
+
+    });
+
+    this.$el.children('#inputBox').append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('#inputBox').children('img.x').on('click', function() {
+      that.closeResponseBox();
+    });
+
+
+
+
+    if (this.responding) {
+      //why do I need to use this selector?
+      this.$el.children('div#inputBox').css('height', '100px');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //append topic box
     this.$el.append( this.topicTemplate(this.model) );
@@ -240,6 +373,37 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   },
+
+
+
+
+
+  openResponseBox: function(data) {
+    console.log('respond neto: ', data);
+    this.responding = true;
+    this.responseData = data;
+    $('textarea#inputTextArea').val('');
+    if (data.type === 'Reply') {
+      $('textarea#inputTextArea').val('@'+data.username);
+    }
+    $('.inputBox').css('height', '100px');
+  },
+
+  //for selecting different replies/comments/topics
+  respondTo: function(data) {
+
+  },
+
+  closeResponseBox: function() {
+    //why lol
+    this.responding = false;
+    $('.inputBox').css('height', '0px');
+
+  },
+
+
+
+
 
   close: function() {
     this.$el.empty();
