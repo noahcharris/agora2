@@ -448,6 +448,19 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $('#content1').css('width', sideWidth+'px');
 
 
+    //fucking around with mapController
+
+    console.log('layers: ', this.get('mapController').get('countries'));
+    this.get('mapController').highlightCountry('United States');
+
+    $('body').on('click', function() {
+      that.get('mapController').removeHighlightCountry('United States');
+    });
+
+
+
+
+
     
   },
 

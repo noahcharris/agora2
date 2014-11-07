@@ -10,6 +10,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   defaults: {
     location: '',
     group:'',
+    countries: null,
+    states: null,
+    cities: null,
+    places: null
   },
 
   initialize: function(appController) {
@@ -193,13 +197,90 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-
-
-
-
-
-
-
+  highlightCountry: function(countryName) {
+    var countries = this.get('countries') || {};
+    for (var key in countries._layers) {
+      if (countries._layers[key].feature.properties.name === countryName) {
+        countries._layers[key].setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.8
+            });
+      }
+    }
+  },
+  removeHighlightCountry: function(countryName) {
+    var countries = this.get('countries') || {};
+    for (var key in countries._layers) {
+      if (countries._layers[key].feature.properties.name === countryName) {
+        countries.resetStyle(countries._layers[key]);
+      }
+    }
+  },
+  highlightState: function(stateName) {
+    var states = this.get('states') || {};
+    for (var key in states._layers) {
+      if (states._layers[key].feature.properties.name === stateName) {
+        states._layers[key].setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.8
+            });
+      }
+    }
+  },
+  removeHighlightState: function(stateName) {
+    var states = this.get('states') || {};
+    for (var key in states._layers) {
+      if (states._layers[key].feature.properties.name === stateName) {
+        states.resetStyle(states._layers[key]);
+      }
+    }
+  },
+  highlightCity: function(cityName) {
+    var cities = this.get('cities') || {};
+    for (var key in cities._layers) {
+      if (cities._layers[key].feature.properties.name === cityName) {
+        cities._layers[key].setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.8
+            });
+      }
+    }
+  },
+  removeHighlightCity: function(cityName) {
+    var cities = this.get('cities') || {};
+    for (var key in cities._layers) {
+      if (cities._layers[key].feature.properties.name === cityName) {
+        cities.resetStyle(cities._layers[key]);
+      }
+    }
+  },
+  hightlightPlace: function(placeName) {
+    var places = this.get('places') || {};
+    for (var key in places._layers) {
+      if (places._layers[key].feature.properties.name === placeName) {
+        places._layers[key].setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.8
+            });
+      }
+    }
+  },
+  removeHighlightPlace: function(placeName) {
+    var places = this.get('places') || {};
+    for (var key in places._layers) {
+      if (places._layers[key].feature.properties.name === placeName) {
+        places.resetStyle(places._layers[key]);
+      }
+    }
+  },
 
 
 
