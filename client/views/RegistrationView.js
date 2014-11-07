@@ -41,7 +41,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       //  -need to interact over both ports
 
       $.ajax({
-        url: 'login',
+        url: 'https://localhost:443/login',
         method: 'POST',
         data: {
           username: username,

@@ -78,7 +78,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
       that.app.get('content1').show(that.app.get('sidebarView'));
       if (!that.app.get('expanded')) {
-        that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
+        //don't show the detail view on clicking the message button
+        //that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
       } else {
 
         if (previousDisplayed === 'Messages') {

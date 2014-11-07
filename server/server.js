@@ -1,6 +1,9 @@
   
+var http = require('http');
+var http = require('https');
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var routes = require('./routes.js');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -10,7 +13,6 @@ var favicon = require('static-favicon');
 
 
 app = express();
-app.set('port', 8080);
 
   
 
@@ -39,7 +41,6 @@ app.use(cookieSession({
 app.get('/', function(request, response) {
   response.redirect('index.html');
 });
-
 
 app.get('/dance', routes.danceParty);
 
@@ -84,8 +85,15 @@ app.use(favicon(__dirname + '/../client/media/favicon.png'));
 
 
 app.use(express.static(__dirname + '/../client'));
-app.listen(app.get('port'));
-console.log('express server listening on port %s', app.get('port'));
+
+var options = {
+  key: fs.readFileSync(__dirname + '/key.pem'),
+  cert: fs.readFileSync(__dirname + '/key-cert.pem')
+};
+
+http.createServer(app).listen(80);
+https.createServer(options, app).listen(443);
+console.log('express server listening on ports 80 and 443');
 
 
 

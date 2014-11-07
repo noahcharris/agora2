@@ -58,6 +58,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     //MESSAGE BOX DOESN'T POST WITHIN GROUPS YET
     this.$el.append(this.inputBoxTemplate());
+    this.$el.children('div#inputBox').css('height', '0px');
     this.$el.children('div#inputBox').children('div#inputBoxButton').on('click', function(e) {
 
       var headline = that.$el.children('div#inputBox').children('textarea#inputHeadlineTextArea').val();
@@ -122,8 +123,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     });
 
     this.$el.children('#inputBox').append($('<img src="resources/images/x.png" class="x"></img>'));
+    console.log(this.$el.children('#inputeBox').children('img.x'));
     this.$el.children('#inputBox').children('img.x').on('click', function() {
-      that.closeResponseBox();
+      that.closeInputBox();
     });
 
 
@@ -131,6 +133,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     if (this.responding) {
       //why do I need to use this selector?
+      console.log('whaaaaat');
       this.$el.children('div#inputBox').css('height', '100px');
     }
 
@@ -179,7 +182,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         topic: that.model.id
       }
 
-      that.app.get('detailView').openResponseBox(responseParams);
+      that.openInputBox(responseParams);
 
     });
     this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
@@ -202,7 +205,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             topic: that.id,
             comment: comments[x].id
           }
-          that.app.get('detailView').openResponseBox(responseParams);
+          that.openInputBox(responseParams);
         });
       };
       a();
@@ -277,7 +280,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               comment: comments[x].id,
               username: comments[x].responses[y].poster
             }
-            that.app.get('detailView').openResponseBox(responseParams);
+            that.openInputBox(responseParams);
           });
         };
         b();
@@ -378,7 +381,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-  openResponseBox: function(data) {
+  openInputBox: function(data) {
     console.log('respond neto: ', data);
     this.responding = true;
     this.responseData = data;
@@ -386,7 +389,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     if (data.type === 'Reply') {
       $('textarea#inputTextArea').val('@'+data.username);
     }
-    $('.inputBox').css('height', '100px');
+    $('#inputBox').css('height', '100px');
   },
 
   //for selecting different replies/comments/topics
@@ -394,10 +397,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
   },
 
-  closeResponseBox: function() {
+  closeInputBox: function() {
     //why lol
+    console.log('whooaahahahah');
     this.responding = false;
-    $('.inputBox').css('height', '0px');
+    $('#inputBox').css('height', '0px');
 
   },
 
