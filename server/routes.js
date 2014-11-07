@@ -279,7 +279,7 @@ module.exports.getPlace = function(request, response) {
 module.exports.login = function(request, response) {
 
   console.log('login!!!!!!');
-  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {
