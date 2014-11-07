@@ -87,36 +87,39 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var $commentExpansionBox = $('<div class="commentExpansionBox">');
       var $expandCommentButton = $('<img src="resources/images/expand.png" class="expandCommentButton"></img>');
 
-      var commentCollapsed = true;
 
       //this fixed the problem like in detailView, but why??
-      $expandCommentButton[0].onclick = function(e) {
-        if (!commentCollapsed) {
+      var c = function() {
 
-          //TODO
-          $(e.target).parent().parent().next().css('height', '0px');
-          $(e.target).attr('src', 'resources/images/expand.png');
-          commentCollapsed = true;
-        } else if (commentCollapsed) {
+        var commentCollapsed = true;
+        $expandCommentButton[0].onclick = function(e) {
+          if (!commentCollapsed) {
 
-          //TODO
+            //TODO
+            $(e.target).parent().parent().next().css('height', '0px');
+            $(e.target).attr('src', 'resources/images/expand.png');
+            commentCollapsed = true;
+          } else if (commentCollapsed) {
 
-          //well, there it is. will have to also change parent values in the response expansion
-          var height = 0;
-          $(e.target).parent().parent().next().children().each(function(index) {
-            console.log($(this).height());
-            height += $(this).height();
-            console.log('hwhw', height);
-          });
+            //TODO
 
-          console.log('height: ', height);
+            //well, there it is. will have to also change parent values in the response expansion
+            var height = 0;
+            $(e.target).parent().parent().next().children().each(function(index) {
+              console.log($(this).height());
+              height += $(this).height();
+              console.log('hwhw', height);
+            });
 
-          $(e.target).parent().parent().next().css('height', height + 'px');
+            $(e.target).parent().parent().next().css('height', height + 'px');
 
-          $(e.target).attr('src', 'resources/images/contract.png');
-          commentCollapsed = false;
-        }
-      };
+            $(e.target).attr('src', 'resources/images/contract.png');
+            commentCollapsed = false;
+          }
+        };
+
+      }
+      c();
 
       $comment.children('div.commentToolbox').append($expandCommentButton);
       //$comment.append($expandCommentButton);
@@ -160,53 +163,58 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         var $responseExpansionBox = $('<div class="responseExpansionBox">');
         var $expandResponseButton = $('<img src="resources/images/expand.png" class="expandResponseButton"></img>');
 
-        var responseCollapsed = true;
 
-        //this fixed the problem like in detailView, but why??
-        $expandResponseButton[0].onclick = function(e) {
-          console.log('whaha');
-          if (!responseCollapsed) {
+        var d = function() {
 
-            var x = $(e.target).parent().parent().next().height();
+          var responseCollapsed = true;
+          //this fixed the problem like in detailView, but why??
+          $expandResponseButton[0].onclick = function(e) {
+            console.log('whaha');
+            if (!responseCollapsed) {
 
-            //TODO
-            $(e.target).parent().parent().next().css('height', '0px');
+              var x = $(e.target).parent().parent().next().height();
 
-            var y = $(e.target).parent().parent().parent().height();
-            $(e.target).parent().parent().parent().css('height', y - x + 'px');
-            console.log(y);
+              //TODO
+              $(e.target).parent().parent().next().css('height', '0px');
 
-
-
-            $(e.target).attr('src', 'resources/images/expand.png');
-            responseCollapsed = true;
-          } else if (responseCollapsed) {
-            //TODO
-            // $(e.target).parent().next().css('height', 'auto');
-            // $(e.target).attr('src', 'resources/images/contract.png');
-            // responseCollapsed = false;
-            var height = 0;
-            $(e.target).parent().parent().next().children().each(function(index) {
-              console.log($(this).height());
-              height += $(this).height();
-              console.log('hwhw', height);
-            });
-
-            console.log('height: ', height);
-
-            $(e.target).parent().parent().next().css('height', height + 'px');
-
-            //NEED TO CHANGE PARENT AS WELL, BECAUSE THEY ARE NESTED
-            var x = $(e.target).parent().parent().parent().height();
-            $(e.target).parent().parent().parent().css('height', x + height + 'px');
-            console.log(x);
+              var y = $(e.target).parent().parent().parent().height();
+              $(e.target).parent().parent().parent().css('height', y - x + 'px');
+              console.log(y);
 
 
-            $(e.target).attr('src', 'resources/images/contract.png');
-            responseCollapsed = false;
 
-          }
-        };
+              $(e.target).attr('src', 'resources/images/expand.png');
+              responseCollapsed = true;
+            } else if (responseCollapsed) {
+              //TODO
+              // $(e.target).parent().next().css('height', 'auto');
+              // $(e.target).attr('src', 'resources/images/contract.png');
+              // responseCollapsed = false;
+              var height = 0;
+              $(e.target).parent().parent().next().children().each(function(index) {
+                console.log($(this).height());
+                height += $(this).height();
+                console.log('hwhw', height);
+              });
+
+              console.log('height: ', height);
+
+              $(e.target).parent().parent().next().css('height', height + 'px');
+
+              //NEED TO CHANGE PARENT AS WELL, BECAUSE THEY ARE NESTED
+              var x = $(e.target).parent().parent().parent().height();
+              $(e.target).parent().parent().parent().css('height', x + height + 'px');
+              console.log(x);
+
+
+              $(e.target).attr('src', 'resources/images/contract.png');
+              responseCollapsed = false;
+
+            }
+          };
+
+        }
+        d();
 
         $response.children('.responseToolbox').append($expandResponseButton);
 
