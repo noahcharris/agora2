@@ -93,8 +93,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-
-
     $('#notificationsButton').on('click', function() {
       alert('notifications');
     });
@@ -102,29 +100,28 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     //pressing enter should trigger search
 
-    //LEAVING OUT SEARCH RIGHT NOW
+    var searching = false;
+    $('#searchButton').on('click', function() {
+      // if (!searching) {
+      //   searching = true;
+      //   $('#searchInput').val('');
+      //   that.app.get('alertView').mode = 'Search';
+      //   that.app.get('content2').show(that.app.get('alertView'));
+      //   //to simulate search time
+      //   setTimeout(function() {
+      //     //if failed, display the search failed template on alertView
 
-    // var searching = false;
-    // $('#searchButton').on('click', function() {
-    //   if (!searching) {
-    //     searching = true;
-    //     $('#searchInput').val('');
-    //     that.app.get('alertView').mode = 'Search';
-    //     that.app.get('content2').show(that.app.get('alertView'));
-    //     //to simulate search time
-    //     setTimeout(function() {
-    //       //if failed, display the search failed template on alertView
-
-    //       //if successful, load the search results setup
-    //       //updated the search collection AND then:
-    //       that.app.get('sidebarView').displayed = 'All';
-    //       that.app.get('content2').show(that.get('detailView'));
-    //       that.app.get('content1').show(that.get('sidebarView'));
-    //       searching = false;
-    //     },2000);
+      //     //if successful, load the search results setup
+      //     //updated the search collection AND then:
+      //     that.app.get('sidebarView').displayed = 'All';
+      //     that.app.get('content2').show(that.get('detailView'));
+      //     that.app.get('content1').show(that.get('sidebarView'));
+      //     searching = false;
+      //   },2000);
         
-    //   }
-    // });
+      // }
+    });
+
 
 
     $('#title').on('click', function() {
