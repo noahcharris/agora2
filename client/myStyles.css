@@ -130,6 +130,15 @@ body {
   z-index: 9999;
 }
 
+#pathSubtreeView {
+  position: absolute;
+  z-index: 502;
+  bottom: -100px;
+  width: 100px;
+  height: 100px;
+  background-color: green;
+}
+
 .channelView {
   display: inline-block;
   width: 370px;
@@ -138,6 +147,11 @@ body {
 }
 
 .channelName {
+  color: #f8f8f8;
+}
+
+.channelWrapper {
+  position: relative;
   color: #f8f8f8;
 }
 
@@ -151,6 +165,16 @@ body {
   top: 30px;
   left: 20px;
   z-index: 9999;
+}
+
+#channelSubtreeView {
+  position: absolute;
+  z-index: 502;
+  bottom: -100px;
+  width: 100px;
+  height: 100px;
+  background-color: green;
+
 }
 
 

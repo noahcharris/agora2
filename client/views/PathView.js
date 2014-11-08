@@ -86,15 +86,28 @@ Agora.Views.PathView = Backbone.View.extend({
     });
     this.$el.append(searchButton);
 
+
+
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
     var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
     $treeButton.on('click', function() {
 
-      //TODO: add subcpath code here
+      //TODO: add subpath code here
 
       console.log('woooooooooô');
+
+      $subtreeView = $('<div id="pathSubtreeView">Subpaths</div>');
+      $subtreeView.on('click', function() {
+        $(this).remove();
+      });
+      that.$el.append($subtreeView);
+
+
+
     });
     this.$el.append($treeButton);
+
+
 
 
 

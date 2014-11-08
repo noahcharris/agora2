@@ -88,6 +88,32 @@ Agora.Controllers.AppController = Backbone.Model.extend({
               headline: 'caveman'
             }]
         }]
+      },{
+        id: 22,
+        headline: 'whither will these winds',
+        poster: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of responses
+        responses: [{
+            poster: 'Mr. Bean',
+            headline: 'whither will these winds',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }, {
+            poster: 'Mr. Bean',
+            headline: 'ok',
+            contents: 'I mean it..',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }]
       }] 
     }];
 
