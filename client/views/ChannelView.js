@@ -70,7 +70,16 @@ Agora.Views.ChannelView = Backbone.View.extend({
        });
     });
     this.$el.append(searchButton);
-    this.$el.append($('<span class="channelName"><strong>' + channel + '</strong></span>'));
+
+    var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
+    $treeButton.on('click', function() {
+
+      //TODO: add subchennal code here
+
+      console.log('woooooooooô');
+    });
+    this.$el.append($treeButton);
+
   },
 
   setHandlers: function() {

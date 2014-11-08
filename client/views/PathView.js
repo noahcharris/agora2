@@ -87,6 +87,15 @@ Agora.Views.PathView = Backbone.View.extend({
     this.$el.append(searchButton);
 
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
+    var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
+    $treeButton.on('click', function() {
+
+      //TODO: add subcpath code here
+
+      console.log('woooooooooô');
+    });
+    this.$el.append($treeButton);
+
 
 
     var $world = $('<span class="pathName">World</span>')
