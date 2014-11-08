@@ -197,6 +197,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+  //LATER ON ADD A hightlightCountries function that does many at a time more efficiently
+
+
   highlightCountry: function(countryName) {
     var countries = this.get('countries') || {};
     for (var key in countries._layers) {

@@ -11,7 +11,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     'click': 'clickTrigger'
   },
 
-  initialize: function() {
+  initialize: function(app) {
+    this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
     this.placeTemplate = _.template( $('#sidebarPlaceEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
@@ -19,7 +20,43 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   },
 
   renderTopic: function() {
+    var that = this;
     this.$el.html( this.topicTemplate(this.model) );
+
+    this.$el.on('mouseover', function() {
+      that.app.get('mapController').highlightCountry('United States');
+      that.app.get('mapController').highlightCountry('China');
+      that.app.get('mapController').highlightCountry('France');
+      that.app.get('mapController').highlightCountry('Germany');
+      that.app.get('mapController').highlightCountry('Argentina');
+      that.app.get('mapController').highlightCountry('Australia');
+      that.app.get('mapController').highlightCountry('Monaco');
+      that.app.get('mapController').highlightCountry('Italy');
+      that.app.get('mapController').highlightCountry('Ecuador');
+      that.app.get('mapController').highlightCountry('Palestine');
+
+    });
+
+    this.$el.on('mouseout', function() {
+      that.app.get('mapController').removeHighlightCountry('United States');
+      that.app.get('mapController').removeHighlightCountry('China');
+      that.app.get('mapController').removeHighlightCountry('France');
+      that.app.get('mapController').removeHighlightCountry('Germany');
+      that.app.get('mapController').removeHighlightCountry('Argentina');
+      that.app.get('mapController').removeHighlightCountry('Australia');
+      that.app.get('mapController').removeHighlightCountry('Monaco');
+      that.app.get('mapController').removeHighlightCountry('Italy');
+      that.app.get('mapController').removeHighlightCountry('Ecuador');
+      that.app.get('mapController').removeHighlightCountry('Palestine');
+
+    });
+
+
+
+
+
+
+
   },
 
   renderPlace: function() {

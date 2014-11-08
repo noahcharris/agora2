@@ -451,7 +451,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //fucking around with mapController
 
     // console.log('layers: ', this.get('mapController').get('countries'));
-    // this.get('mapController').highlightCountry('United States');
+      // this.get('mapController').highlightCountry('United States');
+      // this.get('mapController').highlightCountry('China');
+      // this.get('mapController').highlightCountry('France');
+      // this.get('mapController').highlightCountry('Germany');
+      // this.get('mapController').highlightCountry('Argentina');
+      // this.get('mapController').highlightCountry('Australia');
+      // this.get('mapController').highlightCountry('Monaco');
+      // this.get('mapController').highlightCountry('Italy');
+      // this.get('mapController').highlightCountry('Ecuador');
+      // this.get('mapController').highlightCountry('Palestine');
 
     // $('body').on('click', function() {
     //   that.get('mapController').removeHighlightCountry('United States');
