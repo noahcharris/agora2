@@ -56,7 +56,6 @@
 
     <script id="sidebarMessageEntryTemplate" type="text/template">
       <p class="authorString">Sender:<%= sender %></p>
-      <p class="sidebarEntryContent"><%= contents %></p>
       <p class="sidebarEntryTopicOrigin">Recipient:<%= recipient %></p>
     </script>
 
@@ -155,9 +154,9 @@
     </script>
 
     <script id="detailMessageEntryTemplate" type="text/template">
-      <p class="authorString">From:<%= sender %></p>
-      <p class="authorString">To:<%= recipient %></p>
-      <h1 class="detailHeaderEntry"> <%= contents %> </h1>
+      <span class="authorString"><%= sender %>:&nbsp</span>
+      <span class="detailHeaderEntry"> <%= contents %> </span>
+      <hr/>
     </script>
 
 

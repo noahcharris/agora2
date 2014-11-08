@@ -14,13 +14,28 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
   },
 
   render: function() {
+
+    console.log('whhhhhaaaa');
+
     this.model = this.model || {
       sender: 'mock data',
       recipient: 'mock data',
       contents: 'mockingbirg'
     };
     
-    this.$el.html(this.template(this.model));
+    console.log('object: :::', this.model.entries.length);
+    for (var i = 0; i<this.model.entries.length ;i++) {
+      this.$el.append(this.template(this.model.entries[i]));
+      console.log(this.model.entries[i]);
+    }
+
+    //need to loop through and set out all the messages in the object
+
+
+
+
+
+
   },
 
   close: function() {

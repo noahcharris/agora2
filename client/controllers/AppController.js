@@ -171,13 +171,31 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       type: 'Message',
       sender: 'noahcharris',
       recipient: 'spw',
-      contents: 'yo'
+      entries: [{
+        sender: 'spw',
+        contents: 'hey dude'
+      },{
+        sender: 'noah',
+        contents: 'yo'
+      },{
+        sender: 'spw',
+        contents: 'what it is'
+      }]
     }, {
       id: 1,
       type: 'Message',
       sender: 'noahcharris',
       recipient: 'spw',
-      contents: 'wooo'
+      entries: [{
+        sender: 'spw',
+        contents: 'hey dude'
+      },{
+        sender: 'noah',
+        contents: 'yo'
+      },{
+        sender: 'spw',
+        contents: 'what it is'
+      }]
     }];
 
     var usersCollection = [{
