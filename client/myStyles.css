@@ -100,6 +100,10 @@ body {
 /***  PATH AND CHANNEL VIEWS     ***/
 /***********************************/
 
+.treeButton {
+  cursor: pointer;
+}
+
 /* I think there's a better way to organize these 6 */
 #pathPrefix {
   cursor: pointer;
@@ -128,6 +132,10 @@ body {
 #pathInput {
   position:absolute;
   width: 350px;
+}
+
+#pathSearchButton {
+  cursor: pointer;
 }
 
 #pathSearchResultList {
@@ -165,6 +173,10 @@ body {
 #channelInput {
   position: absolute;
   width: 250px;
+}
+
+#channelSearchButton {
+  cursor: pointer;
 }
 
 #channelSearchResultList {

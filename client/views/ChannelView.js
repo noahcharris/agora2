@@ -23,7 +23,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     var channel = this.app.get('channel');
     this.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')); //<strong>' + channel + '</strong>&nbsp</span>'));
-    var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+    var searchButton = $('<img id="channelSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
       that.$el.empty();
