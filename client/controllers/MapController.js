@@ -65,16 +65,16 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     //SYSTEM FOR HANDLING CUSTOM COUNTRY ZOOM BOUNDS
 
-    var southWest = L.latLng(14.008696370634658, -136.40625);
-    var northEast = L.latLng(55.429013452407396, -52.91015625);
+    var southWest = L.latLng(15.284185114076445, -107.025390625);
+    var northEast = L.latLng(56.17002298293205, -90.23046875);
     var usBounds = L.latLngBounds(southWest, northEast);
 
-    southWest = L.latLng(39.095962936305504, -135.791015625);
-    northEast = L.latLng(68.52823492039876, -52.294921875);
+    southWest = L.latLng(33.87041555094183, -97.119140625);
+    northEast = L.latLng(66.01801815922042, -69.169921875);
     var canadaBounds = L.latLngBounds(southWest, northEast);
 
-    southWest = L.latLng(41.04621681452063, 16.875);
-    northEast = L.latLng(69.4421276134176, 100.37109375);
+    southWest = L.latLng(37.16031654673677, 26.015625);
+    northEast = L.latLng(67.60922060496382, 58.17187499999999);
     var russiaBounds = L.latLngBounds(southWest, northEast);
 
     southWest = L.latLng(57.136239319177434, -10.1953125);
@@ -726,6 +726,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         var foo = false;
         for (var i=0;i<that.customBounds.length;i++) {
           if (name === that.customBounds[i].name) {
+            console.log('for ', name, ' custom bounds: ', that.customBounds[i]);
             that.get('map').fitBounds(that.customBounds[i].bounds);
             foo = true;
             break;
