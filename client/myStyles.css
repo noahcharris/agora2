@@ -66,6 +66,13 @@ body {
   margin-right: 70px;
 }
 
+#searchSelect {
+  float: right;
+  position: relative;
+  margin-top: 10px;
+  margin-right: 8px;
+}
+
 .username {
   display: none;
   position: relative;
