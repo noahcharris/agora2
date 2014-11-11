@@ -79,11 +79,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top'
         //MAYBE LEAVE THIS OUT FOR MVP??
         +'<div id="timeframeSelect"><select>'
-          +'<option value="Today">Today</option>'
-          +'<option value="This Week">This Week</option>'
-          +'<option value="This Month">This Month</option>'
-          +'<option value="This Year">This Year</option>'
-          +'<option value="All Time">All Time</option>'
+          +'<option value="day">Today</option>'
+          +'<option value="week">This Week</option>'
+          +'<option value="month">This Month</option>'
+          +'<option value="year">This Year</option>'
+          +'<option value="time">All Time</option>'
         +'</select></div>'
         +'</span></div>'));
       this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));

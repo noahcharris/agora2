@@ -390,6 +390,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       switch(that.get('sidebarView').displayed) {
         case 'Topics-Top':
           urlPath = '/topics-top';
+          var $suffix = $('#timeframeSelect').val();
+          $suffix = $suffix || 'day';
+          urlPath += ('-' + $suffix);
           break;
         case 'Topics-New':
           urlPath = '/topics-new';
