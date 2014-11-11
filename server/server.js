@@ -24,6 +24,8 @@ app = express();
 // });
 
 app.use(bodyParser());
+
+
 // app.use(cookieParser('secret'));
 // app.use(cookieSession({
 //   keys: ['a', 'b']
@@ -57,51 +59,82 @@ app.get('/', function(request, response) {
   response.redirect('index.html');
 });
 
-app.get('/dance', routes.danceParty);
+//Returns collections of topics to be displayed in sidebar (without trees)
+app.get('/topics-top-day', routes.getTopTopics);
+app.get('/topics-top-week', routes.getTopTopics);
+app.get('/topics-top-month', routes.getTopTopics);
+app.get('/topics-top-year', routes.getTopTopics);
+app.get('/topics-top-time', routes.getTopTopics);
 
-app.get('/points', routes.getPoints);
-app.get('/place', routes.getPlace);
-app.get('/user', routes.getUser);
-
-//new topics routes with the three filters
-//CHANGE THIS BACK TO getTopTopics, THIS IS FOR TESTING
-app.get('/topics-top', routes.getTopTopics);
 app.get('/topics-new', routes.getNewTopics);
 app.get('/topics-hot', routes.getHotTopics);
 
-//TODO
-//this will return a 'conversation' (replacing the idea of 'messages') for each user
-//users should only be able to have like 150 contacts or smthn before they have to pay
-app.get('/contacts', routes.getContacts);
-app.post('/sendMessage', routes.sendMessage);
+//INDIVIDUAL TOPICS
+app.get('/topicTree', routes.getTopicTree);
+app.get('/topicLocations', routes.getTopicLocations);
 
+app.get('/topicSearch', routes.topicSearch);
+app.get('/userSearch', routes.userSearch);
 //could I do some of this on the client (static location?)
 //or maybe the cache manager keeps track of all the 
 //locations and channels?? (there will be too many ..)
-app.get('/pathSearch', routes.getPathSearchResults);
-app.get('/channelSearch', routes.getChannelSearchResults);
+app.get('/locationSearch', routes.locationSearch);
+app.get('/channelSearch', routes.channelSearch);
 
-app.get('/search', routes.search);
+app.get('/locationSubtree', routes.getLocationSubtree);
+app.get('/channelSubtree', routes.getChannelSubtree);
 
-//this is how users will change their settings/public profile
-app.post('/updateProfile', routes.updateProfile);
+//users should only be able to have like 150 contacts or smthn before they have to pay
+app.get('/contacts', routes.getContacts);
+app.get('/messages', routes.getMessages);
+
+app.get('/messageChain', routes.getMessageChain);
+
+//MAP POINTS
+app.get('/points', routes.getPoints);
+
+//location profiles and user profiles and channel profiles
+app.get('/location', routes.getLocation);
+app.get('/user', routes.getUser);
+app.get('/channel', routes.getChannel);
+
+app.get('/notifications', routes.getNotifications);
+
+
+//POST METHODS (EXCEPT LOGOUT)
 
 //the login route will return a users 'profile', this will be used by the cache manager,
 //contains the user's settings, vote profile, etc.....
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 
+app.post('/addContact', routes.addContact);
+app.post('/sendMessage', routes.sendMessage);
+
+app.post('/registerUser', routes.registerUser);
+app.post('/updateUserProfile', routes.updateUserProfile);
+app.post('/updateLocationProfile', routes.updateLocationProfile);
+
 app.post('/createTopic', routes.createTopic);
+
 app.post('/createComment', routes.createComment);
+app.post('/createResponse', routes.createResponse);
 app.post('/createReply', routes.createReply);
 app.post('/createUser', routes.createUser);
+
+app.post('/upvoteTopic', routes.upvoteTopic);
+app.post('/upvoteComment', routes.upvoteTopic);
+app.post('/upvoteResponse', routes.upvoteTopic);
+app.post('/upvoteReply', routes.upvoteTopic);
+
+app.post('/createLocation', routes.createLocation);
+app.post('/createChannel', routes.createChannel);
 
 app.use(favicon(__dirname + '/../client/media/favicon.png'));
 
 
 app.use(express.static(__dirname + '/../client'));
 
-//console.log(fs.readFileSync(__dirname + '/server.pfx', {encoding: 'utf8'}));
 var options = {
   key: fs.readFileSync(__dirname + '/key.pem'),
   cert: fs.readFileSync(__dirname + '/cert.pem'),

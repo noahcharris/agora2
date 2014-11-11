@@ -58,22 +58,6 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 
 
-
-
-
-
-module.exports.danceParty = function(request, response) {
-  //console.log('dance, dance, dance', request.session.email);
-  //request.session.email = 'hello';
-  //postgres.setupPostGIS();
-  postgres.createTables();
-  //postgres.populateSubgroups();
-  //postgres.populateGroups();
-  //postgres.populateTopics();
-  //postgres.populatePlaces();
-  response.end('woooohoooo');
-}
-
 module.exports.getPoints = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
@@ -81,38 +65,9 @@ module.exports.getPoints = function(request, response) {
   });
 };
 
-module.exports.getPathSearchResults = function(request, response) {
-  //TODO
-  response.json([{
-    text: 'waterBoyz'
-  },{
-    text: 'woohohoh'
-  }]);
-};
 
-module.exports.getChannelSearchResults = function(request, response) {
-  //TODO
-  response.json([{
-    text: 'waterBoyz'
-  },{
-    text: 'woohohoh'
-  }]);
-
-};
-
-module.exports.search = function(request, response) {
-
-};
 
 module.exports.getContacts = function(request, response) {
-
-};
-
-module.exports.sendMessage = function(request, response) {
-
-};
-
-module.exports.updateProfile = function(request, response) {
 
 };
 
@@ -122,6 +77,21 @@ module.exports.updateProfile = function(request, response) {
 /********************************************/
 /***  NEW TOPICS WITH FILTERS METHODS     ***/
 /********************************************/
+
+
+module.exports.getTopicTree = function(request, response) {
+
+  response.end('TODO');
+
+};
+
+module.exports.getTopicLocations = function(request, response) {
+
+  response.end('TODO');
+
+};
+
+
 
 module.exports.getTopTopics = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -151,12 +121,6 @@ module.exports.getTopTopics = function(request, response) {
 
   });
 };
-
-
-
-
-
-
 
 
 module.exports.getNewTopics = function(request, response) {
@@ -254,10 +218,6 @@ module.exports.getHotTopics = function(request, response) {
 };
 
 
-
-
-
-
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   postgres.retrieveUser(queryArgs.username, function(data) {
@@ -267,12 +227,61 @@ module.exports.getUser = function(request, response) {
 };
 
 
-module.exports.getPlace = function(request, response) {
+module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   postgres.retrievePlace(queryArgs.location, function(data) {
     response.json(data);
   });
 };
+
+
+//##########################################
+//############  SEARCHES    ################
+//##########################################
+
+
+module.exports.topicSearch = function(request, response) {
+
+
+    //TODO
+};
+
+module.exports.userSearch = function(request, response) {
+    //TODO
+
+};
+
+
+module.exports.locationSearch = function(request, response) {
+
+    var returnCollection = [];
+    response.json(returnCollection);
+
+};
+
+module.exports.channelSearch = function(request, response) {
+
+  var returnCollection = [];
+  response.json(returnCollection);
+
+};
+
+
+
+module.exports.getNotifications = function(request, response) {
+
+  //clear notifications out of the database when they are sent to the client
+
+};
+
+
+
+
+
+
+
+
+
 
 
 
@@ -426,6 +435,12 @@ module.exports.createComment = function(request, response) {
   });
 };
 
+module.exports.createResponse = function(request, response) {
+
+  //TODO
+
+};
+
 module.exports.createReply = function(request, response) {
   postgres.createReply(request.body.location, request.body.group, 
     request.body.topic, request.body.comment, request.body.headline, 
@@ -447,6 +462,14 @@ module.exports.createReply = function(request, response) {
       response.end('error creating reply');
     }
   });
+};
+
+module.exports.sendMessage = function(request, response) {
+
+};
+
+module.exports.updateProfile = function(request, response) {
+
 };
 
 
