@@ -33,7 +33,7 @@ module.exports.setupPostGIS = function() {
       if (err) {
         console.log('error setting up postGIS');
       } else {
-        console.log('postgres successfully updated');
+        console.log('postgres successfully updated to support postGIS');
       }
     });
 };
@@ -46,14 +46,14 @@ module.exports.retrievePointsWithinRadius = function(latitude, longitude, cb) {
     //if (typeof latitude === 'number' && typeof longitude === '')
 
 
-var query = client.query("SELECT * FROM groups "
-    +"WHERE ST_DWithin(geom, ST_GeomFromText('POINT("+longitude+" "+latitude+")', 4269), 10);", function(err, result) {
-    if (err) {
-      console.log('failed to retrieve points(spaces) for lat:', latitude, ' and long:', longitude);
-    } else {
-      cb(result.rows);
-    }
-  });
+  var query = client.query("SELECT * FROM groups "
+      +"WHERE ST_DWithin(geom, ST_GeomFromText('POINT("+longitude+" "+latitude+")', 4269), 10);", function(err, result) {
+      if (err) {
+        console.log('failed to retrieve points(spaces) for lat:', latitude, ' and long:', longitude);
+      } else {
+        cb(result.rows);
+      }
+    });
 
 };
 

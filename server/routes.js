@@ -1,6 +1,7 @@
 
-var url = require('url');
 var postgres = require('./postgres.js');
+
+var url = require('url');
 var Memcached = require('memcached');
 var amqp = require('amqplib');
 var when = require('when');
@@ -297,6 +298,10 @@ module.exports.getUser = function(request, response) {
   });
 };
 
+module.exports.getUserLocations = function(request, response) {
+
+};
+
 
 module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -324,6 +329,9 @@ module.exports.getNotifications = function(request, response) {
 
 
 module.exports.login = function(request, response) {
+
+
+  //NEED TO MAKE SURE THAT NOT HTTPS REQUESTS DO NOT WORK HERE
 
   console.log('login!!!!!!');
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
@@ -548,7 +556,7 @@ module.exports.createLocation = function(request, response) {
 };
 
 module.exports.createChannel = function(request, response) {
-  
+
 };
 
 

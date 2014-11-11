@@ -85,9 +85,9 @@ app.get('/locationSubtree', routes.getLocationSubtree);
 app.get('/channelSubtree', routes.getChannelSubtree);
 
 //users should only be able to have like 150 contacts or smthn before they have to pay
+//SECURE
 app.get('/contacts', routes.getContacts);
 app.get('/messages', routes.getMessages);
-
 app.get('/messageChain', routes.getMessageChain);
 
 //MAP POINTS
@@ -95,9 +95,12 @@ app.get('/points', routes.getPoints);
 
 //location profiles and user profiles and channel profiles
 app.get('/user', routes.getUser);
+app.get('/userLocations', routes.getUserLocations);
+
 app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);
 
+//SECURE
 app.get('/notifications', routes.getNotifications);
 
 
@@ -105,27 +108,33 @@ app.get('/notifications', routes.getNotifications);
 
 //the login route will return a users 'profile', this will be used by the cache manager,
 //contains the user's settings, vote profile, etc.....
+//SECURE
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 
+//SECURE
 app.post('/addContact', routes.addContact);
 app.post('/sendMessage', routes.sendMessage);
 
 app.post('/registerUser', routes.registerUser);
+
+//SECURE
 app.post('/updateUserProfile', routes.updateUserProfile);
 app.post('/updateLocationProfile', routes.updateLocationProfile);
 
+//SECURE
 app.post('/createTopic', routes.createTopic);
-
 app.post('/createComment', routes.createComment);
 app.post('/createResponse', routes.createResponse);
 app.post('/createReply', routes.createReply);
 
+//SECURE
 app.post('/upvoteTopic', routes.upvoteTopic);
 app.post('/upvoteComment', routes.upvoteComment);
 app.post('/upvoteResponse', routes.upvoteResponse);
 app.post('/upvoteReply', routes.upvoteReply);
 
+//SECURE
 app.post('/createLocation', routes.createLocation);
 app.post('/createChannel', routes.createChannel);
 
