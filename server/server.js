@@ -60,11 +60,11 @@ app.get('/', function(request, response) {
 });
 
 //Returns collections of topics to be displayed in sidebar (without trees)
-app.get('/topics-top-day', routes.getTopTopics);
-app.get('/topics-top-week', routes.getTopTopics);
-app.get('/topics-top-month', routes.getTopTopics);
-app.get('/topics-top-year', routes.getTopTopics);
-app.get('/topics-top-time', routes.getTopTopics);
+app.get('/topics-top-day', routes.getTopTopicsDay);
+app.get('/topics-top-week', routes.getTopTopicsWeek);
+app.get('/topics-top-month', routes.getTopTopicsMonth);
+app.get('/topics-top-year', routes.getTopTopicsYear);
+app.get('/topics-top-time', routes.getTopTopicsTime);
 
 app.get('/topics-new', routes.getNewTopics);
 app.get('/topics-hot', routes.getHotTopics);
@@ -94,8 +94,8 @@ app.get('/messageChain', routes.getMessageChain);
 app.get('/points', routes.getPoints);
 
 //location profiles and user profiles and channel profiles
-app.get('/location', routes.getLocation);
 app.get('/user', routes.getUser);
+app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);
 
 app.get('/notifications', routes.getNotifications);
@@ -120,12 +120,11 @@ app.post('/createTopic', routes.createTopic);
 app.post('/createComment', routes.createComment);
 app.post('/createResponse', routes.createResponse);
 app.post('/createReply', routes.createReply);
-app.post('/createUser', routes.createUser);
 
 app.post('/upvoteTopic', routes.upvoteTopic);
-app.post('/upvoteComment', routes.upvoteTopic);
-app.post('/upvoteResponse', routes.upvoteTopic);
-app.post('/upvoteReply', routes.upvoteTopic);
+app.post('/upvoteComment', routes.upvoteComment);
+app.post('/upvoteResponse', routes.upvoteResponse);
+app.post('/upvoteReply', routes.upvoteReply);
 
 app.post('/createLocation', routes.createLocation);
 app.post('/createChannel', routes.createChannel);

@@ -58,18 +58,7 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 
 
-module.exports.getPoints = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
-    response.json(data);
-  });
-};
 
-
-
-module.exports.getContacts = function(request, response) {
-
-};
 
 
 
@@ -79,21 +68,9 @@ module.exports.getContacts = function(request, response) {
 /********************************************/
 
 
-module.exports.getTopicTree = function(request, response) {
-
-  response.end('TODO');
-
-};
-
-module.exports.getTopicLocations = function(request, response) {
-
-  response.end('TODO');
-
-};
 
 
-
-module.exports.getTopTopics = function(request, response) {
+module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
   console.log('what the fuuuuuuck');
@@ -120,6 +97,26 @@ module.exports.getTopTopics = function(request, response) {
     }
 
   });
+};
+
+module.exports.getTopTopicsWeek = function(request, response) {
+  //TODO
+    response.end('TODO');
+};
+
+module.exports.getTopTopicsMonth = function(request, response) {
+  //TODO
+    response.end('TODO');
+};
+
+module.exports.getTopTopicsYear = function(request, response) {
+  //TODO
+    response.end('TODO');
+};
+
+module.exports.getTopTopicsTime = function(request, response) {
+  //TODO
+    response.end('TODO');
 };
 
 
@@ -217,6 +214,80 @@ module.exports.getHotTopics = function(request, response) {
     response.json(topicsCollection);
 };
 
+module.exports.getTopicTree = function(request, response) {
+
+  response.end('TODO');
+
+};
+
+module.exports.getTopicLocations = function(request, response) {
+
+  response.end('TODO');
+
+};
+
+
+//##########################################
+//############  SEARCHES    ################
+//##########################################
+
+
+module.exports.topicSearch = function(request, response) {
+
+  response.end('TODO');
+    //TODO
+};
+
+module.exports.userSearch = function(request, response) {
+    //TODO
+  response.end('TODO');
+};
+
+
+
+module.exports.locationSearch = function(request, response) {
+
+    var returnCollection = [];
+    response.json(returnCollection);
+
+};
+
+module.exports.channelSearch = function(request, response) {
+
+  var returnCollection = [];
+  response.json(returnCollection);
+
+};
+
+module.exports.getLocationSubtree = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.getChannelSubtree = function(response, request) {
+  response.end('TODO');
+};
+
+
+module.exports.getContacts = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.getMessages = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.getMessageChain = function(request, response) {
+  response.end('TODO');
+};
+
+
+module.exports.getPoints = function(request, response) {
+  var queryArgs = url.parse(request.url, true).query;
+  postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
+    response.json(data);
+  });
+};
+
 
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -234,50 +305,17 @@ module.exports.getLocation = function(request, response) {
   });
 };
 
-
-//##########################################
-//############  SEARCHES    ################
-//##########################################
-
-
-module.exports.topicSearch = function(request, response) {
-
-
-    //TODO
-};
-
-module.exports.userSearch = function(request, response) {
-    //TODO
-
-};
-
-
-module.exports.locationSearch = function(request, response) {
-
-    var returnCollection = [];
-    response.json(returnCollection);
-
-};
-
-module.exports.channelSearch = function(request, response) {
-
-  var returnCollection = [];
-  response.json(returnCollection);
-
-};
+module.exports.getChannel = function(request, response) {
+  response.end('wooo');
+}
 
 
 
 module.exports.getNotifications = function(request, response) {
 
   //clear notifications out of the database when they are sent to the client
-
+  response.end('TODO');
 };
-
-
-
-
-
 
 
 
@@ -326,13 +364,58 @@ module.exports.logout = function(request, response) {
 };
 
 
-
-
-
-
+/***************************/
 /***************************/
 /***  CREATION ROUTES    ***/
 /***************************/
+/***************************/
+
+
+module.exports.addContact = function(request, response) {
+  response.end('TODO');
+};
+
+
+module.exports.sendMessage = function(request, response) {
+  response.end('TODO');
+};
+
+
+module.exports.registerUser = function(request, response) {
+
+  //NEED TO MAKE SURE THAT THE USER DOES NOT ALREADY EXITS
+  //Actually, this is a larger question of how to alert 
+  //to the user whether or not his field input is valid
+
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(request.body.password, salt, function(err, hash) {
+
+      postgres.createUser(request.body.username, hash, salt, 
+        request.body.origin, function(success) {
+          if (success) {
+            response.end('successfully created user');
+          } else {
+            response.end('error creating user');
+          }
+      });
+    });
+  });
+
+};
+
+
+
+module.exports.updateUserProfile = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.updateLocationProfile = function(request, response) {
+  response.end('TODO');
+};
+
+
+
+
 
 
 module.exports.createTopic = function(request, response) {
@@ -379,39 +462,7 @@ module.exports.createTopic = function(request, response) {
 };
 
 
-module.exports.createGroup = function(request, response) {
-  postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
-    request.body.name, request.body.description, request.body.creator,
-    request.body.public, request.body.open, function(success) {
-      if (success) {
-        response.end('group successfully created');
-      } else {
-        response.end('error creating group');
-      }
-    });
-};
 
-module.exports.createUser = function(request, response) {
-
-  //NEED TO MAKE SURE THAT THE USER DOES NOT ALREADY EXITS
-  //Actually, this is a larger question of how to alert 
-  //to the user whether or not his field input is valid
-
-  bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash(request.body.password, salt, function(err, hash) {
-
-      postgres.createUser(request.body.username, hash, salt, 
-        request.body.origin, function(success) {
-          if (success) {
-            response.end('successfully created user');
-          } else {
-            response.end('error creating user');
-          }
-      });
-    });
-  });
-
-}
 
 module.exports.createComment = function(request, response) {
   postgres.createComment(request.body.location, request.body.group, 
@@ -436,7 +487,7 @@ module.exports.createComment = function(request, response) {
 };
 
 module.exports.createResponse = function(request, response) {
-
+response.end('TODO');
   //TODO
 
 };
@@ -464,13 +515,42 @@ module.exports.createReply = function(request, response) {
   });
 };
 
-module.exports.sendMessage = function(request, response) {
 
+
+module.exports.upvoteTopic = function(request, response) {
+response.end('TODO');
 };
 
-module.exports.updateProfile = function(request, response) {
-
+module.exports.upvoteComment = function(request, response) {
+  response.end('TODO');
 };
+
+module.exports.upvoteResponse = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.upvoteReply = function(request, response) {
+  response.end('TODO');
+};
+
+
+
+module.exports.createLocation = function(request, response) {
+  postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
+    request.body.name, request.body.description, request.body.creator,
+    request.body.public, request.body.open, function(success) {
+      if (success) {
+        response.end('group successfully created');
+      } else {
+        response.end('error creating group');
+      }
+    });
+};
+
+module.exports.createChannel = function(request, response) {
+  
+};
+
 
 
 
