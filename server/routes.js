@@ -102,22 +102,25 @@ module.exports.getTopTopicsDay = function(request, response) {
 
 module.exports.getTopTopicsWeek = function(request, response) {
   //TODO
-    response.end('TODO');
+    response.json(false);
+
 };
 
 module.exports.getTopTopicsMonth = function(request, response) {
   //TODO
-    response.end('TODO');
+    response.json(false);
 };
 
 module.exports.getTopTopicsYear = function(request, response) {
   //TODO
-    response.end('TODO');
+    response.json(false);
+
 };
 
 module.exports.getTopTopicsTime = function(request, response) {
   //TODO
-    response.end('TODO');
+    response.json(false);
+    
 };
 
 

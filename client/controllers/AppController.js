@@ -319,62 +319,64 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //OLD TRIGGER (NO FILTERS)
     //need alot more of these methods, topics-top, topics-new
 
-    mapController.on('reloadSidebar', function(location) {
-      console.log('mapController event: reloadSidebar');
+    // mapController.on('reloadSidebar', function(location) {
+    //   console.log('mapController event: reloadSidebar');
 
 
-      var urlPath;
-      switch(that.get('sidebarView').displayed) {
-        case 'Topics-Top':
-          urlPath = '/topics-top';
-          break;
-        case 'Topics-New':
-          urlPath = '/topics-new';
-          break;
-        case 'Topics-Hot':
-          urlPath = '/topics-hot';
-          break;
-        default:
-          urlPath = '';
-          break;
-      }
+    //   var urlPath;
+    //   switch(that.get('sidebarView').displayed) {
+    //     case 'Topics-Top':
+    //       urlPath = '/topics-top';
+    //       break;
+    //     case 'Topics-New':
+    //       urlPath = '/topics-new';
+    //       break;
+    //     case 'Topics-Hot':
+    //       urlPath = '/topics-hot';
+    //       break;
+    //     default:
+    //       urlPath = '';
+    //       break;
+    //   }
 
-      console.log('ajax request to: ', urlPath);
-      $.ajax({
-        url: 'http://localhost:80'+urlPath,
-        data: {
-          location: location,
-          channel: that.get('channel')
-        },
-        crossDomain: true,
-        success: function(data) {
-          console.log(data);
+    //   console.log('ajax request to: ', urlPath);
+    //   $.ajax({
+    //     url: 'http://localhost:80'+urlPath,
+    //     data: {
+    //       location: location,
+    //       channel: that.get('channel')
+    //     },
+    //     crossDomain: true,
+    //     success: function(data) {
+    //       console.log(data);
 
-          for (var i=0;i<data.length;i++) {
-            data[i].type = 'Topic';
-            data[i].reputation = 0;
-          }
-          topicsCollection = data;
-          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-          sidebarView.collection = topicsCollection;
-          content1.show(sidebarView);
+    //       for (var i=0;i<data.length;i++) {
+    //         data[i].type = 'Topic';
+    //         data[i].reputation = 0;
+    //       }
+    //       topicsCollection = data;
+    //       //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+    //       sidebarView.collection = topicsCollection;
+    //       content1.show(sidebarView);
 
-          //take detailView into account while moving around
-          //pretty sure I don't need this stuff if I want detailview to close on navigation
-          // if (that.get('expanded')) {
-          //   if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-          //     content2.show(that.get('detailView'));
-          //   }
-          // }
+    //       //take detailView into account while moving around
+    //       //pretty sure I don't need this stuff if I want detailview to close on navigation
+    //       // if (that.get('expanded')) {
+    //       //   if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
+    //       //     content2.show(that.get('detailView'));
+    //       //   }
+    //       // }
 
-        },
-        error: function(data) {
-          console.log(data);
-        }
-      });
+    //     },
+    //     error: function(data) {
+    //       console.log(data);
+    //     }
+    //   });
 
       
-    });
+    // });
+
+
 
     //NEW TRIGGGER
     //switch between topic filters, need to include this kind of stuff in the method above as well

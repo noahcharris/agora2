@@ -21,6 +21,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
     //indicates whether messages or contacts are being displayed in inbox mode
     this.inboxFilter = 'Messages';
     this.highlighted = 0;
+
+    this.timeframe = 'day'
   },
 
 
@@ -64,28 +66,34 @@ Agora.Views.SidebarView = Backbone.View.extend({
       || this.displayed === 'Topics-Hot') {
 
 
-      //here is the dropdown code
-      // <select>
-      //   <option value="volvo">Volvo</option>
-      //   <option value="saab">Saab</option>
-      //   <option value="opel">Opel</option>
-      //   <option value="audi">Audi</option>
-      // </select>
 
+
+      //It's weird that this works even when i'm selecting the div
+      //and not the select, better watch this
+      var $select = $('<select id="timeframeSelect">\
+        <option value="day">Today</option>\
+        <option value="week">This Week</option>\
+        <option value="month">This Month</option>\
+        <option value="year">This Year</option>\
+        <option value="time">All Time</option>\
+        </select>');
+      $select.val(this.timeframe);
 
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
       this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top'
-        //MAYBE LEAVE THIS OUT FOR MVP??
-        +'<div id="timeframeSelect"><select>'
-          +'<option value="day">Today</option>'
-          +'<option value="week">This Week</option>'
-          +'<option value="month">This Month</option>'
-          +'<option value="year">This Year</option>'
-          +'<option value="time">All Time</option>'
-        +'</select></div>'
         +'</span></div>'));
+
+      $select.change(function() {
+        that.timeframe = $('#timeframeSelect').val();
+        console.log($('#timeframeSelect').val());
+        that.app.trigger('reloadSidebarTopics');
+      });
+
+      this.$el.children('div.leftThirdButton').children('span').append($select);
+
+
       this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
