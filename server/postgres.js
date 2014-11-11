@@ -332,7 +332,7 @@ module.exports.createTables = function() {
       }
   });
 
-  client.query("CREATE TABLE groups ("
+  client.query("CREATE TABLE places ("
     +"id            SERIAL PRIMARY KEY,"
     +"name          VARCHAR(50),"
     +"description   TEXT,"
@@ -367,24 +367,24 @@ module.exports.createTables = function() {
     }
   });
 
-  client.query("CREATE TABLE places ("
-    +"id            SERIAL PRIMARY KEY,"
-    +"location      VARCHAR(100),"
-    +"country       VARCHAR(50),"
-    +"state         VARCHAR(50),"
-    +"city          VARCHAR(50),"
-    +"name          VARCHAR(50),"
-    +"description   TEXT,"
-    +"population    INTEGER,"
-    +"latitude      DECIMAL(25, 10),"
-    +"longitude     DECIMAL(25, 10));", function(err, result) {
-    if (err) {
-      console.log('failed to create places table');
-      console.log(result);
-    } else {
-      console.log('places table created');
-    }
-  });
+  // client.query("CREATE TABLE places ("
+  //   +"id            SERIAL PRIMARY KEY,"
+  //   +"location      VARCHAR(100),"
+  //   +"country       VARCHAR(50),"
+  //   +"state         VARCHAR(50),"
+  //   +"city          VARCHAR(50),"
+  //   +"name          VARCHAR(50),"
+  //   +"description   TEXT,"
+  //   +"population    INTEGER,"
+  //   +"latitude      DECIMAL(25, 10),"
+  //   +"longitude     DECIMAL(25, 10));", function(err, result) {
+  //   if (err) {
+  //     console.log('failed to create places table');
+  //     console.log(result);
+  //   } else {
+  //     console.log('places table created');
+  //   }
+  // });
 
   client.query("CREATE TABLE messages ("
     +"id         SERIAL PRIMARY KEY,"

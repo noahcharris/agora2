@@ -34,7 +34,7 @@ app.use(bodyParser());
 
 //idk what this does exactly, something for the 'secure' cookies
 //apparently this is a security hole though...
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1); // trust first proxy
 
 app.use(session({
   secret: 'keyboard cat',
