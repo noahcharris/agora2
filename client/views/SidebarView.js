@@ -66,8 +66,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       || this.displayed === 'Topics-Hot') {
 
 
-
-
       //It's weird that this works even when i'm selecting the div
       //and not the select, better watch this
       var $select = $('<select id="timeframeSelect">\
@@ -88,11 +86,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
       $select.change(function() {
         that.timeframe = $('#timeframeSelect').val();
         console.log($('#timeframeSelect').val());
+
+        //RELOADSIDEBARTPICS trigger
         that.app.trigger('reloadSidebarTopics');
       });
 
       this.$el.children('div.leftThirdButton').children('span').append($select);
-
 
       this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));

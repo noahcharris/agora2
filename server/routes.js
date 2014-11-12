@@ -30,6 +30,16 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 
 
+//####################
+//####  Postgres  ####
+//####################
+var conString = 'postgres://noahharris@localhost:5432/noahharris';
+//var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
+var client = new pg.Client(conString);
+client.connect();
+
+
+
 
 // ## SETUP CONSISTENT MESSAGE TIMERS ##
 
@@ -64,9 +74,21 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 
 
+
+
+
+
+
+
+
+
+
 /********************************************/
-/***  NEW TOPICS WITH FILTERS METHODS     ***/
+/***   TOPICS WITH FILTERS METHODS     ******/
 /********************************************/
+
+
+
 
 
 
@@ -74,7 +96,6 @@ var memcached = new Memcached('127.0.0.1:11211');
 module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log('what the fuuuuuuck');
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
@@ -84,21 +105,31 @@ module.exports.getTopTopicsDay = function(request, response) {
     location = 'World';
 
 
-  var keyString = location + '~' + channel + '~TopTopics';
+  var keyString = location + '~' + channel + '~TopTopicsDay';
 
-  console.log('attempting to retrieve topics from: '+keyString);
-  memcached.get(keyString, function (err, data) {
-    if (data) {
-      console.log('sending data from memcached to client');
-      console.log(data[0]);
-      response.json(data);
-    } else {    
-      console.log('memcached returned false for ', keyString);
-      response.json(false);
-    }
+  // console.log('attempting to retrieve topics from: '+keyString);
+  // memcached.get(keyString, function (err, data) {
+  //   if (data) {
+  //     console.log('sending data from memcached to client');
+  //     console.log(data[0]);
+  //     response.json(data);
+  //   } else {    
+  //     console.log('memcached returned false for ', keyString);
+  //     response.json(false);
+  //   }
 
-  });
+  // });
+
+
+
+
 };
+
+
+
+
+
+
 
 module.exports.getTopTopicsWeek = function(request, response) {
   //TODO
@@ -120,7 +151,7 @@ module.exports.getTopTopicsYear = function(request, response) {
 module.exports.getTopTopicsTime = function(request, response) {
   //TODO
     response.json(false);
-    
+
 };
 
 
