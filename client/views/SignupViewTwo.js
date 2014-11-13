@@ -34,8 +34,9 @@ Agora.Views.SignupViewTwo = Backbone.View.extend({
       //NEEDS TO BE OVER HTTPS!!!!
       $.ajax({
 
-        url: 'createUser',
+        url: 'https://localhost:443/registerUser',
         method: 'POST',
+        crossDomain: true,
         data: {
           username: that.data.username,
           password: that.data.password,

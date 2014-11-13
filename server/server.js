@@ -4,11 +4,14 @@ var https = require('https');
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
-var session = require('express-session');
+//var session = require('express-session');
+
+var cookie = require('cookie');
+
 
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var cookieSession = require('cookie-session');
+//var cookieParser = require('cookie-parser');
+//var cookieSession = require('cookie-session');
 var csrf = require('csurf');
 var favicon = require('static-favicon');
 
@@ -26,23 +29,42 @@ app = express();
 app.use(bodyParser());
 
 
-// app.use(cookieParser('secret'));
+//app.set('trust proxy', 1) // trust first proxy
+
+//app.use(cookieParser());
 // app.use(cookieSession({
+//   secret: 'Keyboard Cat',
+//   secure: true,
+//   httpOnly: true,
 //   keys: ['a', 'b']
 // }));
 
 
+console.log(cookie.serialize('foo','bar', {
+  path: '/',
+  secure: true,
+  httpOnly: true,
+  maxAge: 300000
+}));
+
+
+
+
+//EXPRESS-SESSION THIS SHIT DID NOT SEEM TO WORK
 //idk what this does exactly, something for the 'secure' cookies
 //apparently this is a security hole though...
-app.set('trust proxy', 1); // trust first proxy
+// app.set('trust proxy', 1); // trust first proxy
 
-app.use(session({
-  secret: 'keyboard cat',
-  cookie: { path: '/', httpOnly: true, secure: true, maxAge: null },
-  //adding these two made some warnings go away so w2snare
-  // resave: true,
-  // saveUninitialized: true
-}));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   cookie: { path: '/', httpOnly: false, secure: true, maxAge: 6000 },
+//   //adding these two made some warnings go away so w2snare
+//    resave: true,
+//    saveUninitialized: true
+// }));
+
+
+
 
 //CSRF IS BLOCKING MY AJAX CALLS
 //app.use(csrf());

@@ -206,9 +206,9 @@ module.exports.createGroup = function(location, lat, lng, name, description, cre
   });
 };
 
-module.exports.createUser = function(username, passhash, salt, origin, cb) {
-  client.query("INSERT INTO users (username, passhash, salt, origin) "
-    +"VALUES ($1, $2, $3, $4);", [username, passhash, salt, origin], function(err, result) {
+module.exports.createUser = function(username, passhash, salt, location, cb) {
+  client.query("INSERT INTO users (username, passhash, salt, location) "
+    +"VALUES ($1, $2, $3, $4);", [username, passhash, salt, location], function(err, result) {
       if (err) {
         console.log('error inserting into users table');
         console.log(err);

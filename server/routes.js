@@ -1,11 +1,14 @@
 
 var postgres = require('./postgres.js');
 
+var pg = require('pg');
 var url = require('url');
 var Memcached = require('memcached');
 var amqp = require('amqplib');
 var when = require('when');
 var bcrypt = require('bcrypt');
+
+var cookie = require('cookie');
 
 
 
@@ -106,6 +109,8 @@ module.exports.getTopTopicsDay = function(request, response) {
 
 
   var keyString = location + '~' + channel + '~TopTopicsDay';
+
+  response.json(false);
 
   // console.log('attempting to retrieve topics from: '+keyString);
   // memcached.get(keyString, function (err, data) {
@@ -366,9 +371,12 @@ module.exports.login = function(request, response) {
 
 
   //NEED TO MAKE SURE THAT NOT HTTPS REQUESTS DO NOT WORK HERE
+  //NEED CSRF PROTECTION
 
-  console.log('login!!!!!!');
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
+  //request.session.hello = 'yo';
+  //console.log('SESSION: ', request.session.hello);
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {
@@ -378,8 +386,17 @@ module.exports.login = function(request, response) {
           //LOGIN SUCCESSFUL
 
           console.log('Login successful for user: ', request.body.username);
-          request.session.login = true;
-          request.session.username = request.body.username;
+
+          //request.session.login = true;
+          //request.session.username = request.body.username;
+
+          response.setHeader('Set-Cookie', cookie.serialize('ID','woooooo', {
+            path: '/',
+            secure: true,
+            httpOnly: true,
+            maxAge: 300000
+          }));
+
 
           //do we give the csrf token here also?
 
@@ -429,6 +446,10 @@ module.exports.registerUser = function(request, response) {
   //Actually, this is a larger question of how to alert 
   //to the user whether or not his field input is valid
 
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
+  console.log(request);
+
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(request.body.password, salt, function(err, hash) {
 
@@ -461,7 +482,12 @@ module.exports.updateLocationProfile = function(request, response) {
 
 
 module.exports.createTopic = function(request, response) {
+
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
   //AUTHENTICATION HERE
+  //console.log('request.session.login: ', request.session.login);
+
+  console.log('cookie parser: ', cookie.parse(request.header('Set-Cookie')));
   if (request.session.login) {
 
     //call accepts true or false depending on whether the request failed or not

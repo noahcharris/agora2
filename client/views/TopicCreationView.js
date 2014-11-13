@@ -41,9 +41,11 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.children('button').on('click', function() {
 
         if (that.app.get('login')) {
+          
           $.ajax({
-            url: 'createTopic',
+            url: 'https://localhost:443/createTopic',
             method: 'POST',
+            crossDomain: true,
             data: {
               headline: that.$el.children('input#topicCreationHeadline').val(),
               link: that.$el.children('input#topicCreationLink').val(),
@@ -62,11 +64,10 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
               alert('post creation failed');
             }
           });
+
         } else {
           alert('must be logged in to create a topic');
         }
-
-
 
     });
   },
