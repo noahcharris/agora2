@@ -387,16 +387,16 @@ module.exports.login = function(request, response) {
 
           console.log('Login successful for user: ', request.body.username);
 
+          console.log('cookie:   ',request.header('Cookie'));
+          response.setHeader('Set-Cookie', 'wooooooooooo=wooooooo');
+
+
+
+
           //request.session.login = true;
           //request.session.username = request.body.username;
 
-          response.setHeader('Set-Cookie', cookie.serialize('ID','woooooo', {
-            path: '/',
-            secure: true,
-            httpOnly: true,
-            maxAge: 300000
-          }));
-
+          //console.log('seen you: ', request.mySession.seenyou);
 
           //do we give the csrf token here also?
 
@@ -486,9 +486,9 @@ module.exports.createTopic = function(request, response) {
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
   //AUTHENTICATION HERE
   //console.log('request.session.login: ', request.session.login);
+  console.log(request.mySession);
 
-  console.log('cookie parser: ', cookie.parse(request.header('Set-Cookie')));
-  if (request.session.login) {
+  if (request.mySession.login) {
 
     //call accepts true or false depending on whether the request failed or not
     postgres.createTopic(request.body.headline, request.body.link,
