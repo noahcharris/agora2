@@ -162,6 +162,38 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //append topic box
     this.$el.append( this.topicTemplate(this.model) );
 
+    //add upvote handling
+    var $upvote = this.$el.children('div.topicBox').children('div.topicUpvoteBox').children('img');
+    $upvote.on('click', function() {
+
+      $.ajax({
+        url: 'http://localhost/upvoteTopic',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          topicId: that.model.id
+        },
+        success: function(msg) {
+          alert(msg);
+          //some weird shit going on here with detailView
+          // that.app.get('sidebarView').displayed = 'Topics-New'
+          // that.app.get('content2').hide();
+          // that.app.trigger('reloadSidebarTopics');
+        },
+        error: function() {
+          alert('upvote failed');
+        }
+      });
+
+    });
+
+
+
+
+
+
+
     var comments = this.model.comments;
 
 

@@ -591,7 +591,48 @@ module.exports.createReply = function(request, response) {
 
 
 module.exports.upvoteTopic = function(request, response) {
-response.end('TODO');
+
+
+  client.query("SELECT * FROM topicVoteJoin where username = $1",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topicVoteJoin: ', err);
+        //should i just send the error back here?
+        response.end('error');
+      } else {
+        if (result.rowCount === 0) {
+          client.query("INSERT INTO topicVoteJoin (topic, username) "+
+            "VALUES ($1, $2);", [request.body.topicId, request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into topicVoteJoin: ', err);
+                response.end('error');
+              } else {
+
+                client.query("UPDATE topics SET rank = rank + 1 where id = $1", [request.body.topicId],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error updating topics: ', err);
+                      response.end('error');
+                    } else {
+                      console.log('user: '+request.body.username+' has successfully voted for topic: '+request.body.topicId);
+                      response.end('Succesfully voted');
+                    }
+                });
+
+              }
+            });
+        } else {
+          response.end('Already voted');
+        }
+      }
+
+  });
+
+
+
+
 };
 
 module.exports.upvoteComment = function(request, response) {
