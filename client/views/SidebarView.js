@@ -230,7 +230,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             //wtf am i doing
             var thet = this;
-            
+
             $.ajax({
               url: 'http://localhost/topicTree',
               method: 'GET',
@@ -239,7 +239,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 topicId: 1
               },
               success: function(model) {
-                that.app.get('detailView').displayed = 'Topics-Top'
 
                 that.app.get('content2').show(that.app.get('detailView'), model);
                 thet.$el.addClass('highlight');

@@ -610,7 +610,7 @@ module.exports.createTopic = function(request, response) {
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
   //AUTHENTICATION HERE
   //console.log('request.session.login: ', request.session.login);
-  console.log(request.mySession);
+  console.log('username: ', request.body.username);
 
   if (request.mySession.login) {
 
