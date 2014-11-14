@@ -437,7 +437,22 @@ module.exports.getMessages = function(request, response) {
 };
 
 module.exports.getMessageChain = function(request, response) {
-  response.end('TODO');
+  response.json({
+      id: 0,
+      type: 'Message',
+      sender: 'noahcharris',
+      recipient: 'spw',
+      entries: [{
+        sender: 'spw',
+        contents: 'hey dude'
+      },{
+        sender: 'noah',
+        contents: 'yo'
+      },{
+        sender: 'spw',
+        contents: 'what it is'
+      }]
+    });
 };
 
 

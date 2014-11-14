@@ -215,13 +215,18 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           entryView.on('click', function(id, type) {
 
-            //SOME BULSSLHIT RIGHT HURR
-            if (model.type === 'Topic')
+            var urlSuffix;
+
+            if (model.type === 'Topic') {              
               that.app.get('detailView').displayed = 'Topics';
-            if (model.type === 'Message')
+              urlSuffix = 'topicTree';
+            } else if (model.type === 'Message') {
               that.app.get('detailView').displayed = 'Messages';
-            if (model.type === 'User')
+              urlSuffix = 'messageChain';
+            } else if (model.type === 'User') {              
               that.app.get('detailView').displayed = 'Users';
+              urlSuffix = 'messageChain';
+            }
 
               
 
@@ -232,7 +237,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
             var thet = this;
 
             $.ajax({
-              url: 'http://localhost/topicTree',
+              url: 'http://localhost/'+urlSuffix,
               method: 'GET',
               crossDomain: true,
               data: {

@@ -438,9 +438,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }
 
       })
-
-
-
+      
     });
 
 
