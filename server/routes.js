@@ -494,8 +494,9 @@ module.exports.createTopic = function(request, response) {
   if (request.mySession.login) {
 
     //call accepts true or false depending on whether the request failed or not
+    //!!!remember that timestamp can be forged this way
     postgres.createTopic(request.body.headline, request.body.link,
-     request.body.content, request.body.location, request.body.channel, request.body.rank, function(success) {
+     request.body.content, request.body.location, request.body.channel, request.body.timestamp, function(success) {
       if (success) {
 
         //PUT MESSAGE IN QUEUE

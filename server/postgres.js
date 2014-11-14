@@ -129,7 +129,7 @@ module.exports.retrieveUser = function(username, cb) {
 /**************************/
 
 
-module.exports.createTopic = function(headline, link, contents, location, channel, rank, cb) {
+module.exports.createTopic = function(headline, link, contents, location, channel, timestamp, cb) {
 
   console.log(location.split('/'));
 
@@ -140,9 +140,9 @@ module.exports.createTopic = function(headline, link, contents, location, channe
   }
 
   //need to sanitize the sql parameters
-  client.query("INSERT INTO topics (headline, link, contents, location, channel, rank)"
-    +"VALUES ($1, $2, $3, $4, $5, $6);",
-    [headline, link, contents, location, channel, rank], function(err, result) {
+  client.query("INSERT INTO topics (headline, link, contents, location, channel, createdAt)"
+    +"VALUES ($1, $2, $3, $4, $5, now());",
+    [headline, link, contents, location, channel], function(err, result) {
       if (err) {
         console.log('error inserting post into topics: ', err);
         cb(false);
