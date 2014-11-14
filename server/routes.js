@@ -155,7 +155,7 @@ module.exports.getTopTopicsWeek = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -179,7 +179,7 @@ module.exports.getTopTopicsMonth = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -202,7 +202,7 @@ module.exports.getTopTopicsYear = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -226,7 +226,7 @@ module.exports.getTopTopicsTime = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -254,7 +254,7 @@ module.exports.getNewTopics = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY createdAt DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY createdAt DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -281,7 +281,7 @@ module.exports.getHotTopics = function(request, response) {
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY heat DESC;",
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY heat DESC;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
