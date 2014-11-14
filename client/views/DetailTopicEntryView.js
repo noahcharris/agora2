@@ -245,7 +245,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       a();
 
       var $comment = $(this.commentTemplate(comments[i]));
-      $comment.children('div.commentContentBox').append($commentReplyButton);
+      $comment.children('div.commentToolbox').append($commentReplyButton);
       //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
       //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
       //$comment.children('div.commentContentBox').append($starIcon);
@@ -323,7 +323,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
         var $response = $(this.responseTemplate(comments[i].responses[j]));
-        $response.append($responseReplyButton);
+        $response.children('div.responseToolbox').append($responseReplyButton);
 
         //$comment.children('div.replyContentBox').append($replyReplyButton);
 
