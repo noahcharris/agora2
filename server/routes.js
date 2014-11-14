@@ -138,7 +138,6 @@ module.exports.getTopTopicsDay = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -456,7 +455,7 @@ module.exports.getTopicTree = function(request, response) {
       resultTree.comments = [];
       for (var i=0; i < comments.length ;i++) {
         comments[i].responses = [];
-        resultTree.push(comments[i]);
+        resultTree.comments.push(comments[i]);
       }
       for (var i=0; i < responses.length ;i++) {
         responses[i].replies = [];
@@ -468,7 +467,7 @@ module.exports.getTopicTree = function(request, response) {
 
         for (var j=0; j < responses.length ;j++) {
           if (responses[j].id === replies[i].response) {
-            responses[j].push(replies[i]);
+            responses[j].replies.push(replies[i]);
             break;
           }
         }
@@ -774,11 +773,8 @@ module.exports.createTopic = function(request, response) {
             ch.assertQueue(q);
 
 
-
             // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
             var msg = 'Trees:'+request.body.location+':'+request.body.channel;
-
-
 
             ch.sendToQueue(q, new Buffer(msg));
             console.log(" [x] Sent '%s'", msg);
@@ -805,8 +801,12 @@ module.exports.createTopic = function(request, response) {
 
 
 module.exports.createComment = function(request, response) {
-  postgres.createComment(request.body.location, request.body.group, 
-    request.body.topic, request.body.headline, request.body.content, function(success) {
+
+  console.log(request.body.username, request.body.location, request.body.channel, 
+    request.body.topicId, request.body.headline, request.body.content);
+
+  postgres.createComment(request.body.username, request.body.location, request.body.channel, 
+    request.body.topicId, request.body.headline, request.body.content, function(success) {
     if (success) {
       response.end('successfully created comment');
       //put message in the queue

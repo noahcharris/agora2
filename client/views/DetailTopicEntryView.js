@@ -124,9 +124,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     this.$el.children('#inputBox').append($('<img src="resources/images/x.png" class="x"></img>'));
     console.log(this.$el.children('#inputeBox').children('img.x'));
-    this.$el.children('#inputBox').children('img.x').on('click', function() {
+    this.$el.children('#inputBox').children('img.x')[0].onclick = function() {
       that.closeInputBox();
-    });
+    };
 
 
 
@@ -205,18 +205,17 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
     //sending data to the response box
-    $topicReplyButton.on('click', function() {
+    $topicReplyButton[0].onclick = function() {
       
       var responseParams = {
-        type: 'Topic',
-        location: that.app.get('mapController').get('location'),
-        group: that.app.get('mapController').get('group'),
-        topic: that.model.id
+        location: that.model.location,
+        channel: that.model.channel,
+        topicId: that.model.id
       }
 
       that.openInputBox(responseParams);
 
-    });
+    };
     this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
 
 
@@ -229,7 +228,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //sending data to the response box
       var a = function() {
         var x = i;
-        $commentReplyButton.on('click', function() {
+        $commentReplyButton[0].onclick = function() {
           var responseParams = {
             type: 'Comment',
             location: that.app.get('mapController').get('location'),
@@ -238,7 +237,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             comment: comments[x].id
           }
           that.openInputBox(responseParams);
-        });
+        };
       };
       a();
 
@@ -414,6 +413,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   openInputBox: function(data) {
+    var that = this;
     console.log('respond neto: ', data);
     this.responding = true;
     this.responseData = data;
@@ -422,6 +422,67 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       $('textarea#inputTextArea').val('@'+data.username);
     }
     $('#inputBox').css('height', '100px');
+
+    $('#inputBoxButton')[0].onclick = function() {
+
+
+      //whaaaa
+      var thet = this;
+
+      $.ajax({
+        url: 'http://localhost/createComment',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          headline: $(thet).parent().children('textarea#inputHeadlineTextArea').val(),
+          link: $(thet).parent().children('textarea#inputTextArea').val(),
+          content: $(thet).parent().children('textarea#inputTextArea').val(),
+          location: data.location,
+          channel: data.channel,
+          topicId: data.topicId
+        },
+        success: function(msg) {
+
+          $('#inputBox').css('height', '0px');
+          alert(msg);
+
+          //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+
+          //that.app.trigger('reloadSidebarTopics');
+          //just reload fuck it
+          setTimeout(function() {
+
+            $.ajax({
+              url: 'http://localhost/topicTree',
+              method: 'GET',
+              crossDomain: true,
+              data: {
+                //these two models are different scope!
+                topicId: that.model.id
+              },
+              success: function(model) {
+
+                that.app.get('content2').show(that.app.get('detailView'), model);
+              },
+              error: function() {
+                alert('server error');
+              }
+            });
+
+          }, 1000);
+
+        },
+        error: function() {
+          alert('comment creation failed');
+        }
+      });
+
+
+    };
+
+
+
   },
 
   //for selecting different replies/comments/topics

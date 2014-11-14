@@ -155,9 +155,9 @@ module.exports.createTopic = function(username, headline, link, contents, locati
 
 
 
-module.exports.createComment = function(location, group, topic, headline, content, cb) {
-  client.query("INSERT INTO comments (location, agroup, topic, headline, contents) "
-    +"VALUES ($1, $2, $3, $4, $5);", [location, group, topic, headline, content], function(err, result) {
+module.exports.createComment = function(username, location, channel, topic, headline, content, cb) {
+  client.query("INSERT INTO comments (type,username, location, channel, topic, headline, contents, createdAt, rank, heat) "
+    +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, now(), 0, 30);", [username, location, channel, topic, headline, content], function(err, result) {
       if (err) {
         console.log('error inserting into comments: ', err);
         cb(false);
