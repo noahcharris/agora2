@@ -53,6 +53,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
     //this one appears to work much better than the one above, why is that?
     this.$el.children('img.x')[0].onclick = function() {
+      that.app.get('sidebarView').removeHighlights();
       that.app.get('content2').hide();
     }
 

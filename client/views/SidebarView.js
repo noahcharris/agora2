@@ -225,10 +225,35 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               
 
-
             console.log('using region manager 2 to open up detailView and passing through model: ', model);
-            that.app.get('content2').show(that.app.get('detailView'), model);
+            //AJAX OMG
+
+            //wtf am i doing
+            var thet = this;
+            
+            $.ajax({
+              url: 'http://localhost/topicTree',
+              method: 'GET',
+              crossDomain: true,
+              data: {
+                topicId: 1
+              },
+              success: function(model) {
+                that.app.get('detailView').displayed = 'Topics-Top'
+
+                that.app.get('content2').show(that.app.get('detailView'), model);
+                thet.$el.addClass('highlight');
+              },
+              error: function() {
+                alert('post creation failed');
+              }
+            });
+
+
             //that.app.get('detailView')[entryViewMethod](model);
+
+
+
             that.removeHighlights();
             this.$el.addClass('highlight');
           });

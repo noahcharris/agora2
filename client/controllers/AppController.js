@@ -586,6 +586,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       //if we're showing a topic we have to do some dumb shit apparently
       var renderMethod;
 
+      //i really could just reduce all these Topics-* to one topic display...
       switch (that.get('detailView').displayed) {
         case 'Topics-Top':
           renderMethod = 'renderTopic';

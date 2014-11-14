@@ -297,7 +297,86 @@ module.exports.getHotTopics = function(request, response) {
 
 module.exports.getTopicTree = function(request, response) {
 
-  response.end('TODO');
+  response.json({ id: 1,
+      headline: 'Defaults are desecrets',
+      type: 'Topic',
+      username: 'thalonius want',
+      contents: 'Unce more breach. Twice too many.',
+      city: 'Oregon',
+      area: 'Hack Reactor',
+      rank: 42,
+      upvoted: true,
+      expanded: true,   //this is for the outer expansion/contraction button
+      comments: [{
+        id: 22,
+        headline: 'whither will these winds',
+        username: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of responses
+        responses: [{
+            username: 'Mr. Bean',
+            headline: 'whither will these winds',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }, {
+            username: 'Mr. Bean',
+            headline: 'ok',
+            contents: 'I mean it..',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }]
+      }, {
+        id: 87,
+        headline: 'whither will these winds',
+        username: 'Jason Aldean',
+        contents: 'Ok, but how about them yanks?',
+        upvoted: false,
+        expanded: false,
+        responses: [{
+            poster: 'Heckles',
+            headline: 'whither will these winds',
+            contents: 'Just the one.',
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }]
+      },{
+        id: 22,
+        headline: 'whither will these winds',
+        username: 'J-aldrean',
+        contents: 'This dream, no more a dream than waking',
+        upvoted: true,
+        expanded: false,    //these are for each group of responses
+        responses: [{
+            poster: 'Mr. Bean',
+            headline: 'whither will these winds',
+            contents: 'You sir, are a ruffian.',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }, {
+            username: 'Mr. Bean',
+            headline: 'ok',
+            contents: 'I mean it..',
+            upvoted: false,
+            replies: [{
+              contents: 'woooooooo',
+              headline: 'caveman'
+            }]
+        }]
+      }] 
+    });
 
 };
 
@@ -363,10 +442,11 @@ module.exports.getMessageChain = function(request, response) {
 
 
 module.exports.getPoints = function(request, response) {
-  var queryArgs = url.parse(request.url, true).query;
-  postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
-    response.json(data);
-  });
+  // var queryArgs = url.parse(request.url, true).query;
+  // postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
+  //   response.json(data);
+  // });
+  response.json([]);
 };
 
 
