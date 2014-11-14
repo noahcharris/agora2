@@ -108,8 +108,8 @@ module.exports.getTopTopicsDay = function(request, response) {
   console.log('channel: ', channel);
 
   //testing memcached !!!!!!!!!!!!!!!!!
-  if (queryArgs.location === '')
-    location = 'World';
+  // if (queryArgs.location === '')
+  //   location = 'World';
 
   var keyString = location + '~' + channel + '~TopTopicsDay';
 
@@ -128,7 +128,8 @@ module.exports.getTopTopicsDay = function(request, response) {
   // });
 
 
-  client.query("SELECT * FROM topics WHERE (location = '' AND channel = 'General');",
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+    [location, channel],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -175,51 +176,31 @@ module.exports.getTopTopicsTime = function(request, response) {
 
 
 module.exports.getNewTopics = function(request, response) {
-  var topicsCollection = [{ id: 1,
-      headline: 'Defaults are desecrets',
-      type: 'Topic',
-      poster: 'thalonius want',
-      contents: 'Unce more breach. Twice too many.',
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      upvoted: true,
-      expanded: true,   //this is for the outer expansion/contraction button
-      comments: [{
-        id: 22,
-        poster: 'J-aldrean',
-        headline: 'suck it',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of replies
-        replies: [{
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'I mean it..',
-            upvoted: false,
-        }]
-      }, {
-        id: 87,
-        poster: 'Jason Aldean',
-        headline: 'suck it',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        replies: [{
-            poster: 'Heckles',
-            headline: 'wow',
-            contents: 'Just the one.'
-        }]
-      }] 
-    }];
+  var queryArgs = url.parse(request.url, true).query;
 
-    response.json(topicsCollection);
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY createdAt DESC;",
+    [location, channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
+
 };
+
+
+
 
 module.exports.getHotTopics = function(request, response) {
   var topicsCollection = [{ id: 1,
@@ -509,8 +490,8 @@ module.exports.createTopic = function(request, response) {
 
     //call accepts true or false depending on whether the request failed or not
     //!!!remember that timestamp can be forged this way
-    postgres.createTopic(request.body.author, request.body.headline, request.body.link,
-     request.body.content, request.body.location, request.body.channel, request.body.timestamp, function(success) {
+    postgres.createTopic(request.body.username, request.body.headline, request.body.link,
+     request.body.content, request.body.location, request.body.channel, function(success) {
       if (success) {
 
         //PUT MESSAGE IN QUEUE
