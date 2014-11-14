@@ -24,6 +24,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('content1', content1);
     this.set('content2', content2);
 
+    this.set('username', null); //is this secure???
+
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 

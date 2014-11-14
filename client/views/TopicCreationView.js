@@ -47,6 +47,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
             method: 'POST',
             crossDomain: true,
             data: {
+              author: that.app.get('username'),
               headline: that.$el.children('input#topicCreationHeadline').val(),
               link: that.$el.children('input#topicCreationLink').val(),
               content: that.$el.children('textarea#topicCreationContent').val(),

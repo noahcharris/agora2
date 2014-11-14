@@ -40,7 +40,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       //LOGIN (This needs to be done over HTTPS, I just don't know how yet)
       //  -need to interact over both ports
 
-      //CHANGING THIS BACK TO HTTP BECAUSE IT SEEMS TO BREAK COOKIES, HAVE TO TRY WITH A REAL SERVER...
+      //CHANGING THIS BACK TO HTTP BECAUSE IT SEEMS TO BREAK COOKIES, HAVE TO TRY WITH A REAL SERVER
 
       $.ajax({
         url: 'http://localhost/login',
@@ -57,6 +57,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
             that.app.get('topbarView').model.user = username;
             that.app.get('topbarView').render();
+            that.app.set('username', username);
             that.app.get('content2').hide();
 
           } else {

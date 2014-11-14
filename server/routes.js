@@ -495,11 +495,12 @@ module.exports.createTopic = function(request, response) {
 
     //call accepts true or false depending on whether the request failed or not
     //!!!remember that timestamp can be forged this way
-    postgres.createTopic(request.body.headline, request.body.link,
+    postgres.createTopic(request.body.author, request.body.headline, request.body.link,
      request.body.content, request.body.location, request.body.channel, request.body.timestamp, function(success) {
       if (success) {
 
         //PUT MESSAGE IN QUEUE
+        //need a helper function to do this
         connection.then(function(conn) {
           var ok = conn.createChannel();
           ok = ok.then(function(ch) {
