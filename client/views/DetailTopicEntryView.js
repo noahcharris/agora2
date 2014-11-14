@@ -33,7 +33,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
+    console.log('whoooooo rendering this.model: ', this.model);
 
 
 
@@ -164,7 +164,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     //add upvote handling
     var $upvote = this.$el.children('div.topicBox').children('div.topicUpvoteBox').children('img');
-    $upvote.on('click', function() {
+    $upvote[0].onclick = function() {
 
       $.ajax({
         url: 'http://localhost/upvoteTopic',
@@ -186,7 +186,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         }
       });
 
-    });
+    };
 
 
 
@@ -210,7 +210,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var responseParams = {
         location: that.model.location,
         channel: that.model.channel,
-        topicId: that.model.id
+        topicId: that.model.id,
+        urlSuffix: 'createComment'
       }
 
       that.openInputBox(responseParams);
@@ -229,13 +230,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var a = function() {
         var x = i;
         $commentReplyButton[0].onclick = function() {
+
           var responseParams = {
-            type: 'Comment',
-            location: that.app.get('mapController').get('location'),
-            group: that.app.get('mapController').get('group'),
-            topic: that.id,
-            comment: comments[x].id
+            location: that.model.location,
+            channel: that.model.channel,
+            topicId: that.model.id,
+            commentId: comments[x].id,
+            urlSuffix: 'createResponse'
           }
+
           that.openInputBox(responseParams);
         };
       };
@@ -302,17 +305,19 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         var b = function() {
           var x = i;
           var y = j;
-          $responseReplyButton.on('click', function() {
+          $responseReplyButton[0].onclick = function() {
             var responseParams = {
-              type: 'Reply',
-              location: that.app.get('mapController').get('location'),
-              group: that.app.get('mapController').get('group'),
-              topic: that.model.id,
-              comment: comments[x].id,
-              username: comments[x].responses[y].poster
+              location: that.model.location,
+              channel: that.model.channel,
+              topicId: that.model.id,
+              commentId: comments[x].id,
+              responseId: comments[x].responses[y].id,
+              urlSuffix: 'createReply',
+              replyToUser: comments[x].responses[y].username
             }
+
             that.openInputBox(responseParams);
-          });
+          };
         };
         b();
 
@@ -430,7 +435,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var thet = this;
 
       $.ajax({
-        url: 'http://localhost/createComment',
+        url: 'http://localhost/' + data.urlSuffix,
         method: 'POST',
         crossDomain: true,
         data: {
@@ -440,7 +445,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           content: $(thet).parent().children('textarea#inputTextArea').val(),
           location: data.location,
           channel: data.channel,
-          topicId: data.topicId
+          topicId: data.topicId,
+          commentId: data.commentId,
+          responseId: data.responseId
         },
         success: function(msg) {
 
@@ -474,7 +481,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
         },
         error: function() {
-          alert('comment creation failed');
+          alert('server error');
         }
       });
 

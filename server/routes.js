@@ -10,6 +10,8 @@ var bcrypt = require('bcrypt');
 
 var cookie = require('cookie');
 
+var _ = require('underscore');
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
 
@@ -393,8 +395,6 @@ module.exports.getTopicTree = function(request, response) {
     var responses = [];
     var replies = [];
 
-    console.log('ID SENT FROM CLIENT: ', queryArgs.topicId);
-
     client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -440,6 +440,7 @@ module.exports.getTopicTree = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
+        console.log('found replies: ', result.rows);
         count++;
         replies = result.rows;
         if (count === 4) {
@@ -448,9 +449,11 @@ module.exports.getTopicTree = function(request, response) {
       } 
     });
 
-    function buildSequence(topic, comments, responses, replies) {
-      console.log(topic,comments,responses,replies);
 
+    function buildSequence(topic, comments, responses, replies) {
+
+
+      var responses = responses.slice(0);
       var resultTree = topic;
       resultTree.comments = [];
       for (var i=0; i < comments.length ;i++) {
@@ -465,23 +468,25 @@ module.exports.getTopicTree = function(request, response) {
 
       for (var i=0; i < replies.length ;i++) {
 
+        console.log('replyyyyyy.response: ', replies[i].response);
+
         for (var j=0; j < responses.length ;j++) {
           if (responses[j].id === replies[i].response) {
+            console.log('match!');
             responses[j].replies.push(replies[i]);
             break;
           }
         }
-
-
       }
+
+      console.log('in betweener: ', responses);
 
 
       for (var i=0; i < responses.length ;i++) {
-        responses[i].replies = [];
 
-        for (var j=0; j < comments.length ;j++) {
+        for (var j=0; j < resultTree.comments.length ;j++) {
           if (responses[i].comment === comments[j].id) {
-            comments[j].responses.push(responses[i]);
+            resultTree.comments[j].responses.push(responses[i]);
             break;
           }
 
@@ -489,11 +494,7 @@ module.exports.getTopicTree = function(request, response) {
 
       }
 
-
       return resultTree;
-
-
-
 
     };
 
@@ -827,31 +828,49 @@ module.exports.createComment = function(request, response) {
 };
 
 module.exports.createResponse = function(request, response) {
-response.end('TODO');
-  //TODO
+  postgres.createResponse(request.body.username, request.body.location, request.body.channel, 
+      request.body.topicId, request.body.commentId, request.body.headline, request.body.content,
+      function(success) {
+        if (success) {
+          response.end('successfully created response');
+          //put message in the queue
+          connection.then(function(conn) {
+            var ok = conn.createChannel();
+            ok = ok.then(function(ch) {
+              ch.assertQueue(q);
+              // Here we are sending the tree:<path>:<filter> command
+              var msg = 'Tree:'+request.body.location;
+              ch.sendToQueue(q, new Buffer(msg));
+              console.log(" [x] Sent '%s'", msg);
+            });
+          });
+        } else {
+          response.end('error creating response');
+        }
+    });
 
 };
 
 module.exports.createReply = function(request, response) {
-  postgres.createReply(request.body.location, request.body.group, 
-    request.body.topic, request.body.comment, request.body.headline, 
-    request.body.content, function(success) {
-    if (success) {
-      response.end('successfully created reply');
-      //put message in the queue
-      connection.then(function(conn) {
-        var ok = conn.createChannel();
-        ok = ok.then(function(ch) {
-          ch.assertQueue(q);
-          // Here we are sending the tree:<path>:<filter> command
-          var msg = 'Tree:'+request.body.location;
-          ch.sendToQueue(q, new Buffer(msg));
-          console.log(" [x] Sent '%s'", msg);
+  postgres.createReply(request.body.username, request.body.location, request.body.channel, 
+    request.body.topicId, request.body.commentId, request.body.responseId, request.body.headline, request.body.content,
+    function(success) {
+      if (success) {
+        response.end('successfully created reply');
+        //put message in the queue
+        connection.then(function(conn) {
+          var ok = conn.createChannel();
+          ok = ok.then(function(ch) {
+            ch.assertQueue(q);
+            // Here we are sending the tree:<path>:<filter> command
+            var msg = 'Tree:'+request.body.location;
+            ch.sendToQueue(q, new Buffer(msg));
+            console.log(" [x] Sent '%s'", msg);
+          });
         });
-      });
-    } else {
-      response.end('error creating reply');
-    }
+      } else {
+        response.end('error creating reply');
+      }
   });
 };
 
@@ -860,8 +879,8 @@ module.exports.createReply = function(request, response) {
 module.exports.upvoteTopic = function(request, response) {
 
 
-  client.query("SELECT * FROM topicVoteJoin where username = $1",
-    [request.body.username],
+  client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
+    [request.body.username, request.body.topicId],
     function(err, result) {
       if (err) {
         console.log('error selecting from topicVoteJoin: ', err);

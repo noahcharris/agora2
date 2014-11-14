@@ -169,9 +169,23 @@ module.exports.createComment = function(username, location, channel, topic, head
 };
 
 
-module.exports.createReply = function(location, group, topic, comment, headline, content, cb) {
-  client.query("INSERT INTO replies (location, agroup, topic, comment, headline, contents) "
-    +"VALUES ($1, $2, $3, $4, $5, $6);", [location, group, topic, comment, headline, content], function(err, result) {
+module.exports.createResponse = function(username, location, channel, topic, comment, headline, contents, cb) {
+  client.query("INSERT INTO responses (type, username, location, channel, topic, comment, headline, contents, createdAt, rank, heat) "
+    +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);", [username, location, channel, topic, comment, headline, contents], function(err, result) {
+      if (err) {
+        console.log('error inserting into responses: ', err);
+        cb(false);
+      } else {
+        console.log(result);
+        cb(true);
+      }
+    });
+};
+
+
+module.exports.createReply = function(username, location, channel, topic, comment, response, headline, contents, cb) {
+  client.query("INSERT INTO replies (type, username, location, channel, topic, comment, response, headline, contents, createdAt, rank, heat) "
+    +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);", [username, location, channel, topic, comment, response, headline, contents], function(err, result) {
       if (err) {
         console.log('error inserting into replies: ', err);
         cb(false);
@@ -179,7 +193,7 @@ module.exports.createReply = function(location, group, topic, comment, headline,
         console.log(result);
         cb(true);
       }
-    });
+  });
 };
 
 module.exports.createGroup = function(location, lat, lng, name, description, creator, public, open, cb) {
