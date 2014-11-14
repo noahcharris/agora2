@@ -866,18 +866,8 @@ textarea {
 }
 
 
-/* ## GROUP CREATION ## */
-
-.groupCreationView {
-
-}
-
-
-
-
-
-.subgroupCreationView {
-
+#imageUploadButton {
+  background-color: aqua;
 }
 
 

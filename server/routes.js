@@ -103,14 +103,16 @@ module.exports.getTopTopicsDay = function(request, response) {
   var location = queryArgs.location;
   var channel = queryArgs.channel;
 
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
   //testing memcached !!!!!!!!!!!!!!!!!
   if (queryArgs.location === '')
     location = 'World';
 
-
   var keyString = location + '~' + channel + '~TopTopicsDay';
 
-  response.json(false);
 
   // console.log('attempting to retrieve topics from: '+keyString);
   // memcached.get(keyString, function (err, data) {
@@ -124,6 +126,18 @@ module.exports.getTopTopicsDay = function(request, response) {
   //   }
 
   // });
+
+
+  client.query("SELECT * FROM topics WHERE (location = '' AND channel = 'General');",
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
 
 
 

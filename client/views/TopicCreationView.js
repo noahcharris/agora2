@@ -21,6 +21,10 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.empty();
     this.$el.html( this.template() );
 
+    this.$el.children('div#imageUploadButton').on('click', function() {
+      console.log('aqua');
+    });
+
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {

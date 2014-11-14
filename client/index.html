@@ -45,13 +45,13 @@
     <!--Sidebar Entry Views-->
 
     <script id="sidebarTopicEntryTemplate" type="text/template">
-     <p class="authorString">&nbsp(<%= reputation %>) <strong><%= poster %>, 3 hours ago</strong></p>
+     <p class="authorString">&nbsp(rank:&nbsp<%= rank %>) <strong><%= author %>, 3 hours ago</strong></p>
      <p class="sidebarEntryContent"><%= headline %></p>
      <p class="sidebarEntryTopicOrigin">Posted in: <%= location %></p>
     </script>
 
     <script id="sidebarPlaceEntryTemplate" type="text/template">
-     <%= reputation %>-<strong> <%= name %> </strong>
+     <%= rank %>-<strong> <%= name %> </strong>
     </script>
 
     <script id="sidebarUserEntryTemplate" type="text/template">
@@ -71,10 +71,10 @@
      <div class="topicBox">
       <div class="topicUpvoteBox">
        <img src="/resources/images/upvote.png" height="20px" width="20px"></img>
-       <div><%= reputation %></div>
+       <div>rank:&nbsp<%= rank %></div>
       </div>
       <div class="topicContentBox">
-       <p class="authorString">&nbsp(<%= reputation %>) <strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
+       <p class="authorString">&nbsp(rank:&nbsp<%= rank %>) <strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
        <p class="topicHeader"> <%= headline %> </p>
        <p class="topic"> <%= contents %> </p>
       </div>
@@ -173,7 +173,7 @@
       <input id="topicCreationLink" placeholder="Link"></input>
       <br/><br/>
       <textarea id="topicCreationContent" placeholder="Content"></textarea>
-      <p>Image upload</p>
+      <div id="imageUploadButton">Image Upload</div>
       <p>other options</p>
     </script>
 

@@ -426,7 +426,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             topicsCollection = data;
             console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-            sidebarView.collection = topicsCollection;
+            sidebarView.collection = data;
             content1.show(sidebarView); 
           } else {
             console.log('memcached returned false');
