@@ -31,7 +31,7 @@ module.exports.setupPostGIS = function() {
     +"CREATE EXTENSION fuzzystrmatch;"
     +"CREATE EXTENSION postgis_tiger_geocoder;", function(err, result) {
       if (err) {
-        console.log('error setting up postGIS');
+        console.log('error setting up postGIS: ', err);
       } else {
         console.log('postgres successfully updated to support postGIS');
       }
@@ -49,7 +49,7 @@ module.exports.retrievePointsWithinRadius = function(latitude, longitude, cb) {
   var query = client.query("SELECT * FROM groups "
       +"WHERE ST_DWithin(geom, ST_GeomFromText('POINT("+longitude+" "+latitude+")', 4269), 10);", function(err, result) {
       if (err) {
-        console.log('failed to retrieve points(spaces) for lat:', latitude, ' and long:', longitude);
+        console.log('error retrieving points: ', err);
       } else {
         cb(result.rows);
       }
@@ -90,7 +90,7 @@ module.exports.retrieveTopics = function(location, cb) {
 
   client.query("SELECT * FROM topics WHERE location = $1;",[location], function(err, result) {
     if (err) {
-      console.log('failed to retrieve topics for '+ location);
+      console.log('error retrieving topics: ', err);
     }
      if (result) {
       //console.log('retrieved topics for '+city+':', result.rows);
@@ -103,8 +103,7 @@ module.exports.retrieveTopics = function(location, cb) {
 module.exports.retrievePlace = function(location, cb) {
   client.query("SELECT * FROM places WHERE location=$1;", [location], function(err, result) {
       if (err) {
-        console.log(err);
-        console.log('error selecting from places');
+        console.log('error selecting from places: ', err);
       } else {
         cb(result.rows);
       }
@@ -115,8 +114,7 @@ module.exports.retrieveUser = function(username, cb) {
   client.query("SELECT * FROM users "
     +"WHERE username=$1", [username], function(err, result) {
       if (err) {
-        console.log(err);
-        console.log('error selecting from users');
+        console.log('error selecting from users: ', err);
       } else {
         cb(result.rows);
       }
@@ -131,7 +129,7 @@ module.exports.retrieveUser = function(username, cb) {
 /**************************/
 
 
-module.exports.createTopic = function(headline, link, contents, location, cb) {
+module.exports.createTopic = function(headline, link, contents, location, channel, rank, cb) {
 
   console.log(location.split('/'));
 
@@ -142,12 +140,11 @@ module.exports.createTopic = function(headline, link, contents, location, cb) {
   }
 
   //need to sanitize the sql parameters
-  client.query("INSERT INTO topics (headline, link, contents, location, rank, "
-    +"country, state, city) "
-    +"VALUES ($1, $2, $3, $4, 42, $5, $6, $7);",
-    [headline, link, contents, location, country, '', ''], function(err, result) {
+  client.query("INSERT INTO topics (headline, link, contents, location, channel, rank)"
+    +"VALUES ($1, $2, $3, $4, $5, $6);",
+    [headline, link, contents, location, channel, rank], function(err, result) {
       if (err) {
-        console.log('error inserting post into topics');
+        console.log('error inserting post into topics: ', err);
         cb(false);
       } else {
         cb(true);
@@ -162,7 +159,7 @@ module.exports.createComment = function(location, group, topic, headline, conten
   client.query("INSERT INTO comments (location, agroup, topic, headline, contents) "
     +"VALUES ($1, $2, $3, $4, $5);", [location, group, topic, headline, content], function(err, result) {
       if (err) {
-        console.log('error inserting into comments');
+        console.log('error inserting into comments: ', err);
         cb(false);
       } else {
         console.log(result);
@@ -176,7 +173,7 @@ module.exports.createReply = function(location, group, topic, comment, headline,
   client.query("INSERT INTO replies (location, agroup, topic, comment, headline, contents) "
     +"VALUES ($1, $2, $3, $4, $5, $6);", [location, group, topic, comment, headline, content], function(err, result) {
       if (err) {
-        console.log('error inserting into replies');
+        console.log('error inserting into replies: ', err);
         cb(false);
       } else {
         console.log(result);
@@ -196,7 +193,7 @@ module.exports.createGroup = function(location, lat, lng, name, description, cre
     +"$2, 311, 4072, $3, $4, $5, $6, $7, $8);",
     [name, description, creator, public, open, lat, lng, location], function(err, result) {
       if (err) {
-        console.log('[!!!] error inserting into groups table');
+        console.log('[!!!] error inserting into groups table: ', err);
         console.log(err);
         cb(false);
       } else {
@@ -210,7 +207,7 @@ module.exports.createUser = function(username, passhash, salt, location, cb) {
   client.query("INSERT INTO users (username, passhash, salt, location) "
     +"VALUES ($1, $2, $3, $4);", [username, passhash, salt, location], function(err, result) {
       if (err) {
-        console.log('error inserting into users table');
+        console.log('error inserting into users table: ', err);
         console.log(err);
         cb(false);
       } else {

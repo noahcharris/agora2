@@ -41,9 +41,9 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.children('button').on('click', function() {
 
         if (that.app.get('login')) {
-          
+
           $.ajax({
-            url: 'https://localhost:443/createTopic',
+            url: 'http://localhost/createTopic',
             method: 'POST',
             crossDomain: true,
             data: {
@@ -51,14 +51,15 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
               link: that.$el.children('input#topicCreationLink').val(),
               content: that.$el.children('textarea#topicCreationContent').val(),
               location: that.app.get('mapController').get('location'),
+              rank: 66,
               channel: that.app.get('channel')
             },
             success: function(msg) {
               alert(msg);
               //some weird shit going on here with detailView
-              that.app.get('content2').show(that.app.get('detailView'));
-              that.app.get('mapController').trigger('reloadSidebar', 
-                that.app.get('mapController').get('location'));
+              that.app.get('sidebarView').displayed = 'Topics-New'
+              that.app.get('content2').hide();
+              that.app.trigger('reloadSidebarTopics');
             },
             error: function() {
               alert('post creation failed');

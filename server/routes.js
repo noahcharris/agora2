@@ -386,12 +386,15 @@ module.exports.login = function(request, response) {
           //LOGIN SUCCESSFUL
 
           console.log('Login successful for user: ', request.body.username);
+          //response.setHeader('Set-Cookie', 'wooooooooooo=wooooooo');
 
-          console.log('cookie:   ',request.header('Cookie'));
-          response.setHeader('Set-Cookie', 'wooooooooooo=wooooooo');
+          console.log('before set: ', request.mySession);
 
 
+          request.mySession.login = true;
 
+
+          console.log('after set: ', request.mySession);
 
           //request.session.login = true;
           //request.session.username = request.body.username;
@@ -492,7 +495,7 @@ module.exports.createTopic = function(request, response) {
 
     //call accepts true or false depending on whether the request failed or not
     postgres.createTopic(request.body.headline, request.body.link,
-     request.body.content, request.body.location, function(success) {
+     request.body.content, request.body.location, request.body.channel, request.body.rank, function(success) {
       if (success) {
 
         //PUT MESSAGE IN QUEUE

@@ -26,7 +26,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
-    this.set('login', false);
+
+
+
+    //CHANGE THIS BACK!!!!!
+    this.set('login', true);
 
 
 

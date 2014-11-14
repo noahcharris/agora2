@@ -4,17 +4,18 @@ var https = require('https');
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
-//var session = require('express-session');
+
+var session = require('express-session');
 
 var cookie = require('cookie');
 
 
 var bodyParser = require('body-parser');
 
-//var sessions = require('client-sessions');
+var sessions = require('client-sessions');
 
-//var cookieParser = require('cookie-parser');
-//var cookieSession = require('cookie-session');
+var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 
 var csrf = require('csurf');
 var favicon = require('static-favicon');
@@ -33,7 +34,7 @@ app = express();
 app.use(bodyParser());
 
 
-//app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) // trust first proxy
 
 //app.use(cookieParser());
 // app.use(cookieSession({
@@ -51,14 +52,13 @@ app.use(bodyParser());
 //   maxAge: 300000
 // }));
 
-
-
-//   app.use(sessions({
-//     cookieName: 'mySession', // cookie name dictates the key name added to the request object
-//     secret: 'blargadeeblargblarg', // should be a large unguessable string
-//     duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
-//     activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
-//   }));
+  app.use(sessions({
+    cookieName: 'mySession', // cookie name dictates the key name added to the request object
+    path: '/',
+    secret: 'blargadeeblargblarg', // should be a large unguessable string
+    duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
+    activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+  }));
 
 //   app.use(function(req, res, next) {
 //   if (req.mySession.seenyou) {
@@ -80,9 +80,9 @@ app.use(bodyParser());
 //apparently this is a security hole though...
 // app.set('trust proxy', 1); // trust first proxy
 
-// app.use(session({
+//  app.use(session({
 //   secret: 'keyboard cat',
-//   cookie: { path: '/', httpOnly: false, secure: true, maxAge: 6000 },
+//   cookie: { path: '/', httpOnly: true, secure: true, maxAge: 6000 },
 //   //adding these two made some warnings go away so w2snare
 //    resave: true,
 //    saveUninitialized: true
