@@ -128,8 +128,9 @@ module.exports.getTopTopicsDay = function(request, response) {
   // });
 
 
-  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
-    [location, channel],
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
+    //!!!! the concatenated % allows postgres to match, so the cascading effect occurs
+    [location + '%', channel],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -141,39 +142,107 @@ module.exports.getTopTopicsDay = function(request, response) {
   });
 
 
-
-
 };
 
 
-
-
-
-
-
 module.exports.getTopTopicsWeek = function(request, response) {
-  //TODO
-    response.json(false);
+  var queryArgs = url.parse(request.url, true).query;
+
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+    [location+'%', channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
 
 };
 
 module.exports.getTopTopicsMonth = function(request, response) {
-  //TODO
-    response.json(false);
+  var queryArgs = url.parse(request.url, true).query;
+
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+    [location+'%', channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
 };
 
 module.exports.getTopTopicsYear = function(request, response) {
-  //TODO
-    response.json(false);
+  var queryArgs = url.parse(request.url, true).query;
+
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+    [location+'%', channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
 
 };
 
 module.exports.getTopTopicsTime = function(request, response) {
-  //TODO
-    response.json(false);
+  var queryArgs = url.parse(request.url, true).query;
+
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY rank DESC;",
+    [location+'%', channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
 
 };
 
+
+
+//## NEW TOPICS ####
 
 module.exports.getNewTopics = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -186,7 +255,7 @@ module.exports.getNewTopics = function(request, response) {
 
 
   client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY createdAt DESC;",
-    [location, channel],
+    [location+'%', channel],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -203,50 +272,27 @@ module.exports.getNewTopics = function(request, response) {
 
 
 module.exports.getHotTopics = function(request, response) {
-  var topicsCollection = [{ id: 1,
-      headline: 'Defaults are desecrets',
-      type: 'Topic',
-      poster: 'nyeah',
-      contents: 'Unce more breach. Twice too many.',
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      upvoted: true,
-      expanded: true,   //this is for the outer expansion/contraction button
-      comments: [{
-        id: 22,
-        poster: 'J-aldrean',
-        headline: 'suck it',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of replies
-        replies: [{
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'my dick',
-            contents: 'I mean it..',
-            upvoted: false,
-        }]
-      }, {
-        id: 87,
-        poster: 'Jason Aldean',
-        headline: 'suck it',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        replies: [{
-            poster: 'Heckles',
-            headline: 'wow',
-            contents: 'Just the one.'
-        }]
-      }] 
-    }];
+  var queryArgs = url.parse(request.url, true).query;
 
-    response.json(topicsCollection);
+  var location = queryArgs.location;
+  var channel = queryArgs.channel;
+
+  console.log('location: ', location);
+  console.log('channel: ', channel);
+
+
+  client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER BY heat DESC;",
+    [location+'%', channel],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        console.log(result);
+        response.json(result.rows);
+      }
+  });
+
 };
 
 module.exports.getTopicTree = function(request, response) {

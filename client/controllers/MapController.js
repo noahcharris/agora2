@@ -564,7 +564,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
                 that.app.get('sidebarView').displayed = 'Topics-Top';
               } 
             that.set('group', undefined);
-            that.trigger('reloadSidebar', e.target.city);
+            that.app.trigger('reloadSidebarTopics', e.target.city);
           }
         });
         citiesLayer.addLayer(circle);
@@ -644,7 +644,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.set('group', undefined);
 
 
-          that.trigger('reloadSidebar', e.target.feature.properties.name);
+          that.app.trigger('reloadSidebarTopics', e.target.feature.properties.name);
         }
         that.set('location', e.target.feature.properties.name);
         that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
@@ -750,7 +750,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.set('group', undefined);
 
         }
-        that.trigger('reloadSidebar', name);
+        that.app.trigger('reloadSidebarTopics', name);
         that.set('location', name);
         that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
       };
