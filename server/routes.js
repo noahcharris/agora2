@@ -10,6 +10,8 @@ var bcrypt = require('bcrypt');
 
 var cookie = require('cookie');
 
+//var treeBuilder = require('../workers/treebuilder.js');
+
 
 
 
@@ -297,7 +299,9 @@ module.exports.getHotTopics = function(request, response) {
 
 module.exports.getTopicTree = function(request, response) {
 
-  response.json({ id: 1,
+
+
+  /*response.json({ id: 1,
       headline: 'Defaults are desecrets',
       type: 'Topic',
       username: 'thalonius want',
@@ -376,7 +380,134 @@ module.exports.getTopicTree = function(request, response) {
             }]
         }]
       }] 
+    });*/
+
+
+  var queryArgs = url.parse(request.url, true).query;
+
+
+    //woooo treebuilder 2.0
+
+    var count = 0;
+    var topic = null;
+    var comments = [];
+    var responses = [];
+    var replies = [];
+
+    console.log('ID SENT FROM CLIENT: ', queryArgs.topicId);
+
+    client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        count++;
+        topic = result.rows[0];
+        if (count === 4) {
+
+        }
+      }
+
     });
+
+    client.query("SELECT * FROM comments WHERE comments.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        count++;
+        comments = result.rows;
+        if (count === 4) {
+          response.json(buildSequence(topic, comments, responses, replies));
+        }
+      }
+    });
+
+    client.query("SELECT * FROM responses WHERE responses.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        count++;
+        responses = result.rows;
+        if (count === 4) {
+          response.json(buildSequence(topic, comments, responses, replies));
+        }
+      }
+    });
+
+    client.query("SELECT * FROM replies WHERE replies.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        count++;
+        replies = result.rows;
+        if (count === 4) {
+          response.json(buildSequence(topic, comments, responses, replies));
+        }
+      } 
+    });
+
+    function buildSequence(topic, comments, responses, replies) {
+      console.log(topic,comments,responses,replies);
+
+      var resultTree = topic;
+      resultTree.comments = [];
+      for (var i=0; i < comments.length ;i++) {
+        comments[i].responses = [];
+        resultTree.push(comments[i]);
+      }
+      for (var i=0; i < responses.length ;i++) {
+        responses[i].replies = [];
+      }
+
+
+
+      for (var i=0; i < replies.length ;i++) {
+
+        for (var j=0; j < responses.length ;j++) {
+          if (responses[j].id === replies[i].response) {
+            responses[j].push(replies[i]);
+            break;
+          }
+        }
+
+
+      }
+
+
+      for (var i=0; i < responses.length ;i++) {
+        responses[i].replies = [];
+
+        for (var j=0; j < comments.length ;j++) {
+          if (responses[i].comment === comments[j].id) {
+            comments[j].responses.push(responses[i]);
+            break;
+          }
+
+        }
+
+      }
+
+
+      return resultTree;
+
+
+
+
+    };
+
+
+
+
+
+
+
+
+
+
+
 
 };
 

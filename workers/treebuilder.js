@@ -34,7 +34,7 @@ var amqp = require('amqplib');
 
 
 
-module.exports.build = function(path, cb) {
+module.exports.build = function(location, channel, cb) {
 
   console.log('executing treeBuilder');
 
@@ -44,7 +44,7 @@ module.exports.build = function(path, cb) {
   //limit these by ranking??
 
   //TOPICS
-  client.query("SELECT * FROM topics WHERE topics.location=$1;",[path], function(err, result) {
+  client.query("SELECT * FROM topics WHERE (topics.location=$1, topics.channel=$2);",[location, channel], function(err, result) {
       if (err) {
         console.log('error join selecting topics and comments');
         console.log(err);
@@ -61,7 +61,7 @@ module.exports.build = function(path, cb) {
 
   //COMMENTS
   client.query("SELECT comments.* FROM comments "
-    +"INNER JOIN topics ON comments.topic=topics.id WHERE topics.location=$1;",[path], function(err, result) {
+    +"INNER JOIN topics ON comments.topic=topics.id WHERE (topics.location=$1, topics.channel=$2);",[location, channel], function(err, result) {
       if (err) {
         console.log('error join selecting topics and comments');
         console.log(err);
@@ -78,7 +78,7 @@ module.exports.build = function(path, cb) {
 
   //REPLIES
   client.query("SELECT replies.* FROM replies "
-    +"INNER JOIN topics ON replies.topic=topics.id WHERE topics.location=$1;",[path], function(err, result) {
+    +"INNER JOIN topics ON replies.topic=topics.id WHERE (topics.location=$1, topics.channel=$2);",[location, channel], function(err, result) {
       if (err) {
         console.log('error join selecting topics and comments');
         console.log(err);
@@ -88,7 +88,7 @@ module.exports.build = function(path, cb) {
         replies = result.rows;
         count++;
         if (count === 3) {
-          buildSequence(topics, comments, replies, path, cb);
+          buildSequence(topics, comments, replies, location, channel, cb);
         }
       }
   });

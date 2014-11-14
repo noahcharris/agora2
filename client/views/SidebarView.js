@@ -236,12 +236,15 @@ Agora.Views.SidebarView = Backbone.View.extend({
             //wtf am i doing
             var thet = this;
 
+            console.log('SENDING ID: ', model.id);
+
             $.ajax({
               url: 'http://localhost/'+urlSuffix,
               method: 'GET',
               crossDomain: true,
               data: {
-                topicId: 1
+                //these two models are different scope!
+                topicId: model.id
               },
               success: function(model) {
 
@@ -249,7 +252,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 thet.$el.addClass('highlight');
               },
               error: function() {
-                alert('post creation failed');
+                alert('server error');
               }
             });
 

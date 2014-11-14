@@ -42,12 +42,12 @@ Agora.Views.PathView = Backbone.View.extend({
     // });
 
     //this.$el.html( $dropButton );
-    this.$el.html( $('<span id="pathPrefix">&nbsp&nbspPath:&nbsp</span>') );
+    this.$el.html( $('<span id="pathPrefix">&nbsp&nbspLocation:&nbsp</span>') );
     var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
       that.$el.empty();
-      that.$el.append($('<span class="channelName">&nbsp&nbspPath:&nbsp</span>'));
+      that.$el.append($('<span class="channelName">&nbsp&nbspLocation:&nbsp</span>'));
 
       var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
