@@ -454,7 +454,7 @@ module.exports.userSearch = function(request, response) {
 };
 
 
-
+//maybe send back subtrees here
 module.exports.locationSearch = function(request, response) {
 
     var returnCollection = [];
@@ -462,6 +462,7 @@ module.exports.locationSearch = function(request, response) {
 
 };
 
+//maybe send back subtrees here
 module.exports.channelSearch = function(request, response) {
 
   var returnCollection = [];
@@ -469,12 +470,14 @@ module.exports.channelSearch = function(request, response) {
 
 };
 
+//maybe just return subtrees with the topics and locations themselves?????
 module.exports.getLocationSubtree = function(request, response) {
-  response.end('TODO');
+  response.json(['United States', 'Japan', 'France']);
 };
 
-module.exports.getChannelSubtree = function(response, request) {
-  response.end('TODO');
+//maybe just return subtrees with the topics and locations themselves?????
+module.exports.getChannelSubtree = function(request, response) {
+  response.json(['Music', 'Politics', 'Guns']);
 };
 
 

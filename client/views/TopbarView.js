@@ -58,7 +58,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-    //event listener on the "hello:" is set by pathView
+    //event listener on the "hello:" is set by locationView
 
     $('#messagingButton').on('click', function() {
 

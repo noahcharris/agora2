@@ -185,7 +185,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     }
 
     this.get('map').fitBounds(worldBounds);
-    this.set('location', '');   //location is set to '' for world, which is automatically added by pathview
+    this.set('location', '');   //location is set to '' for world, which is automatically added by locationview
     this.router.navigate('World', { trigger:false });
     if (!this.placing) {
       this.app.get('content2').hide();
@@ -518,7 +518,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-            //probably need to change pathView, reloadSidebar, and firbounds to the point,
+            //probably need to change locationView, reloadSidebar, and firbounds to the point,
             //don't go through goToPath, it will not center on the marker
 
 

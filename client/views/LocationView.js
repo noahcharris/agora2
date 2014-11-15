@@ -1,11 +1,11 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
-Agora.Views.PathView = Backbone.View.extend({
+Agora.Views.LocationView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'pathView',
+  className: 'locationView',
 
 
   //CAREFUL ABOUT PASSING THINGS IN, THERE'S A GHOST
@@ -90,21 +90,46 @@ Agora.Views.PathView = Backbone.View.extend({
 
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
     var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
-    $treeButton.on('click', function() {
+    $treeButton[0].onclick = function() {
 
       //TODO: add subpath code here
 
-      console.log('woooooooooô');
+      //AJAX CALL TO SERVER FOR SUBTREES
 
-      $subtreeView = $('<div id="pathSubtreeView">Subpaths</div>');
-      $subtreeView.on('click', function() {
-        $(this).remove();
+
+      $.ajax({
+        url: 'http://localhost:80/locationSubtree',
+        crossDomain: true,
+        method: 'GET',
+        data: {
+          location: that.app.get('mapController').get('location')
+        },
+        success: function(data) {
+          if (data) {
+            console.log('DATA: ', data);
+            $subtreeView = $('<div id="locationSubtreeView">Subpaths</div>');
+            $subtreeView.on('click', function() {
+              $(this).remove();
+            });
+            for (var i=0; i < data.length ;i++) {
+              $subtreeView.append($('<p>'+data[i]+'</p>'));
+            }
+
+            that.$el.append($subtreeView);
+
+          } else {
+            alert('error');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
       });
-      that.$el.append($subtreeView);
 
 
 
-    });
+
+    };
     this.$el.append($treeButton);
 
 

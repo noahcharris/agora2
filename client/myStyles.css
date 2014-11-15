@@ -112,7 +112,7 @@ body {
 }
 
 /*what we set as width here will dictate the maximum characters allowed for paths and channels*/
-.pathView {
+.locationView {
   display: inline-block;
   width: 420px;
 }
@@ -131,7 +131,7 @@ body {
 
 #pathInput {
   position:absolute;
-  width: 350px;
+  width: 300px;
 }
 
 #pathSearchButton {
@@ -145,7 +145,7 @@ body {
   z-index: 9999;
 }
 
-#pathSubtreeView {
+#locationSubtreeView {
   position: absolute;
   z-index: 502;
   bottom: -100px;
@@ -153,10 +153,9 @@ body {
   height: 100px;
   background-color: green;
 }
-
 .channelView {
   display: inline-block;
-  width: 370px;
+  width: 350px;
   position: relative;
   /*display: inline-block;*/
 }

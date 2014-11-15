@@ -269,11 +269,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     mapController.router = router;
     router.app = this;
 
-    var pathView = new Agora.Views.PathView({ model:mapController });
-    pathView.app = this;
-    pathView.router = router;
-    pathView.render();
-    $('#topbar2').append(pathView.$el);
+    var locationView = new Agora.Views.LocationView({ model:mapController });
+    locationView.app = this;
+    locationView.router = router;
+    locationView.render();
+    $('#topbar2').append(locationView.$el);
 
     var channelView = new Agora.Views.ChannelView({ model: mapController });
     channelView.app = this;
@@ -297,23 +297,23 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     setTimeout(function() { Backbone.history.start(); }, 10);
 
 
-    // ## PATHVIEW EVENTING ##
+    // ## LOCATIONVIEW EVENTING ##
 
     var that = this;
 
     //sets up the highlighting interaction between sidebarView and detailView
     mapController.on('change:location', function() {
-      pathView.render();
-      pathView.setHandlers();
+      locationView.render();
+      locationView.setHandlers();
     });
 
     mapController.on('change:group', function() {
-      pathView.render();
-      pathView.setHandlers();
+      locationView.render();
+      locationView.setHandlers();
     });
 
-    pathView.render();
-    pathView.setHandlers();
+    locationView.render();
+    locationView.setHandlers();
 
     
 
@@ -417,6 +417,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       $.ajax({
         url: 'http://localhost:80' + urlPath,
         crossDomain: true,
+        method: 'GET',
         data: {
           location: location,
           channel: that.get('channel')
@@ -437,8 +438,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           console.log('ajax error ocurred: ', err);
         }
 
-      })
-      
+      });
+
     });
 
 

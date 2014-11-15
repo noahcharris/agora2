@@ -78,14 +78,44 @@ Agora.Views.ChannelView = Backbone.View.extend({
     var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
     $treeButton.on('click', function() {
 
-      //TODO: add subchennal code here
 
-      console.log('woooooooooô');
-      $subtreeView = $('<div id="channelSubtreeView">Subchannels</div>');
-      $subtreeView.on('click', function() {
-        $(this).remove();
+
+
+      $.ajax({
+        url: 'http://localhost:80/channelSubtree',
+        crossDomain: true,
+        method: 'GET',
+        data: {
+          channel: that.app.get('channel')
+        },
+        success: function(data) {
+          if (data) {
+            console.log('DATA: ', data);
+            $subtreeView = $('<div id="channelSubtreeView">Subpaths</div>');
+            $subtreeView.on('click', function() {
+              $(this).remove();
+            });
+            for (var i=0; i < data.length ;i++) {
+              $subtreeView.append($('<p>'+data[i]+'</p>'));
+            }
+
+            that.$el.append($subtreeView);
+
+          } else {
+            alert('error');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
       });
-      that.$el.append($subtreeView);
+
+
+
+
+
+
+
     });
     this.$el.append($treeButton);
 
