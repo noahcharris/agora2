@@ -67,6 +67,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
       that.app.get('sidebarView').displayed = 'Messages';
       that.app.get('detailView').displayed = 'Messages';
 
+      that.app.trigger('reloadSidebarContacts');
+
 
       //WHAT SORT OF BEHAVIOR SHOULD THIS HAVE, OPEN ON SELECT?? BUT PEOPLE LIKE PRIVACY WHEN IT COMES
       //TO MESSAGES IDK
@@ -77,6 +79,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       // console.log(that.app.get('sidebarView').collection.models);
 
       that.app.get('content1').show(that.app.get('sidebarView'));
+
       if (!that.app.get('expanded')) {
         //don't show the detail view on clicking the message button
         //that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
@@ -85,7 +88,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         if (previousDisplayed === 'Messages') {
           that.app.get('content2').hide();
         } else {
-          that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
+         // that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
         }
       }
     });

@@ -473,8 +473,22 @@ module.exports.getChannelSubtree = function(request, response) {
 
 
 module.exports.getContacts = function(request, response) {
-  response.end('TODO');
-};
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM users JOIN contactsjoin " 
+    +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
+    +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topics: ', err);
+        response.end('error');
+      } else {
+        response.json(result.rows);
+      }
+    });
+  };
 
 module.exports.getMessages = function(request, response) {
   response.end('TODO');
