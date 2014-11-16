@@ -418,20 +418,11 @@ module.exports.getTopicTree = function(request, response) {
     };
 
 
-
-
-
-
-
-
-
-
-
-
 };
 
 module.exports.getTopicLocations = function(request, response) {
 
+  //keep these in memcached
   response.end('TODO');
 
 };

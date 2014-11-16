@@ -288,7 +288,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-
+  //THIS SHOULD BE RENAMED 'goToLocation' !!!!!!!!!
+  //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
   goToPath: function(path) {
 

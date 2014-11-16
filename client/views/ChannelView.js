@@ -96,7 +96,26 @@ Agora.Views.ChannelView = Backbone.View.extend({
               $(this).remove();
             });
             for (var i=0; i < data.length ;i++) {
-              $subtreeView.append($('<p>'+data[i]+'</p>'));
+
+              var $subtree = $('<p>'+data[i]+'</p>');
+
+              var f = function() {
+                var x = data[i];
+                $subtree[0].onclick = function() {
+                  // that.app.get('mapController').set('location', data[i]);
+                  // that.app.trigger('reloadSidebarTopics', data[i]);
+                  // that.router.navigate('World/'+data[i], { trigger:false });
+                  
+                  console.log(x);
+
+                  //WHATVER THE CHANNEL EQUIVALENT OF goToPath is goes here!!!!!
+
+                  //that.app.get('mapController').goToPath(x);
+                };
+              };
+              f();
+              $subtreeView.append($subtree);
+
             }
 
             that.$el.append($subtreeView);

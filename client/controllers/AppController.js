@@ -42,86 +42,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#########  MOCK DATA  #################
     //#######################################
     
-    var defaultCollection = [{ id: 1,
-      headline: 'Defaults are desecrets',
-      type: 'Topic',
-      poster: 'thalonius want',
-      contents: 'Unce more breach. Twice too many.',
-      city: 'Oregon',
-      area: 'Hack Reactor',
-      reputation: 42,
-      upvoted: true,
-      expanded: true,   //this is for the outer expansion/contraction button
-      comments: [{
-        id: 22,
-        headline: 'whither will these winds',
-        poster: 'J-aldrean',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of responses
-        responses: [{
-            poster: 'Mr. Bean',
-            headline: 'whither will these winds',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-            replies: [{
-              contents: 'woooooooo',
-              headline: 'caveman'
-            }]
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'ok',
-            contents: 'I mean it..',
-            upvoted: false,
-            replies: [{
-              contents: 'woooooooo',
-              headline: 'caveman'
-            }]
-        }]
-      }, {
-        id: 87,
-        headline: 'whither will these winds',
-        poster: 'Jason Aldean',
-        contents: 'Ok, but how about them yanks?',
-        upvoted: false,
-        expanded: false,
-        responses: [{
-            poster: 'Heckles',
-            headline: 'whither will these winds',
-            contents: 'Just the one.',
-            replies: [{
-              contents: 'woooooooo',
-              headline: 'caveman'
-            }]
-        }]
-      },{
-        id: 22,
-        headline: 'whither will these winds',
-        poster: 'J-aldrean',
-        contents: 'This dream, no more a dream than waking',
-        upvoted: true,
-        expanded: false,    //these are for each group of responses
-        responses: [{
-            poster: 'Mr. Bean',
-            headline: 'whither will these winds',
-            contents: 'You sir, are a ruffian.',
-            upvoted: false,
-            replies: [{
-              contents: 'woooooooo',
-              headline: 'caveman'
-            }]
-        }, {
-            poster: 'Mr. Bean',
-            headline: 'ok',
-            contents: 'I mean it..',
-            upvoted: false,
-            replies: [{
-              contents: 'woooooooo',
-              headline: 'caveman'
-            }]
-        }]
-      }] 
-    }];
+    var defaultCollection = [];
 
     var searchCollection = [
       { id: 1,
@@ -172,49 +93,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     }];
 
 
-    var messagesCollection = [{
-      id: 0,
-      type: 'Message',
-      sender: 'noahcharris',
-      recipient: 'spw',
-      entries: [{
-        sender: 'spw',
-        contents: 'hey dude'
-      },{
-        sender: 'noah',
-        contents: 'yo'
-      },{
-        sender: 'spw',
-        contents: 'what it is'
-      }]
-    }, {
-      id: 1,
-      type: 'Message',
-      sender: 'noahcharris',
-      recipient: 'spw',
-      entries: [{
-        sender: 'spw',
-        contents: 'hey dude'
-      },{
-        sender: 'noah',
-        contents: 'yo'
-      },{
-        sender: 'spw',
-        contents: 'what it is'
-      }]
-    }];
-
-    var usersCollection = [{
-      id: 0,
-      type: 'User',
-      name: 'Noah Harris',
-      origin: 'Seattle'
-    }, {
-      id: 0,
-      type: 'User',
-      name: 'Noah Harris',
-      origin: 'Seattle'
-    }];
+    var messagesCollection = [];
 
 
 
@@ -249,7 +128,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     sidebarView.collection = defaultCollection;
     sidebarView.searchCollection = searchCollection;
     sidebarView.messagesCollection = messagesCollection;
-    sidebarView.usersCollection = usersCollection;
     this.set('sidebarView', sidebarView);
 
     var detailView = new Agora.Views.DetailView(this);
@@ -321,67 +199,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
     //#########  TOPIC RETRIEVAL AJAX  ######
     //#######################################
-
-    //OLD TRIGGER (NO FILTERS)
-    //need alot more of these methods, topics-top, topics-new
-
-    // mapController.on('reloadSidebar', function(location) {
-    //   console.log('mapController event: reloadSidebar');
-
-
-    //   var urlPath;
-    //   switch(that.get('sidebarView').displayed) {
-    //     case 'Topics-Top':
-    //       urlPath = '/topics-top';
-    //       break;
-    //     case 'Topics-New':
-    //       urlPath = '/topics-new';
-    //       break;
-    //     case 'Topics-Hot':
-    //       urlPath = '/topics-hot';
-    //       break;
-    //     default:
-    //       urlPath = '';
-    //       break;
-    //   }
-
-    //   console.log('ajax request to: ', urlPath);
-    //   $.ajax({
-    //     url: 'http://localhost:80'+urlPath,
-    //     data: {
-    //       location: location,
-    //       channel: that.get('channel')
-    //     },
-    //     crossDomain: true,
-    //     success: function(data) {
-    //       console.log(data);
-
-    //       for (var i=0;i<data.length;i++) {
-    //         data[i].type = 'Topic';
-    //         data[i].reputation = 0;
-    //       }
-    //       topicsCollection = data;
-    //       //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-    //       sidebarView.collection = topicsCollection;
-    //       content1.show(sidebarView);
-
-    //       //take detailView into account while moving around
-    //       //pretty sure I don't need this stuff if I want detailview to close on navigation
-    //       // if (that.get('expanded')) {
-    //       //   if ($('#content2').children()[0] && $('#content2').children()[0].className === 'detailView') {
-    //       //     content2.show(that.get('detailView'));
-    //       //   }
-    //       // }
-
-    //     },
-    //     error: function(data) {
-    //       console.log(data);
-    //     }
-    //   });
-
-      
-    // });
-
 
 
     //NEW TRIGGGER
