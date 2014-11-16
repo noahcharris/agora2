@@ -143,11 +143,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
     } else if (this.displayed === 'Messages') {
       renderCollection = this.messagesCollection;
     } else if (this.displayed === 'Contacts') {
-      renderCollection = this.usersCollection;
+      renderCollection = this.contactsCollection;
     }
-    console.log(renderCollection);
     if (renderCollection) {
-    console.log('blargh');
 
       _.each(this.subViews, function(subView) {
         subView.close();
@@ -157,7 +155,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       console.log('rendering sidebar with collection: ', renderCollection);
 
       _.each(renderCollection, function(model) {
-
 
         //the only difference between these is the type of entryView instantiated
         var entryViewMethod;
@@ -170,6 +167,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
         } else if (model.type === 'User') {
           entryViewMethod = 'renderUser';
         }
+
+        console.log(entryViewMethod);
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
           entryView.model = model;
