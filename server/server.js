@@ -134,7 +134,7 @@ app.get('/channelSubtree', routes.getChannelSubtree);
 //users should only be able to have like 150 contacts or smthn before they have to pay
 //SECURE
 app.get('/contacts', routes.getContacts);
-app.get('/messages', routes.getMessages);
+app.get('/messages', routes.getMessageChains);
 app.get('/messageChain', routes.getMessageChain);
 
 //MAP POINTS

@@ -19,7 +19,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
     });
-    this.$el.append($messageButton);
+    this.$el.prepend($messageButton);
   },
 
   close: function() {

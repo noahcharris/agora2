@@ -490,8 +490,22 @@ module.exports.getContacts = function(request, response) {
     });
   };
 
-module.exports.getMessages = function(request, response) {
-  response.end('TODO');
+module.exports.getMessageChains = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM messageChains WHERE "
+    +"(username1 = $1 OR username2 = $1) ORDER BY lastMessage DESC;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from messageChains: ', err);
+      } else {
+        response.json(result.rows);
+      }
+
+  });
+
 };
 
 module.exports.getMessageChain = function(request, response) {

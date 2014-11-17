@@ -29,10 +29,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 
-
-
-    //CHANGE THIS BACK!!!!!
-    this.set('login', true);
+    this.set('login', false);
 
 
 
@@ -299,14 +296,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarMessageChains');
 
-      var username = that.get('username');
 
       $.ajax({
         url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
         data: {
-          username: username
+          username: that.get('username')
         },
         success: function(data) {
           if (data) {
@@ -488,6 +484,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           renderMethod = 'renderMessage';
           break;
         case 'Users':
+          renderMethod = 'renderUser';
+          break;
+        case 'Contacts':
           renderMethod = 'renderUser';
           break;
         default:

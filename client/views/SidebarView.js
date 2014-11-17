@@ -162,8 +162,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryViewMethod = 'renderTopic';
         } else if (model.type === 'Place') {
           entryViewMethod = 'renderPlace';
-        } else if (model.type === 'Message') {
-          entryViewMethod = 'renderMessage';
+        } else if (model.type === 'MessageChain') {
+          entryViewMethod = 'renderMessageChain';
         } else if (model.type === 'User') {
           entryViewMethod = 'renderUser';
         }
@@ -216,44 +216,55 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             var urlSuffix;
 
-            if (model.type === 'Topic') {              
-              that.app.get('detailView').displayed = 'Topics';
-              urlSuffix = 'topicTree';
-            } else if (model.type === 'Message') {
-              that.app.get('detailView').displayed = 'Messages';
-              urlSuffix = 'messageChain';
-            } else if (model.type === 'User') {              
-              that.app.get('detailView').displayed = 'Users';
-              urlSuffix = 'messageChain';
-            }
-
-              
-
-            console.log('using region manager 2 to open up detailView and passing through model: ', model);
-            //AJAX OMG
-
-            //wtf am i doing
             var thet = this;
 
-            console.log('SENDING ID: ', model.id);
+            if (model.type === 'Topic') {
 
-            $.ajax({
-              url: 'http://localhost/'+urlSuffix,
-              method: 'GET',
-              crossDomain: true,
-              data: {
-                //these two models are different scope!
-                topicId: model.id
-              },
-              success: function(model) {
-                console.log('soooooooweeeeeeeta: ', model);
-                that.app.get('content2').show(that.app.get('detailView'), model);
-                thet.$el.addClass('highlight');
-              },
-              error: function() {
-                alert('server error');
-              }
-            });
+              that.app.get('detailView').displayed = 'Topics';
+
+              $.ajax({
+                url: 'http://localhost/topicTree',
+                method: 'GET',
+                crossDomain: true,
+                data: {
+                  //these two models are different scope!
+                  topicId: model.id
+                },
+                success: function(model) {
+                  console.log('soooooooweeeeeeeta: ', model);
+                  that.app.get('content2').show(that.app.get('detailView'), model);
+                  thet.$el.addClass('highlight');
+                },
+                error: function() {
+                  alert('server error');
+                }
+              });
+
+            } else if (model.type === 'MessageChain') {
+              that.app.get('detailView').displayed = 'Messages';
+              urlSuffix = 'messageChain';
+
+              $.ajax({
+                url: 'http://localhost/messageChain',
+                method: 'GET',
+                crossDomain: true,
+                data: {
+                  //these two models are different scope!
+                  topicId: model.id
+                },
+                success: function(model) {
+                  console.log('soooooooweeeeeeeta: ', model);
+                  that.app.get('content2').show(that.app.get('detailView'), model);
+                  thet.$el.addClass('highlight');
+                },
+                error: function() {
+                  alert('server error');
+                }
+              });
+            } else if (model.type === 'User') {              
+              that.app.get('detailView').displayed = 'Contacts';
+              that.app.get('content2').show(that.app.get('detailView'), model);
+            }
 
 
             //that.app.get('detailView')[entryViewMethod](model);

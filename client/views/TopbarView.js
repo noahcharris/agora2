@@ -62,35 +62,43 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     $('#messagingButton').on('click', function() {
 
-      var previousDisplayed = that.app.get('detailView').displayed;
+      if (that.app.get('login')) {
 
-      that.app.get('sidebarView').displayed = 'Messages';
-      that.app.get('detailView').displayed = 'Messages';
+        var previousDisplayed = that.app.get('detailView').displayed;
 
-      that.app.trigger('reloadSidebarContacts');
+        that.app.get('sidebarView').displayed = 'Messages';
+        that.app.get('detailView').displayed = 'Messages';
+
+        that.app.trigger('reloadSidebarContacts');
+        that.app.trigger('reloadSidebarMessageChains');
 
 
-      //WHAT SORT OF BEHAVIOR SHOULD THIS HAVE, OPEN ON SELECT?? BUT PEOPLE LIKE PRIVACY WHEN IT COMES
-      //TO MESSAGES IDK
+        //WHAT SORT OF BEHAVIOR SHOULD THIS HAVE, OPEN ON SELECT?? BUT PEOPLE LIKE PRIVACY WHEN IT COMES
+        //TO MESSAGES IDK
 
 
-      //set messagesCollection?
-      // that.app.get('sidebarView').collection.models = that.app.messagesCollection;
-      // console.log(that.app.get('sidebarView').collection.models);
+        //set messagesCollection?
+        // that.app.get('sidebarView').collection.models = that.app.messagesCollection;
+        // console.log(that.app.get('sidebarView').collection.models);
 
-      that.app.get('content1').show(that.app.get('sidebarView'));
+        that.app.get('content1').show(that.app.get('sidebarView'));
 
-      if (!that.app.get('expanded')) {
-        //don't show the detail view on clicking the message button
-        //that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
-      } else {
-
-        if (previousDisplayed === 'Messages') {
-          that.app.get('content2').hide();
+        if (!that.app.get('expanded')) {
+          //don't show the detail view on clicking the message button
+          //that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
         } else {
-         // that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
+
+          if (previousDisplayed === 'Messages') {
+            that.app.get('content2').hide();
+          } else {
+           // that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
+          }
         }
+
+      } else {
+        alert('Must be logged in to view messages');
       }
+
     });
 
 
