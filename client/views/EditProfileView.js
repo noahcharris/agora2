@@ -91,9 +91,6 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
       });
 
-
-
-
     };
     this.$el.append($saveChangesButton);
 

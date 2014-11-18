@@ -34,24 +34,28 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
 
     var $imageInput = $('<input type="file" id="imageInput"></input>');
+    var $imagePreview = $('<br/><img height="150px" width="150px"></img>');
 
     $imageInput.on('change', function(e) {
       var reader = new window.FileReader()
       reader.onload = function(e) {
-        console.log('eyessss: ', e);
-        $imageInput.after($('<img height="170px" width="170px" src="'+e.target.result+'"></img>'));
+        $imagePreview.attr('src', e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
     });
 
-    if (window.File && window.FileReader)
+    if (window.File && window.FileReader) {
       console.log('ho');
+    }
 
 
     this.$el.append($imageInput);
+    this.$el.append($imagePreview);
+
+
 
     //this.$el.append( $('<button>Upload Image</button><br/><br/>') );
-    this.$el.append( $('<br/><br/><br/><button>Post</button>') );
+    this.$el.append( $('<br/><br/><button>Post</button>') );
 
     var location = that.app.get('mapController').get('location') || 'World';
     this.$el.append( $('<p>Location:&nbsp' + location + '</p>'))

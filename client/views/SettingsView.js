@@ -56,6 +56,18 @@ Agora.Views.SettingsView = Backbone.View.extend({
     };
     this.$el.append($editProfileButton);
 
+    var $changeLocationButton = $('<button>Change Location</button>');
+    $changeLocationButton[0].onclick = function() {
+
+    };
+    this.$el.append($changeLocationButton);
+
+    var $changePasswordButton = $('<button>Change Password</button>');
+    $changePasswordButton[0].onclick = function() {
+
+    };
+    this.$el.append($changePasswordButton);
+
 
 
     var $pathCreationButton = $('<li>CREATE YR OWN PATH</li>');

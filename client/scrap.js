@@ -26,6 +26,22 @@ $.ajax({
 
 
 
+var $saveChangesButton = $('<button>Save Changes</button>');
+$saveChangesButton[0].onclick = function() {
+
+};
+this.$el.append($saveChangesButton);
+
+
+
+
+
+
+
+
+
+
+
 //uploading images
 var fd = new FormData();    
 fd.append( 'file', input.files[0] );
