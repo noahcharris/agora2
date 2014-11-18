@@ -744,7 +744,8 @@ module.exports.createTopic = function(request, response) {
               console.log('USING KEYSTRING: ', keyString);
               //THIS IS A VULNERABILITY !!!!!!!!!!!!
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
-              memcached.set(keyString, [request.body.origin], 2592000, function(err) {
+              //request.body.origin (ALT, this shows the author's origin on the map
+              memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
                   console.log('error setting topicLocations key: ', err);
               });
 
