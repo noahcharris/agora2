@@ -31,6 +31,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('username', 'noahcharris'); //is this secure???
 
+    this.set('origin', 'United States');
+
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 

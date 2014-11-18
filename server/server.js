@@ -143,7 +143,6 @@ app.get('/points', routes.getPoints);
 
 //location profiles and user profiles and channel profiles
 app.get('/user', routes.getUser);
-app.get('/userLocation', routes.getUserLocation);
 
 app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);

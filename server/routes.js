@@ -165,7 +165,6 @@ module.exports.getTopTopicsWeek = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -189,7 +188,6 @@ module.exports.getTopTopicsMonth = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -212,7 +210,6 @@ module.exports.getTopTopicsYear = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -236,7 +233,6 @@ module.exports.getTopTopicsTime = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -264,7 +260,6 @@ module.exports.getNewTopics = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -291,7 +286,6 @@ module.exports.getHotTopics = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log(result);
         response.json(result.rows);
       }
   });
@@ -422,8 +416,18 @@ module.exports.getTopicTree = function(request, response) {
 
 module.exports.getTopicLocations = function(request, response) {
 
-  //keep these in memcached
-  response.end('TODO');
+  var queryArgs = url.parse(request.url, true).query;
+
+  console.log('heyyyy', queryArgs.topicId);
+  var keyString = 'topicLocations:' + queryArgs.topicId;
+  memcached.get(keyString, function(err, data) {
+    if (err) {
+      console.log('error getting topic locations from memcached: ', err);
+    } else {
+      console.log('PULLED: ', data, ' OUT OF MEMCACHED');
+      response.json(data);
+    }
+  })
 
 };
 
@@ -543,10 +547,6 @@ module.exports.getUser = function(request, response) {
     console.log('sending user data for ', queryArgs.username, ' to client');
     response.json(data);
   });
-};
-
-module.exports.getUserLocation = function(request, response) {
-
 };
 
 
@@ -730,10 +730,31 @@ module.exports.createTopic = function(request, response) {
 
         response.end('topic successfully created, sent message to queue');
 
+
+        //THERE MUST BE A BETTER WAY TO DO THIS
+        client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
+          [request.body.username],
+          function(err, result) {
+            if (err) {
+              console.log('error selecting from topics: ', err);
+            } else {
+
+              console.log("WTF", result.rows[0].id);
+              var keyString = 'topicLocations:' + result.rows[0].id;
+              console.log('USING KEYSTRING: ', keyString);
+              //THIS IS A VULNERABILITY !!!!!!!!!!!!
+              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
+              memcached.set(keyString, [request.body.origin], 2592000, function(err) {
+                  console.log('error setting topicLocations key: ', err);
+              });
+
+              
+            }
+        });
+
       } else {
         response.end('error inserting into topics');
       }
-
 
     });
   } else {

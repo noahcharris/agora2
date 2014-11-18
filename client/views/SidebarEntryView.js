@@ -23,33 +23,45 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var that = this;
     this.$el.html( this.topicTemplate(this.model) );
 
-    this.$el.on('mouseover', function() {
-      that.app.get('mapController').highlightCountry('United States');
-      that.app.get('mapController').highlightCountry('China');
-      that.app.get('mapController').highlightCountry('France');
-      that.app.get('mapController').highlightCountry('Germany');
-      that.app.get('mapController').highlightCountry('Argentina');
-      that.app.get('mapController').highlightCountry('Australia');
-      that.app.get('mapController').highlightCountry('Monaco');
-      that.app.get('mapController').highlightCountry('Italy');
-      that.app.get('mapController').highlightCountry('Ecuador');
-      that.app.get('mapController').highlightCountry('Palestine');
+    var mouseoverHandler = _.once(function () {
+      //woooooooo
+      var thet = this;
+      $.ajax({
+        url: 'http://localhost:80/topicLocations',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          topicId: that.model.id
+        },
+        success: function(data) {
+            console.log('oaaaá222222server returned: ', data);
+            console.log(typeof data);
 
+          for (var i=0; i < data.length ;i++) {
+
+            var f = function() {
+              var x = data[i];
+              that.$el.on('mouseover', function() {
+                that.app.get('mapController').highlightCountry(x);
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightCountry(x);
+              });
+            };
+            f();
+
+          }
+
+            
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
     });
+    this.$el.on('mouseover', mouseoverHandler);
 
-    this.$el.on('mouseout', function() {
-      that.app.get('mapController').removeHighlightCountry('United States');
-      that.app.get('mapController').removeHighlightCountry('China');
-      that.app.get('mapController').removeHighlightCountry('France');
-      that.app.get('mapController').removeHighlightCountry('Germany');
-      that.app.get('mapController').removeHighlightCountry('Argentina');
-      that.app.get('mapController').removeHighlightCountry('Australia');
-      that.app.get('mapController').removeHighlightCountry('Monaco');
-      that.app.get('mapController').removeHighlightCountry('Italy');
-      that.app.get('mapController').removeHighlightCountry('Ecuador');
-      that.app.get('mapController').removeHighlightCountry('Palestine');
 
-    });
 
 
 
@@ -66,7 +78,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   renderUser: function() {
     var that = this;
     this.$el.html( this.userTemplate(this.model) );
-    console.log('THA SHITTT: ', this.model);
     this.$el.on('mouseover', function() {
 
       that.app.get('mapController').highlightCountry(that.model.location);

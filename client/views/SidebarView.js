@@ -183,34 +183,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
           //####### ENTRYVIEW CLICK EVENT #########
           //#######################################
 
-          //need to use the above pattern with this detailView rendering shit
-          // entryView.on('mouseover', function() {
-          //   that.app.get('mapController').highlightCountry('United States');
-          //   that.app.get('mapController').highlightCountry('China');
-          //   that.app.get('mapController').highlightCountry('France');
-          //   that.app.get('mapController').highlightCountry('Germany');
-          //   that.app.get('mapController').highlightCountry('Argentina');
-          //   that.app.get('mapController').highlightCountry('Australia');
-          //   that.app.get('mapController').highlightCountry('Monaco');
-          //   that.app.get('mapController').highlightCountry('Italy');
-          //   that.app.get('mapController').highlightCountry('Ecuador');
-          //   that.app.get('mapController').highlightCountry('Palestine');
-          // });
-
-          // entryView.on('mouseout', function() {
-          //   that.app.get('mapController').removeHighlightCountry('United States');
-          //   that.app.get('mapController').removeHighlightCountry('China');
-          //   that.app.get('mapController').removeHighlightCountry('France');
-          //   that.app.get('mapController').removeHighlightCountry('Germany');
-          //   that.app.get('mapController').removeHighlightCountry('Argentina');
-          //   that.app.get('mapController').removeHighlightCountry('Australia');
-          //   that.app.get('mapController').removeHighlightCountry('Monaco');
-          //   that.app.get('mapController').removeHighlightCountry('Italy');
-          //   that.app.get('mapController').removeHighlightCountry('Ecuador');
-          //   that.app.get('mapController').removeHighlightCountry('Palestine');
-          // });
-
-
 
           entryView.on('click', function(id, type) {
 
