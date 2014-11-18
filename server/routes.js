@@ -680,7 +680,20 @@ module.exports.registerUser = function(request, response) {
 
 
 module.exports.updateUserProfile = function(request, response) {
-  response.end('TODO');
+
+
+
+  client.query("UPDATE users SET about = $1 WHERE username = $2;",
+    [request.body.about, request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error updating users table: ', err);
+      } else {
+        response.end('successfully updated profile');
+      }
+    });
+
+
 };
 
 module.exports.updateLocationProfile = function(request, response) {

@@ -74,6 +74,26 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
     var $saveChangesButton = $('<button>Save Changes</button>');
     $saveChangesButton[0].onclick = function() {
+
+      $.ajax({
+        url: 'http://localhost:80/updateUserProfile',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          about: $textArea.val()
+        },
+        success: function(data) {
+          alert(data);
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
+
     };
     this.$el.append($saveChangesButton);
 
