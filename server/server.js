@@ -128,6 +128,7 @@ app.get('/userSearch', routes.userSearch);
 app.get('/locationSearch', routes.locationSearch);
 app.get('/channelSearch', routes.channelSearch);
 
+//SEE IF THE 'LIKE' PATTERN MATCHING WILL WORK HERE:
 app.get('/locationSubtree', routes.getLocationSubtree);
 app.get('/channelSubtree', routes.getChannelSubtree);
 
@@ -142,7 +143,7 @@ app.get('/points', routes.getPoints);
 
 //location profiles and user profiles and channel profiles
 app.get('/user', routes.getUser);
-app.get('/userLocations', routes.getUserLocations);
+app.get('/userLocation', routes.getUserLocation);
 
 app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);
@@ -168,6 +169,7 @@ app.post('/registerUser', routes.registerUser);
 //SECURE
 app.post('/updateUserProfile', routes.updateUserProfile);
 app.post('/updateLocationProfile', routes.updateLocationProfile);
+app.post('/updateChannelProfile', routes.updateChannelProfile);
 
 //SECURE
 app.post('/createTopic', routes.createTopic);

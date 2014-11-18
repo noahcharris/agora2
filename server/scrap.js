@@ -17,3 +17,7 @@ var queryArgs = url.parse(request.url, true).query;
 
 
 
+ST_GeomFromText(text, srid) returns geometry
+
+ST_AsGeoJSON(geometry) returns text
+

@@ -545,7 +545,7 @@ module.exports.getUser = function(request, response) {
   });
 };
 
-module.exports.getUserLocations = function(request, response) {
+module.exports.getUserLocation = function(request, response) {
 
 };
 
@@ -684,6 +684,10 @@ module.exports.updateUserProfile = function(request, response) {
 };
 
 module.exports.updateLocationProfile = function(request, response) {
+  response.end('TODO');
+};
+
+module.exports.updateChannelProfile = function(request, response) {
   response.end('TODO');
 };
 

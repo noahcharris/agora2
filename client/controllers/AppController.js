@@ -41,67 +41,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     //#######################################
-    //#########  MOCK DATA  #################
-    //#######################################
-    
-    var defaultCollection = [];
-
-    var searchCollection = [
-      { id: 1,
-        headline: 'Defaults are desecrets',
-        type: 'Topic',
-        poster: 'thalonius want',
-        contents: 'Unce more breach. Twice too many.',
-        upvoted: false,
-        expanded: false,
-        city: 'Oregon',
-        area: 'Hack Reactor',
-        reputation: 42,
-        comments: [{
-          id: 22,
-          poster: 'J-aldrean',
-          contents: 'This dream, no more a dream than waking',
-          upvoted: false,
-          expanded: false,
-          responses: [{
-              poster: 'Mr. Bean',
-              contents: 'You sir, are a ruffian.',
-              upvoted: false,
-          }, {
-              poster: 'Mr. Bean',
-              contents: 'I mean it..',
-              upvoted: false,
-          }]
-        }, {
-          id:87,
-          poster: 'Jason Aldean',
-          contents: 'Ok, but how about them yanks?',
-          upvoted: false,
-          expanded: false,
-          responses: [{
-              poster: 'Heckles',
-              contents: 'Just the one.',
-              upvoted: false,
-          }]
-        }] 
-    }, {
-      id: 3,
-      type: 'Place',
-      name: 'Hack Reactor',
-      latitude: 37.7833,
-      longitude: 122.4167,
-      reputation: 42,
-      city: 'San Francisco'
-    }];
-
-
-    var messagesCollection = [];
-
-
-
-
-
-    //#######################################
     //#########  VIEWS AND MODELS  ##########
     //#######################################
 
@@ -125,6 +64,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     // dropdownView.render();
 
 
+    var defaultCollection = [];
+    var searchCollection = [];
+    var messagesCollection = [];
 
     var sidebarView = new Agora.Views.SidebarView(this); //collection from TopicsCollection
     sidebarView.collection = defaultCollection;

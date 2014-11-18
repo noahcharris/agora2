@@ -66,11 +66,14 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   renderUser: function() {
     var that = this;
     this.$el.html( this.userTemplate(this.model) );
+    console.log('THA SHITTT: ', this.model);
     this.$el.on('mouseover', function() {
-      that.app.get('mapController').highlightCountry('Italy');
+
+      that.app.get('mapController').highlightCountry(that.model.location);
+
     });  
     this.$el.on('mouseout', function() {
-      that.app.get('mapController').removeHighlightCountry('Italy');
+      that.app.get('mapController').removeHighlightCountry(that.model.location);
     });    
   },
 
