@@ -13,6 +13,31 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     this.$el.html( this.template(this.model) );
 
+    this.$el.children('span#username')[0].onclick = function() {
+
+      $.ajax({
+        url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username')
+        },
+        success: function(data) {
+          if (data) {
+            that.app.get('detailView').displayed = 'Users';
+            console.log('server returned: ', data);
+            that.app.get('content2').show(that.app.get('detailView'), data);
+          } else {
+            console.log('no data returned from server');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+    };
+
     var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
     $('#registrationButton').on('click', function() {
       var previousDisplayed = that.app.get('detailView').displayed;

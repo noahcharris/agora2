@@ -116,7 +116,7 @@ module.exports.retrieveUser = function(username, cb) {
       if (err) {
         console.log('error selecting from users: ', err);
       } else {
-        cb(result.rows);
+        cb(result.rows[0]);
       }
     });
 };
