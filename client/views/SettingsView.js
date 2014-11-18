@@ -24,6 +24,39 @@ Agora.Views.SettingsView = Backbone.View.extend({
       that.app.get('content2').hide();
     });
 
+    var $viewProfileButton = $('<button>View My Profile</button>');
+    $viewProfileButton[0].onclick = function() {
+      console.log('hi');
+      $.ajax({
+        url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username')
+        },
+        success: function(data) {
+          if (data) {
+            that.app.get('detailView').displayed = 'Users';
+            console.log('server returned: ', data);
+            that.app.get('content2').show(that.app.get('detailView'), data);
+          } else {
+            console.log('no data returned from server');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+      });
+    };
+    this.$el.append($viewProfileButton);
+
+    var $editProfileButton = $('<button>Edit My Profile</button>');
+    $editProfileButton[0].onclick = function() {
+      //TODO editProfileView????
+    };
+    this.$el.append($editProfileButton);
+
+
+
     var $pathCreationButton = $('<li>CREATE YR OWN PATH</li>');
     $pathCreationButton.on('click', function() {
       that.app.get('content2').show(new Agora.Views.PathCreationView(that.app));
