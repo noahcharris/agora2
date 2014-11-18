@@ -29,6 +29,10 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
 
 
+    var $textArea = $('<textArea height="200px" width="300px"></textarea>');
+    var $profilePicture = $('<img height="150px" width="150px"></img>');
+
+
     $.ajax({
       url: 'http://localhost:80/user',
       method: 'GET',
@@ -40,12 +44,11 @@ Agora.Views.EditProfileView = Backbone.View.extend({
         if (data) {
           console.log('server returned: ', data);
 
-          var $textArea = $('<textArea height="200px" width="300px"></textarea>');
           that.$el.append($textArea);
           $textArea.val(data[0].about);
 
-          var $profilePicture = $('<img height="150px" width="150px" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg"></img>');
           that.$el.append($profilePicture);
+          $profilePicture.attr('src', 'http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg');
 
 
         } else {
@@ -58,7 +61,16 @@ Agora.Views.EditProfileView = Backbone.View.extend({
     });
 
 
+    var $imageInput = $('<input type="file" id="imageInput"></input>');
+    this.$el.append($imageInput);
 
+    $imageInput.on('change', function(e) {
+      var reader = new window.FileReader()
+      reader.onload = function(e) {
+        $profilePicture.attr('src', e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
 
     var $saveChangesButton = $('<button>Save Changes</button>');
     $saveChangesButton[0].onclick = function() {
@@ -85,4 +97,8 @@ Agora.Views.EditProfileView = Backbone.View.extend({
   }
 
 
-})
+});
+
+
+
+
