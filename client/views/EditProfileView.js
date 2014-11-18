@@ -5,23 +5,34 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'editProfileView',
+  className: 'detailEntryView',
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#registrationViewTemplate').html() );
+    //this.template = _.template( $('#editViewTemplate').html() );
     this.$el.addClass('detailView');
   },
 
   render: function() {
+    var that = this;
     this.$el.empty();
-    this.$el.append($('<p class="x">X</p>'));
-    this.$el.children('p.x').on('click', function() {
+
+    var $x = $('<img src="resources/images/x.png" class="x"></img>')
+
+
+    this.$el.append( $x );
+
+    this.$el.children('img.x')[0].onclick = function() {
+      that.app.get('sidebarView').removeHighlights();
       that.app.get('content2').hide();
-    });
+    }
+
+
     //maybe pull the users profile in here for use with the edit view
     //prepopulate the fields with current data?
-    this.$el.append( this.template() );s
+
+    //do we even need template?
+    //this.$el.append( this.template() );
   },
 
   setHandlers: function() {

@@ -38,7 +38,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
           if (data) {
             that.app.get('detailView').displayed = 'Users';
             console.log('server returned: ', data);
-            that.app.get('content2').show(that.app.get('detailView'), data);
+            that.app.get('content2').show(that.app.get('detailView'), data[0]);
           } else {
             console.log('no data returned from server');
           }
@@ -51,7 +51,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $editProfileButton = $('<button>Edit My Profile</button>');
     $editProfileButton[0].onclick = function() {
-      //TODO editProfileView????
+      that.app.get('detailView').displayed = 'Edit Profile';
+      that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
     };
     this.$el.append($editProfileButton);
 

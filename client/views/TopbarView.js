@@ -26,7 +26,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
           if (data) {
             that.app.get('detailView').displayed = 'Users';
             console.log('server returned: ', data);
-            that.app.get('content2').show(that.app.get('detailView'), data);
+            that.app.get('content2').show(that.app.get('detailView'), data[0]);
           } else {
             console.log('no data returned from server');
           }

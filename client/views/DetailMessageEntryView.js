@@ -3,6 +3,7 @@ window.Agora.Views = window.Agora.Views || {};
 
 //MORE LIKE A 'CONVERSATION VIEW', think facebook
 
+//yeah need to rename this
 Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   tagName: 'div',
