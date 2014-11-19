@@ -809,8 +809,10 @@ module.exports.updateUserProfile = function(request, response) {
 
       var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
+
+      console.log('whaaaaaaa: ', fields.about[0]);
       client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
-        [fields.about, imageLink, fields.username],
+        [fields.about[0], imageLink, fields.username[0]],
         function(err, result) {
           if (err) {
             console.log('error updating users table: ', err);

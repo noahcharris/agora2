@@ -25,6 +25,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       //ajax
     });
 
+    this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image);
+
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
     //need to return whether the user is a contact or not...
     if (this.model.username !== this.app.get('username')) {
