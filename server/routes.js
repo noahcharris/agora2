@@ -779,49 +779,72 @@ module.exports.updateUserProfile = function(request, response) {
 
   form.parse(request, function(err, fields, files) {
 
-    console.log('WHOAHAHAHAH', err, fields, files.file[0].path);
+    //if an image is sent
+    if (files.file) {
 
-    var keyString = fields.username[0];
+      var keyString = fields.username[0];
 
-    var params = {
-      localFile: files.file[0].path,
+      var params = {
+        localFile: files.file[0].path,
 
-      s3Params: {
-        Bucket: "agora-image-storage",
-        Key: keyString,
-        // other options supported by putObject, except Body and ContentLength.
-        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-      },
-    };
+        s3Params: {
+          Bucket: "agora-image-storage",
+          Key: keyString,
+          // other options supported by putObject, except Body and ContentLength.
+          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+        },
+      };
 
-    var uploader = s3Client.uploadFile(params);
-    uploader.on('error', function(err) {
-      console.error("unable to upload:", err.stack);
-    });
+      var uploader = s3Client.uploadFile(params);
+      uploader.on('error', function(err) {
+        console.error("unable to upload:", err.stack);
+      });
 
-    uploader.on('progress', function() {
-      console.log("progress", uploader.progressMd5Amount,
-                uploader.progressAmount, uploader.progressTotal);
-    });
+      uploader.on('progress', function() {
+        console.log("progress", uploader.progressMd5Amount,
+                  uploader.progressAmount, uploader.progressTotal);
+      });
 
-    uploader.on('end', function() {
-      console.log("done uploading");
+      uploader.on('end', function() {
+        console.log("done uploading");
 
-      var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+        var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-      console.log('whaaaaaaa: ', fields.about[0]);
-      client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
-        [fields.about[0], imageLink, fields.username[0]],
+        console.log('whaaaaaaa: ', fields.about[0]);
+        client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
+          [fields.about[0], imageLink, fields.username[0]],
+          function(err, result) {
+            if (err) {
+              console.log('error updating users table: ', err);
+            } else {
+              response.end('successfully updated profile');
+            }
+        });
+        
+      });
+
+    } else {
+
+      //NO IMAGE
+
+      client.query("UPDATE users SET about = $1 WHERE username = $2;",
+        [fields.about[0], fields.username[0]],
         function(err, result) {
           if (err) {
             console.log('error updating users table: ', err);
           } else {
-            response.end('successfully updated profile');
+            response.end('successfully updated profile (no image)');
           }
       });
-      
-    });
+
+
+
+
+
+
+    }
+
 
   });
 

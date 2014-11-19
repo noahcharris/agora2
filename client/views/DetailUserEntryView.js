@@ -25,8 +25,12 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       //ajax
     });
 
-    var random = Math.floor((Math.random() * 10000) + 1)
-    this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image + '?extra=' + random);
+    //MAYBE ONLY DO THIS FOR A LITTLE WHILE AFTER THE PROFILE HAS BEEN UPDATED??????
+    var suffix = '';
+    if (this.model.username === this.app.get('username')) {
+      suffix = '?extra=' + Math.floor((Math.random() * 10000) + 1);
+    }
+    this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image + suffix);
 
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
     //need to return whether the user is a contact or not...

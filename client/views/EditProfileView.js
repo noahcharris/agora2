@@ -11,6 +11,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
     this.app = appController;
     //this.template = _.template( $('#editViewTemplate').html() );
     this.$el.addClass('detailView');
+    this.userData = null;
   },
 
   render: function() {
@@ -29,8 +30,22 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
 
 
-    var $textArea = $('<textArea height="200px" width="300px"></textarea>');
     var $profilePicture = $('<img height="150px" width="150px"></img>');
+    var $imageInput = $('<input type="file" id="imageInput"></input>');
+    var $textArea = $('<textArea id="editAboutMe" height="200px" width="300px"></textarea>');
+
+    this.$el.append($profilePicture);
+    this.$el.append('<br/>');
+    this.$el.append($imageInput);
+    this.$el.append('<br/>');
+    this.$el.append('<br/>');
+    this.$el.append('<br/>');
+    this.$el.append('<h4>ABOUT ME:</h4>');
+    that.$el.append($textArea);
+    this.$el.append('<br/>');
+    this.$el.append('<br/>');
+    this.$el.append('<br/>');
+    this.$el.append('<br/>');
 
 
     $.ajax({
@@ -44,12 +59,11 @@ Agora.Views.EditProfileView = Backbone.View.extend({
         if (data) {
           console.log('server returned: ', data);
 
-          that.$el.append($textArea);
-          $textArea.val(data[0].about);
+          this.userData = data[0];
 
-          that.$el.append($profilePicture);
           $profilePicture.attr('src', data[0].image);
 
+          $textArea.val(data[0].about);
 
         } else {
           console.log('no data returned from server');
@@ -60,9 +74,6 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
     });
 
-
-    var $imageInput = $('<input type="file" id="imageInput"></input>');
-    this.$el.append($imageInput);
 
     $imageInput.on('change', function(e) {
       var reader = new window.FileReader()
@@ -111,6 +122,49 @@ Agora.Views.EditProfileView = Backbone.View.extend({
         data: fd,
         success: function(data) {
           alert(data);
+
+          
+          //NOOOOOOO DON't DOOOO THIS
+
+          $.ajax({
+            url: 'http://localhost:80/user',
+            method: 'GET',
+            crossDomain: true,
+            data: {
+              username: that.app.get('username'),
+              //so that this is never cached
+              extra: Math.floor((Math.random() * 10000) + 1)
+            },
+            success: function(data) {
+              if (data) {
+                that.app.get('detailView').displayed = 'Users';
+                console.log('server returned: ', data);
+
+
+                //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
+                //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
+                //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
+
+                //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
+                //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
+                data[0].isContact = true;
+
+                that.app.get('content2').show(that.app.get('detailView'), data[0]);
+              } else {
+                console.log('no data returned from server');
+              }
+            }, error: function(err) {
+              console.log('ajax error ocurred: ', err);
+            }
+
+          });
+
+
+
+
+
+
+
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
         }

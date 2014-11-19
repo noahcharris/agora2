@@ -32,15 +32,44 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
     this.$el.children('button').on('click', function() {
       var signupTwo = new Agora.Views.SignupViewTwo(that.app);
       signupTwo.data = {
-        email: $('#signupEmailInput').val(),
+        //email: $('#signupEmailInput').val(),
         username: $('#signupUsernameInput').val(),
         //need to check with confirmation field
         password: $('#signupPasswordInput').val(),
-        origin: $('#signupOriginInput').val(),
+        //origin: $('#signupOriginInput').val(),
         about: $('signupAboutInput').val()
       };
 
-      that.app.get('content2').show(signupTwo);
+      //LEAVING OUT SIGNUPVIEWTWO for now
+      //that.app.get('content2').show(signupTwo);
+
+
+      $.ajax({
+
+        url: 'https://localhost:443/registerUser',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          username: $('#signupUsernameInput').val(),
+          password: $('#signupPasswordInput').val(),
+          origin: $('#signupOriginInput').val(),
+          email: $('#signupEmailInput').val(),
+          about: $('signupAboutInput').val()
+        },
+        success: function(data) {
+          alert(data);
+          that.app.get('content2').hide();
+          //log user in
+          //show them success screen (introduction/tutorial?)
+        },
+        error: function(data) {
+          alert(data);
+        }
+
+      });
+
+
+
     });
   },
 
