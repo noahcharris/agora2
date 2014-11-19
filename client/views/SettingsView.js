@@ -60,13 +60,13 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $changeLocationButton[0].onclick = function() {
 
     };
-    this.$el.append($changeLocationButton);
+    //this.$el.append($changeLocationButton);
 
     var $changePasswordButton = $('<button>Change Password</button>');
     $changePasswordButton[0].onclick = function() {
 
     };
-    this.$el.append($changePasswordButton);
+    //this.$el.append($changePasswordButton);
 
 
 

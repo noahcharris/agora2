@@ -335,36 +335,24 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
     var sideWidth = $(window).width() - mapWidth;
     $('#content1').css('width', sideWidth+'px');
-
-
-    //fucking around with mapController
-
-    // console.log('layers: ', this.get('mapController').get('countries'));
-      // this.get('mapController').highlightCountry('United States');
-      // this.get('mapController').highlightCountry('China');
-      // this.get('mapController').highlightCountry('France');
-      // this.get('mapController').highlightCountry('Germany');
-      // this.get('mapController').highlightCountry('Argentina');
-      // this.get('mapController').highlightCountry('Australia');
-      // this.get('mapController').highlightCountry('Monaco');
-      // this.get('mapController').highlightCountry('Italy');
-      // this.get('mapController').highlightCountry('Ecuador');
-      // this.get('mapController').highlightCountry('Palestine');
-
-    // $('body').on('click', function() {
-    //   that.get('mapController').removeHighlightCountry('United States');
-    // });
-
-
-
-
-
     
   },
 
 
 
+  //WHAAAAAT?????
 
+  showUser: function() {
+
+  },
+
+  showLocation: function() {
+
+  },
+
+  showChannel: function() {
+
+  },
 
 
 

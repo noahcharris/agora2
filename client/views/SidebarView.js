@@ -186,8 +186,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           entryView.on('click', function(id, type) {
 
-            var urlSuffix;
-
             var thet = this;
 
             if (model.type === 'Topic') {
@@ -214,7 +212,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             } else if (model.type === 'MessageChain') {
               that.app.get('detailView').displayed = 'Messages';
-              urlSuffix = 'messageChain';
 
               $.ajax({
                 url: 'http://localhost/messageChain',

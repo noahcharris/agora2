@@ -13,13 +13,55 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
   },
 
   render: function() {
+    var that = this;
     console.log(this.model);
     this.$el.html( this.template(this.model) );
     var $messageButton = $('<button>SEND MESSAGE</button>');
-    $messageButton.on('click', function(params) {
+    $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
-    });
+      var chains = that.app.get('sidebarView').messagesCollection;
+      var offsetCount = -1;
+      for (var i=0; i < chains.length ;i++) {
+
+        offsetCount++;
+
+        //will need to account for pagination here eventually
+
+        if (chains[i].contact === that.model.username) {
+          //open up this shit
+
+          that.app.get('sidebarView').displayed = 'Messages';
+          that.app.get('detailView').displayed = 'Messages';
+
+          that.app.get('content1').show(that.app.get('sidebarView'));
+
+          $.ajax({
+            url: 'http://localhost/messageChain',
+            method: 'GET',
+            crossDomain: true,
+            data: {
+              //these two models are different scope!
+              chainId: chains[i]
+            },
+            success: function(model) {
+              that.app.get('content2').show(that.app.get('detailView'), model);
+              that.app.get('sidebarView').highlightCell(offsetCount);
+            },
+            error: function() {
+              alert('server error');
+            }
+          });
+
+        }
+
+      }
+
+      //CREATE NEW CHAIN HERE
+
+    };
+
+
     var $contactButton = $('<button>Contact Request</button>');
     $contactButton.on('click', function() {
       //ajax
