@@ -683,8 +683,9 @@ module.exports.registerUser = function(request, response) {
     bcrypt.hash(request.body.password, salt, function(err, hash) {
 
       postgres.createUser(request.body.username, hash, salt, 
-        request.body.origin, function(success) {
+        request.body.origin, request.body.about, function(success) {
           if (success) {
+            //send back login token here????
             response.end('successfully created user');
           } else {
             response.end('error creating user');

@@ -54,10 +54,16 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
           password: $('#signupPasswordInput').val(),
           origin: $('#signupOriginInput').val(),
           email: $('#signupEmailInput').val(),
-          about: $('signupAboutInput').val()
+          about: $('#signupAboutInput').val()
         },
         success: function(data) {
           alert(data);
+          that.app.set('login', true);
+
+          that.app.get('topbarView').model.user = $('#signupUsernameInput').val();
+          that.app.get('topbarView').render();
+          that.app.set('username', $('#signupUsernameInput').val());
+
           that.app.get('content2').hide();
           //log user in
           //show them success screen (introduction/tutorial?)

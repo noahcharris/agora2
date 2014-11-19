@@ -46,6 +46,15 @@ Agora.Views.SignupViewTwo = Backbone.View.extend({
         },
         success: function(data) {
           alert(data);
+
+          that.app.set('login', true);
+
+          that.app.get('topbarView').model.user = that.data.username;
+          console.log('heeyeyyyy');
+          console.log(that.data.username);
+          that.app.get('topbarView').render();
+          that.app.set('username', username);
+
           that.app.get('content2').hide();
           //log user in
           //show them success screen (introduction/tutorial?)
