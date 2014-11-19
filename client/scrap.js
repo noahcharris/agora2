@@ -55,6 +55,11 @@ $.ajax({
 
 
 
+ANON PICTURE
+'http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg'
+
+
+
 
 
 

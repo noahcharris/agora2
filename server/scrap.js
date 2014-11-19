@@ -27,3 +27,8 @@ AWS ACCESS KEYS
 
 AWSAccessKeyId=AKIAIFTRAZLMMQJZ6OWQ
 AWSSecretKey=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
+
+
+
+ANON LINK
+'http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg'

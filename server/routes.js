@@ -781,7 +781,7 @@ module.exports.updateUserProfile = function(request, response) {
 
     console.log('WHOAHAHAHAH', err, fields, files.file[0].path);
 
-    var keyString = 'test';
+    var keyString = fields.username[0];
 
     var params = {
       localFile: files.file[0].path,

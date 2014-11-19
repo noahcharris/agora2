@@ -48,7 +48,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
           $textArea.val(data[0].about);
 
           that.$el.append($profilePicture);
-          $profilePicture.attr('src', 'http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg');
+          $profilePicture.attr('src', data[0].image);
 
 
         } else {
