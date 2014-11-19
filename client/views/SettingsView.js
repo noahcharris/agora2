@@ -74,13 +74,13 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $pathCreationButton.on('click', function() {
       that.app.get('content2').show(new Agora.Views.PathCreationView(that.app));
     });
-    this.$el.children('#settingsViewList').append($pathCreationButton);
+    //this.$el.children('#settingsViewList').append($pathCreationButton);
 
     var $channelCreationButton = $('<li>CREATE YR OWN CHANNEL!!!</li>');
     $channelCreationButton.on('click', function() {
       that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
     });
-    this.$el.children('#settingsViewList').append($channelCreationButton);
+    //this.$el.children('#settingsViewList').append($channelCreationButton);
 
 
   },
