@@ -739,6 +739,7 @@ body {
 
 #profileRightColumn {
   float: left;
+  padding: 30px;
 }
 
 #profileColumnWrapper {

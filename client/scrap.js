@@ -37,11 +37,6 @@ this.$el.append($saveChangesButton);
 
 
 
-
-
-
-
-
 //uploading images
 var fd = new FormData();    
 fd.append( 'file', input.files[0] );
@@ -56,3 +51,14 @@ $.ajax({
     alert(data);
   }
 });
+
+
+
+
+
+
+
+
+
+
+

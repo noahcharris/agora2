@@ -21,3 +21,9 @@ ST_GeomFromText(text, srid) returns geometry
 
 ST_AsGeoJSON(geometry) returns text
 
+
+
+AWS ACCESS KEYS
+
+AWSAccessKeyId=AKIAIFTRAZLMMQJZ6OWQ
+AWSSecretKey=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

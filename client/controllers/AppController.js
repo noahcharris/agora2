@@ -225,6 +225,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             //topicsCollection = data;
             console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+
+            for (var i=0; i < data.length ;i++) {
+              data[i].isContact = true;
+            }
+
             sidebarView.contactsCollection = data;
             content1.show(sidebarView); 
           } else {

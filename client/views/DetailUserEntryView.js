@@ -7,7 +7,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
   className: 'detailEntryItem',
 
-  initialize: function() {
+  initialize: function(appController) {
+    this.app = appController;
     this.template = _.template( $('#detailUserEntryTemplate').html() );
   },
 
@@ -19,7 +20,22 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
     });
-    this.$el.prepend($messageButton);
+    var $contactButton = $('<button>Contact Request</button>');
+    $contactButton.on('click', function() {
+      //ajax
+    });
+
+    var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
+    //need to return whether the user is a contact or not...
+    if (this.model.username !== this.app.get('username')) {
+      $toolColumn.append($messageButton);
+      if (!this.model.isContact) {
+        $toolColumn.append($('<br/>'));
+        $toolColumn.append($contactButton);
+      }
+
+    }
+
   },
 
   close: function() {

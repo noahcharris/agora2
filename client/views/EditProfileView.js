@@ -75,14 +75,40 @@ Agora.Views.EditProfileView = Backbone.View.extend({
     var $saveChangesButton = $('<button>Save Changes</button>');
     $saveChangesButton[0].onclick = function() {
 
+
+      //SECURITYYYYYY???????????!!!!!!!!
+      var fd = new FormData();    
+      console.log($('#imageInput'));
+      fd.append( 'file', $('#imageInput')[0].files[0] );
+      fd.append( 'username', that.app.get('username') );
+      fd.append( 'about', $textArea.val());
+
+      console.log('FORM: ', fd);
+
+      // $.ajax({
+      //   url: 'http://localhost:80/updateUserImage',
+      //   method: 'POST',
+      //   cache: false,
+      //   contentType: 'application/json',
+      //   crossDomain: true,
+      //   processData: false,
+      //   data: fd,
+      //   success: function(data) {
+      //     alert(data);
+      //   }, error: function(err) {
+      //     console.log('ajax error ocurred: ', err);
+      //   }
+
+      // });
+
+
       $.ajax({
         url: 'http://localhost:80/updateUserProfile',
         method: 'POST',
         crossDomain: true,
-        data: {
-          username: that.app.get('username'),
-          about: $textArea.val()
-        },
+        contentType: false,
+        processData: false,
+        data: fd,
         success: function(data) {
           alert(data);
         }, error: function(err) {

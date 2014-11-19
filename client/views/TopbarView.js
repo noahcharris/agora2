@@ -26,6 +26,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
           if (data) {
             that.app.get('detailView').displayed = 'Users';
             console.log('server returned: ', data);
+
+            //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
+            //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
+            data[0].isContact = true;
+
             that.app.get('content2').show(that.app.get('detailView'), data[0]);
           } else {
             console.log('no data returned from server');

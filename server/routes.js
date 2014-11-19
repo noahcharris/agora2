@@ -7,6 +7,9 @@ var Memcached = require('memcached');
 var amqp = require('amqplib');
 var when = require('when');
 var bcrypt = require('bcrypt');
+var s3 = require('s3');
+
+var multiparty = require('multiparty');
 
 var cookie = require('cookie');
 
@@ -73,6 +76,21 @@ client.connect();
 // setInterval(memcachedTimers, 100000);
 
 //#####################################
+
+
+var s3Client = s3.createClient({
+  maxAsyncS3: 20,     // this is the default
+  s3RetryCount: 3,    // this is the default
+  s3RetryDelay: 1000, // this is the default
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
+  s3Options: {
+    accessKeyId: 'AKIAIFTRAZLMMQJZ6OWQ',
+    secretAccessKey: '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',
+    // any other options are passed to new AWS.S3()
+    // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
+  },
+});
 
 
 
@@ -679,19 +697,135 @@ module.exports.registerUser = function(request, response) {
 
 
 
+module.exports.updateUserImage = function(request, response) {
+
+
+  if (request.method == 'POST') {
+    var body = '';
+    request.on('data', function (data) {
+        body += data;
+
+        // Too much POST data, kill the connection!
+        if (body.length > 1e6)
+            request.connection.destroy();
+    });
+    request.on('end', function () {
+        // var post = qs.parse(body);
+        console.log('BODY: ', body);
+
+        // use post['blah'], etc.
+    });
+  }
+
+
+
+  // console.log(request);
+
+  // var keyString = 'test';
+
+  // console.log('request.bodies::::');
+  // console.log(request.body.username);
+  // console.log(request.body.about);
+  // console.log(request.body.image);
+
+  // var params = {
+  //   localFile: request.body.image,
+
+  //   s3Params: {
+  //     Bucket: "agora-image-storage",
+  //     Key: keyString,
+  //     // other options supported by putObject, except Body and ContentLength.
+  //     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+  //   },
+  // };
+
+  // var uploader = s3Client.uploadFile(params);
+  // uploader.on('error', function(err) {
+  //   console.error("unable to upload:", err.stack);
+  // });
+
+  // uploader.on('progress', function() {
+  //   console.log("progress", uploader.progressMd5Amount,
+  //             uploader.progressAmount, uploader.progressTotal);
+  // });
+
+  // uploader.on('end', function() {
+  //   console.log("done uploading");
+
+  //   var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+  //   client.query("UPDATE users SET image = $1 WHERE username = $2;",
+  //     [request.body.about, imageLink, request.body.username],
+  //     function(err, result) {
+  //       if (err) {
+  //         console.log('error updating users table: ', err);
+  //       } else {
+  //         response.end('successfully updated profile');
+  //       }
+  //   });
+    
+  // });
+
+  // response.end('what');
+
+
+};
+
+
 module.exports.updateUserProfile = function(request, response) {
 
 
+  var form = new multiparty.Form();
 
-  client.query("UPDATE users SET about = $1 WHERE username = $2;",
-    [request.body.about, request.body.username],
-    function(err, result) {
-      if (err) {
-        console.log('error updating users table: ', err);
-      } else {
-        response.end('successfully updated profile');
-      }
+  form.parse(request, function(err, fields, files) {
+
+    console.log('WHOAHAHAHAH', err, fields, files.file[0].path);
+
+    var keyString = 'test';
+
+    var params = {
+      localFile: files.file[0].path,
+
+      s3Params: {
+        Bucket: "agora-image-storage",
+        Key: keyString,
+        // other options supported by putObject, except Body and ContentLength.
+        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+      },
+    };
+
+    var uploader = s3Client.uploadFile(params);
+    uploader.on('error', function(err) {
+      console.error("unable to upload:", err.stack);
     });
+
+    uploader.on('progress', function() {
+      console.log("progress", uploader.progressMd5Amount,
+                uploader.progressAmount, uploader.progressTotal);
+    });
+
+    uploader.on('end', function() {
+      console.log("done uploading");
+
+      var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+      client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
+        [fields.about, imageLink, fields.username],
+        function(err, result) {
+          if (err) {
+            console.log('error updating users table: ', err);
+          } else {
+            response.end('successfully updated profile');
+          }
+      });
+      
+    });
+
+  });
+
+
+
+
 
 
 };
