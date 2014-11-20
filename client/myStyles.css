@@ -358,7 +358,8 @@ body {
 }
 
 
-
+/* CHAINS lul */
+/* TODO */
 
 
 .sidebarInnerList {
@@ -521,6 +522,66 @@ body {
 /***************************/
 
 
+/*.sidebarFloatClear {
+  height: 84px;
+  width: 100%;
+}
+.topString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 70%;
+  margin: 0px;
+  padding: 0px;
+
+}
+.toString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 60%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.fromString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 60%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.sidebarTopicImage {
+  float: left;
+  height: 84px;
+  width: 84px;
+}
+
+.contentAndToFromWrapper {
+  position: relative;
+  float: left;
+  height: 84px;
+  width: 100px;
+}
+
+.sidebarContentWrapper {
+  font-family: 'clearThin';
+  font-size: 85%;
+  position: relative;
+  overflow-y: hidden;
+  height: 69%;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E8E8E8;
+}
+
+.sidebarToFromWrapper {
+  position: relative;
+  height: 30%;
+  width: 100%;
+}*/
+
+
 /* INPUT BOX */
 #inputBox {
   position: absolute;
@@ -606,14 +667,27 @@ body {
   border-width: 1px;
   border-color: black;
 }
-.topicUpvoteBox {
+.topicTopString {
+  font-family: 'clearThin';
   position: relative;
-  left: 10px;
-  float:left;
-  width:10%;
+  font-size: 100%;
+  margin: 0px;
+  padding: 0px;
 }
-.topicContentBox {
-  width: 90%;
+#detailTopicClear {
+  height: 150px;
+  width: 100%;
+}
+#detailTopicImage {
+  float: left;
+  height: 150px;
+  width: 150px;
+}
+#topicContentBox {
+  float: left;
+  height: 150px;
+  width: 200px;
+  background-color: green;
 }
 .topicHeader {
   font-size: 20px;

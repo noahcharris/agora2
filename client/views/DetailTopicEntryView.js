@@ -163,7 +163,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.$el.append( this.topicTemplate(this.model) );
 
     //add upvote handling
-    var $upvote = this.$el.children('div.topicBox').children('div.topicUpvoteBox').children('img');
+    var $upvote = this.$el.children('div.topicBox').children('img');
     $upvote[0].onclick = function() {
 
       $.ajax({
