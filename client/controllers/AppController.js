@@ -26,7 +26,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     
 
-
     //CHANGE THESE BACK
 
     this.set('username', 'noahcharris'); //is this secure???
@@ -324,7 +323,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         $('#map').css('width', '100%');
 
       }
-
       //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
     }, 100);
 

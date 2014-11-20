@@ -288,34 +288,78 @@ body {
   border-color: #E8E8E8;
   border-bottom-style: solid;
   border-width: 2px;
-  padding: 10px 5px;
+  margin: 0px;
+  padding: 0px;
   z-index: 50;
   /*-webkit-transition-duration:0.7s;
   -moz-transition-duration:0.7s;*/
 }
 
-.authorString {
+
+/* TOPICS */
+
+.sidebarFloatClear {
+  height: 84px;
+  width: 100%;
+}
+.topString {
   font-family: 'clearThin';
-  width:100%;
-  font-size: 12px;
+  position: relative;
+  font-size: 70%;
   margin: 0px;
+  padding: 0px;
+
+}
+.toString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 60%;
+  margin: 0px;
+  padding: 0px;
 }
 
-.sidebarEntryContent {
+.fromString {
   font-family: 'clearThin';
-  width:90%;
   position: relative;
-  left: 7%;
+  font-size: 60%;
   margin: 0px;
+  padding: 0px;
 }
 
-.sidebarEntryTopicOrigin {
-  width:90%;
-  position: relative;
-  left: 7%;
-  font-size: 11px;
-  margin: 0px;
+.sidebarTopicImage {
+  float: left;
+  height: 84px;
+  width: 84px;
 }
+
+.contentAndToFromWrapper {
+  position: relative;
+  float: left;
+  height: 84px;
+  width: 100px;
+}
+
+.sidebarContentWrapper {
+  font-family: 'clearThin';
+  font-size: 85%;
+  position: relative;
+  overflow-y: hidden;
+  height: 69%;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E8E8E8;
+}
+
+.sidebarToFromWrapper {
+  position: relative;
+  height: 30%;
+  width: 100%;
+}
+
+
+
+
 
 .sidebarInnerList {
   position: relative;

@@ -246,9 +246,115 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);
+
+
+
+
+
         
       });
-    };
+
+
+      
+
+
+
+
+
+
+
+
+      //#######################################
+      //#########  RESIZING  ##################
+      //#######################################
+
+      var throttledResize = _.throttle(function() {
+
+        var sidebarTopicWidth = $('#sidebarContainer').width();
+        console.log('fdsasdfasf', sidebarTopicWidth);
+        
+        console.log($('div.contentAndToFromWrapper'));
+
+
+
+        for (var i=0; i < that.subViews.length ;i++) {
+          var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
+          console.log(box);
+          box.css('width', (sidebarTopicWidth - 98) + 'px');
+
+
+        };
+
+
+
+
+
+        // if ($(window).width() > 500) {
+
+        //   that.set('mobile', false);
+        //   $('#sidebarContainer').show();
+        //   $('#map').css('width', '70%');
+        //   $('#mobileSelectionBarWrapper').css('height', '0px');
+
+
+        //   var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+        //   var sidebarWidth = $(window).width() - mapWidth;
+
+        //   if (!that.get('expanded')) {  
+        //     $('#sidebarContainer').css('-webkit-transition-duration', '0s');
+        //     $('#sidebarContainer').css('width', sidebarWidth+'px');
+
+        //     $('#content1').css('width', sidebarWidth+'px');
+
+        //   } else {
+        //     $('#content1').css('width', sidebarWidth+'px');
+        //     //need the extra -2 for borders?
+        //     $('#content2').css('width', ($(window).width() * 0.75) - sidebarWidth - 5);
+        //     //maybe turn off animations here
+        //     $('#sidebarContainer').css('-webkit-transition-duration', '0s');
+        //     $('#sidebarContainer').css('width', $(window).width() * 0.75);
+        //   }
+
+        // } else {
+
+        //   that.set('mobile', true);
+        //   $('#mobileSelectionBarWrapper').css('height', '40px');
+
+        //   //need a variable which determines whether topics or map is selected if 'mobile'
+
+        //   $('#sidebarContainer').hide();
+        //   $('#map').css('width', '100%');
+
+        // }
+        //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+      }, 100);
+
+
+      $(window).on('resize', throttledResize);
+
+      throttledResize();
+
+      //NEED TO UNBIND THIS HANDLER SOMEHOW
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    }; 
+
+
+
+
 
   },
 
