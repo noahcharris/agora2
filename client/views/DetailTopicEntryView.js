@@ -363,9 +363,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
-
-
      //MAYBE JUST LOOP THROUGH SUBVIEWS AND PUT RESIZE LISTENER ON
       //PARENT SO THAT IT IS AUTOMATICALLY UNBOUND???
 
@@ -392,9 +389,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       for (var i=0; i < that.replyContentBoxes.length ;i++) {
         that.replyContentBoxes[i].css('width', (0.8 * detailTopicWidth - 160) + 'px');
       }
-
-
-
 
 
       //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)

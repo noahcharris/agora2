@@ -12,6 +12,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   initialize: function() {
     this.template = _.template( $('#detailMessageEntryTemplate').html() );
+    this.messageInputTemplate = _.template( $('#messageInputBoxTemplate').html() );
   },
 
   render: function() {
@@ -29,6 +30,8 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       this.$el.append(this.template(this.model.entries[i]));
       console.log(this.model.entries[i]);
     }
+
+    this.$el.append( $(this.messageInputTemplate()) );
 
     //need to loop through and set out all the messages in the object
 

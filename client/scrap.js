@@ -35,6 +35,11 @@ this.$el.append($saveChangesButton);
 
 
 
+//REMEMBER TO USE PREVENT DEFAULT ON THE LINKS WHICH OVER SIDEBAR TOPICS AND SHIT
+
+
+
+
 
 
 //uploading images

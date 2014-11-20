@@ -77,8 +77,11 @@
     </script>
 
     <script id="sidebarMessageChainEntryTemplate" type="text/template">
-      <p class="authorString">Sender:<%= contact %></p>
-      <p class="sidebarEntryTopicOrigin">Recipient:<%= type %></p>
+      <p class="authorString">Contact:<%= contact %></p>
+      <br/>
+      <br/>
+      <br/>
+      <!--<p class="sidebarEntryTopicOrigin">Recipient:<%= type %></p>-->
     </script>
 
 
@@ -201,6 +204,14 @@
        <br/>
        <textarea id="inputTextArea" placeholder="Content"></textarea>
        <div id="inputBoxButton"><span>Post</span></div>
+      </div>
+    </script>
+
+
+    <script id="messageInputBoxTemplate" type="text/template">
+      <div id="messageInputBox">
+       <textarea id="messageInputTextArea" placeholder="Content"></textarea>
+       <div id="messageInputBoxButton"><span>Send</span></div>
       </div>
     </script>
 
