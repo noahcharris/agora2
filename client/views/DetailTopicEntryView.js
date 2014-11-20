@@ -21,6 +21,12 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.responding = null;
     this.responseData = null;
 
+    //for content box resizes
+    this.topicContentBox = null;
+    this.commentContentBoxes = [];
+    this.responseContentBoxes = [];
+    this.replyContentBoxes = [];
+
   },
 
   render: function() {
@@ -66,64 +72,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var location = that.app.get('mapController').get('location');
       that.$el.children('div#inputBox').children('textarea').val('');
 
-      //wtf is this reponsedata shit
-      // if (that.responseData.type === 'Topic') {
-      //   $.ajax({
-      //     url: 'createComment',
-      //     method: 'POST',
-      //     data: {
-      //       location: that.responseData.location,
-      //       group: that.responseData.group,
-      //       topic: that.responseData.topic,
-      //       headline: headline,
-      //       content: content
-      //     },
-      //     success: function(data) {
-      //       alert(data);
-      //       //append their comment anyways?
-      //       that.app.get('mapController').trigger('reloadSidebar', location);
-      //     },
-      //     error: function() {
-      //       //TODO
-      //     }
-      //   });
-      // } else if (that.responseData.type === 'Comment') {
-
-      //   //TODO
-      //   //send a response generating ajax request
-
-
-      // } else if (that.responseData.type === 'Response' ||
-      //   that.responseData.type === 'Reply') {
-
-      //   $.ajax({
-      //     url: 'createReply',
-      //     method: 'POST',
-      //     data: {
-      //       location: that.responseData.location,
-      //       group: that.responseData.group,
-      //       topic: that.responseData.topic,
-      //       comment: that.responseData.comment,
-      //       headline: headline,
-      //       content: content
-      //     },
-      //     success: function(data) {
-      //       alert(data);
-      //       //append their reply
-      //       //reload the proper sidebar
-      //       that.app.get('mapController').trigger('reloadSidebar', location);
-      //     },
-      //     error: function() {
-      //       //TODO
-      //     }
-      //   });
-
-      // }
 
     });
 
     this.$el.children('#inputBox').append($('<img src="resources/images/x.png" class="x"></img>'));
-    console.log(this.$el.children('#inputeBox').children('img.x'));
     this.$el.children('#inputBox').children('img.x')[0].onclick = function() {
       that.closeInputBox();
     };
@@ -133,7 +85,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     if (this.responding) {
       //why do I need to use this selector?
-      console.log('whaaaaat');
       this.$el.children('div#inputBox').css('height', '100px');
     }
 
@@ -141,26 +92,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //append topic box
     this.$el.append( this.topicTemplate(this.model) );
+    this.topicContentBox = this.$el.children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
 
     //add upvote handling
     var $upvote = this.$el.children('div.topicBox').children('img');
@@ -203,7 +137,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
 
 
-    var $topicReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
+    var $topicReplyButton = this.$el.children('div.topicBox').children('#detailTopicClear').children('#topicContentBox');
     //sending data to the response box
     $topicReplyButton[0].onclick = function() {
       
@@ -217,14 +151,20 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       that.openInputBox(responseParams);
 
     };
-    this.$el.children('div.topicBox').children('div.topicContentBox').append($topicReplyButton);
 
 
 
 
     for (var i=0;i<comments.length;i++) {
       
-      var $commentReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
+      //CREATE AND APPEND COMMENT TO OUTERBOX
+      var $comment = $(this.commentTemplate(comments[i]));
+      this.$el.append( $comment );
+      
+      this.commentContentBoxes.push($comment.children('.detailCommentClear').children('.commentContentBox'));
+
+      var $commentReplyButton = $comment.children('.detailCommentClear').children('.commentContentBox').children('div.replyButton');
+      var $expandCommentButton = $comment.children('.detailCommentClear').children('img.expandCommentButton');
 
       //sending data to the response box
       var a = function() {
@@ -244,18 +184,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       };
       a();
 
-      var $comment = $(this.commentTemplate(comments[i]));
-      $comment.children('div.commentToolbox').append($commentReplyButton);
       //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
       //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
       //$comment.children('div.commentContentBox').append($starIcon);
       //$comment.children('div.commentContentBox').append($shareIcon);
 
-      //APPEND COMMENT TO OUTERBOX
-      this.$el.append( $comment );
 
       var $commentExpansionBox = $('<div class="commentExpansionBox">');
-      var $expandCommentButton = $('<img src="resources/images/expand.png" class="expandCommentButton"></img>');
 
 
       //this fixed the problem like in detailView, but why??
@@ -291,15 +226,17 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       }
       c();
 
-      $comment.children('div.commentToolbox').append($expandCommentButton);
-      //$comment.append($expandCommentButton);
-
       this.$el.append($commentExpansionBox);
 
 
       for (var j=0;j<comments[i].responses.length;j++) {
 
-        var $responseReplyButton = $('<div class="replyButton"><span class="replyLabel">Reply</span></div>');
+        var $response = $(this.responseTemplate(comments[i].responses[j]));
+
+        this.responseContentBoxes.push($response.children('.detailResponseClear').children('.responseContentBox'));
+
+        var $responseReplyButton = $response.children('.detailResponseClear').children('.responseContentBox').children('div.replyButton');
+        var $expandResponseButton = $response.children('.detailResponseClear').children('img.expandResponseButton');
 
         //sending data to the response box
         var b = function() {
@@ -322,8 +259,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         b();
 
 
-        var $response = $(this.responseTemplate(comments[i].responses[j]));
-        $response.children('div.responseToolbox').append($responseReplyButton);
 
         //$comment.children('div.replyContentBox').append($replyReplyButton);
 
@@ -333,7 +268,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         //$comment.children('div.replyContentBox').append($shareIcon);
 
         var $responseExpansionBox = $('<div class="responseExpansionBox">');
-        var $expandResponseButton = $('<img src="resources/images/expand.png" class="expandResponseButton"></img>');
 
 
         var d = function() {
@@ -388,18 +322,31 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         }
         d();
 
-        $response.children('.responseToolbox').append($expandResponseButton);
 
         $commentExpansionBox.append($response);
 
         $commentExpansionBox.append($responseExpansionBox);
 
+
+
+
         for (var k=0;k<comments[i].responses[j].replies.length;k++) {
 
-          var $reply = $( this.replyTemplate(comments[i].responses[j].replies[k]) );
+          var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
+
+          console.log('wooo', $reply.children('.detailReplyClear').children('.replyContentBox'));
+
+          this.replyContentBoxes.push($reply.children('.detailReplyClear').children('.replyContentBox'));
+
+          var $replyReplyButton = $reply.children('.detailReplyClear').children('.replyContentBox').children('div.replyButton');
+
+
+
           $responseExpansionBox.append($reply);
 
         }
+
+
 
 
          
@@ -409,6 +356,55 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     var $spacer = $('<div class="spacer"></div>');
     this.$el.append($spacer);
+
+
+
+
+
+
+
+
+
+
+     //MAYBE JUST LOOP THROUGH SUBVIEWS AND PUT RESIZE LISTENER ON
+      //PARENT SO THAT IT IS AUTOMATICALLY UNBOUND???
+
+    //have to reset all the content widths that are next
+    //to images
+    var throttledResize = _.throttle(function() {
+
+
+
+      //SO ROUGH
+
+      var detailTopicWidth = $('#content2').width();
+      
+      that.topicContentBox.css('width', (detailTopicWidth - 200) + 'px');
+
+      for (var i=0; i < that.commentContentBoxes.length ;i++) {
+        that.commentContentBoxes[i].css('width', (detailTopicWidth - 160) + 'px');
+      }
+
+      for (var i=0; i < that.responseContentBoxes.length ;i++) {
+        that.responseContentBoxes[i].css('width', (0.9 * detailTopicWidth - 160) + 'px');
+      }
+
+      for (var i=0; i < that.replyContentBoxes.length ;i++) {
+        that.replyContentBoxes[i].css('width', (0.8 * detailTopicWidth - 160) + 'px');
+      }
+
+
+
+
+
+      //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+    }, 100);
+
+
+    $(window).on('resize', throttledResize);
+
+    throttledResize();
+    setTimeout(throttledResize, 20);
 
 
   },

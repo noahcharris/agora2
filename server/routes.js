@@ -371,7 +371,6 @@ module.exports.getTopicTree = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
-        console.log('found replies: ', result.rows);
         count++;
         replies = result.rows;
         if (count === 4) {
@@ -399,18 +398,14 @@ module.exports.getTopicTree = function(request, response) {
 
       for (var i=0; i < replies.length ;i++) {
 
-        console.log('replyyyyyy.response: ', replies[i].response);
 
         for (var j=0; j < responses.length ;j++) {
           if (responses[j].id === replies[i].response) {
-            console.log('match!');
             responses[j].replies.push(replies[i]);
             break;
           }
         }
       }
-
-      console.log('in betweener: ', responses);
 
 
       for (var i=0; i < responses.length ;i++) {

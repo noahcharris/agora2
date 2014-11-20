@@ -100,6 +100,7 @@
         <div id="topicContentBox">
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
+          <div class="replyButton"><span class="replyLabel">Reply</span></div>
         </div>
 
        </div>
@@ -112,56 +113,87 @@
 
 
     <script id="detailCommentEntryTemplate" type="text/template">
+
      <div class="commentBox">
-      <!--<div class="commentUpvoteBox">
-        <div>42</div>
-      </div>-->
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="commentTopString">
+      &nbsp(<%= rank %>)
+      &nbspUser:&nbsp<%= username %>
+      FROM::::::
+      </span>
 
-      <div class="commentToolbox">
-        <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <div class="detailCommentClear">
+        <img src="resources/images/expand.png" class="expandCommentButton"></img>
+
+        <img class="detailCommentImage"></img>
+
+        <div class="commentContentBox">
+          <p class="commentHeader"> <%= headline %> </p>
+          <p class="comment"> <%= contents %> </p>
+          <div class="replyButton"><span class="replyLabel">Reply</span></div>
+        </div>
+
       </div>
 
-      <div class="commentContentBox">
-        <!--<p class="authorString">&nbsp<strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>-->
-        <p class="commentHeader"> <%= headline %> </p>
-        <p class="comment"> <%= contents %> </p>
-      </div>
+
+
      </div>
     </script>
 
 
     <script id="detailResponseEntryTemplate" type="text/template">
-      <!- remember that this is THE SAME NAME as the OTHER response box -->
      <div class="responseBox">
-      <!--<div class="responseUpvoteBox">
-        <div>42</div>
-      </div>-->
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="responseTopString">
+      &nbsp(<%= rank %>)
+      &nbspUser:&nbsp<%= username %>
+      FROM::::::
+      </span>
 
-      <div class="responseToolbox">
-        <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <div class="detailResponseClear">
+
+        <img src="resources/images/expand.png" class="expandResponseButton"></img>
+
+        <img class="detailResponseImage"></img>
+
+        <div class="responseContentBox">
+          <p class="responseHeader"> <%= headline %> </p>
+          <p class="response"> <%= contents %> </p>
+          <div class="replyButton"><span class="replyLabel">Reply</span></div>
+        </div>
+
       </div>
-      
-      <div class="responseContentBox">
-        <!--<p class="authorString">&nbsp<strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>-->
-        <p class="responseHeader"> <%= headline %> </p>
-        <p class="response"> <%= contents %> </p>
-      </div>
+
+
      </div>
     </script>
+
+
 
     <script id="detailReplyEntryTemplate" type="text/template">
      <div class="replyBox">
-      <div class="replyUpvoteBox">
-       <img src="/resources/images/upvote.png" height="20px" width="20px"></img>
-       <div>42</div>
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="replyTopString">
+      &nbsp(<%= rank %>)
+      &nbspUser:&nbsp<%= username %>
+      FROM::::::
+      </span>
+
+      <div class="detailReplyClear">
+
+        <img class="detailReplyImage"></img>
+
+        <div class="replyContentBox">
+          <p class="replyHeader"> <%= headline %> </p>
+          <p class="reply"> <%= contents %> </p>
+          <div class="replyButton"><span class="replyLabel">Reply</span></div>
+        </div>
+
       </div>
-      <div class="replyContentBox">
-       <p class="authorString">&nbsp<strong>Noah Harris, Seattle WA, 3 hours ago</strong></p>
-       <p class="replyHeader"> <%= headline %> </p>
-       <p class="reply"> <%= contents %> </p>
-      </div>
+
      </div>
     </script>
+
 
     <script id="inputBoxTemplate" type="text/template">
       <div id="inputBox">
