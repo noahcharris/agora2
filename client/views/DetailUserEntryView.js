@@ -61,7 +61,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
     var $contactButton = $('<button>Contact Request</button>');
-    $contactButton.on('click', function() {
+
+    $contactButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
         url: 'http://localhost:80/addContact',
@@ -83,7 +84,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       });
 
 
-    });
+    };
 
 
 

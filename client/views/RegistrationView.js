@@ -60,6 +60,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.set('username', username);
             that.app.get('content2').hide();
 
+            that.app.trigger('reloadSidebarContacts');
+
           } else {
             alert('login failed');
             that.app.set('login', false);
