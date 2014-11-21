@@ -206,8 +206,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     });
 
-
-    this.on('reloadSidebarContacts', function(location) { 
+    //TAKES A CALLBACK
+    this.on('reloadSidebarContacts', function(cb) { 
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarContacts');
@@ -246,8 +246,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     });
 
+    //TAKES A CALL BACK (USED IN DetailUserEntryView)
+    this.on('reloadSidebarMessageChains', function(cb) { 
 
-    this.on('reloadSidebarMessageChains', function(location) { 
+    cb = cb || function() { /*oi.io*/ };
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarMessageChains');
@@ -267,6 +269,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
             sidebarView.messagesCollection = data;
             content1.show(sidebarView); 
+            cb();
           } else {
             console.log('memcached returned false');
             content1.show(sidebarView);

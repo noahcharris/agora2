@@ -161,6 +161,7 @@ app.get('/logout', routes.logout);
 
 //SECURE
 app.post('/addContact', routes.addContact);
+app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
 app.post('/registerUser', routes.registerUser);

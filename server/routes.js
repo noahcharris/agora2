@@ -527,6 +527,7 @@ module.exports.getMessageChains = function(request, response) {
 
 module.exports.getMessageChain = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
+  console.log('get chain');
   console.log(queryArgs.contact, queryArgs.username);
 
   //KIND BUMMED THAT I'M NOT USING THIS FORMAT ANYMORE.. MODEL2... smh
@@ -787,13 +788,26 @@ module.exports.addContact = function(request, response) {
 
 
 
-
-
-
-
 };
 
 
+
+module.exports.createMessageChain = function(request, response) {
+
+  client.query("INSERT INTO messageChains (type, username1, username2) "
+    +"VALUES ('MessageChain', $1, $2);",
+    [request.body.username, request.body.contact],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into messageChains: ', err);
+        response.end('error');
+      } else {
+        response.end('successfully created messageChain');
+      }
+    });
+
+
+};
 
 
 module.exports.sendMessage = function(request, response) {

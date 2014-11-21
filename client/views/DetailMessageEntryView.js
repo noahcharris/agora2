@@ -20,6 +20,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
     var that = this;
 
+    this.$el.unbind();
+    this.$el.empty();
+
     //MOAR MOCK DATA LIKE THIS
     this.model = this.model || [{
       sender: 'mock data',
@@ -40,9 +43,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.$el.append( $(this.messageInputTemplate()) );
 
     var $sendButton = this.$el.children('#messageInputBox').children('#messageInputBoxButton');
-    $sendButton.on('click', function() {
-      console.log($('#messageInputTextArea').val());
+    $sendButton[0].onclick = function() {
 
+      console.log($('#messageInputTextArea').val());
 
       $.ajax({
         url: 'http://localhost:80/sendMessage',
@@ -58,6 +61,40 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
           if (data) {
             alert(data);
             $('#messageInputTextArea').val('');
+
+            //reload message chain
+
+
+
+
+            $.ajax({
+              url: 'http://localhost/messageChain',
+              method: 'GET',
+              crossDomain: true,
+              cache: false,
+              data: {
+                username: that.app.get('username'),
+                contact: model2.contact
+              },
+              success: function(model) {
+                //GAHHHHHHH SO HACKY FUCKKKK
+                console.log('he');
+                console.log(model);
+                that.model = model;
+                that.render(model2);
+                // that.app.get('content2').show(that.app.get('detailView'), model, model2);
+                // thet.$el.addClass('highlight');
+              },
+              error: function() {
+                alert('server error');
+              }
+            });
+
+
+
+
+
+
           } else {
             $('#messageInputTextArea').val('');
           }
@@ -70,7 +107,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
 
 
-    });
+    };
 
     //need to loop through and set out all the messages in the object
 
