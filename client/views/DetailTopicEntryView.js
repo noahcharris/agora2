@@ -36,22 +36,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
-
-
-    console.log('whoooooo rendering this.model: ', this.model);
-
-
-
-
-
-
-
-
-
-    //∆∆∆∆∆∆∆∆∆∆∆∆ GOING TO MOVE ALL THIS code into detailTopicEntryView ∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂
-
-
     // ## RESPONSE BOX ##
     //console.log('appending response box in render responding: ',this.responding);
     //USE this.responseData here so users won't lose their changes

@@ -23,6 +23,47 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var that = this;
     this.$el.html( this.topicTemplate(this.model) );
 
+
+
+
+    var $username = that.$el.children('.topString').children('.sidebarUsername');
+    $username.on('click', function(e) {
+
+      $.ajax({
+        url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.model.username,
+          //so that this is never cached
+          extra: Math.floor((Math.random() * 10000) + 1)
+        },
+        success: function(data) {
+          if (data) {
+            that.app.get('detailView').displayed = 'Users';
+            console.log('server returned: ', data);
+
+            //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
+
+            that.app.get('content2').show(that.app.get('detailView'), data[0]);
+          } else {
+            console.log('no data returned from server');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+      e.stopPropagation();
+
+    });
+      
+
+
+
+
+
     var mouseoverHandler = _.once(function () {
       //woooooooo
       var thet = this;

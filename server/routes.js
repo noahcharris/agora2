@@ -528,6 +528,8 @@ module.exports.getMessageChains = function(request, response) {
 module.exports.getMessageChain = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   console.log(queryArgs.contact, queryArgs.username);
+
+  //KIND BUMMED THAT I'M NOT USING THIS FORMAT ANYMORE.. MODEL2... smh
   // response.json({
   //     id: 0,
   //     type: 'Message',
@@ -544,6 +546,7 @@ module.exports.getMessageChain = function(request, response) {
   //       contents: 'what it is'
   //     }]
   //   });
+
 
   client.query("SELECT * FROM messages WHERE (sender=$1 AND recipient=$2) "
     +"OR (sender=$2 AND recipient=$1) ORDER BY sentAt DESC;",
