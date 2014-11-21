@@ -15,6 +15,16 @@ var queryArgs = url.parse(request.url, true).query;
 
 
 
+//MEMCACHED
+
+memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
+    console.log('error setting topicLocations key: ', err);
+});
+
+memcached.get('foo', function (err, data) {
+  console.log(data);
+});
+
 
 
 ST_GeomFromText(text, srid) returns geometry

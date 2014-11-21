@@ -676,7 +676,73 @@ module.exports.logout = function(request, response) {
 
 
 module.exports.addContact = function(request, response) {
-  response.end('TODO');
+
+  console.log(request.body.username);
+  console.log(request.body.contact);
+
+  //ADD CONTACT REQUEST KEY FORMAT:   <username>/addContactRequest/<contact>
+  memcached.get(request.body.contact + '/addContactRequest/' + request.body.username, function (err, data) {
+
+    console.log('memcached returned: ', data);
+    if (data) {
+      //if they have, add to the contact join and delete data from memcached
+
+
+      client.query("INSERT INTO contactsjoin (username1, username2) "
+        +"VALUES ($1, $2);",
+      [request.body.username, request.body.contact],
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into contactsjoin: ', err);
+        } else {
+
+          console.log('successfully inserted into contactsjoin');
+          //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
+          //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
+
+          //cache invalidation time!!
+          memcached.del(request.body.contact + '/addContactRequest/' + request.body.username, function (err) {
+
+          });
+          memcached.del(request.body.username + '/addContactRequest/' + request.body.contact, function (err) {
+
+          });
+
+          //OK SEEMS TO BE WORKING, BUT MAYBE I SHOULD MAKE A BOT THAT TRAWLS contactsjoin 
+          //for duplicates just in case
+
+          //reword this fo sho
+          response.end('you and '+ request.body.contact +' are now contacts');
+
+
+        }
+
+      });
+
+
+    } else {
+      //if there is no pending request, put a request into memcached
+      memcached.set(request.body.username + '/addContactRequest/' + request.body.contact, true, 2592000, function(err) {
+        if (err) {
+          console.log('error setting addContactRequest to memcached: ', err);
+        } else {
+          response.end('sent contact request');
+        }
+      });
+
+      //maybe alert the user some other way??
+      //their cache manager will deal with it.
+
+
+    }
+  });
+
+
+
+
+
+
+
 };
 
 

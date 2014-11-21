@@ -30,7 +30,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
         if (chains[i].contact === that.model.username) {
           //open up this shit
-
           that.app.get('sidebarView').displayed = 'Messages';
           that.app.get('detailView').displayed = 'Messages';
 
@@ -52,7 +51,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
               alert('server error');
             }
           });
-
         }
 
       }
@@ -64,8 +62,37 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
     var $contactButton = $('<button>Contact Request</button>');
     $contactButton.on('click', function() {
-      //ajax
+      console.log('hi');
+      $.ajax({
+        url: 'http://localhost:80/addContact',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          contact: that.model.username
+        },
+        success: function(data) {
+          if (data) {
+            alert(data);
+          } else {
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
+
+
+
+
+
+
+
+
+
 
     //MAYBE ONLY DO THIS FOR A LITTLE WHILE AFTER THE PROFILE HAS BEEN UPDATED??????
     var suffix = '';
