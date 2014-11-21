@@ -10,14 +10,15 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   className: 'detailEntryItem',
 
-  initialize: function() {
+  initialize: function(appController) {
     this.template = _.template( $('#detailMessageEntryTemplate').html() );
     this.messageInputTemplate = _.template( $('#messageInputBoxTemplate').html() );
+    this.app = appController;
   },
 
-  render: function() {
+  render: function(model2) {
 
-    console.log('whhhhhaaaa');
+    var that = this;
 
     this.model = this.model || {
       sender: 'mock data',
@@ -32,6 +33,38 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     }
 
     this.$el.append( $(this.messageInputTemplate()) );
+
+    var $sendButton = this.$el.children('#messageInputBox').children('#messageInputBoxButton');
+    $sendButton.on('click', function() {
+      console.log($('#messageInputTextArea').val());
+
+
+      $.ajax({
+        url: 'http://localhost:80/sendMessage',
+        method: 'POST',
+        crossDomain: true,
+        data: {
+          sender: that.app.get('username'),
+          //THIS IS THE WHOLE POINT OF MODEL2 !!!!!!!!!!!!!
+          recipient: model2.contact,
+          contents: $('#messageInputTextArea').val()
+        },
+        success: function(data) {
+          if (data) {
+            alert(data);
+          } else {
+
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
+
+    });
 
     //need to loop through and set out all the messages in the object
 

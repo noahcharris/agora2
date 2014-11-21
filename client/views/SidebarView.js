@@ -174,6 +174,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryView.model = model;
           entryView[entryViewMethod]();
 
+          var model2 = model;
+
 
 
 
@@ -222,8 +224,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   topicId: model.id
                 },
                 success: function(model) {
-                  console.log('soooooooweeeeeeeta: ', model);
-                  that.app.get('content2').show(that.app.get('detailView'), model);
+                  //GAHHHHHHH SO HACKY FUCKKKK
+                  that.app.get('content2').show(that.app.get('detailView'), model, model2);
                   thet.$el.addClass('highlight');
                 },
                 error: function() {

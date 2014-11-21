@@ -660,6 +660,9 @@ module.exports.addContact = function(request, response) {
 
 
 module.exports.sendMessage = function(request, response) {
+  console.log('sendMessage: ', request.body.sender);
+  console.log('sendMessage: ', request.body.recipient);
+  console.log('sendMessage: ', request.body.contents);
   response.end('TODO');
 };
 

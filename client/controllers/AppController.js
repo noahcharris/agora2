@@ -398,9 +398,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var currentView = null;
     var that = this;
 
-    //I'm going to put a callback into content2.show for
-    //cases like response box
-    region.show = function(view, model) {
+    //MODEL 2 is some bullshittttttt
+    region.show = function(view, model, model2) {
 
 
       //if we're showing a topic we have to do some dumb shit apparently
@@ -444,7 +443,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       currentView = view;
       if (view) {
-        view[renderMethod](model);
+        //MODEL 2 FUUUUCCKKCKCKCKCK
+        view[renderMethod](model, model2);
         $(el).html(view.el);
         if (view.onShow)
           view.onShow();
