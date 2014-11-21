@@ -526,22 +526,40 @@ module.exports.getMessageChains = function(request, response) {
 };
 
 module.exports.getMessageChain = function(request, response) {
-  response.json({
-      id: 0,
-      type: 'Message',
-      sender: 'noahcharris',
-      recipient: 'spw',
-      entries: [{
-        sender: 'spw',
-        contents: 'hey dude'
-      },{
-        sender: 'noah',
-        contents: 'yo'
-      },{
-        sender: 'spw',
-        contents: 'what it is'
-      }]
-    });
+  var queryArgs = url.parse(request.url, true).query;
+  console.log(queryArgs.contact, queryArgs.username);
+  // response.json({
+  //     id: 0,
+  //     type: 'Message',
+  //     sender: 'noahcharris',
+  //     recipient: 'spw',
+  //     entries: [{
+  //       sender: 'spw',
+  //       contents: 'hey dude'
+  //     },{
+  //       sender: 'noah',
+  //       contents: 'yo'
+  //     },{
+  //       sender: 'spw',
+  //       contents: 'what it is'
+  //     }]
+  //   });
+
+  client.query("SELECT * FROM messages WHERE (sender=$1 AND recipient=$2) "
+    +"OR (sender=$2 AND recipient=$1) ORDER BY sentAt DESC;",
+    [queryArgs.username, queryArgs.contact],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from messages: ', err);
+        response.end('error');
+      } else {
+        response.json(result.rows);
+      }
+  });
+
+
+
+
 };
 
 
@@ -659,12 +677,28 @@ module.exports.addContact = function(request, response) {
 };
 
 
+
+
 module.exports.sendMessage = function(request, response) {
-  console.log('sendMessage: ', request.body.sender);
-  console.log('sendMessage: ', request.body.recipient);
-  console.log('sendMessage: ', request.body.contents);
-  response.end('TODO');
+
+
+  client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
+    +"VALUES ('Message', $1, $2, $3, now());",
+      [request.body.sender, request.body.recipient, request.body.contents],
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into messages: ', err);
+          response.end('error');
+        } else {
+          response.end('successfully created message');
+        }
+  });
+
+
 };
+
+
+
 
 
 module.exports.registerUser = function(request, response) {

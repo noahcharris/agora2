@@ -220,8 +220,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 method: 'GET',
                 crossDomain: true,
                 data: {
-                  //these two models are different scope!
-                  topicId: model.id
+                  username: that.app.get('username'),
+                  contact: model.contact
                 },
                 success: function(model) {
                   //GAHHHHHHH SO HACKY FUCKKKK

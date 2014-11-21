@@ -41,8 +41,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             method: 'GET',
             crossDomain: true,
             data: {
-              //these two models are different scope!
-              chainId: chains[i]
+              username: that.app.get('username'),
+              contact: chains[i].contact
             },
             success: function(model) {
               that.app.get('content2').show(that.app.get('detailView'), model);

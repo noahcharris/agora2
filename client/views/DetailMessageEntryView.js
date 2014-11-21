@@ -20,17 +20,22 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
     var that = this;
 
-    this.model = this.model || {
+    //MOAR MOCK DATA LIKE THIS
+    this.model = this.model || [{
       sender: 'mock data',
       recipient: 'mock data',
       contents: 'mockingbirg'
-    };
+    }];
     
     console.log('object: :::', this.model.entries.length);
-    for (var i = 0; i<this.model.entries.length ;i++) {
-      this.$el.append(this.template(this.model.entries[i]));
-      console.log(this.model.entries[i]);
+    for (var i = 0; i<this.model.length ;i++) {
+      this.$el.prepend(this.template(this.model[i]));
+      console.log(this.model[i]);
     }
+
+    this.$el.append('<div class="spacer"></div>')
+
+    //NEED TO SCROLL TO BOTTOM ONCE THESE ARE ALL PREPENDED
 
     this.$el.append( $(this.messageInputTemplate()) );
 
@@ -52,8 +57,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
         success: function(data) {
           if (data) {
             alert(data);
+            $('#messageInputTextArea').val('');
           } else {
-
+            $('#messageInputTextArea').val('');
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
