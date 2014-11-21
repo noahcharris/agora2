@@ -336,7 +336,7 @@ body {
   position: relative;
   float: left;
   height: 84px;
-  width: 100px;
+  width: 100%;
 }
 
 .sidebarContentWrapper {
@@ -635,7 +635,7 @@ body {
 #topicContentBox {
   float: left;
   height: 150px;
-  width: 200px;
+  width: 97%;
   background-color: green;
 }
 .topicHeader {
@@ -680,7 +680,7 @@ body {
   position: relative;
   float: left;
   height: 100px;
-  width: 200px;
+  width: 94%;
   background-color: green;
 }
 .detailCommentImage {
@@ -747,7 +747,7 @@ body {
   position: relative;
   float: left;
   height: 100px;
-  width: 200px;
+  width: 94%;
   background-color: green;
 }
 .responseHeader {
@@ -800,7 +800,7 @@ body {
   position: relative;
   float: left;
   height: 100px;
-  width: 200px;
+  width: 97%;
   background-color: red;
 }
 .replyHeader {

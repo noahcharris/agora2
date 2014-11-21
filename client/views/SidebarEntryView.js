@@ -23,7 +23,11 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var that = this;
     this.$el.html( this.topicTemplate(this.model) );
 
-
+    if (!this.model.image) {
+      this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');
+    } else {
+      //put the image in
+    }
 
 
     var $username = that.$el.children('.topString').children('.sidebarUsername');

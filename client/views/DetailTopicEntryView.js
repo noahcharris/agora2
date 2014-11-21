@@ -78,7 +78,16 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     //append topic box
     this.$el.append( this.topicTemplate(this.model) );
+
     this.topicContentBox = this.$el.children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
+
+    if (!this.model.image) {
+      this.$el.children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').css('width', '0px');
+    } else {
+      this.topicContentBox.hasImage = true; 
+      //insert the image
+    }
+
 
     //add upvote handling
     var $upvote = this.$el.children('div.topicBox').children('img');
@@ -144,8 +153,19 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       //CREATE AND APPEND COMMENT TO OUTERBOX
       var $comment = $(this.commentTemplate(comments[i]));
       this.$el.append( $comment );
+
+      var commentContentBox = $comment.children('.detailCommentClear').children('.commentContentBox');
+
+      if (!comments[i].image) {
+        $comment.children('.detailCommentClear').children('.detailCommentImage').css('width', '0px');
+      } else {
+        commentContentBox.hasImage = true;
+        //insert the image
+      }
+      this.commentContentBoxes.push(commentContentBox);
+
+
       
-      this.commentContentBoxes.push($comment.children('.detailCommentClear').children('.commentContentBox'));
 
       var $commentReplyButton = $comment.children('.detailCommentClear').children('.commentContentBox').children('div.replyButton');
       var $expandCommentButton = $comment.children('.detailCommentClear').children('img.expandCommentButton');
@@ -215,9 +235,20 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       for (var j=0;j<comments[i].responses.length;j++) {
 
+
+
         var $response = $(this.responseTemplate(comments[i].responses[j]));
 
-        this.responseContentBoxes.push($response.children('.detailResponseClear').children('.responseContentBox'));
+        var responseContentBox = $response.children('.detailResponseClear').children('.responseContentBox');
+        
+        if (!comments[i].responses[j].image) {
+          $response.children('.detailResponseClear').children('.detailResponseImage').css('width', '0px');
+        } else {
+          responseContentBox.hasImage = true;
+          //insert the image
+        }
+
+        this.responseContentBoxes.push(responseContentBox);
 
         var $responseReplyButton = $response.children('.detailResponseClear').children('.responseContentBox').children('div.replyButton');
         var $expandResponseButton = $response.children('.detailResponseClear').children('img.expandResponseButton');
@@ -318,9 +349,16 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
 
-          console.log('wooo', $reply.children('.detailReplyClear').children('.replyContentBox'));
+          var replyContentBox = $reply.children('.detailReplyClear').children('.replyContentBox');
 
-          this.replyContentBoxes.push($reply.children('.detailReplyClear').children('.replyContentBox'));
+          if (!comments[i].responses[j].replies[k].image) {
+            $reply.children('.detailReplyClear').children('.detailReplyImage').css('width', '0px');
+          } else {
+            replyContentBox.hasImage = true;
+            //insert the image
+          }
+          this.replyContentBoxes.push(replyContentBox);
+
 
           var $replyReplyButton = $reply.children('.detailReplyClear').children('.replyContentBox').children('div.replyButton');
 
@@ -360,18 +398,28 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       var detailTopicWidth = $('#content2').width();
       
-      that.topicContentBox.css('width', (detailTopicWidth - 200) + 'px');
+      if (that.topicContentBox.hasImage) {
+        that.topicContentBox.css('width', (detailTopicWidth - 200) + 'px');
+      }
 
       for (var i=0; i < that.commentContentBoxes.length ;i++) {
-        that.commentContentBoxes[i].css('width', (detailTopicWidth - 160) + 'px');
+        //SOOOO HACKY AHHHHHHHH
+        if (that.commentContentBoxes[i].hasImage) {
+          that.commentContentBoxes[i].css('width', (detailTopicWidth - 160) + 'px');
+        }
+
       }
 
       for (var i=0; i < that.responseContentBoxes.length ;i++) {
-        that.responseContentBoxes[i].css('width', (0.9 * detailTopicWidth - 160) + 'px');
+        if (that.responseContentBoxes[i].hasImage) {
+          that.responseContentBoxes[i].css('width', (0.9 * detailTopicWidth - 160) + 'px');
+        }
       }
 
       for (var i=0; i < that.replyContentBoxes.length ;i++) {
-        that.replyContentBoxes[i].css('width', (0.8 * detailTopicWidth - 160) + 'px');
+        if (that.replyContentBoxes[i].hasImage) {
+          that.replyContentBoxes[i].css('width', (0.8 * detailTopicWidth - 160) + 'px');
+        }
       }
 
 
