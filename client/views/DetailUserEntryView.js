@@ -46,7 +46,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
               contact: chains[i].contact
             },
             success: function(model) {
-              that.app.get('content2').show(that.app.get('detailView'), model);
+              //horrible
+              that.app.get('content2').show(that.app.get('detailView'), model, { contact: chains[i].contact });
               that.app.get('sidebarView').highlightCell(offsetCount);
             },
             error: function() {
@@ -78,27 +79,42 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-              that.app.get('sidebarView').displayed = 'Messages';
-              that.app.get('detailView').displayed = 'Messages';
+              var chains = that.app.get('sidebarView').messagesCollection;
+              var offsetCount = -1;
+              for (var i=0; i < chains.length ;i++) {
+                offsetCount++;
 
-              that.app.get('content1').show(that.app.get('sidebarView'));
+                //will need to account for pagination here eventually
 
-              $.ajax({
-                url: 'http://localhost/messageChain',
-                method: 'GET',
-                crossDomain: true,
-                data: {
-                  username: that.app.get('username'),
-                  contact: that.model.username
-                },
-                success: function(model) {
-                  that.app.get('content2').show(that.app.get('detailView'), model);
-                  that.app.get('sidebarView').highlightCell(offsetCount);
-                },
-                error: function() {
-                  alert('server error');
+                if (chains[i].contact === that.model.username) {
+                  foundChain = true;
+                  //open up this shit
+                  that.app.get('sidebarView').displayed = 'Messages';
+                  that.app.get('detailView').displayed = 'Messages';
+
+                  that.app.get('content1').show(that.app.get('sidebarView'));
+
+                  $.ajax({
+                    url: 'http://localhost/messageChain',
+                    method: 'GET',
+                    crossDomain: true,
+                    data: {
+                      username: that.app.get('username'),
+                      contact: chains[i].contact
+                    },
+                    success: function(model) {
+                      //ugh so bad
+                      that.app.get('content2').show(that.app.get('detailView'), model, {contact: chains[i].contact});
+                      that.app.get('sidebarView').highlightCell(offsetCount);
+                    },
+                    error: function() {
+                      alert('server error');
+                    }
+                  });
+
                 }
-              });
+
+              }
 
 
 
