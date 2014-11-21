@@ -229,7 +229,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   alert('server error');
                 }
               });
-            } else if (model.type === 'User') {              
+            } else if (model.type === 'User') {           
               that.app.get('detailView').displayed = 'Contacts';
               that.app.get('content2').show(that.app.get('detailView'), model);
             }

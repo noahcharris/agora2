@@ -577,10 +577,58 @@ module.exports.getPoints = function(request, response) {
 
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-  postgres.retrieveUser(queryArgs.username, function(data) {
-    console.log('sending user data for ', queryArgs.username, ' to client');
-    response.json(data);
+
+  //SECURITY HOLE, THIS MEANS SOMEONE CAN FIND OUT IF TWO PEOPLE ARE CONTACTS OR NOT
+
+  // if (!queryArgs.asker) {
+
+  console.log('NOOO ASKERRR');
+  client.query("SELECT * FROM users WHERE username=$1;", [queryArgs.username], function(err, result) {
+      if (err) {
+        console.log('error selecting from users: ', err);
+      } else {
+
+        response.json(result.rows);
+      }
   });
+
+  // } else {
+
+
+    //wont have to do this once the cache manager is working..
+    // client.query("SELECT * FROM users JOIN contactsjoin ON "
+    // +"(contactsjoin.username1 = $2 "
+    // +"AND contactsjoin.username2 = $1 "
+    // +"AND users.username = $1) "
+    // +"OR "
+    // +"(contactsjoin.username1 = $1 "
+    // +"AND contactsjoin.username2 = $2 "
+    // +"AND users.username = $1);", [queryArgs.username, queryArgs.asker],
+    // function(err, result) {
+
+    //   if (err) {
+    //     console.log('error selecting from users join contactsjoin: ', err);
+    //   } else {
+
+    //     if (result.rows[0].username1) {
+    //       result.rows[0]
+
+    //       }
+    //     }
+
+
+    //     response.json(result.rows);
+    //   }
+
+    // });
+
+
+  // }
+
+
+
+
+
 };
 
 

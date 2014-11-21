@@ -29,17 +29,21 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var $username = that.$el.children('.topString').children('.sidebarUsername');
     $username.on('click', function(e) {
 
+
       $.ajax({
         url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
         data: {
           username: that.model.username,
+          asker: that.app.get('username'),
           //so that this is never cached
           extra: Math.floor((Math.random() * 10000) + 1)
         },
         success: function(data) {
           if (data) {
+
+            console.log('whaaa');
             that.app.get('detailView').displayed = 'Users';
             console.log('server returned: ', data);
 
@@ -59,9 +63,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     });
       
-
-
-
 
 
     var mouseoverHandler = _.once(function () {

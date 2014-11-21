@@ -102,15 +102,37 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image + suffix);
 
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
+
     //need to return whether the user is a contact or not...
-    if (this.model.username !== this.app.get('username')) {
-      $toolColumn.append($messageButton);
-      if (!this.model.isContact) {
-        $toolColumn.append($('<br/>'));
+    // if (this.model.username !== this.app.get('username')) {
+    //   $toolColumn.append($messageButton);
+    //   if (!this.model.isContact) {
+    //     $toolColumn.append($('<br/>'));
+    //     $toolColumn.append($contactButton);
+    //   }
+    //}
+
+    var contacts = this.app.contacts;
+    var isContact = false;
+    for (var i=0; i < contacts.length ;i++) {
+      if (this.model.username === contacts[i].username) {
+        isContact = true;
+        break;
+      }
+    }
+
+    if (this.model.username !== that.app.get('username')) {
+
+      if (isContact) {
+        $toolColumn.append($messageButton);
+      } else {
         $toolColumn.append($contactButton);
       }
-
+      
     }
+
+
+
 
   },
 

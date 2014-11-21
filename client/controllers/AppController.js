@@ -24,6 +24,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('content1', content1);
     this.set('content2', content2);
 
+    this.contacts = [];
+
     
 
     //CHANGE THESE BACK
@@ -221,7 +223,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         },
         success: function(data) {
           if (data) {
-            //topicsCollection = data;
+
+            that.contacts = data;
             console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
 
