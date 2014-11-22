@@ -140,9 +140,9 @@ module.exports.createTopic = function(username, headline, link, contents, locati
   }
 
   //need to sanitize the sql parameters
-  client.query("INSERT INTO topics (type, username, headline, link, contents, location, channel, createdAt, rank, heat)"
-    +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, now(), 0, 30);",
-    [username, headline, link, contents, location, channel], function(err, result) {
+  client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+    +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+    [username, headline, link, contents, location, "{\""+location+"\"}", channel], function(err, result) {
       if (err) {
         console.log('error inserting post into topics: ', err);
         cb(false);

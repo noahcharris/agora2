@@ -431,16 +431,32 @@ module.exports.getTopicLocations = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log('heyyyy', queryArgs.topicId);
-  var keyString = 'topicLocations:' + queryArgs.topicId;
-  memcached.get(keyString, function(err, data) {
-    if (err) {
-      console.log('error getting topic locations from memcached: ', err);
-    } else {
-      console.log('PULLED: ', data, ' OUT OF MEMCACHED');
-      response.json(data);
-    }
-  })
+
+  client.query("SELECT locations FROM topics WHERE id=$1;",
+      [queryArgs.topicId],
+      function(err, result) {
+        if (err) {
+          console.log('error selecting from topics: ', err);
+          response.end('error');
+        } else {
+          console.log('Topic Locations: ', result);
+          response.json(result.rows[0].locations);
+        }
+  });
+
+
+
+
+  // console.log('heyyyy', queryArgs.topicId);
+  // var keyString = 'topicLocations:' + queryArgs.topicId;
+  // memcached.get(keyString, function(err, data) {
+  //   if (err) {
+  //     console.log('error getting topic locations from memcached: ', err);
+  //   } else {
+  //     console.log('PULLED: ', data, ' OUT OF MEMCACHED');
+  //     response.json(data);
+  //   }
+  // })
 
 };
 
@@ -1068,26 +1084,26 @@ module.exports.createTopic = function(request, response) {
 
 
         //THERE MUST BE A BETTER WAY TO DO THIS
-        client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
-          [request.body.username],
-          function(err, result) {
-            if (err) {
-              console.log('error selecting from topics: ', err);
-            } else {
+        // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
+        //   [request.body.username],
+        //   function(err, result) {
+        //     if (err) {
+        //       console.log('error selecting from topics: ', err);
+        //     } else {
 
-              console.log("WTF", result.rows[0].id);
-              var keyString = 'topicLocations:' + result.rows[0].id;
-              console.log('USING KEYSTRING: ', keyString);
-              //THIS IS A VULNERABILITY !!!!!!!!!!!!
-              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
-              //request.body.origin (ALT, this shows the author's origin on the map
-              memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
-                  console.log('error setting topicLocations key: ', err);
-              });
+        //       console.log("WTF", result.rows[0].id);
+        //       var keyString = 'topicLocations:' + result.rows[0].id;
+        //       console.log('USING KEYSTRING: ', keyString);
+        //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
+        //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
+        //       //request.body.origin (ALT, this shows the author's origin on the map
+        //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
+        //           console.log('error setting topicLocations key: ', err);
+        //       });
 
-              
-            }
-        });
+        //     }
+        // });
+
 
       } else {
         response.end('error inserting into topics');
