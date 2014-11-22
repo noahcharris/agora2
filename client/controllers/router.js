@@ -7,8 +7,6 @@ Agora.Router = Backbone.Router.extend({
 
   routes: {
     '': 'index',
-    'World~:group': 'worldGroupPath', //uppercase and lowercase versions of both
-    'world~:group': 'worldGroupPath',
     'World*path': 'path',
     'world*path': 'path',
     'User/:user': 'user',
@@ -23,19 +21,14 @@ Agora.Router = Backbone.Router.extend({
 
   index: function() {
     this.navigate('World');
-    this.path('');
   },
 
   path: function(path) {
     if (path) {
-      this.app.get('mapController').goToPath(path.slice(1));
+      //TODO
     } else {
       this.app.get('mapController').showWorld();
     }
-  },
-
-  worldGroupPath: function(input) {
-    this.app.get('mapController').goToPath('~' + input);
   },
 
   user: function(input) {

@@ -16,6 +16,30 @@ Agora.Views.LocationView = Backbone.View.extend({
   },
 
 
+
+
+  parseLocation: function(location) {
+    //returns [{ name:..., path:..}, ..]
+
+    var result = [];
+
+    var split = location.split('/');
+    var path = '';
+    for (var i=0; i < split.length ;i++) {
+      if (i === 0) {
+        path += split[i];
+      } else {
+        path += '/' + split[i];
+      }
+      result.push({ name: split[i], path: path })
+
+    };
+    return result;
+  },
+
+
+
+
   //This pathing system is obviously broken fundamentally, I can patch it for now,
   //but eventually I will have to rebuild it.
   render: function() {
@@ -25,9 +49,6 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
     var path = this.model.get('location').split('/');
-    if (this.model.get('group')) {
-      var group = this.model.get('group').split('/');
-    }
 
     // var $dropButton = $('<button>DROP</button>');
     // var collapsed = true;
@@ -111,18 +132,18 @@ Agora.Views.LocationView = Backbone.View.extend({
             $subtreeView.on('click', function() {
               $(this).remove();
             });
+
+
             for (var i=0; i < data.length ;i++) {
               var $subtree = $('<p>'+data[i].name+'</p>');
 
 
               var f = function() {
-                var x = data[i];
+                var x = data[i].name;
                 $subtree[0].onclick = function() {
                   // that.app.get('mapController').set('location', data[i]);
                   // that.app.trigger('reloadSidebarTopics', data[i]);
                   // that.router.navigate('World/'+data[i], { trigger:false });
-                  console.log(data[i]);
-                  console.log('haahahh');
                   that.app.get('mapController').goToPath(x);
                 };
               };
@@ -144,8 +165,6 @@ Agora.Views.LocationView = Backbone.View.extend({
       });
 
 
-
-
     };
     this.$el.append($treeButton);
 
@@ -153,69 +172,110 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
 
-    var $world = $('<span class="pathName">World</span>')
-    $world.on('click', function() {
-      that.app.get('mapController').showWorld();
-    })
-    $('span.pathWrapper').append($world);
 
-    if (path.length > 0 && path[0] !== '') {
-      var $country = $('<span class="pathName">/'+path[0]+'</span>');
-      $country.on('click', function() {
-        that.app.get('mapController').goToPath(path[0]);
-        that.router.navigate('World/'+path[0], {trigger: false});
-      });
-      $('span.pathWrapper').append($country);
-    //Need to check against a list of the countries that have been
-    //divided into 'states' instead of just hardcoding it..
-    } 
 
-    if (path.length > 1 && path[0] === 'United States') {
-      var $state = $('<span class="pathName">/'+path[1]+'</span>');
-      $state.on('click', function() {
-        that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
-        that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
-      });
-      $('span.pathWrapper').append($state);
-    } else if (path.length > 1) {
-      var $city = $('<span class="pathName">/'+path[1]+'</span>');
-      $city.on('click', function() {
-        that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
-        that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
-      });
-      $('span.pathWrapper').append($city);
-    } 
 
-    if (path.length > 2) {
-      var $city = $('<span class="pathName">/'+path[2]+'</span>');
-      $city.on('click', function() {
-        that.app.get('mapController').goToPath(path[0]+'/'+path[1]+'/'+path[2]);
-        that.router.navigate('World/'+path[0]+'/'+path[1]+'/'+path[2], {trigger: false});
-      });
-      $('span.pathWrapper').append($city);
+
+
+    //NEED TO SPLIT UP THE LOCATION HERE AND CREATE A BREADCRUMB
+
+    var parsedLocationArray = this.parseLocation(this.app.get('mapController').get('location'));
+
+    for (var i=0; i < parsedLocationArray.length ;i++) {
+      if (i===0) {  //this manages the '/' in the locationView
+        var $channelElement = $('<strong><span class="channelWrapper">'+parsedLocationArray[i].name+'</span></strong>');
+      } else {
+        var $channelElement = $('<strong><span class="channelWrapper">/'+parsedLocationArray[i].name+'</span></strong>');
+      }
+      (function() {
+        var x = parsedLocationArray[i].path;
+        $channelElement[0].onclick = function() {
+
+          that.app.get('mapController').goToPath(x);
+          that.render();
+
+        ;}
+
+      })();
+      $('span.pathWrapper').append( $channelElement );
+
     }
 
 
-    if (this.model.get('group')) {
-      if (group[0]) {
-        var $group = $('<span class="pathName">'+group[0]+'</span>');
-        $group.on('click', function() {
-          that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]);
-          that.router.navigate('World/'+that.model.get('location')+'~'+group[0], {trigger: false});
-        });
-        $('span.pathWrapper').append('~ ').append($group);
-      }
 
-      if (group.length > 1) {
-        var $subgroup = $('<span class="pathName">/'+group[1]+'</span>');
-        $subgroup.on('click', function() {
-          that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]+'/'+group[1]);
-          that.router.navigate('World/'+that.model.get('location')+'~'+group[0]+'/'+group[1], {trigger: false});
 
-        });
-        $('span.pathWrapper').append($subgroup);
-      }
-    }
+
+
+
+
+    // var $world = $('<span class="pathName">World</span>')
+    // $world.on('click', function() {
+    //   that.app.get('mapController').showWorld();
+    // })
+    // $('span.pathWrapper').append($world);
+
+    // if (path.length > 0 && path[0] !== '') {
+    //   var $country = $('<span class="pathName">/'+path[0]+'</span>');
+    //   $country.on('click', function() {
+    //     that.app.get('mapController').goToPath(path[0]);
+    //     that.router.navigate('World/'+path[0], {trigger: false});
+    //   });
+    //   $('span.pathWrapper').append($country);
+    // //Need to check against a list of the countries that have been
+    // //divided into 'states' instead of just hardcoding it..
+    // } 
+
+    // if (path.length > 1 && path[0] === 'United States') {
+    //   var $state = $('<span class="pathName">/'+path[1]+'</span>');
+    //   $state.on('click', function() {
+    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
+    //     that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
+    //   });
+    //   $('span.pathWrapper').append($state);
+    // } else if (path.length > 1) {
+    //   var $city = $('<span class="pathName">/'+path[1]+'</span>');
+    //   $city.on('click', function() {
+    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
+    //     that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
+    //   });
+    //   $('span.pathWrapper').append($city);
+    // } 
+
+    // if (path.length > 2) {
+    //   var $city = $('<span class="pathName">/'+path[2]+'</span>');
+    //   $city.on('click', function() {
+    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]+'/'+path[2]);
+    //     that.router.navigate('World/'+path[0]+'/'+path[1]+'/'+path[2], {trigger: false});
+    //   });
+    //   $('span.pathWrapper').append($city);
+    // }
+
+
+    // if (this.model.get('group')) {
+    //   if (group[0]) {
+    //     var $group = $('<span class="pathName">'+group[0]+'</span>');
+    //     $group.on('click', function() {
+    //       that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]);
+    //       that.router.navigate('World/'+that.model.get('location')+'~'+group[0], {trigger: false});
+    //     });
+    //     $('span.pathWrapper').append('~ ').append($group);
+    //   }
+
+    //   if (group.length > 1) {
+    //     var $subgroup = $('<span class="pathName">/'+group[1]+'</span>');
+    //     $subgroup.on('click', function() {
+    //       that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]+'/'+group[1]);
+    //       that.router.navigate('World/'+that.model.get('location')+'~'+group[0]+'/'+group[1], {trigger: false});
+
+    //     });
+    //     $('span.pathWrapper').append($subgroup);
+    //   }
+    // }
+
+
+
+
+
   },
 
 

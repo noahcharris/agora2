@@ -92,22 +92,22 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
     this.customBounds = [{
-      name: 'Russia',
+      name: 'World/Russia',
       bounds: russiaBounds
     }, {
-      name: 'Norway',
+      name: 'World/Norway',
       bounds: norwayBounds
     }, {
-      name: 'United States',
+      name: 'World/United States',
       bounds: usBounds
     }, {
-      name: 'Canada',
+      name: 'World/Canada',
       bounds: canadaBounds
     }, {
-      name: 'Sweden',
+      name: 'World/Sweden',
       bounds: swedenBounds
     }, {
-      name: 'India',
+      name: 'World/India',
       bounds: indiaBounds
     }, ];
 
@@ -289,89 +289,42 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //THIS SHOULD BE RENAMED 'goToLocation' !!!!!!!!!
   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
   goToPath: function(path) {
 
-    //GO TO PATH ACCEPTS A STRING WITHOUT THE LEADING 'WORLD/'
 
     console.log('goingt to path', path);
 
     var that = this;
-    var groupMode = false;
-
-    console.log('trying to go to path: ', path);
-
-    if (path.indexOf('~') !== -1) {
-      groupMode = true;
-
-      var group = path.split('~')[1];
-
-      //set path to the location fragment
-      path = path.split('~')[0];
 
 
-      if (group.indexOf('/') !== -1) {
-        //try to go to the subgroup
 
-        //need to display in path
-        that.app.get('sidebarView').displayed = 'SubgroupTopics';
-        that.trigger('reloadSubgroupSidebar', {
-          location: path,
-          group: group.split('/')[0],
-          name: group.split('/')[1]
-        });
 
-      } else {
-        //check if the group exists and go to it
+    this.app.get('sidebarView').displayed = 'Topics';
 
-        //make the call to server, wait for the response, zoom to the 
-        //location fragment in the meantime, if the response comes in,
-        //load and zoom to the group, if it fails, flash an error message
-        $.ajax({
-          url: 'group',
-          method: 'GET',
-          data: {
-            location: path,
-            group: group
-          },
-          success: function(data) {
-            console.log('querying server to see if this group exists');
-            console.log('receiving group data ', data);
-            //set group here so path doesn't display nonextant groups
-            if (data.length) {
-
-              that.set('group', group);
-              //need to change sidebarView.displayed need to shift map 
-              //to the place
-              that.app.get('sidebarView').displayed = 'GroupTopics';
-              //this takes in location and group data
-              that.trigger('reloadGroupSidebar', { location: path, group: group} );
-              // that.app.get('content2').hide();
-              // that.app.get('content1').show(that.app.get('sidebarView'));
-              // console.log('tried to change it?');
-            }
-          }
-        });
-
-      }
-
-    };
-
-    //IF THE PATH HAS A GROUP IDENTIFIER, LOAD SIDEBAR WITH 'GroupTopics'
-    //CHECK FOR TILDE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    // !! to break out of search:
-    if (this.app.get('sidebarView').displayed === 'All') {
-      this.app.get('sidebarView').displayed = 'Topics';
-      //that.app.get('sidebarView').render();
+    if (path.split('/').length === 1) {
+      this.showWorld();
     }
 
-    //need to refactor the custom bounds to the top of this file and use them here
 
     //COUNTRY
-    if (path.split('/').length === 1) {
+    if (path.split('/').length === 2) {
 
       var name = path
 
@@ -396,10 +349,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
 
       
+    //need to refactor the custom bounds to the top of this file and use them here
 
     //IF IT'S A COUNTRY WITH STATES (ONLY THE US RIGHT NOW)
     var map = this.get('map');
-    } else if (path.split('/').length === 2 && path.split('/')[0] === 'United States') {
+    } else if (path.split('/').length === 3 && path.split('/')[1] === 'United States') {
       //super hacky way to still use goToPath if the states haven't been created yet, maybe just create on initialize then???
       if (!this.get('states')) {  //DON'T DO THIS PLEASE!!!!!!
         this.addStates();
@@ -428,7 +382,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
     }
 
-    if (!this.placing && !groupMode) {
+    //wtf is this for
+    if (!this.placing) {
       if (this.app.get('sidebarView').displayed !== 'Topics'
       && this.app.get('sidebarView').displayed !== 'Topics-Top'
       && this.app.get('sidebarView').displayed !== 'Topics-New'

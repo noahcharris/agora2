@@ -173,7 +173,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           urlPath = '/topics-hot';
           break;
         default:
-          urlPath = '';
+
+          //LOL BECAUSE THE DEFAULT WAS '' I WAS GETTING index.html back
+          urlPath = '/topics-top-day';
           break;
       }
 
