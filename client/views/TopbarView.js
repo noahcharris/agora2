@@ -142,9 +142,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-
+    //woooooo usin on('click'  wooooooo
     $('#notificationsButton').on('click', function() {
-      alert('notifications');
+
     });
 
 

@@ -695,15 +695,68 @@ module.exports.getNotifications = function(request, response) {
 
 
   var queryArgs = url.parse(request.url, true).query;
+  var notifications = {}; //master notifications object to send back at the end
 
-  memcached.get( queryArgs.username + '/notifications', function (err, data) {
-    if (err) {
-      console.log('error getting from memcached: ', err);
-      response.end('error');
-    } else {
-      response.json(data);
-    }
+  //check for any pending contact requests
+  client.query("SELECT * FROM contactRequestJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from contactRequestJoin: ', err);
+        response.end('error');
+      } else {
+
+        notifications.contactRequests = result.rows;
+
+
+
+        //check for any new message alerts
+        client.query("SELECT * FROM newMessageJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+          [queryArgs.username],
+          function(err, result) {
+            if (err) {
+              console.log('error selecting from newMessageJoin: ', err);
+              response.end('error');
+            } else {
+
+              notifications.newMessages = result.rows;
+
+
+
+
+
+              client.query("SELECT * FROM topicActivityJoin WHERE (username = $1) ORDER BY sentAt DESC;",
+                [queryArgs.username],
+                function(err, result) {
+                  if (err) {
+                    console.log('error selecting from newMessageJoin: ', err);
+                    response.end('error');
+                  } else {
+
+                    notifications.topicActivity = result.rows;
+
+                    response.json(notifications);
+
+
+                  }
+              });
+
+
+
+
+              //THE STEPPES
+
+
+            }
+        });
+
+
+
+        //OF WOE
+
+      }
   });
+
 
 };
 

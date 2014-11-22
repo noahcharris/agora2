@@ -580,9 +580,24 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (data) {
             console.log('CACHE MANAGER');
             console.log('server returned: ', data);
-            //change style of notification button
-            //add click notification that brings up the notifications,
-            //which then take you to users, topics
+
+            if (data.contactRequests.length > 0) {
+
+              $('#notificationsButton').css('background-color', 'red');
+
+              $('#notificationsButton')[0].onclick = function() {
+
+                for (var i=0; i < data.contactRequests.length ;i++) {
+
+                  alert('Contact request from: ' + data.contactRequests[i].sender);
+
+                }
+
+              }
+
+
+            }
+
           } else {
             console.log('nothing returned for notifications');
           }
