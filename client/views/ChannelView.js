@@ -16,8 +16,34 @@ Agora.Views.ChannelView = Backbone.View.extend({
   },
 
 
+  parseChannel: function(channel) {
+
+    var result = [];
+
+    var split = channel.split('/');
+    var path = '';
+    for (var i=0; i < split.length ;i++) {
+      if (i === 0) {
+        path += split[i];
+      } else {
+        path += '/' + split[i];
+      }
+      result.push({ name: split[i], path: path })
+
+    };
+
+
+
+    return result;
+
+  },
+
+
   render: function() {
     var that = this;
+
+    this.$el.unbind();
+    this.$el.empty();
 
     //TODO- Preston's suggestion, give it click interaction with searchability
 
@@ -73,7 +99,37 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
 
-    this.$el.append( $('<strong><span class="channelWrapper">General</span></strong>') );
+    //NEED TO SPLIT UP THE CHANNEL HERE AND CREATE A BREADCRUMB
+
+    var parsedChannelArray = this.parseChannel(this.app.get('channel'));
+
+    for (var i=0; i < parsedChannelArray.length ;i++) {
+      if (i===0) {  //this manages the '/' in the channelView
+        var $channelElement = $('<strong><span class="channelWrapper">'+parsedChannelArray[i].name+'</span></strong>');
+      } else {
+        var $channelElement = $('<strong><span class="channelWrapper">/'+parsedChannelArray[i].name+'</span></strong>');
+      }
+      (function() {
+        var x = parsedChannelArray[i].path;
+        $channelElement[0].onclick = function() {
+
+          that.app.changeChannel(x);
+          that.render();
+
+        ;}
+
+      })();
+      this.$el.append( $channelElement );
+
+    }
+
+
+
+
+
+
+
+
 
     var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
     $treeButton.on('click', function() {
@@ -108,6 +164,9 @@ Agora.Views.ChannelView = Backbone.View.extend({
                   
                   console.log(x);
 
+                  that.app.changeChannel(x.name);
+                  that.render();
+
                   //WHATVER THE CHANNEL EQUIVALENT OF goToPath is goes here!!!!!
 
                   //that.app.get('mapController').goToPath(x);
@@ -139,6 +198,10 @@ Agora.Views.ChannelView = Backbone.View.extend({
     this.$el.append($treeButton);
 
   },
+
+
+
+
 
   setHandlers: function() {
 
