@@ -26,6 +26,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.contacts = [];
 
+    this.set('cacheManager', null);
+
     
 
     //CHANGE THESE BACK
@@ -139,6 +141,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     locationView.render();
     locationView.setHandlers();
+
+
+    //#######################################
+    //###########  CACHE MANAGERS  ##########
+    //#######################################
+
+
+    var cacheManager = this.CacheManager(this);
+    this.set('cacheManager', cacheManager);
+
+    cacheManager.start();
+
 
     
 
@@ -539,8 +553,48 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   //unless the time period is up, at which point grab a new one, replace and delete the old one
 
   
-  CacheManager: function() {
+  CacheManager: function(appController) {
     var manager = {};
+    manager.app = appController;
+
+    manager.start = function() {
+
+      this.getNotifications();
+
+
+    };
+
+    manager.getNotifications = function() {
+
+      var that = this;
+      console.log('THIS: ', that);
+
+      $.ajax({
+        url: 'http://localhost:80/notifications',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username')
+        },
+        success: function(data) {
+          if (data) {
+            console.log('CACHE MANAGER');
+            console.log('server returned: ', data);
+            //change style of notification button
+            //add click notification that brings up the notifications,
+            //which then take you to users, topics
+          } else {
+            console.log('nothing returned for notifications');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+    };
+
 
     manager.addTopicsCollection = function() {
       console.log('adding topics to cache');

@@ -694,8 +694,18 @@ module.exports.getChannel = function(request, response) {
 
 module.exports.getNotifications = function(request, response) {
 
-  //clear notifications out of the database when they are sent to the client
-  response.end('TODO');
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  memcached.get( queryArgs.username + '/notifications', function (err, data) {
+    if (err) {
+      console.log('error getting from memcached: ', err);
+      response.end('error');
+    } else {
+      response.json(data);
+    }
+  });
+
 };
 
 
