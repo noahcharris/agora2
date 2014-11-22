@@ -191,7 +191,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     if (!this.placing) {
       this.app.get('content2').hide();
       //remember to switch this to the new system
-      this.app.trigger('reloadSidebarTopics', '');
+      this.app.trigger('reloadSidebarTopics', 'World');
     }
   },
 
