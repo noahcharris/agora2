@@ -501,6 +501,22 @@ module.exports.getLocationSubtree = function(request, response) {
 
 //maybe just return subtrees with the topics and locations themselves?????
 module.exports.getChannelSubtree = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+
+  client.query("SELECT * FROM channels WHERE parent = $1;",
+      [queryArgs.channel],
+      function(err, result) {
+        if (err) {
+          console.log('error selecting from channels: ', err);
+          response.end('error');
+        } else {
+          response.json(result.rows);
+        }
+  });
+
+
   response.json(['Music', 'Politics', 'Guns']);
 };
 

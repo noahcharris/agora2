@@ -283,9 +283,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
 
-
-
-
     //#######################################
     //#########  RESIZING  ##################
     //#######################################
@@ -341,6 +338,28 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $('#content1').css('width', sideWidth+'px');
     
   },
+
+
+
+
+  //sorta like mapController's goToPath()
+  //but way easier
+
+  changeChannel: function(channel) {
+
+    this.set('channel', channel);
+    this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
+
+  },
+
+
+
+
+
+
+
+
+
 
 
 
