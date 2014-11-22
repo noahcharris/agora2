@@ -439,7 +439,6 @@ module.exports.getTopicLocations = function(request, response) {
           console.log('error selecting from topics: ', err);
           response.end('error');
         } else {
-          console.log('Topic Locations: ', result);
           response.json(result.rows[0].locations);
         }
   });
@@ -786,61 +785,76 @@ module.exports.addContact = function(request, response) {
   console.log(request.body.contact);
 
   //ADD CONTACT REQUEST KEY FORMAT:   <username>/addContactRequest/<contact>
-  memcached.get(request.body.contact + '/addContactRequest/' + request.body.username, function (err, data) {
-
-    console.log('memcached returned: ', data);
-    if (data) {
-      //if they have, add to the contact join and delete data from memcached
-
-
-      client.query("INSERT INTO contactsjoin (username1, username2) "
-        +"VALUES ($1, $2);",
-      [request.body.username, request.body.contact],
+  client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
+      [request.body.contact, request.body.username],
       function(err, result) {
         if (err) {
-          console.log('error inserting into contactsjoin: ', err);
+          console.log('error selecting from contactRequestJoin: ', err);
+          response.end('error');
         } else {
 
-          console.log('successfully inserted into contactsjoin');
-          //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
-          //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
+          //ONCE WE CHECK
 
-          //cache invalidation time!!
-          memcached.del(request.body.contact + '/addContactRequest/' + request.body.username, function (err) {
+          //IF THERE IS AN ENTRY THAN INSERT INTO CONTACTSJOIN
+          if (result.rows.length) {
+            //if they have, add to the contact join and delete data from memcached
 
-          });
-          memcached.del(request.body.username + '/addContactRequest/' + request.body.contact, function (err) {
+                client.query("INSERT INTO contactsjoin (username1, username2) "
+                  +"VALUES ($1, $2);",
+                [request.body.username, request.body.contact],
+                function(err, result) {
+                  if (err) {
+                    console.log('error inserting into contactsjoin: ', err);
+                  } else {
+                        console.log('successfully inserted into contactsjoin');
+                        //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
+                        //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
+                        client.query("DELETE FROM contactRequestJoin WHERE (sender = $1 AND recipient = $2)"
+                          +" OR (sender = $2 AND recipient = $1);",
+                            [request.body.username, request.body.contact],
+                            function(err, result) {
+                              if (err) {
+                                console.log('error selecting from topics: ', err);
+                                response.end('error');
+                              } else {
+                                //reword this fo sho
+                                response.end('you and '+ request.body.contact +' are now contacts');
+                              }
+                        });
+                  }
 
-          });
+                });
 
-          //OK SEEMS TO BE WORKING, BUT MAYBE I SHOULD MAKE A BOT THAT TRAWLS contactsjoin 
-          //for duplicates just in case
+          } else {
+              //if there is no pending request, put a request into memcached
+              client.query("INSERT INTO contactRequestJoin (sender, recipient) "
+                +"VALUES ($1, $2);",
+              [request.body.username, request.body.contact],
+              function(err, result) {
+                if (err) {
+                  console.log('error inserting into contactsRequestJoin: ', err);
+                } else {
+                  response.end('sent contact request');
+                }
+              });
+          }
+      }
+  });
 
-          //reword this fo sho
-          response.end('you and '+ request.body.contact +' are now contacts');
+
+    
 
 
-        }
+      // memcached.append(request.body.contact + '/notifications', request.body.username, true, 2592000, function(err) {
+      //   if (err) {
+      //     console.log('error setting notification to memcached: ', err);
+      //   } else {
+      //   }
+      // });
 
-      });
-
-
-    } else {
-      //if there is no pending request, put a request into memcached
-      memcached.set(request.body.username + '/addContactRequest/' + request.body.contact, true, 2592000, function(err) {
-        if (err) {
-          console.log('error setting addContactRequest to memcached: ', err);
-        } else {
-          response.end('sent contact request');
-        }
-      });
 
       //maybe alert the user some other way??
       //their cache manager will deal with it.
-
-
-    }
-  });
 
 
 
