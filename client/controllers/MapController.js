@@ -8,7 +8,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
   defaults: {
-    location: '',
+    location: 'World',
+    //need to exorcise 'groups'
     group:'',
     countries: null,
     states: null,
@@ -185,7 +186,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     }
 
     this.get('map').fitBounds(worldBounds);
-    this.set('location', '');   //location is set to '' for world, which is automatically added by locationview
+    this.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
     this.router.navigate('World', { trigger:false });
     if (!this.placing) {
       this.app.get('content2').hide();

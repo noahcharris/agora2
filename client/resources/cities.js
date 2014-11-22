@@ -7,7 +7,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Alaska/Adak"
+			"city": "World/United States/Alaska/Adak"
 		}
 	}, {
 		"geometry": {
@@ -16,7 +16,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tonga/Nuku'alofa"
+			"city": "World/Tonga/Nuku'alofa"
 		}
 	}, {
 		"geometry": {
@@ -25,7 +25,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Samoa/Apia"
+			"city": "World/Samoa/Apia"
 		}
 	}, {
 		"geometry": {
@@ -34,7 +34,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "American Samoa/Pago Pago"
+			"city": "World/American Samoa/Pago Pago"
 		}
 	}, {
 		"geometry": {
@@ -43,7 +43,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Niue/Alofi"
+			"city": "World/Niue/Alofi"
 		}
 	}, {
 		"geometry": {
@@ -52,7 +52,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cook Islands/Avarua"
+			"city": "World/Cook Islands/Avarua"
 		}
 	}, {
 		"geometry": {
@@ -61,7 +61,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Hawaii/Honolulu"
+			"city": "World/United States/Hawaii/Honolulu"
 		}
 	}, {
 		"geometry": {
@@ -70,7 +70,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Hawaii/Hilo"
+			"city": "World/United States/Hawaii/Hilo"
 		}
 	}, {
 		"geometry": {
@@ -79,7 +79,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Alaska/Anchorage"
+			"city": "World/United States/Alaska/Anchorage"
 		}
 	}, {
 		"geometry": {
@@ -88,7 +88,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "French Polynesia/Pape'ete"
+			"city": "World/French Polynesia/Pape'ete"
 		}
 	}, {
 		"geometry": {
@@ -97,7 +97,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Alaska/Fairbanks"
+			"city": "World/United States/Alaska/Fairbanks"
 		}
 	}, {
 		"geometry": {
@@ -106,7 +106,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Alaska/Sitka"
+			"city": "World/United States/Alaska/Sitka"
 		}
 	}, {
 		"geometry": {
@@ -115,7 +115,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Whitehorse"
+			"city": "World/Canada/Whitehorse"
 		}
 	}, {
 		"geometry": {
@@ -124,7 +124,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Alaska/Juneau"
+			"city": "World/United States/Alaska/Juneau"
 		}
 	}, {
 		"geometry": {
@@ -133,7 +133,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pitcairn Islands/Adamstown"
+			"city": "World/Pitcairn Islands/Adamstown"
 		}
 	}, {
 		"geometry": {
@@ -142,7 +142,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Vancouver"
+			"city": "World/Canada/Vancouver"
 		}
 	}, {
 		"geometry": {
@@ -151,7 +151,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Fiji/Rabi Island"
+			"city": "World/Fiji/Rabi Island"
 		}
 	}, {
 		"geometry": {
@@ -160,7 +160,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Oregon/Portland"
+			"city": "World/United States/Oregon/Portland"
 		}
 	}, {
 		"geometry": {
@@ -169,7 +169,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/California/San Francisco"
+			"city": "World/United States/California/San Francisco"
 		}
 	}, {
 		"geometry": {
@@ -178,7 +178,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Washington/Seattle"
+			"city": "World/United States/Washington/Seattle"
 		}
 	}, {
 		"geometry": {
@@ -187,7 +187,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/California/Sacramento"
+			"city": "World/United States/California/Sacramento"
 		}
 	}, {
 		"geometry": {
@@ -196,7 +196,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/California/Los Angeles"
+			"city": "World/United States/California/Los Angeles"
 		}
 	}, {
 		"geometry": {
@@ -205,7 +205,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/California/Riverside"
+			"city": "World/United States/California/Riverside"
 		}
 	}, {
 		"geometry": {
@@ -214,7 +214,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/California/San Diego"
+			"city": "World/United States/California/San Diego"
 		}
 	}, {
 		"geometry": {
@@ -223,7 +223,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Tijuana"
+			"city": "World/Mexico/Tijuana"
 		}
 	}, {
 		"geometry": {
@@ -232,7 +232,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Mexicali"
+			"city": "World/Mexico/Mexicali"
 		}
 	}, {
 		"geometry": {
@@ -241,7 +241,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Nevada/Las Vegas"
+			"city": "World/United States/Nevada/Las Vegas"
 		}
 	}, {
 		"geometry": {
@@ -250,7 +250,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Yellowknife"
+			"city": "World/Canada/Yellowknife"
 		}
 	}, {
 		"geometry": {
@@ -259,7 +259,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Calgary"
+			"city": "World/Canada/Calgary"
 		}
 	}, {
 		"geometry": {
@@ -268,7 +268,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Edmonton"
+			"city": "World/Canada/Edmonton"
 		}
 	}, {
 		"geometry": {
@@ -277,7 +277,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Arizona/Phoenix"
+			"city": "World/United States/Arizona/Phoenix"
 		}
 	}, {
 		"geometry": {
@@ -286,7 +286,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Utah/Salt Lake City"
+			"city": "World/United States/Utah/Salt Lake City"
 		}
 	}, {
 		"geometry": {
@@ -295,7 +295,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Arizona/Tucson"
+			"city": "World/United States/Arizona/Tucson"
 		}
 	}, {
 		"geometry": {
@@ -304,7 +304,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Easter Island/Hanga Roa"
+			"city": "World/Easter Island/Hanga Roa"
 		}
 	}, {
 		"geometry": {
@@ -313,7 +313,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Saskatoon"
+			"city": "World/Canada/Saskatoon"
 		}
 	}, {
 		"geometry": {
@@ -322,7 +322,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New Mexico/Albuquerque"
+			"city": "World/United States/New Mexico/Albuquerque"
 		}
 	}, {
 		"geometry": {
@@ -331,7 +331,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Texas/El Paso"
+			"city": "World/United States/Texas/El Paso"
 		}
 	}, {
 		"geometry": {
@@ -340,7 +340,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Chihuahua"
+			"city": "World/Mexico/Chihuahua"
 		}
 	}, {
 		"geometry": {
@@ -350,7 +350,7 @@ var cities = {
 		"type": "Feature",
 		"properties": {
 			"wikipedia": "Denver",
-			"city": "United States/Colorado/Denver"
+			"city": "World/United States/Colorado/Denver"
 		}
 	}, {
 		"geometry": {
@@ -359,7 +359,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Durango"
+			"city": "World/Mexico/Durango"
 		}
 	}, {
 		"geometry": {
@@ -368,7 +368,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Regina"
+			"city": "World/Canada/Regina"
 		}
 	}, {
 		"geometry": {
@@ -377,7 +377,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Zapopan"
+			"city": "World/Mexico/Zapopan"
 		}
 	}, {
 		"geometry": {
@@ -386,7 +386,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Guadalajara"
+			"city": "World/Mexico/Guadalajara"
 		},
 		"id": "Guadalajara"
 	}, {
@@ -396,7 +396,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Monterrey"
+			"city": "World/Mexico/Monterrey"
 		}
 	}, {
 		"geometry": {
@@ -405,7 +405,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Mexico City"
+			"city": "World/Mexico/Mexico City"
 		}
 	}, {
 		"geometry": {
@@ -414,7 +414,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Texas/San Antonio"
+			"city": "World/United States/Texas/San Antonio"
 		}
 	}, {
 		"geometry": {
@@ -423,7 +423,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Puebla"
+			"city": "World/Mexico/Puebla"
 		}
 	}, {
 		"geometry": {
@@ -432,7 +432,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Texas/Austin"
+			"city": "World/United States/Texas/Austin"
 		}
 	}, {
 		"geometry": {
@@ -441,7 +441,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Oklahoma/Oklahoma City"
+			"city": "World/United States/Oklahoma/Oklahoma City"
 		}
 	}, {
 		"geometry": {
@@ -450,7 +450,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Kansas/Wichita"
+			"city": "World/United States/Kansas/Wichita"
 		}
 	}, {
 		"geometry": {
@@ -459,7 +459,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Winnipeg"
+			"city": "World/Canada/Winnipeg"
 		}
 	}, {
 		"geometry": {
@@ -468,7 +468,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Texas/Dallas"
+			"city": "World/United States/Texas/Dallas"
 		}
 	}, {
 		"geometry": {
@@ -477,7 +477,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Veracruz"
+			"city": "World/Mexico/Veracruz"
 		}
 	}, {
 		"geometry": {
@@ -486,7 +486,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Texas/Houston"
+			"city": "World/United States/Texas/Houston"
 		}
 	}, {
 		"geometry": {
@@ -495,7 +495,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Missouri/Kansas City"
+			"city": "World/United States/Missouri/Kansas City"
 		}
 	}, {
 		"geometry": {
@@ -504,7 +504,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Minnesota/Minneapolis"
+			"city": "World/United States/Minnesota/Minneapolis"
 		}
 	}, {
 		"geometry": {
@@ -513,7 +513,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guatemala/Quetzaltenango"
+			"city": "World/Guatemala/Quetzaltenango"
 		}
 	}, {
 		"geometry": {
@@ -522,7 +522,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guatemala/Guatemala City"
+			"city": "World/Guatemala/Guatemala City"
 		}
 	}, {
 		"geometry": {
@@ -531,7 +531,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Missouri/St. Louis"
+			"city": "World/United States/Missouri/St. Louis"
 		}
 	}, {
 		"geometry": {
@@ -540,7 +540,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Louisiana/New Orleans"
+			"city": "World/United States/Louisiana/New Orleans"
 		}
 	}, {
 		"geometry": {
@@ -549,7 +549,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Tennessee/Memphis"
+			"city": "World/United States/Tennessee/Memphis"
 		}
 	}, {
 		"geometry": {
@@ -558,7 +558,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mexico/Merida"
+			"city": "World/Mexico/Merida"
 		}
 	}, {
 		"geometry": {
@@ -567,7 +567,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "El Salvador/San Salvador"
+			"city": "World/El Salvador/San Salvador"
 		}
 	}, {
 		"geometry": {
@@ -576,7 +576,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Belize/Belmopan"
+			"city": "World/Belize/Belmopan"
 		}
 	}, {
 		"geometry": {
@@ -585,7 +585,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Belize/Belize City"
+			"city": "World/Belize/Belize City"
 		}
 	}, {
 		"geometry": {
@@ -594,7 +594,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Wisconsin/Milwaukee"
+			"city": "World/United States/Wisconsin/Milwaukee"
 		}
 	}, {
 		"geometry": {
@@ -603,7 +603,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Illinois/Chicago"
+			"city": "World/United States/Illinois/Chicago"
 		}
 	}, {
 		"geometry": {
@@ -612,7 +612,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Honduras/Tegucigalpa"
+			"city": "World/Honduras/Tegucigalpa"
 		}
 	}, {
 		"geometry": {
@@ -621,7 +621,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Tennessee/Nashville"
+			"city": "World/United States/Tennessee/Nashville"
 		}
 	}, {
 		"geometry": {
@@ -630,7 +630,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nicaragua/Managua"
+			"city": "World/Nicaragua/Managua"
 		}
 	}, {
 		"geometry": {
@@ -639,7 +639,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Indiana/Indianapolis"
+			"city": "World/United States/Indiana/Indianapolis"
 		}
 	}, {
 		"geometry": {
@@ -648,7 +648,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Kentucky/Louisville"
+			"city": "World/United States/Kentucky/Louisville"
 		}
 	}, {
 		"geometry": {
@@ -657,7 +657,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Ohio/Cincinnati"
+			"city": "World/United States/Ohio/Cincinnati"
 		}
 	}, {
 		"geometry": {
@@ -666,7 +666,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Georgia/Atlanta"
+			"city": "World/United States/Georgia/Atlanta"
 		}
 	}, {
 		"geometry": {
@@ -675,7 +675,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Costa Rica/San Jose"
+			"city": "World/Costa Rica/San Jose"
 		}
 	}, {
 		"geometry": {
@@ -684,7 +684,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Michigan/Detroit"
+			"city": "World/United States/Michigan/Detroit"
 		}
 	}, {
 		"geometry": {
@@ -693,7 +693,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Ohio/Columbus"
+			"city": "World/United States/Ohio/Columbus"
 		}
 	}, {
 		"geometry": {
@@ -702,7 +702,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Florida/Tampa"
+			"city": "World/United States/Florida/Tampa"
 		}
 	}, {
 		"geometry": {
@@ -711,7 +711,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cuba/Havana"
+			"city": "World/Cuba/Havana"
 		}
 	}, {
 		"geometry": {
@@ -720,7 +720,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Ohio/Cleveland"
+			"city": "World/United States/Ohio/Cleveland"
 		}
 	}, {
 		"geometry": {
@@ -729,7 +729,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Florida/Jacksonville"
+			"city": "World/United States/Florida/Jacksonville"
 		}
 	}, {
 		"geometry": {
@@ -738,7 +738,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/George Town"
+			"city": "World/Malaysia/George Town"
 		}
 	}, {
 		"geometry": {
@@ -747,7 +747,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/North Carolina/Charlotte"
+			"city": "World/United States/North Carolina/Charlotte"
 		}
 	}, {
 		"geometry": {
@@ -756,7 +756,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Florida/Miami"
+			"city": "World/United States/Florida/Miami"
 		}
 	}, {
 		"geometry": {
@@ -765,7 +765,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Pennsylvania/Pittsburgh"
+			"city": "World/United States/Pennsylvania/Pittsburgh"
 		}
 	}, {
 		"geometry": {
@@ -774,7 +774,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ecuador/Guayaquil"
+			"city": "World/Ecuador/Guayaquil"
 		}
 	}, {
 		"geometry": {
@@ -783,7 +783,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Panama/Panama City"
+			"city": "World/Panama/Panama City"
 		}
 	}, {
 		"geometry": {
@@ -792,7 +792,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Toronto"
+			"city": "World/Canada/Toronto"
 		}
 	}, {
 		"geometry": {
@@ -801,7 +801,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New York/Buffalo"
+			"city": "World/United States/New York/Buffalo"
 		}
 	}, {
 		"geometry": {
@@ -810,7 +810,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/North Carolina/Raleigh"
+			"city": "World/United States/North Carolina/Raleigh"
 		}
 	}, {
 		"geometry": {
@@ -819,7 +819,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ecuador/Quito"
+			"city": "World/Ecuador/Quito"
 		}
 	}, {
 		"geometry": {
@@ -828,7 +828,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New York/Rochester"
+			"city": "World/United States/New York/Rochester"
 		}
 	}, {
 		"geometry": {
@@ -837,7 +837,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bahamas/Nassau"
+			"city": "World/Bahamas/Nassau"
 		}
 	}, {
 		"geometry": {
@@ -846,7 +846,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Washington D.C."
+			"city": "World/United States/Washington D.C."
 		}
 	}, {
 		"geometry": {
@@ -855,7 +855,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Peru/Lima"
+			"city": "World/Peru/Lima"
 		}
 	}, {
 		"geometry": {
@@ -864,7 +864,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Norfolk Island/Kingston"
+			"city": "World/Norfolk Island/Kingston"
 		}
 	}, {
 		"geometry": {
@@ -873,7 +873,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Maryland/Baltimore"
+			"city": "World/United States/Maryland/Baltimore"
 		}
 	}, {
 		"geometry": {
@@ -882,7 +882,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Colombia/Cali"
+			"city": "World/Colombia/Cali"
 		}
 	}, {
 		"geometry": {
@@ -891,7 +891,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Virginia/Virginia Beach"
+			"city": "World/United States/Virginia/Virginia Beach"
 		}
 	}, {
 		"geometry": {
@@ -900,7 +900,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cuba/Santiago de Cuba"
+			"city": "World/Cuba/Santiago de Cuba"
 		}
 	}, {
 		"geometry": {
@@ -909,7 +909,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Ottawa"
+			"city": "World/Canada/Ottawa"
 		}
 	}, {
 		"geometry": {
@@ -918,7 +918,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Colombia/Medellin"
+			"city": "World/Colombia/Medellin"
 		}
 	}, {
 		"geometry": {
@@ -927,7 +927,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Colombia/Cartagena"
+			"city": "World/Colombia/Cartagena"
 		}
 	}, {
 		"geometry": {
@@ -936,7 +936,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Pennsylvania/Philadelphia"
+			"city": "World/United States/Pennsylvania/Philadelphia"
 		}
 	}, {
 		"geometry": {
@@ -945,7 +945,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Colombia/Barranquilla"
+			"city": "World/Colombia/Barranquilla"
 		}
 	}, {
 		"geometry": {
@@ -954,7 +954,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New Jersey/Forked River"
+			"city": "World/United States/New Jersey/Forked River"
 		}
 	}, {
 		"geometry": {
@@ -963,7 +963,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New Jersey/Jersey City"
+			"city": "World/United States/New Jersey/Jersey City"
 		}
 	}, {
 		"geometry": {
@@ -972,7 +972,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Colombia/Bogota"
+			"city": "World/Colombia/Bogota"
 		}
 	}, {
 		"geometry": {
@@ -981,7 +981,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/New York/New York City"
+			"city": "World/United States/New York/New York City"
 		}
 	}, {
 		"geometry": {
@@ -990,7 +990,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Montreal"
+			"city": "World/Canada/Montreal"
 		}
 	}, {
 		"geometry": {
@@ -999,7 +999,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Peru/Iquitos"
+			"city": "World/Peru/Iquitos"
 		}
 	}, {
 		"geometry": {
@@ -1008,7 +1008,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Valdivia"
+			"city": "World/Chile/Valdivia"
 		}
 	}, {
 		"geometry": {
@@ -1017,7 +1017,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Concepcion"
+			"city": "World/Chile/Concepcion"
 		}
 	}, {
 		"geometry": {
@@ -1026,7 +1026,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Haiti/Port-au-Prince"
+			"city": "World/Haiti/Port-au-Prince"
 		}
 	}, {
 		"geometry": {
@@ -1035,7 +1035,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Peru/Cusco"
+			"city": "World/Peru/Cusco"
 		}
 	}, {
 		"geometry": {
@@ -1044,7 +1044,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Venezuela/Maracaibo"
+			"city": "World/Venezuela/Maracaibo"
 		}
 	}, {
 		"geometry": {
@@ -1053,7 +1053,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Valparaiso"
+			"city": "World/Chile/Valparaiso"
 		}
 	}, {
 		"geometry": {
@@ -1062,7 +1062,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Peru/Arequipa"
+			"city": "World/Peru/Arequipa"
 		}
 	}, {
 		"geometry": {
@@ -1071,7 +1071,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Rhode Island/Providence"
+			"city": "World/United States/Rhode Island/Providence"
 		}
 	}, {
 		"geometry": {
@@ -1080,7 +1080,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/San Carlos de Bariloche"
+			"city": "World/Argentina/San Carlos de Bariloche"
 		}
 	}, {
 		"geometry": {
@@ -1089,7 +1089,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/La Serena"
+			"city": "World/Chile/La Serena"
 		}
 	}, {
 		"geometry": {
@@ -1098,7 +1098,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Quebec City"
+			"city": "World/Canada/Quebec City"
 		}
 	}, {
 		"geometry": {
@@ -1107,7 +1107,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cockburn Town"
+			"city": "World/Cockburn Town"
 		}
 	}, {
 		"geometry": {
@@ -1116,7 +1116,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States/Massachusetts/Boston"
+			"city": "World/United States/Massachusetts/Boston"
 		}
 	}, {
 		"geometry": {
@@ -1125,7 +1125,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Punta Arenas"
+			"city": "World/Chile/Punta Arenas"
 		}
 	}, {
 		"geometry": {
@@ -1134,7 +1134,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Santiago"
+			"city": "World/Chile/Santiago"
 		}
 	}, {
 		"geometry": {
@@ -1143,7 +1143,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Antofagasta"
+			"city": "World/Chile/Antofagasta"
 		}
 	}, {
 		"geometry": {
@@ -1152,7 +1152,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Iquique"
+			"city": "World/Chile/Iquique"
 		}
 	}, {
 		"geometry": {
@@ -1161,7 +1161,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Oranjestad"
+			"city": "World/Oranjestad"
 		}
 	}, {
 		"geometry": {
@@ -1170,7 +1170,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Dominican Republic/Santo Domingo"
+			"city": "World/Dominican Republic/Santo Domingo"
 		}
 	}, {
 		"geometry": {
@@ -1179,7 +1179,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Rio Branco"
+			"city": "World/Brazil/Rio Branco"
 		}
 	}, {
 		"geometry": {
@@ -1188,7 +1188,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Willemstad"
+			"city": "World/Willemstad"
 		}
 	}, {
 		"geometry": {
@@ -1197,7 +1197,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Calama"
+			"city": "World/Chile/Calama"
 		}
 	}, {
 		"geometry": {
@@ -1206,7 +1206,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Mendoza"
+			"city": "World/Argentina/Mendoza"
 		}
 	}, {
 		"geometry": {
@@ -1215,7 +1215,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Iqaluit"
+			"city": "World/Canada/Iqaluit"
 		}
 	}, {
 		"geometry": {
@@ -1224,7 +1224,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Ushuaia"
+			"city": "World/Argentina/Ushuaia"
 		}
 	}, {
 		"geometry": {
@@ -1233,7 +1233,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bolivia/La Paz"
+			"city": "World/Bolivia/La Paz"
 		}
 	}, {
 		"geometry": {
@@ -1242,7 +1242,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chile/Puerto Williams"
+			"city": "World/Chile/Puerto Williams"
 		}
 	}, {
 		"geometry": {
@@ -1251,7 +1251,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Venezuela/Caracas"
+			"city": "World/Venezuela/Caracas"
 		}
 	}, {
 		"geometry": {
@@ -1260,7 +1260,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Fredericton"
+			"city": "World/Canada/Fredericton"
 		}
 	}, {
 		"geometry": {
@@ -1269,7 +1269,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Puerto Rico/San Juan"
+			"city": "World/Puerto Rico/San Juan"
 		}
 	}, {
 		"geometry": {
@@ -1278,7 +1278,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Saint John"
+			"city": "World/Canada/Saint John"
 		}
 	}, {
 		"geometry": {
@@ -1287,7 +1287,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bolivia/Sucre"
+			"city": "World/Bolivia/Sucre"
 		},
 	}, {
 		"geometry": {
@@ -1296,7 +1296,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United States Virgin Islands/Charlotte Amalie"
+			"city": "World/United States Virgin Islands/Charlotte Amalie"
 		}
 	}, {
 		"geometry": {
@@ -1305,7 +1305,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Hamilton"
+			"city": "World/New Zealand/Hamilton"
 		}
 	}, {
 		"geometry": {
@@ -1314,7 +1314,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "British Virgin Islands/Road Town"
+			"city": "World/British Virgin Islands/Road Town"
 		}
 	}, {
 		"geometry": {
@@ -1323,7 +1323,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Cordoba"
+			"city": "World/Argentina/Cordoba"
 		}
 	}, {
 		"geometry": {
@@ -1332,7 +1332,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Porto Velho"
+			"city": "World/Brazil/Porto Velho"
 		}
 	}, {
 		"geometry": {
@@ -1341,7 +1341,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Halifax"
+			"city": "World/Canada/Halifax"
 		}
 	}, {
 		"geometry": {
@@ -1350,7 +1350,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bolivia/Santa Cruz de la Sierra"
+			"city": "World/Bolivia/Santa Cruz de la Sierra"
 		}
 	}, {
 		"geometry": {
@@ -1359,7 +1359,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/Charlottetown"
+			"city": "World/Canada/Charlottetown"
 		}
 	}, {
 		"geometry": {
@@ -1368,7 +1368,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Anguilla/The Valley"
+			"city": "World/Anguilla/The Valley"
 		}
 	}, {
 		"geometry": {
@@ -1377,7 +1377,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guadeloupe/Basse-Terre"
+			"city": "World/Guadeloupe/Basse-Terre"
 		}
 	}, {
 		"geometry": {
@@ -1386,7 +1386,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Bahia Blanca"
+			"city": "World/Argentina/Bahia Blanca"
 		}
 	}, {
 		"geometry": {
@@ -1395,7 +1395,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canada/St. John's"
+			"city": "World/Canada/St. John's"
 		}
 	}, {
 		"geometry": {
@@ -1404,7 +1404,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Grenada/St. George's"
+			"city": "World/Grenada/St. George's"
 		}
 	}, {
 		"geometry": {
@@ -1413,7 +1413,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Trinidad and Tobago/Port of Spain"
+			"city": "World/Trinidad and Tobago/Port of Spain"
 		}
 	}, {
 		"geometry": {
@@ -1422,7 +1422,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Trinidad and Tobago/San Fernando"
+			"city": "World/Trinidad and Tobago/San Fernando"
 		}
 	}, {
 		"geometry": {
@@ -1431,7 +1431,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Dominica/Roseau"
+			"city": "World/Dominica/Roseau"
 		}
 	}, {
 		"geometry": {
@@ -1440,7 +1440,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Trinidad and Tobago/Chaguanas"
+			"city": "World/Trinidad and Tobago/Chaguanas"
 		}
 	}, {
 		"geometry": {
@@ -1449,7 +1449,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saint Vincent and the Grenadines/Kingstown"
+			"city": "World/Saint Vincent and the Grenadines/Kingstown"
 		}
 	}, {
 		"geometry": {
@@ -1458,7 +1458,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Martinique/Fort-de-France"
+			"city": "World/Martinique/Fort-de-France"
 		}
 	}, {
 		"geometry": {
@@ -1467,7 +1467,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saint Lucia/Castries"
+			"city": "World/Saint Lucia/Castries"
 		}
 	}, {
 		"geometry": {
@@ -1476,7 +1476,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Rosario"
+			"city": "World/Argentina/Rosario"
 		}
 	}, {
 		"geometry": {
@@ -1485,7 +1485,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Boa Vista"
+			"city": "World/Brazil/Boa Vista"
 		}
 	}, {
 		"geometry": {
@@ -1494,7 +1494,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Manaus"
+			"city": "World/Brazil/Manaus"
 		}
 	}, {
 		"geometry": {
@@ -1503,7 +1503,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Barbados/Bridgetown"
+			"city": "World/Barbados/Bridgetown"
 		}
 	}, {
 		"geometry": {
@@ -1512,7 +1512,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Argentina/Buenos Aires"
+			"city": "World/Argentina/Buenos Aires"
 		}
 	}, {
 		"geometry": {
@@ -1521,7 +1521,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Falkland Islands/Stanley"
+			"city": "World/Falkland Islands/Stanley"
 		}
 	}, {
 		"geometry": {
@@ -1530,7 +1530,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Paraguay/Asuncion"
+			"city": "World/Paraguay/Asuncion"
 		}
 	}, {
 		"geometry": {
@@ -1539,7 +1539,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saint-Pierre and Miquelon/Saint-Pierre"
+			"city": "World/Saint-Pierre and Miquelon/Saint-Pierre"
 		}
 	}, {
 		"geometry": {
@@ -1548,7 +1548,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Uruguay/Montevideo"
+			"city": "World/Uruguay/Montevideo"
 		}
 	}, {
 		"geometry": {
@@ -1557,7 +1557,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Cuiaba"
+			"city": "World/Brazil/Cuiaba"
 		}
 	}, {
 		"geometry": {
@@ -1566,7 +1566,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Suriname/Paramaribo"
+			"city": "World/Suriname/Paramaribo"
 		}
 	}, {
 		"geometry": {
@@ -1575,7 +1575,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Campo Grande"
+			"city": "World/Brazil/Campo Grande"
 		}
 	}, {
 		"geometry": {
@@ -1584,7 +1584,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Paraguay/Ciudad del Este"
+			"city": "World/Paraguay/Ciudad del Este"
 		}
 	}, {
 		"geometry": {
@@ -1593,7 +1593,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Uruguay/Chuy"
+			"city": "World/Uruguay/Chuy"
 		}
 	}, {
 		"geometry": {
@@ -1602,7 +1602,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Pelotas"
+			"city": "World/Brazil/Pelotas"
 		}
 	}, {
 		"geometry": {
@@ -1611,7 +1611,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "French Guiana/Cayenne"
+			"city": "World/French Guiana/Cayenne"
 		}
 	}, {
 		"geometry": {
@@ -1620,7 +1620,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Greenland/Nuuk"
+			"city": "World/Greenland/Nuuk"
 		}
 	}, {
 		"geometry": {
@@ -1629,7 +1629,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Porto Alegre"
+			"city": "World/Brazil/Porto Alegre"
 		}
 	}, {
 		"geometry": {
@@ -1638,7 +1638,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Macapa"
+			"city": "World/Brazil/Macapa"
 		}
 	}, {
 		"geometry": {
@@ -1647,7 +1647,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Assis"
+			"city": "World/Brazil/Assis"
 		}
 	}, {
 		"geometry": {
@@ -1656,7 +1656,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Curitiba"
+			"city": "World/Brazil/Curitiba"
 		}
 	}, {
 		"geometry": {
@@ -1665,7 +1665,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Belem"
+			"city": "World/Brazil/Belem"
 		}
 	}, {
 		"geometry": {
@@ -1674,7 +1674,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Brasilia"
+			"city": "World/Brazil/Brasilia"
 		}
 	}, {
 		"geometry": {
@@ -1683,7 +1683,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Campinas"
+			"city": "World/Brazil/Campinas"
 		}
 	}, {
 		"geometry": {
@@ -1692,7 +1692,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Sao Paulo"
+			"city": "World/Brazil/Sao Paulo"
 		}
 	}, {
 		"geometry": {
@@ -1701,7 +1701,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Sao Jose dos Campos"
+			"city": "World/Brazil/Sao Jose dos Campos"
 		}
 	}, {
 		"geometry": {
@@ -1710,7 +1710,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Rio de Janeiro"
+			"city": "World/Brazil/Rio de Janeiro"
 		}
 	}, {
 		"geometry": {
@@ -1719,7 +1719,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Vitoria"
+			"city": "World/Brazil/Vitoria"
 		}
 	}, {
 		"geometry": {
@@ -1728,7 +1728,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Ilheus"
+			"city": "World/Brazil/Ilheus"
 		}
 	}, {
 		"geometry": {
@@ -1737,7 +1737,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Fortaleza"
+			"city": "World/Brazil/Fortaleza"
 		}
 	}, {
 		"geometry": {
@@ -1746,7 +1746,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Maceio"
+			"city": "World/Brazil/Maceio"
 		}
 	}, {
 		"geometry": {
@@ -1755,7 +1755,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brazil/Recife"
+			"city": "World/Brazil/Recife"
 		}
 	}, {
 		"geometry": {
@@ -1764,7 +1764,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Azores/Horta"
+			"city": "World/Azores/Horta"
 		}
 	}, {
 		"geometry": {
@@ -1773,7 +1773,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Azores/Angra do Heroismo"
+			"city": "World/Azores/Angra do Heroismo"
 		}
 	}, {
 		"geometry": {
@@ -1782,7 +1782,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Azores/Ponta Delgada"
+			"city": "World/Azores/Ponta Delgada"
 		}
 	}, {
 		"geometry": {
@@ -1791,7 +1791,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cape Verde/Praia"
+			"city": "World/Cape Verde/Praia"
 		}
 	}, {
 		"geometry": {
@@ -1800,7 +1800,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iceland/Reykjavik"
+			"city": "World/Iceland/Reykjavik"
 		}
 	}, {
 		"geometry": {
@@ -1809,7 +1809,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Senegal/Dakar"
+			"city": "World/Senegal/Dakar"
 		}
 	}, {
 		"geometry": {
@@ -1818,7 +1818,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Senegal/Thies"
+			"city": "World/Senegal/Thies"
 		}
 	}, {
 		"geometry": {
@@ -1827,7 +1827,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "The Gambia/Serekunda"
+			"city": "World/The Gambia/Serekunda"
 		}
 	}, {
 		"geometry": {
@@ -1836,7 +1836,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "The Gambia/Brikama"
+			"city": "World/The Gambia/Brikama"
 		}
 	}, {
 		"geometry": {
@@ -1845,7 +1845,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "The Gambia/Banjul"
+			"city": "World/The Gambia/Banjul"
 		}
 	}, {
 		"geometry": {
@@ -1854,7 +1854,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canary Islands/Santa Cruz de Tenerife"
+			"city": "World/Canary Islands/Santa Cruz de Tenerife"
 		}
 	}, {
 		"geometry": {
@@ -1863,7 +1863,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mauritania/Nouakchott"
+			"city": "World/Mauritania/Nouakchott"
 		}
 	}, {
 		"geometry": {
@@ -1872,7 +1872,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guinea-Bissau/Bissau"
+			"city": "World/Guinea-Bissau/Bissau"
 		}
 	}, {
 		"geometry": {
@@ -1881,7 +1881,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Canary Islands/Las Palmas de Gran Canaria"
+			"city": "World/Canary Islands/Las Palmas de Gran Canaria"
 		}
 	}, {
 		"geometry": {
@@ -1890,7 +1890,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guinea/Conakry"
+			"city": "World/Guinea/Conakry"
 		}
 	}, {
 		"geometry": {
@@ -1899,7 +1899,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sierra Leone/Freetown"
+			"city": "World/Sierra Leone/Freetown"
 		}
 	}, {
 		"geometry": {
@@ -1908,7 +1908,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Western Sahara/El Aaiun"
+			"city": "World/Western Sahara/El Aaiun"
 		}
 	}, {
 		"geometry": {
@@ -1917,7 +1917,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Liberia/Monrovia"
+			"city": "World/Liberia/Monrovia"
 		}
 	}, {
 		"geometry": {
@@ -1926,7 +1926,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Portugal/Lisbon"
+			"city": "World/Portugal/Lisbon"
 		}
 	}, {
 		"geometry": {
@@ -1935,7 +1935,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Portugal/Porto"
+			"city": "World/Portugal/Porto"
 		}
 	}, {
 		"geometry": {
@@ -1944,7 +1944,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ireland/Cork"
+			"city": "World/Ireland/Cork"
 		}
 	}, {
 		"geometry": {
@@ -1953,7 +1953,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Morocco/Marrakech"
+			"city": "World/Morocco/Marrakech"
 		}
 	}, {
 		"geometry": {
@@ -1962,7 +1962,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mali/Bamako"
+			"city": "World/Mali/Bamako"
 		}
 	}, {
 		"geometry": {
@@ -1971,7 +1971,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Morocco/Casablanca"
+			"city": "World/Morocco/Casablanca"
 		}
 	}, {
 		"geometry": {
@@ -1980,7 +1980,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mali/Koulikoro"
+			"city": "World/Mali/Koulikoro"
 		}
 	}, {
 		"geometry": {
@@ -1989,7 +1989,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Morocco/Rabat"
+			"city": "World/Morocco/Rabat"
 		}
 	}, {
 		"geometry": {
@@ -1998,7 +1998,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Faroe Islands/Torshavn"
+			"city": "World/Faroe Islands/Torshavn"
 		}
 	}, {
 		"geometry": {
@@ -2007,7 +2007,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ireland/Dublin"
+			"city": "World/Ireland/Dublin"
 		}
 	}, {
 		"geometry": {
@@ -2016,7 +2016,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Seville"
+			"city": "World/Spain/Seville"
 		}
 	}, {
 		"geometry": {
@@ -2025,7 +2025,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Belfast"
+			"city": "World/United Kingdom/Belfast"
 		}
 	}, {
 		"geometry": {
@@ -2034,7 +2034,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saint Helena/Jamestown"
+			"city": "World/Saint Helena/Jamestown"
 		}
 	}, {
 		"geometry": {
@@ -2043,7 +2043,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Gibraltar"
+			"city": "World/Spain/Gibraltar"
 		}
 	}, {
 		"geometry": {
@@ -2052,7 +2052,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cote d'Ivoire/Yamoussoukro"
+			"city": "World/Cote d'Ivoire/Yamoussoukro"
 		}
 	}, {
 		"geometry": {
@@ -2061,7 +2061,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Isle of Man/Douglas"
+			"city": "World/Isle of Man/Douglas"
 		}
 	}, {
 		"geometry": {
@@ -2070,7 +2070,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Malaga"
+			"city": "World/Spain/Malaga"
 		}
 	}, {
 		"geometry": {
@@ -2079,7 +2079,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Glasgow"
+			"city": "World/United Kingdom/Glasgow"
 		}
 	}, {
 		"geometry": {
@@ -2088,7 +2088,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cote d'Ivoire/Abidjan"
+			"city": "World/Cote d'Ivoire/Abidjan"
 		}
 	}, {
 		"geometry": {
@@ -2097,7 +2097,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Madrid"
+			"city": "World/Spain/Madrid"
 		}
 	}, {
 		"geometry": {
@@ -2106,7 +2106,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Cardiff"
+			"city": "World/United Kingdom/Cardiff"
 		}
 	}, {
 		"geometry": {
@@ -2115,7 +2115,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Edinburgh"
+			"city": "World/United Kingdom/Edinburgh"
 		}
 	}, {
 		"geometry": {
@@ -2124,7 +2124,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mali/Timbuktu"
+			"city": "World/Mali/Timbuktu"
 		}
 	}, {
 		"geometry": {
@@ -2133,7 +2133,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Liverpool"
+			"city": "World/United Kingdom/Liverpool"
 		}
 	}, {
 		"geometry": {
@@ -2142,7 +2142,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Bilbao"
+			"city": "World/Spain/Bilbao"
 		}
 	}, {
 		"geometry": {
@@ -2151,7 +2151,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Manchester"
+			"city": "World/United Kingdom/Manchester"
 		}
 	}, {
 		"geometry": {
@@ -2160,7 +2160,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Aberdeen"
+			"city": "World/United Kingdom/Aberdeen"
 		}
 	}, {
 		"geometry": {
@@ -2169,7 +2169,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Birmingham"
+			"city": "World/United Kingdom/Birmingham"
 		}
 	}, {
 		"geometry": {
@@ -2178,7 +2178,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Leeds"
+			"city": "World/United Kingdom/Leeds"
 		}
 	}, {
 		"geometry": {
@@ -2187,7 +2187,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Nantes"
+			"city": "World/France/Nantes"
 		}
 	}, {
 		"geometry": {
@@ -2196,7 +2196,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Burkina Faso/Ouagadougou"
+			"city": "World/Burkina Faso/Ouagadougou"
 		}
 	}, {
 		"geometry": {
@@ -2205,7 +2205,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ghana/Tamale"
+			"city": "World/Ghana/Tamale"
 		}
 	}, {
 		"geometry": {
@@ -2214,7 +2214,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Valencia"
+			"city": "World/Spain/Valencia"
 		}
 	}, {
 		"geometry": {
@@ -2223,7 +2223,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ghana/Accra"
+			"city": "World/Ghana/Accra"
 		}
 	}, {
 		"geometry": {
@@ -2232,7 +2232,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/London"
+			"city": "World/United Kingdom/London"
 		}
 	}, {
 		"geometry": {
@@ -2241,7 +2241,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Kingdom/Greenwich"
+			"city": "World/United Kingdom/Greenwich"
 		}
 	}, {
 		"geometry": {
@@ -2250,7 +2250,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Togo/Lome"
+			"city": "World/Togo/Lome"
 		}
 	}, {
 		"geometry": {
@@ -2259,7 +2259,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Toulouse"
+			"city": "World/France/Toulouse"
 		}
 	}, {
 		"geometry": {
@@ -2268,7 +2268,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Andorra/Andorra la Vella"
+			"city": "World/Andorra/Andorra la Vella"
 		}
 	}, {
 		"geometry": {
@@ -2277,7 +2277,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Ibiza"
+			"city": "World/Spain/Ibiza"
 		}
 	}, {
 		"geometry": {
@@ -2286,7 +2286,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Niger/Niamey"
+			"city": "World/Niger/Niamey"
 		}
 	}, {
 		"geometry": {
@@ -2295,7 +2295,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Barcelona"
+			"city": "World/Spain/Barcelona"
 		}
 	}, {
 		"geometry": {
@@ -2304,7 +2304,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Paris"
+			"city": "World/France/Paris"
 		}
 	}, {
 		"geometry": {
@@ -2313,7 +2313,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Benin/Cotonou"
+			"city": "World/Benin/Cotonou"
 		}
 	}, {
 		"geometry": {
@@ -2322,7 +2322,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Benin/Porto-Novo"
+			"city": "World/Benin/Porto-Novo"
 		}
 	}, {
 		"geometry": {
@@ -2331,7 +2331,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Spain/Palma"
+			"city": "World/Spain/Palma"
 		}
 	}, {
 		"geometry": {
@@ -2340,7 +2340,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Algeria/Algiers"
+			"city": "World/Algeria/Algiers"
 		}
 	}, {
 		"geometry": {
@@ -2349,7 +2349,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nigeria/Lagos"
+			"city": "World/Nigeria/Lagos"
 		}
 	}, {
 		"geometry": {
@@ -2358,7 +2358,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nigeria/Ibadan"
+			"city": "World/Nigeria/Ibadan"
 		}
 	}, {
 		"geometry": {
@@ -2367,7 +2367,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Netherlands/The Hague"
+			"city": "World/Netherlands/The Hague"
 		}
 	}, {
 		"geometry": {
@@ -2376,7 +2376,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Belgium/Brussels"
+			"city": "World/Belgium/Brussels"
 		}
 	}, {
 		"geometry": {
@@ -2385,7 +2385,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Belgium/Antwerp"
+			"city": "World/Belgium/Antwerp"
 		}
 	}, {
 		"geometry": {
@@ -2394,7 +2394,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Netherlands/Rotterdam"
+			"city": "World/Netherlands/Rotterdam"
 		}
 	}, {
 		"geometry": {
@@ -2403,7 +2403,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Lyon"
+			"city": "World/France/Lyon"
 		}
 	}, {
 		"geometry": {
@@ -2412,7 +2412,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Netherlands/Amsterdam"
+			"city": "World/Netherlands/Amsterdam"
 		}
 	}, {
 		"geometry": {
@@ -2421,7 +2421,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Marseille"
+			"city": "World/France/Marseille"
 		}
 	}, {
 		"geometry": {
@@ -2430,7 +2430,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Norway/Bergen"
+			"city": "World/Norway/Bergen"
 		}
 	}, {
 		"geometry": {
@@ -2439,7 +2439,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Luxembourg/Luxembourg City"
+			"city": "World/Luxembourg/Luxembourg City"
 		}
 	}, {
 		"geometry": {
@@ -2448,7 +2448,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Switzerland/Geneva"
+			"city": "World/Switzerland/Geneva"
 		}
 	}, {
 		"geometry": {
@@ -2457,7 +2457,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sao Tome and Principe/Sao Tome"
+			"city": "World/Sao Tome and Principe/Sao Tome"
 		}
 	}, {
 		"geometry": {
@@ -2466,7 +2466,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Dusseldorf"
+			"city": "World/Germany/Dusseldorf"
 		}
 	}, {
 		"geometry": {
@@ -2475,7 +2475,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Cologne"
+			"city": "World/Germany/Cologne"
 		}
 	}, {
 		"geometry": {
@@ -2484,7 +2484,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Cannes"
+			"city": "World/France/Cannes"
 		}
 	}, {
 		"geometry": {
@@ -2493,7 +2493,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Nice"
+			"city": "World/France/Nice"
 		}
 	}, {
 		"geometry": {
@@ -2502,7 +2502,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Monaco"
+			"city": "World/Monaco"
 		}
 	}, {
 		"geometry": {
@@ -2511,7 +2511,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Switzerland/Bern"
+			"city": "World/Switzerland/Bern"
 		}
 	}, {
 		"geometry": {
@@ -2520,7 +2520,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nigeria/Abuja"
+			"city": "World/Nigeria/Abuja"
 		}
 	}, {
 		"geometry": {
@@ -2529,7 +2529,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nigeria/Enugu"
+			"city": "World/Nigeria/Enugu"
 		}
 	}, {
 		"geometry": {
@@ -2538,7 +2538,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Italy/Turin"
+			"city": "World/Italy/Turin"
 		}
 	}, {
 		"geometry": {
@@ -2547,7 +2547,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "France/Strasbourg"
+			"city": "World/France/Strasbourg"
 		}
 	}, {
 		"geometry": {
@@ -2556,7 +2556,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nigeria/Kano"
+			"city": "World/Nigeria/Kano"
 		}
 	}, {
 		"geometry": {
@@ -2565,7 +2565,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Switzerland/Zurich"
+			"city": "World/Switzerland/Zurich"
 		}
 	}, {
 		"geometry": {
@@ -2574,7 +2574,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Frankfurt"
+			"city": "World/Germany/Frankfurt"
 		}
 	}, {
 		"geometry": {
@@ -2583,7 +2583,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Equatorial Guinea/Malabo"
+			"city": "World/Equatorial Guinea/Malabo"
 		}
 	}, {
 		"geometry": {
@@ -2592,7 +2592,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Stuttgart"
+			"city": "World/Germany/Stuttgart"
 		}
 	}, {
 		"geometry": {
@@ -2601,7 +2601,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Italy/Milan"
+			"city": "World/Italy/Milan"
 		}
 	}, {
 		"geometry": {
@@ -2610,7 +2610,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Gabon/Libreville"
+			"city": "World/Gabon/Libreville"
 		}
 	}, {
 		"geometry": {
@@ -2619,7 +2619,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Liechtenstein/Vaduz"
+			"city": "World/Liechtenstein/Vaduz"
 		}
 	}, {
 		"geometry": {
@@ -2628,7 +2628,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cameroon/Douala"
+			"city": "World/Cameroon/Douala"
 		}
 	}, {
 		"geometry": {
@@ -2637,7 +2637,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Hanover"
+			"city": "World/Germany/Hanover"
 		}
 	}, {
 		"geometry": {
@@ -2646,7 +2646,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Hamburg"
+			"city": "World/Germany/Hamburg"
 		}
 	}, {
 		"geometry": {
@@ -2655,7 +2655,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tunisia/Tunis"
+			"city": "World/Tunisia/Tunis"
 		}
 	}, {
 		"geometry": {
@@ -2664,7 +2664,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Denmark/Aarhus"
+			"city": "World/Denmark/Aarhus"
 		}
 	}, {
 		"geometry": {
@@ -2673,7 +2673,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Norway/Oslo"
+			"city": "World/Norway/Oslo"
 		}
 	}, {
 		"geometry": {
@@ -2682,7 +2682,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Austria/Innsbruck"
+			"city": "World/Austria/Innsbruck"
 		}
 	}, {
 		"geometry": {
@@ -2691,7 +2691,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cameroon/Yaounde"
+			"city": "World/Cameroon/Yaounde"
 		}
 	}, {
 		"geometry": {
@@ -2700,7 +2700,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Munich"
+			"city": "World/Germany/Munich"
 		}
 	}, {
 		"geometry": {
@@ -2709,7 +2709,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sweden/Gothenburg"
+			"city": "World/Sweden/Gothenburg"
 		}
 	}, {
 		"geometry": {
@@ -2718,7 +2718,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Leipzig"
+			"city": "World/Germany/Leipzig"
 		}
 	}, {
 		"geometry": {
@@ -2727,7 +2727,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "San Marino/City of San Marino"
+			"city": "World/San Marino/City of San Marino"
 		}
 	}, {
 		"geometry": {
@@ -2736,7 +2736,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vatican City"
+			"city": "World/Vatican City"
 		}
 	}, {
 		"geometry": {
@@ -2745,7 +2745,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Italy/Rome"
+			"city": "World/Italy/Rome"
 		}
 	}, {
 		"geometry": {
@@ -2754,7 +2754,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Denmark/Copenhagen"
+			"city": "World/Denmark/Copenhagen"
 		}
 	}, {
 		"geometry": {
@@ -2763,7 +2763,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sweden/Malmo"
+			"city": "World/Sweden/Malmo"
 		}
 	}, {
 		"geometry": {
@@ -2772,7 +2772,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Austria/Salzburg"
+			"city": "World/Austria/Salzburg"
 		}
 	}, {
 		"geometry": {
@@ -2781,7 +2781,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Libya/Tripoli"
+			"city": "World/Libya/Tripoli"
 		}
 	}, {
 		"geometry": {
@@ -2790,7 +2790,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Angola/Luanda"
+			"city": "World/Angola/Luanda"
 		}
 	}, {
 		"geometry": {
@@ -2799,7 +2799,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Berlin"
+			"city": "World/Germany/Berlin"
 		}
 	}, {
 		"geometry": {
@@ -2808,7 +2808,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Germany/Dresden"
+			"city": "World/Germany/Dresden"
 		}
 	}, {
 		"geometry": {
@@ -2817,7 +2817,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Italy/Naples"
+			"city": "World/Italy/Naples"
 		}
 	}, {
 		"geometry": {
@@ -2826,7 +2826,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Austria/Linz"
+			"city": "World/Austria/Linz"
 		}
 	}, {
 		"geometry": {
@@ -2835,7 +2835,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Czech Republic/Prague"
+			"city": "World/Czech Republic/Prague"
 		}
 	}, {
 		"geometry": {
@@ -2844,7 +2844,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Libya/Sabha"
+			"city": "World/Libya/Sabha"
 		}
 	}, {
 		"geometry": {
@@ -2853,7 +2853,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malta/Birkirkara"
+			"city": "World/Malta/Birkirkara"
 		}
 	}, {
 		"geometry": {
@@ -2862,7 +2862,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Slovenia/Ljubljana"
+			"city": "World/Slovenia/Ljubljana"
 		}
 	}, {
 		"geometry": {
@@ -2871,7 +2871,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malta/Valletta"
+			"city": "World/Malta/Valletta"
 		}
 	}, {
 		"geometry": {
@@ -2880,7 +2880,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Chad/N'Djamena"
+			"city": "World/Chad/N'Djamena"
 		}
 	}, {
 		"geometry": {
@@ -2889,7 +2889,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Republic of Congo/Brazzaville"
+			"city": "World/Republic of Congo/Brazzaville"
 		}
 	}, {
 		"geometry": {
@@ -2898,7 +2898,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Democratic Republic of the Congo/Kinshasa"
+			"city": "World/Democratic Republic of the Congo/Kinshasa"
 		}
 	}, {
 		"geometry": {
@@ -2907,7 +2907,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Austria/Graz"
+			"city": "World/Austria/Graz"
 		}
 	}, {
 		"geometry": {
@@ -2916,7 +2916,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Norway/Longyearbyen"
+			"city": "World/Norway/Longyearbyen"
 		}
 	}, {
 		"geometry": {
@@ -2925,7 +2925,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Croatia/Zagreb"
+			"city": "World/Croatia/Zagreb"
 		}
 	}, {
 		"geometry": {
@@ -2934,7 +2934,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Austria/Vienna"
+			"city": "World/Austria/Vienna"
 		}
 	}, {
 		"geometry": {
@@ -2943,7 +2943,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Croatia/Split"
+			"city": "World/Croatia/Split"
 		}
 	}, {
 		"geometry": {
@@ -2952,7 +2952,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Slovakia/Bratislava"
+			"city": "World/Slovakia/Bratislava"
 		}
 	}, {
 		"geometry": {
@@ -2961,7 +2961,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sweden/Stockholm"
+			"city": "World/Sweden/Stockholm"
 		}
 	}, {
 		"geometry": {
@@ -2970,7 +2970,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bosnia and Herzegovina/Sarajevo"
+			"city": "World/Bosnia and Herzegovina/Sarajevo"
 		}
 	}, {
 		"geometry": {
@@ -2979,7 +2979,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Cape Town"
+			"city": "World/South Africa/Cape Town"
 		}
 	}, {
 		"geometry": {
@@ -2988,7 +2988,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Central African Republic/Bangui"
+			"city": "World/Central African Republic/Bangui"
 		}
 	}, {
 		"geometry": {
@@ -2997,7 +2997,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Poland/Gdansk"
+			"city": "World/Poland/Gdansk"
 		}
 	}, {
 		"geometry": {
@@ -3006,7 +3006,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Hungary/Budapest"
+			"city": "World/Hungary/Budapest"
 		}
 	}, {
 		"geometry": {
@@ -3015,7 +3015,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Montenegro/Podgorica"
+			"city": "World/Montenegro/Podgorica"
 		}
 	}, {
 		"geometry": {
@@ -3024,7 +3024,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Albania/Tirana"
+			"city": "World/Albania/Tirana"
 		}
 	}, {
 		"geometry": {
@@ -3033,7 +3033,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Poland/Krakow"
+			"city": "World/Poland/Krakow"
 		}
 	}, {
 		"geometry": {
@@ -3042,7 +3042,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Serbia/Belgrade"
+			"city": "World/Serbia/Belgrade"
 		}
 	}, {
 		"geometry": {
@@ -3051,7 +3051,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Kaliningrad"
+			"city": "World/Russia/Kaliningrad"
 		}
 	}, {
 		"geometry": {
@@ -3060,7 +3060,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Poland/Warsaw"
+			"city": "World/Poland/Warsaw"
 		}
 	}, {
 		"geometry": {
@@ -3069,7 +3069,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kosovo/Pristina"
+			"city": "World/Kosovo/Pristina"
 		}
 	}, {
 		"geometry": {
@@ -3078,7 +3078,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Macedonia/Skopje"
+			"city": "World/Macedonia/Skopje"
 		}
 	}, {
 		"geometry": {
@@ -3087,7 +3087,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Greece/Thessaloniki"
+			"city": "World/Greece/Thessaloniki"
 		}
 	}, {
 		"geometry": {
@@ -3096,7 +3096,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bulgaria/Sofia"
+			"city": "World/Bulgaria/Sofia"
 		}
 	}, {
 		"geometry": {
@@ -3105,7 +3105,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Greece/Athens"
+			"city": "World/Greece/Athens"
 		},
 		"id": "Athens"
 	}, {
@@ -3115,7 +3115,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Finland/Tampere"
+			"city": "World/Finland/Tampere"
 		}
 	}, {
 		"geometry": {
@@ -3124,7 +3124,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ukraine/Lviv"
+			"city": "World/Ukraine/Lviv"
 		},
 		"id": "Lviv"
 	}, {
@@ -3134,7 +3134,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Latvia/Riga"
+			"city": "World/Latvia/Riga"
 		}
 	}, {
 		"geometry": {
@@ -3143,7 +3143,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Finland/Espoo"
+			"city": "World/Finland/Espoo"
 		}
 	}, {
 		"geometry": {
@@ -3152,7 +3152,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Estonia/Tallinn"
+			"city": "World/Estonia/Tallinn"
 		}
 	}, {
 		"geometry": {
@@ -3161,7 +3161,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Finland/Helsinki"
+			"city": "World/Finland/Helsinki"
 		}
 	}, {
 		"geometry": {
@@ -3170,7 +3170,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Lithuania/Vilnius"
+			"city": "World/Lithuania/Vilnius"
 		}
 	}, {
 		"geometry": {
@@ -3179,7 +3179,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Port Elizabeth"
+			"city": "World/South Africa/Port Elizabeth"
 		}
 	}, {
 		"geometry": {
@@ -3188,7 +3188,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zambia/Livingstone"
+			"city": "World/Zambia/Livingstone"
 		},
 		"id": "Livingstone"
 	}, {
@@ -3198,7 +3198,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Botswana/Gaborone"
+			"city": "World/Botswana/Gaborone"
 		}
 	}, {
 		"geometry": {
@@ -3207,7 +3207,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Romania/Bucharest"
+			"city": "World/Romania/Bucharest"
 		}
 	}, {
 		"geometry": {
@@ -3216,7 +3216,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Bloemfontein"
+			"city": "World/South Africa/Bloemfontein"
 		}
 	}, {
 		"geometry": {
@@ -3225,7 +3225,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Estonia/Tartu"
+			"city": "World/Estonia/Tartu"
 		}
 	}, {
 		"geometry": {
@@ -3234,7 +3234,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Izmir"
+			"city": "World/Turkey/Izmir"
 		}
 	}, {
 		"geometry": {
@@ -3243,7 +3243,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Democratic Republic of the Congo/Lubumbashi"
+			"city": "World/Democratic Republic of the Congo/Lubumbashi"
 		}
 	}, {
 		"geometry": {
@@ -3252,7 +3252,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Lesotho/Maseru"
+			"city": "World/Lesotho/Maseru"
 		}
 	}, {
 		"geometry": {
@@ -3261,7 +3261,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Botswana/Francistown"
+			"city": "World/Botswana/Francistown"
 		}
 	}, {
 		"geometry": {
@@ -3270,7 +3270,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Belarus/Minsk"
+			"city": "World/Belarus/Minsk"
 		}
 	}, {
 		"geometry": {
@@ -3279,7 +3279,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Johannesburg"
+			"city": "World/South Africa/Johannesburg"
 		}
 	}, {
 		"geometry": {
@@ -3288,7 +3288,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Pretoria"
+			"city": "World/South Africa/Pretoria"
 		}
 	}, {
 		"geometry": {
@@ -3297,7 +3297,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zambia/Lusaka"
+			"city": "World/Zambia/Lusaka"
 		}
 	}, {
 		"geometry": {
@@ -3306,7 +3306,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zambia/Ndola"
+			"city": "World/Zambia/Ndola"
 		}
 	}, {
 		"geometry": {
@@ -3315,7 +3315,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zimbabwe/Bulawayo"
+			"city": "World/Zimbabwe/Bulawayo"
 		}
 	}, {
 		"geometry": {
@@ -3324,7 +3324,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Moldova/Chisinau"
+			"city": "World/Moldova/Chisinau"
 		}
 	}, {
 		"geometry": {
@@ -3333,7 +3333,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Istanbul"
+			"city": "World/Turkey/Istanbul"
 		}
 	}, {
 		"geometry": {
@@ -3342,7 +3342,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Bursa"
+			"city": "World/Turkey/Bursa"
 		}
 	}, {
 		"geometry": {
@@ -3351,7 +3351,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Burundi/Bujumbura"
+			"city": "World/Burundi/Bujumbura"
 		}
 	}, {
 		"geometry": {
@@ -3360,7 +3360,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Moldova/Tiraspol"
+			"city": "World/Moldova/Tiraspol"
 		}
 	}, {
 		"geometry": {
@@ -3369,7 +3369,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Egypt/Alexandria"
+			"city": "World/Egypt/Alexandria"
 		}
 	}, {
 		"geometry": {
@@ -3378,7 +3378,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Rwanda/Kigali"
+			"city": "World/Rwanda/Kigali"
 		}
 	}, {
 		"geometry": {
@@ -3387,7 +3387,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Saint Petersburg"
+			"city": "World/Russia/Saint Petersburg"
 		}
 	}, {
 		"geometry": {
@@ -3396,7 +3396,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ukraine/Kiev"
+			"city": "World/Ukraine/Kiev"
 		}
 	}, {
 		"geometry": {
@@ -3405,7 +3405,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ukraine/Odessa"
+			"city": "World/Ukraine/Odessa"
 		}
 	}, {
 		"geometry": {
@@ -3414,7 +3414,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zimbabwe/Harare"
+			"city": "World/Zimbabwe/Harare"
 		}
 	}, {
 		"geometry": {
@@ -3423,7 +3423,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Africa/Durban"
+			"city": "World/South Africa/Durban"
 		}
 	}, {
 		"geometry": {
@@ -3432,7 +3432,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Swaziland/Mbabane"
+			"city": "World/Swaziland/Mbabane"
 		}
 	}, {
 		"geometry": {
@@ -3441,7 +3441,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Swaziland/Lobamba"
+			"city": "World/Swaziland/Lobamba"
 		}
 	}, {
 		"geometry": {
@@ -3450,7 +3450,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Egypt/Cairo"
+			"city": "World/Egypt/Cairo"
 		}
 	}, {
 		"geometry": {
@@ -3459,7 +3459,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Swaziland/Manzini"
+			"city": "World/Swaziland/Manzini"
 		}
 	}, {
 		"geometry": {
@@ -3468,7 +3468,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Egypt/Port Said"
+			"city": "World/Egypt/Port Said"
 		}
 	}, {
 		"geometry": {
@@ -3477,7 +3477,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Konya"
+			"city": "World/Turkey/Konya"
 		}
 	}, {
 		"geometry": {
@@ -3486,7 +3486,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sudan/Omdurman"
+			"city": "World/Sudan/Omdurman"
 		}
 	}, {
 		"geometry": {
@@ -3495,7 +3495,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sudan/Khartoum"
+			"city": "World/Sudan/Khartoum"
 		}
 	}, {
 		"geometry": {
@@ -3504,7 +3504,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Egypt/Suez"
+			"city": "World/Egypt/Suez"
 		}
 	}, {
 		"geometry": {
@@ -3513,7 +3513,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mozambique/Maputo"
+			"city": "World/Mozambique/Maputo"
 		}
 	}, {
 		"geometry": {
@@ -3522,7 +3522,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Egypt/Luxor"
+			"city": "World/Egypt/Luxor"
 		}
 	}, {
 		"geometry": {
@@ -3531,7 +3531,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Ankara"
+			"city": "World/Turkey/Ankara"
 		}
 	}, {
 		"geometry": {
@@ -3540,7 +3540,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tanzania/Mwanza"
+			"city": "World/Tanzania/Mwanza"
 		}
 	}, {
 		"geometry": {
@@ -3549,7 +3549,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Murmansk"
+			"city": "World/Russia/Murmansk"
 		}
 	}, {
 		"geometry": {
@@ -3558,7 +3558,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cyprus/Nicosia"
+			"city": "World/Cyprus/Nicosia"
 		}
 	}, {
 		"geometry": {
@@ -3567,7 +3567,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malawi/Lilongwe"
+			"city": "World/Malawi/Lilongwe"
 		}
 	}, {
 		"geometry": {
@@ -3576,7 +3576,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Crimea/Simferopol"
+			"city": "World/Crimea/Simferopol"
 		}
 	}, {
 		"geometry": {
@@ -3585,7 +3585,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Palestine/Gaza"
+			"city": "World/Palestine/Gaza"
 		}
 	}, {
 		"geometry": {
@@ -3594,7 +3594,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Mersin"
+			"city": "World/Turkey/Mersin"
 		}
 	}, {
 		"geometry": {
@@ -3603,7 +3603,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Israel/Tel Aviv"
+			"city": "World/Israel/Tel Aviv"
 		}
 	}, {
 		"geometry": {
@@ -3612,7 +3612,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malawi/Blantyre"
+			"city": "World/Malawi/Blantyre"
 		}
 	}, {
 		"geometry": {
@@ -3621,7 +3621,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Israel/Jerusalem"
+			"city": "World/Israel/Jerusalem"
 		}
 	}, {
 		"geometry": {
@@ -3630,7 +3630,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Adana"
+			"city": "World/Turkey/Adana"
 		}
 	}, {
 		"geometry": {
@@ -3639,7 +3639,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Lebanon/Beirut"
+			"city": "World/Lebanon/Beirut"
 		}
 	}, {
 		"geometry": {
@@ -3648,7 +3648,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tanzania/Dodoma"
+			"city": "World/Tanzania/Dodoma"
 		}
 	}, {
 		"geometry": {
@@ -3657,7 +3657,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Jordan/Amman"
+			"city": "World/Jordan/Amman"
 		}
 	}, {
 		"geometry": {
@@ -3666,7 +3666,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Syria/Damascus"
+			"city": "World/Syria/Damascus"
 		}
 	}, {
 		"geometry": {
@@ -3675,7 +3675,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ukraine/Kharkiv"
+			"city": "World/Ukraine/Kharkiv"
 		}
 	}, {
 		"geometry": {
@@ -3684,7 +3684,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kenya/Nairobi"
+			"city": "World/Kenya/Nairobi"
 		}
 	}, {
 		"geometry": {
@@ -3693,7 +3693,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkey/Gaziantep"
+			"city": "World/Turkey/Gaziantep"
 		}
 	}, {
 		"geometry": {
@@ -3702,7 +3702,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Moscow"
+			"city": "World/Russia/Moscow"
 		}
 	}, {
 		"geometry": {
@@ -3711,7 +3711,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Ethiopia/Addis Ababa"
+			"city": "World/Ethiopia/Addis Ababa"
 		}
 	}, {
 		"geometry": {
@@ -3720,7 +3720,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Eritrea/Asmara"
+			"city": "World/Eritrea/Asmara"
 		}
 	}, {
 		"geometry": {
@@ -3729,7 +3729,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saudi Arabia/Jeddah"
+			"city": "World/Saudi Arabia/Jeddah"
 		}
 	}, {
 		"geometry": {
@@ -3738,7 +3738,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Zanzibar/Zanzibar City"
+			"city": "World/Zanzibar/Zanzibar City"
 		}
 	}, {
 		"geometry": {
@@ -3747,7 +3747,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tanzania/Dar es Salaam"
+			"city": "World/Tanzania/Dar es Salaam"
 		}
 	}, {
 		"geometry": {
@@ -3756,7 +3756,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saudi Arabia/Medina"
+			"city": "World/Saudi Arabia/Medina"
 		}
 	}, {
 		"geometry": {
@@ -3765,7 +3765,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saudi Arabia/Mecca"
+			"city": "World/Saudi Arabia/Mecca"
 		}
 	}, {
 		"geometry": {
@@ -3774,7 +3774,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Georgia/Sukhumi"
+			"city": "World/Georgia/Sukhumi"
 		}
 	}, {
 		"geometry": {
@@ -3783,7 +3783,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Djibouti/Djibouti City"
+			"city": "World/Djibouti/Djibouti City"
 		}
 	}, {
 		"geometry": {
@@ -3792,7 +3792,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Comoros/Moroni"
+			"city": "World/Comoros/Moroni"
 		}
 	}, {
 		"geometry": {
@@ -3801,7 +3801,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Ossetia/Tskhinvali"
+			"city": "World/South Ossetia/Tskhinvali"
 		}
 	}, {
 		"geometry": {
@@ -3810,7 +3810,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Yemen/Sana'a"
+			"city": "World/Yemen/Sana'a"
 		}
 	}, {
 		"geometry": {
@@ -3819,7 +3819,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iraq/Baghdad"
+			"city": "World/Iraq/Baghdad"
 		}
 	}, {
 		"geometry": {
@@ -3828,7 +3828,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Nizhny Novgorod"
+			"city": "World/Russia/Nizhny Novgorod"
 		}
 	}, {
 		"geometry": {
@@ -3837,7 +3837,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Somalia/Hargeisa"
+			"city": "World/Somalia/Hargeisa"
 		}
 	}, {
 		"geometry": {
@@ -3846,7 +3846,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iraq/Arbil"
+			"city": "World/Iraq/Arbil"
 		}
 	}, {
 		"geometry": {
@@ -3855,7 +3855,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Armenia/Yerevan"
+			"city": "World/Armenia/Yerevan"
 		}
 	}, {
 		"geometry": {
@@ -3864,7 +3864,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Georgia/Tbilisi"
+			"city": "World/Georgia/Tbilisi"
 		}
 	}, {
 		"geometry": {
@@ -3873,7 +3873,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mayotte/Mamoudzou"
+			"city": "World/Mayotte/Mamoudzou"
 		}
 	}, {
 		"geometry": {
@@ -3882,7 +3882,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Somalia/Mogadishu"
+			"city": "World/Somalia/Mogadishu"
 		}
 	}, {
 		"geometry": {
@@ -3891,7 +3891,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iran/Tabriz"
+			"city": "World/Iran/Tabriz"
 		}
 	}, {
 		"geometry": {
@@ -3900,7 +3900,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saudi Arabia/Riyadh"
+			"city": "World/Saudi Arabia/Riyadh"
 		}
 	}, {
 		"geometry": {
@@ -3909,7 +3909,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nagorno-Karabakh Republic/Stepanakert"
+			"city": "World/Nagorno-Karabakh Republic/Stepanakert"
 		}
 	}, {
 		"geometry": {
@@ -3918,7 +3918,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Madagascar/Antananarivo"
+			"city": "World/Madagascar/Antananarivo"
 		}
 	}, {
 		"geometry": {
@@ -3927,7 +3927,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iraq/Basra"
+			"city": "World/Iraq/Basra"
 		}
 	}, {
 		"geometry": {
@@ -3936,7 +3936,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kuwait/Kuwait City"
+			"city": "World/Kuwait/Kuwait City"
 		}
 	}, {
 		"geometry": {
@@ -3945,7 +3945,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Azerbaijian/Baku"
+			"city": "World/Azerbaijian/Baku"
 		}
 	}, {
 		"geometry": {
@@ -3954,7 +3954,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Saudi Arabia/Dammam"
+			"city": "World/Saudi Arabia/Dammam"
 		}
 	}, {
 		"geometry": {
@@ -3963,7 +3963,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Samara"
+			"city": "World/Russia/Samara"
 		}
 	}, {
 		"geometry": {
@@ -3972,7 +3972,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bahrain/Manama"
+			"city": "World/Bahrain/Manama"
 		}
 	}, {
 		"geometry": {
@@ -3981,7 +3981,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iran/Tehran"
+			"city": "World/Iran/Tehran"
 		}
 	}, {
 		"geometry": {
@@ -3990,7 +3990,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Qatar/Doha"
+			"city": "World/Qatar/Doha"
 		}
 	}, {
 		"geometry": {
@@ -3999,7 +3999,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Arab Emirates/Abu Dhabi"
+			"city": "World/United Arab Emirates/Abu Dhabi"
 		}
 	}, {
 		"geometry": {
@@ -4008,7 +4008,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "United Arab Emirates/Dubai"
+			"city": "World/United Arab Emirates/Dubai"
 		}
 	}, {
 		"geometry": {
@@ -4017,7 +4017,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Seychelles/Victoria"
+			"city": "World/Seychelles/Victoria"
 		}
 	}, {
 		"geometry": {
@@ -4026,7 +4026,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Reunion/Saint-Denis"
+			"city": "World/Reunion/Saint-Denis"
 		}
 	}, {
 		"geometry": {
@@ -4035,7 +4035,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Perm"
+			"city": "World/Russia/Perm"
 		}
 	}, {
 		"geometry": {
@@ -4044,7 +4044,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mauritius/Port Louis"
+			"city": "World/Mauritius/Port Louis"
 		}
 	}, {
 		"geometry": {
@@ -4053,7 +4053,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Turkmenistan/Ashgabat"
+			"city": "World/Turkmenistan/Ashgabat"
 		}
 	}, {
 		"geometry": {
@@ -4062,7 +4062,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Oman/Muscat"
+			"city": "World/Oman/Muscat"
 		}
 	}, {
 		"geometry": {
@@ -4071,7 +4071,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Uzbekistan/Nukus"
+			"city": "World/Uzbekistan/Nukus"
 		}
 	}, {
 		"geometry": {
@@ -4080,7 +4080,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Iran/Mashhad"
+			"city": "World/Iran/Mashhad"
 		}
 	}, {
 		"geometry": {
@@ -4089,7 +4089,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Yekaterinburg"
+			"city": "World/Russia/Yekaterinburg"
 		}
 	}, {
 		"geometry": {
@@ -4098,7 +4098,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Afghanistan/Kandahar"
+			"city": "World/Afghanistan/Kandahar"
 		}
 	}, {
 		"geometry": {
@@ -4107,7 +4107,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Karachi"
+			"city": "World/Pakistan/Karachi"
 		}
 	}, {
 		"geometry": {
@@ -4116,7 +4116,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Hyderabad"
+			"city": "World/India/Hyderabad"
 		}
 	}, {
 		"geometry": {
@@ -4125,7 +4125,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tajikistan/Dushanbe"
+			"city": "World/Tajikistan/Dushanbe"
 		}
 	}, {
 		"geometry": {
@@ -4134,7 +4134,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Afghanistan/Kabul"
+			"city": "World/Afghanistan/Kabul"
 		}
 	}, {
 		"geometry": {
@@ -4143,7 +4143,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Uzbekistan/Tashkent"
+			"city": "World/Uzbekistan/Tashkent"
 		}
 	}, {
 		"geometry": {
@@ -4152,7 +4152,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kazakhstan/Astana"
+			"city": "World/Kazakhstan/Astana"
 		}
 	}, {
 		"geometry": {
@@ -4161,7 +4161,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Multan"
+			"city": "World/Pakistan/Multan"
 		}
 	}, {
 		"geometry": {
@@ -4170,7 +4170,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Peshawar"
+			"city": "World/Pakistan/Peshawar"
 		}
 	}, {
 		"geometry": {
@@ -4179,7 +4179,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Uzbekistan/Namangan"
+			"city": "World/Uzbekistan/Namangan"
 		}
 	}, {
 		"geometry": {
@@ -4188,7 +4188,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Ahmedabad"
+			"city": "World/India/Ahmedabad"
 		}
 	}, {
 		"geometry": {
@@ -4197,7 +4197,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Mumbai"
+			"city": "World/India/Mumbai"
 		}
 	}, {
 		"geometry": {
@@ -4206,7 +4206,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Surat"
+			"city": "World/India/Surat"
 		}
 	}, {
 		"geometry": {
@@ -4215,7 +4215,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Faisalabad"
+			"city": "World/Pakistan/Faisalabad"
 		}
 	}, {
 		"geometry": {
@@ -4224,7 +4224,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Rawalpindi"
+			"city": "World/Pakistan/Rawalpindi"
 		}
 	}, {
 		"geometry": {
@@ -4233,7 +4233,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Islamabad"
+			"city": "World/Pakistan/Islamabad"
 		}
 	}, {
 		"geometry": {
@@ -4242,7 +4242,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Omsk"
+			"city": "World/Russia/Omsk"
 		}
 	}, {
 		"geometry": {
@@ -4251,7 +4251,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Maldives/Male"
+			"city": "World/Maldives/Male"
 		}
 	}, {
 		"geometry": {
@@ -4260,7 +4260,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Pune"
+			"city": "World/India/Pune"
 		}
 	}, {
 		"geometry": {
@@ -4269,7 +4269,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Pakistan/Lahore"
+			"city": "World/Pakistan/Lahore"
 		}
 	}, {
 		"geometry": {
@@ -4278,7 +4278,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kyrgyzstan/Bishkek"
+			"city": "World/Kyrgyzstan/Bishkek"
 		}
 	}, {
 		"geometry": {
@@ -4287,7 +4287,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Srinagar"
+			"city": "World/India/Srinagar"
 		}
 	}, {
 		"geometry": {
@@ -4296,7 +4296,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Amritsar"
+			"city": "World/India/Amritsar"
 		}
 	}, {
 		"geometry": {
@@ -4305,7 +4305,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Jaipur"
+			"city": "World/India/Jaipur"
 		}
 	}, {
 		"geometry": {
@@ -4314,7 +4314,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Ludhiana"
+			"city": "World/India/Ludhiana"
 		}
 	}, {
 		"geometry": {
@@ -4323,7 +4323,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kazakhstan/Almaty"
+			"city": "World/Kazakhstan/Almaty"
 		}
 	}, {
 		"geometry": {
@@ -4332,7 +4332,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/New Delhi"
+			"city": "World/India/New Delhi"
 		}
 	}, {
 		"geometry": {
@@ -4341,7 +4341,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Bangalore"
+			"city": "World/India/Bangalore"
 		}
 	}, {
 		"geometry": {
@@ -4350,7 +4350,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Nagpur"
+			"city": "World/India/Nagpur"
 		}
 	}, {
 		"geometry": {
@@ -4359,7 +4359,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sri Lanka/Colombo"
+			"city": "World/Sri Lanka/Colombo"
 		}
 	}, {
 		"geometry": {
@@ -4368,7 +4368,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sri Lanka/Sri Jayawardenapura-Kotte"
+			"city": "World/Sri Lanka/Sri Jayawardenapura-Kotte"
 		}
 	}, {
 		"geometry": {
@@ -4377,7 +4377,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Chennai"
+			"city": "World/India/Chennai"
 		}
 	}, {
 		"geometry": {
@@ -4386,7 +4386,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Kanpur"
+			"city": "World/India/Kanpur"
 		}
 	}, {
 		"geometry": {
@@ -4395,7 +4395,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sri Lanka/Kandy"
+			"city": "World/Sri Lanka/Kandy"
 		}
 	}, {
 		"geometry": {
@@ -4404,7 +4404,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Lucknow"
+			"city": "World/India/Lucknow"
 		}
 	}, {
 		"geometry": {
@@ -4413,7 +4413,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Sri Lanka/Batticaloa"
+			"city": "World/Sri Lanka/Batticaloa"
 		}
 	}, {
 		"geometry": {
@@ -4422,7 +4422,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Novosibirsk"
+			"city": "World/Russia/Novosibirsk"
 		}
 	}, {
 		"geometry": {
@@ -4431,7 +4431,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Patna"
+			"city": "World/India/Patna"
 		}
 	}, {
 		"geometry": {
@@ -4440,7 +4440,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nepal/Kathmandu"
+			"city": "World/Nepal/Kathmandu"
 		}
 	}, {
 		"geometry": {
@@ -4449,7 +4449,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Urumqi"
+			"city": "World/China/Urumqi"
 		}
 	}, {
 		"geometry": {
@@ -4458,7 +4458,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Norilsk"
+			"city": "World/Russia/Norilsk"
 		}
 	}, {
 		"geometry": {
@@ -4467,7 +4467,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Kolkata"
+			"city": "World/India/Kolkata"
 		}
 	}, {
 		"geometry": {
@@ -4476,7 +4476,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Gangtok"
+			"city": "World/India/Gangtok"
 		}
 	}, {
 		"geometry": {
@@ -4485,7 +4485,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tibet/Shigatse"
+			"city": "World/Tibet/Shigatse"
 		}
 	}, {
 		"geometry": {
@@ -4494,7 +4494,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bhutan/Thimphu"
+			"city": "World/Bhutan/Thimphu"
 		}
 	}, {
 		"geometry": {
@@ -4503,7 +4503,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bangladesh/Dhaka"
+			"city": "World/Bangladesh/Dhaka"
 		}
 	}, {
 		"geometry": {
@@ -4512,7 +4512,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tibet/Lhasa"
+			"city": "World/Tibet/Lhasa"
 		}
 	}, {
 		"geometry": {
@@ -4521,7 +4521,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Agartala"
+			"city": "World/India/Agartala"
 		}
 	}, {
 		"geometry": {
@@ -4530,7 +4530,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Guwahati"
+			"city": "World/India/Guwahati"
 		}
 	}, {
 		"geometry": {
@@ -4539,7 +4539,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Bangladesh/Chittagong"
+			"city": "World/Bangladesh/Chittagong"
 		}
 	}, {
 		"geometry": {
@@ -4548,7 +4548,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Shillong"
+			"city": "World/India/Shillong"
 		}
 	}, {
 		"geometry": {
@@ -4557,7 +4557,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Port Blair"
+			"city": "World/India/Port Blair"
 		}
 	}, {
 		"geometry": {
@@ -4566,7 +4566,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "India/Dibrugarh"
+			"city": "World/India/Dibrugarh"
 		}
 	}, {
 		"geometry": {
@@ -4575,7 +4575,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Banda Aceh"
+			"city": "World/Indonesia/Banda Aceh"
 		}
 	}, {
 		"geometry": {
@@ -4584,7 +4584,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Burma/Naypyidaw"
+			"city": "World/Burma/Naypyidaw"
 		}
 	}, {
 		"geometry": {
@@ -4593,7 +4593,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Burma/Yangon"
+			"city": "World/Burma/Yangon"
 		}
 	}, {
 		"geometry": {
@@ -4602,7 +4602,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Medan"
+			"city": "World/Indonesia/Medan"
 		}
 	}, {
 		"geometry": {
@@ -4611,7 +4611,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Phuket"
+			"city": "World/Thailand/Phuket"
 		}
 	}, {
 		"geometry": {
@@ -4620,7 +4620,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Chiang Mai"
+			"city": "World/Thailand/Chiang Mai"
 		}
 	}, {
 		"geometry": {
@@ -4629,7 +4629,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Surat Thani"
+			"city": "World/Thailand/Surat Thani"
 		}
 	}, {
 		"geometry": {
@@ -4638,7 +4638,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Padang"
+			"city": "World/Indonesia/Padang"
 		}
 	}, {
 		"geometry": {
@@ -4647,7 +4647,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Alor Setar"
+			"city": "World/Malaysia/Alor Setar"
 		}
 	}, {
 		"geometry": {
@@ -4656,7 +4656,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Hat Yai"
+			"city": "World/Thailand/Hat Yai"
 		}
 	}, {
 		"geometry": {
@@ -4665,7 +4665,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Bangkok"
+			"city": "World/Thailand/Bangkok"
 		}
 	}, {
 		"geometry": {
@@ -4674,7 +4674,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Pattaya"
+			"city": "World/Thailand/Pattaya"
 		}
 	}, {
 		"geometry": {
@@ -4683,7 +4683,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Ipoh"
+			"city": "World/Malaysia/Ipoh"
 		}
 	}, {
 		"geometry": {
@@ -4692,7 +4692,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Pekanbaru"
+			"city": "World/Indonesia/Pekanbaru"
 		}
 	}, {
 		"geometry": {
@@ -4701,7 +4701,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Bratsk"
+			"city": "World/Russia/Bratsk"
 		}
 	}, {
 		"geometry": {
@@ -4710,7 +4710,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Kuala Lumpur"
+			"city": "World/Malaysia/Kuala Lumpur"
 		}
 	}, {
 		"geometry": {
@@ -4719,7 +4719,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Xining"
+			"city": "World/China/Xining"
 		}
 	}, {
 		"geometry": {
@@ -4728,7 +4728,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Nakhon Ratchasima"
+			"city": "World/Thailand/Nakhon Ratchasima"
 		}
 	}, {
 		"geometry": {
@@ -4737,7 +4737,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Kota Bharu"
+			"city": "World/Malaysia/Kota Bharu"
 		}
 	}, {
 		"geometry": {
@@ -4746,7 +4746,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Malacca Town"
+			"city": "World/Malaysia/Malacca Town"
 		}
 	}, {
 		"geometry": {
@@ -4755,7 +4755,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Laos/Vientiane"
+			"city": "World/Laos/Vientiane"
 		}
 	}, {
 		"geometry": {
@@ -4764,7 +4764,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Kunming"
+			"city": "World/China/Kunming"
 		}
 	}, {
 		"geometry": {
@@ -4773,7 +4773,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Thailand/Udon Thani"
+			"city": "World/Thailand/Udon Thani"
 		}
 	}, {
 		"geometry": {
@@ -4782,7 +4782,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Johor Bahru"
+			"city": "World/Malaysia/Johor Bahru"
 		}
 	}, {
 		"geometry": {
@@ -4791,7 +4791,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Lanzhou"
+			"city": "World/China/Lanzhou"
 		}
 	}, {
 		"geometry": {
@@ -4800,7 +4800,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Singapore"
+			"city": "World/Singapore"
 		}
 	}, {
 		"geometry": {
@@ -4809,7 +4809,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cambodia/Siem Reap"
+			"city": "World/Cambodia/Siem Reap"
 		}
 	}, {
 		"geometry": {
@@ -4818,7 +4818,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Chengdu"
+			"city": "World/China/Chengdu"
 		}
 	}, {
 		"geometry": {
@@ -4827,7 +4827,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Palembang"
+			"city": "World/Indonesia/Palembang"
 		}
 	}, {
 		"geometry": {
@@ -4836,7 +4836,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cambodia/Phnom Penh"
+			"city": "World/Cambodia/Phnom Penh"
 		}
 	}, {
 		"geometry": {
@@ -4845,7 +4845,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vietnam/Hanoi"
+			"city": "World/Vietnam/Hanoi"
 		}
 	}, {
 		"geometry": {
@@ -4854,7 +4854,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Chongqing"
+			"city": "World/China/Chongqing"
 		}
 	}, {
 		"geometry": {
@@ -4863,7 +4863,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vietnam/Hai Phong"
+			"city": "World/Vietnam/Hai Phong"
 		}
 	}, {
 		"geometry": {
@@ -4872,7 +4872,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vietnam/Ho Chi Minh City"
+			"city": "World/Vietnam/Ho Chi Minh City"
 		}
 	}, {
 		"geometry": {
@@ -4881,7 +4881,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Jakarta"
+			"city": "World/Indonesia/Jakarta"
 		}
 	}, {
 		"geometry": {
@@ -4890,7 +4890,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Bogor"
+			"city": "World/Indonesia/Bogor"
 		}
 	}, {
 		"geometry": {
@@ -4899,7 +4899,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Mongolia/Ulan Bator"
+			"city": "World/Mongolia/Ulan Bator"
 		}
 	}, {
 		"geometry": {
@@ -4908,7 +4908,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Bandung"
+			"city": "World/Indonesia/Bandung"
 		}
 	}, {
 		"geometry": {
@@ -4917,7 +4917,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vietnam/Hue"
+			"city": "World/Vietnam/Hue"
 		}
 	}, {
 		"geometry": {
@@ -4926,7 +4926,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vietnam/Da Nang"
+			"city": "World/Vietnam/Da Nang"
 		}
 	}, {
 		"geometry": {
@@ -4935,7 +4935,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Nanning"
+			"city": "World/China/Nanning"
 		}
 	}, {
 		"geometry": {
@@ -4944,7 +4944,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Xi'an"
+			"city": "World/China/Xi'an"
 		}
 	}, {
 		"geometry": {
@@ -4953,7 +4953,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Pontianak"
+			"city": "World/Indonesia/Pontianak"
 		}
 	}, {
 		"geometry": {
@@ -4962,7 +4962,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Kuching"
+			"city": "World/Malaysia/Kuching"
 		}
 	}, {
 		"geometry": {
@@ -4971,7 +4971,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Yogyakarta"
+			"city": "World/Indonesia/Yogyakarta"
 		}
 	}, {
 		"geometry": {
@@ -4980,7 +4980,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Semarang"
+			"city": "World/Indonesia/Semarang"
 		}
 	}, {
 		"geometry": {
@@ -4989,7 +4989,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Taiyuan"
+			"city": "World/China/Taiyuan"
 		}
 	}, {
 		"geometry": {
@@ -4998,7 +4998,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Malang"
+			"city": "World/Indonesia/Malang"
 		}
 	}, {
 		"geometry": {
@@ -5007,7 +5007,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Surabaya"
+			"city": "World/Indonesia/Surabaya"
 		}
 	}, {
 		"geometry": {
@@ -5016,7 +5016,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Guangzhou"
+			"city": "World/China/Guangzhou"
 		}
 	}, {
 		"geometry": {
@@ -5025,7 +5025,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Macau"
+			"city": "World/China/Macau"
 		}
 	}, {
 		"geometry": {
@@ -5034,7 +5034,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Zhengzhou"
+			"city": "World/China/Zhengzhou"
 		}
 	}, {
 		"geometry": {
@@ -5043,7 +5043,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Dongguan"
+			"city": "World/China/Dongguan"
 		}
 	}, {
 		"geometry": {
@@ -5052,7 +5052,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Miri"
+			"city": "World/Malaysia/Miri"
 		}
 	}, {
 		"geometry": {
@@ -5061,7 +5061,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Shenzhen"
+			"city": "World/China/Shenzhen"
 		}
 	}, {
 		"geometry": {
@@ -5070,7 +5070,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Hong Kong"
+			"city": "World/China/Hong Kong"
 		}
 	}, {
 		"geometry": {
@@ -5079,7 +5079,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Wuhan"
+			"city": "World/China/Wuhan"
 		}
 	}, {
 		"geometry": {
@@ -5088,7 +5088,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Handan"
+			"city": "World/China/Handan"
 		}
 	}, {
 		"geometry": {
@@ -5097,7 +5097,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Shijiazhuang"
+			"city": "World/China/Shijiazhuang"
 		}
 	}, {
 		"geometry": {
@@ -5106,7 +5106,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brunei/Bandar Seri Begawan"
+			"city": "World/Brunei/Bandar Seri Begawan"
 		}
 	}, {
 		"geometry": {
@@ -5115,7 +5115,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Denpasar"
+			"city": "World/Indonesia/Denpasar"
 		}
 	}, {
 		"geometry": {
@@ -5124,7 +5124,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Mandurah"
+			"city": "World/Australia/Mandurah"
 		}
 	}, {
 		"geometry": {
@@ -5133,7 +5133,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Perth"
+			"city": "World/Australia/Perth"
 		}
 	}, {
 		"geometry": {
@@ -5142,7 +5142,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Malaysia/Kota Kinabalu"
+			"city": "World/Malaysia/Kota Kinabalu"
 		}
 	}, {
 		"geometry": {
@@ -5151,7 +5151,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Beijing"
+			"city": "World/China/Beijing"
 		}
 	}, {
 		"geometry": {
@@ -5160,7 +5160,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Balikpapan"
+			"city": "World/Indonesia/Balikpapan"
 		}
 	}, {
 		"geometry": {
@@ -5169,7 +5169,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Jinan"
+			"city": "World/China/Jinan"
 		}
 	}, {
 		"geometry": {
@@ -5178,7 +5178,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Tianjin"
+			"city": "World/China/Tianjin"
 		}
 	}, {
 		"geometry": {
@@ -5187,7 +5187,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Port Hedland"
+			"city": "World/Australia/Port Hedland"
 		}
 	}, {
 		"geometry": {
@@ -5196,7 +5196,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Nanjing"
+			"city": "World/China/Nanjing"
 		}
 	}, {
 		"geometry": {
@@ -5205,7 +5205,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Makassar"
+			"city": "World/Indonesia/Makassar"
 		}
 	}, {
 		"geometry": {
@@ -5214,7 +5214,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Hangzhou"
+			"city": "World/China/Hangzhou"
 		}
 	}, {
 		"geometry": {
@@ -5223,7 +5223,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Taiwan/Kaohsiung"
+			"city": "World/Taiwan/Kaohsiung"
 		}
 	}, {
 		"geometry": {
@@ -5232,7 +5232,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Qingdao"
+			"city": "World/China/Qingdao"
 		}
 	}, {
 		"geometry": {
@@ -5241,7 +5241,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Taiwan/Taichung"
+			"city": "World/Taiwan/Taichung"
 		}
 	}, {
 		"geometry": {
@@ -5250,7 +5250,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Manila"
+			"city": "World/Philippines/Manila"
 		}
 	}, {
 		"geometry": {
@@ -5259,7 +5259,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Quezon City"
+			"city": "World/Philippines/Quezon City"
 		}
 	}, {
 		"geometry": {
@@ -5268,7 +5268,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Makati City"
+			"city": "World/Philippines/Makati City"
 		}
 	}, {
 		"geometry": {
@@ -5277,7 +5277,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Shanghai"
+			"city": "World/China/Shanghai"
 		}
 	}, {
 		"geometry": {
@@ -5286,7 +5286,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Taiwan/Taipei"
+			"city": "World/Taiwan/Taipei"
 		}
 	}, {
 		"geometry": {
@@ -5295,7 +5295,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Dalian"
+			"city": "World/China/Dalian"
 		}
 	}, {
 		"geometry": {
@@ -5304,7 +5304,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Iloilo City"
+			"city": "World/Philippines/Iloilo City"
 		}
 	}, {
 		"geometry": {
@@ -5313,7 +5313,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Zamboanga City"
+			"city": "World/Philippines/Zamboanga City"
 		}
 	}, {
 		"geometry": {
@@ -5322,7 +5322,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Shenyang"
+			"city": "World/China/Shenyang"
 		}
 	}, {
 		"geometry": {
@@ -5331,7 +5331,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Tagbilaran"
+			"city": "World/Philippines/Tagbilaran"
 		}
 	}, {
 		"geometry": {
@@ -5340,7 +5340,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Cebu City"
+			"city": "World/Philippines/Cebu City"
 		}
 	}, {
 		"geometry": {
@@ -5349,7 +5349,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Changchun"
+			"city": "World/China/Changchun"
 		}
 	}, {
 		"geometry": {
@@ -5358,7 +5358,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "East Timor/Dili"
+			"city": "World/East Timor/Dili"
 		}
 	}, {
 		"geometry": {
@@ -5367,7 +5367,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "North Korea/Pyongyang"
+			"city": "World/North Korea/Pyongyang"
 		}
 	}, {
 		"geometry": {
@@ -5376,7 +5376,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Philippines/Davao City"
+			"city": "World/Philippines/Davao City"
 		}
 	}, {
 		"geometry": {
@@ -5385,7 +5385,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "North Korea/Kaesong"
+			"city": "World/North Korea/Kaesong"
 		}
 	}, {
 		"geometry": {
@@ -5394,7 +5394,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "China/Harbin"
+			"city": "World/China/Harbin"
 		}
 	}, {
 		"geometry": {
@@ -5403,7 +5403,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Korea/Incheon"
+			"city": "World/South Korea/Incheon"
 		}
 	}, {
 		"geometry": {
@@ -5412,7 +5412,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Korea/Seoul"
+			"city": "World/South Korea/Seoul"
 		}
 	}, {
 		"geometry": {
@@ -5421,7 +5421,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "North Korea/Wonsan"
+			"city": "World/North Korea/Wonsan"
 		}
 	}, {
 		"geometry": {
@@ -5430,7 +5430,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Okinawa"
+			"city": "World/Japan/Okinawa"
 		}
 	}, {
 		"geometry": {
@@ -5439,7 +5439,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Ambon"
+			"city": "World/Indonesia/Ambon"
 		}
 	}, {
 		"geometry": {
@@ -5448,7 +5448,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Korea/Daegu"
+			"city": "World/South Korea/Daegu"
 		}
 	}, {
 		"geometry": {
@@ -5457,7 +5457,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "South Korea/Busan"
+			"city": "World/South Korea/Busan"
 		}
 	}, {
 		"geometry": {
@@ -5466,7 +5466,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Yakutsk"
+			"city": "World/Russia/Yakutsk"
 		}
 	}, {
 		"geometry": {
@@ -5475,7 +5475,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "North Korea/Chongjin"
+			"city": "World/North Korea/Chongjin"
 		}
 	}, {
 		"geometry": {
@@ -5484,7 +5484,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Fukuoka"
+			"city": "World/Japan/Fukuoka"
 		}
 	}, {
 		"geometry": {
@@ -5493,7 +5493,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Darwin"
+			"city": "World/Australia/Darwin"
 		}
 	}, {
 		"geometry": {
@@ -5502,7 +5502,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Vladivostok"
+			"city": "World/Russia/Vladivostok"
 		}
 	}, {
 		"geometry": {
@@ -5511,7 +5511,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Hiroshima"
+			"city": "World/Japan/Hiroshima"
 		}
 	}, {
 		"geometry": {
@@ -5520,7 +5520,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Palau/Koror"
+			"city": "World/Palau/Koror"
 		}
 	}, {
 		"geometry": {
@@ -5529,7 +5529,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Palau/Melekeok"
+			"city": "World/Palau/Melekeok"
 		}
 	}, {
 		"geometry": {
@@ -5538,7 +5538,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Kobe"
+			"city": "World/Japan/Kobe"
 		}
 	}, {
 		"geometry": {
@@ -5547,7 +5547,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Osaka"
+			"city": "World/Japan/Osaka"
 		}
 	}, {
 		"geometry": {
@@ -5556,7 +5556,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Kyoto"
+			"city": "World/Japan/Kyoto"
 		}
 	}, {
 		"geometry": {
@@ -5565,7 +5565,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Nagoya"
+			"city": "World/Japan/Nagoya"
 		}
 	}, {
 		"geometry": {
@@ -5574,7 +5574,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Adelaide"
+			"city": "World/Australia/Adelaide"
 		}
 	}, {
 		"geometry": {
@@ -5583,7 +5583,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Yokohama"
+			"city": "World/Japan/Yokohama"
 		}
 	}, {
 		"geometry": {
@@ -5592,7 +5592,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Kawasaki"
+			"city": "World/Japan/Kawasaki"
 		}
 	}, {
 		"geometry": {
@@ -5601,7 +5601,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Tokyo"
+			"city": "World/Japan/Tokyo"
 		}
 	}, {
 		"geometry": {
@@ -5610,7 +5610,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Indonesia/Jayapura"
+			"city": "World/Indonesia/Jayapura"
 		}
 	}, {
 		"geometry": {
@@ -5619,7 +5619,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Japan/Sapporo"
+			"city": "World/Japan/Sapporo"
 		}
 	}, {
 		"geometry": {
@@ -5628,7 +5628,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Geelong"
+			"city": "World/Australia/Geelong"
 		}
 	}, {
 		"geometry": {
@@ -5637,7 +5637,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guam/Hagatna"
+			"city": "World/Guam/Hagatna"
 		}
 	}, {
 		"geometry": {
@@ -5646,7 +5646,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Guam/Dededo"
+			"city": "World/Guam/Dededo"
 		}
 	}, {
 		"geometry": {
@@ -5655,7 +5655,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Melbourne"
+			"city": "World/Australia/Melbourne"
 		}
 	}, {
 		"geometry": {
@@ -5664,7 +5664,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Northern Mariana Islands/Saipan"
+			"city": "World/Northern Mariana Islands/Saipan"
 		}
 	}, {
 		"geometry": {
@@ -5673,7 +5673,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Cairns"
+			"city": "World/Australia/Cairns"
 		}
 	}, {
 		"geometry": {
@@ -5682,7 +5682,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Townsville"
+			"city": "World/Australia/Townsville"
 		}
 	}, {
 		"geometry": {
@@ -5691,7 +5691,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Papua New Guinea/Port Moresby"
+			"city": "World/Papua New Guinea/Port Moresby"
 		}
 	}, {
 		"geometry": {
@@ -5700,7 +5700,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tasmania/Hobart"
+			"city": "World/Tasmania/Hobart"
 		}
 	}, {
 		"geometry": {
@@ -5709,7 +5709,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Canberra"
+			"city": "World/Australia/Canberra"
 		}
 	}, {
 		"geometry": {
@@ -5718,7 +5718,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Rockhampton"
+			"city": "World/Australia/Rockhampton"
 		}
 	}, {
 		"geometry": {
@@ -5727,7 +5727,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Magadan"
+			"city": "World/Russia/Magadan"
 		}
 	}, {
 		"geometry": {
@@ -5736,7 +5736,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Wollongong"
+			"city": "World/Australia/Wollongong"
 		}
 	}, {
 		"geometry": {
@@ -5745,7 +5745,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Sydney"
+			"city": "World/Australia/Sydney"
 		}
 	}, {
 		"geometry": {
@@ -5754,7 +5754,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Newcastle"
+			"city": "World/Australia/Newcastle"
 		}
 	}, {
 		"geometry": {
@@ -5763,7 +5763,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Federated States of Micronesia/Weno"
+			"city": "World/Federated States of Micronesia/Weno"
 		}
 	}, {
 		"geometry": {
@@ -5772,7 +5772,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Brisbane"
+			"city": "World/Australia/Brisbane"
 		}
 	}, {
 		"geometry": {
@@ -5781,7 +5781,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Australia/Gold Coast"
+			"city": "World/Australia/Gold Coast"
 		}
 	}, {
 		"geometry": {
@@ -5790,7 +5790,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Federated States of Micronesia/Palikir"
+			"city": "World/Federated States of Micronesia/Palikir"
 		}
 	}, {
 		"geometry": {
@@ -5799,7 +5799,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Petropavlovsk-Kamchatsky"
+			"city": "World/Russia/Petropavlovsk-Kamchatsky"
 		}
 	}, {
 		"geometry": {
@@ -5808,7 +5808,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Solomon Islands/Honiara"
+			"city": "World/Solomon Islands/Honiara"
 		}
 	}, {
 		"geometry": {
@@ -5817,7 +5817,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Caledonia/Noumea"
+			"city": "World/New Caledonia/Noumea"
 		}
 	}, {
 		"geometry": {
@@ -5826,7 +5826,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Nauru/Yaren District"
+			"city": "World/Nauru/Yaren District"
 		}
 	}, {
 		"geometry": {
@@ -5835,7 +5835,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Vanuatu/Port Vila"
+			"city": "World/Vanuatu/Port Vila"
 		}
 	}, {
 		"geometry": {
@@ -5844,7 +5844,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Invercargill"
+			"city": "World/New Zealand/Invercargill"
 		}
 	}, {
 		"geometry": {
@@ -5853,7 +5853,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Dunedin"
+			"city": "World/New Zealand/Dunedin"
 		}
 	}, {
 		"geometry": {
@@ -5862,7 +5862,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Marshall Islands/Majuro"
+			"city": "World/Marshall Islands/Majuro"
 		}
 	}, {
 		"geometry": {
@@ -5871,7 +5871,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Christchurch"
+			"city": "World/New Zealand/Christchurch"
 		}
 	}, {
 		"geometry": {
@@ -5880,7 +5880,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kiribati/South Tarawa"
+			"city": "World/Kiribati/South Tarawa"
 		}
 	}, {
 		"geometry": {
@@ -5889,7 +5889,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Wellington"
+			"city": "World/New Zealand/Wellington"
 		}
 	}, {
 		"geometry": {
@@ -5898,7 +5898,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "New Zealand/Auckland"
+			"city": "World/New Zealand/Auckland"
 		}
 	}, {
 		"geometry": {
@@ -5907,7 +5907,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Wallis and Futuna/Mata-Utu"
+			"city": "World/Wallis and Futuna/Mata-Utu"
 		}
 	}, {
 		"geometry": {
@@ -5916,7 +5916,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Russia/Anadyr"
+			"city": "World/Russia/Anadyr"
 		}
 	}, {
 		"geometry": {
@@ -5925,7 +5925,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Fiji/Suva"
+			"city": "World/Fiji/Suva"
 		}
 	}, {
 		"geometry": {
@@ -5934,7 +5934,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tuvalu/Funafuti"
+			"city": "World/Tuvalu/Funafuti"
 		}
 	}, {
 		"geometry": {
@@ -5943,7 +5943,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Fiji/Labasa"
+			"city": "World/Fiji/Labasa"
 		}
 	}, {
 		"geometry": {
@@ -5952,7 +5952,7 @@ var cities = {
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Tuvalu/Nukulaelae"
+			"city": "World/Tuvalu/Nukulaelae"
 		}
 	}]
 }

@@ -112,7 +112,7 @@ Agora.Views.LocationView = Backbone.View.extend({
               $(this).remove();
             });
             for (var i=0; i < data.length ;i++) {
-              var $subtree = $('<p>'+data[i]+'</p>');
+              var $subtree = $('<p>'+data[i].name+'</p>');
 
 
               var f = function() {

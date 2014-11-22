@@ -496,7 +496,21 @@ module.exports.channelSearch = function(request, response) {
 
 //maybe just return subtrees with the topics and locations themselves?????
 module.exports.getLocationSubtree = function(request, response) {
-  response.json(['United States', 'Japan', 'France']);
+
+  var queryArgs = url.parse(request.url, true).query;
+  console.log('searching for loaction subtrees for: ', queryArgs.location);
+
+  client.query("SELECT * FROM locations WHERE parent = $1;",
+      [queryArgs.location],
+      function(err, result) {
+        if (err) {
+          console.log('error selecting from locations: ', err);
+          response.end('error');
+        } else {
+          response.json(result.rows);
+        }
+  });
+
 };
 
 //maybe just return subtrees with the topics and locations themselves?????
@@ -517,7 +531,7 @@ module.exports.getChannelSubtree = function(request, response) {
   });
 
 
-  response.json(['Music', 'Politics', 'Guns']);
+  //response.json(['Music', 'Politics', 'Guns']);
 };
 
 
