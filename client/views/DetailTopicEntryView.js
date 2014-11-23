@@ -169,6 +169,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       var $commentReplyButton = $comment.children('.detailCommentClear').children('.commentContentBox').children('div.replyButton');
       var $expandCommentButton = $comment.children('.detailCommentClear').children('img.expandCommentButton');
+      if (comments[i].responses.length === 0) {
+        $expandCommentButton.hide();
+      }
 
       //sending data to the response box
       var a = function() {
@@ -199,6 +202,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       //this fixed the problem like in detailView, but why??
       var c = function() {
+
 
         var commentCollapsed = true;
         $expandCommentButton[0].onclick = function(e) {
@@ -233,7 +237,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       this.$el.append($commentExpansionBox);
 
 
-      for (var j=0;j<comments[i].responses.length;j++) {
+      for (var j=0;j < comments[i].responses.length;j++) {
 
 
 
@@ -252,6 +256,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
         var $responseReplyButton = $response.children('.detailResponseClear').children('.responseContentBox').children('div.replyButton');
         var $expandResponseButton = $response.children('.detailResponseClear').children('img.expandResponseButton');
+
+        if (comments[i].responses[j].replies.length === 0) {
+          $expandResponseButton.hide();
+        }
 
         //sending data to the response box
         var b = function() {
