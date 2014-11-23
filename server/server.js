@@ -179,6 +179,12 @@ app.post('/createResponse', routes.createResponse);
 app.post('/createReply', routes.createReply);
 
 //SECURE
+app.post('/uploadTopicImage', routes.uploadTopicImage);
+app.post('/uploadCommentImage', routes.uploadCommentImage);
+app.post('/uploadResponseImage', routes.uploadResponseImage);
+app.post('/uploadReplyImage', routes.uploadReplyImage);
+
+//SECURE
 app.post('/upvoteTopic', routes.upvoteTopic);
 app.post('/upvoteComment', routes.upvoteComment);
 app.post('/upvoteResponse', routes.upvoteResponse);

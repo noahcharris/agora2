@@ -1160,69 +1160,215 @@ module.exports.createTopic = function(request, response) {
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
   //AUTHENTICATION HERE
   //console.log('request.session.login: ', request.session.login);
-  console.log('username: ', request.body.username);
+  // console.log('username: ', request.body.username);
 
-  if (request.mySession.login) {
+  // if (request.mySession.login) {
 
-    //call accepts true or false depending on whether the request failed or not
-    //!!!remember that timestamp can be forged this way
-    postgres.createTopic(request.body.username, request.body.headline, request.body.link,
-     request.body.content, request.body.location, request.body.channel, function(success) {
-      if (success) {
+  //   //call accepts true or false depending on whether the request failed or not
+  //   //!!!remember that timestamp can be forged this way
+  //   postgres.createTopic(request.body.username, request.body.headline, request.body.link,
+  //    request.body.content, request.body.location, request.body.channel, function(success) {
+  //     if (success) {
 
-        //PUT MESSAGE IN QUEUE
-        //need a helper function to do this
-        connection.then(function(conn) {
-          var ok = conn.createChannel();
-          ok = ok.then(function(ch) {
-            ch.assertQueue(q);
-
-
-            // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
-            var msg = 'Trees:'+request.body.location+':'+request.body.channel;
-
-            ch.sendToQueue(q, new Buffer(msg));
-            console.log(" [x] Sent '%s'", msg);
-          });
-          return ok;
-        }).then(null, console.warn);
-
-        response.end('topic successfully created, sent message to queue');
+  //       //PUT MESSAGE IN QUEUE
+  //       //need a helper function to do this
+  //       connection.then(function(conn) {
+  //         var ok = conn.createChannel();
+  //         ok = ok.then(function(ch) {
+  //           ch.assertQueue(q);
 
 
-        //THERE MUST BE A BETTER WAY TO DO THIS
-        // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
-        //   [request.body.username],
-        //   function(err, result) {
-        //     if (err) {
-        //       console.log('error selecting from topics: ', err);
-        //     } else {
+  //           // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
+  //           var msg = 'Trees:'+request.body.location+':'+request.body.channel;
 
-        //       console.log("WTF", result.rows[0].id);
-        //       var keyString = 'topicLocations:' + result.rows[0].id;
-        //       console.log('USING KEYSTRING: ', keyString);
-        //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
-        //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
-        //       //request.body.origin (ALT, this shows the author's origin on the map
-        //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
-        //           console.log('error setting topicLocations key: ', err);
-        //       });
+  //           ch.sendToQueue(q, new Buffer(msg));
+  //           console.log(" [x] Sent '%s'", msg);
+  //         });
+  //         return ok;
+  //       }).then(null, console.warn);
 
-        //     }
-        // });
+  //       response.end('topic successfully created, sent message to queue');
 
 
-      } else {
-        response.end('error inserting into topics');
-      }
+  //       //THERE MUST BE A BETTER WAY TO DO THIS
+  //       // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
+  //       //   [request.body.username],
+  //       //   function(err, result) {
+  //       //     if (err) {
+  //       //       console.log('error selecting from topics: ', err);
+  //       //     } else {
 
-    });
-  } else {
-    response.end('you can\'t submit a message if you are not logged in');
-  }
+  //       //       console.log("WTF", result.rows[0].id);
+  //       //       var keyString = 'topicLocations:' + result.rows[0].id;
+  //       //       console.log('USING KEYSTRING: ', keyString);
+  //       //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
+  //       //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
+  //       //       //request.body.origin (ALT, this shows the author's origin on the map
+  //       //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
+  //       //           console.log('error setting topicLocations key: ', err);
+  //       //       });
+
+  //       //     }
+  //       // });
+
+
+  //     } else {
+  //       response.end('error inserting into topics');
+  //     }
+
+
+
+  //   });
+  // } else {
+  //   response.end('you can\'t submit a message if you are not logged in');
+  // }
+
+
+
+
+  //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+  var form = new multiparty.Form();
+
+  form.parse(request, function(err, fields, files) {
+
+    //if an image is sent
+    if (files.file) {
+
+            //insert and fetch id here, then upload the image to amazon
+            //ugh
+            console.log('whaaaaaaa: ', fields.about[0]);
+
+            client.query("INSERT INTO topics ((type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+            +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+            [username, headline, link, contents, location, "{\""+location+"\"}", channel], function(err, result) {
+
+                if (err) {
+                  console.log('error updating users table: ', err);
+                } else {
+
+
+                  //now fetch the id of that recently created topic by selecting and ordering by createdAt
+                  //ugh
+
+
+
+
+                  response.end('successfully inserted topic');
+                }
+            });
+
+
+            //need to fetch id once topic is created and use that in the keystring
+            var keyString = 'topicImage' + fields.username[0];
+
+            var params = {
+              localFile: files.file[0].path,
+
+              s3Params: {
+                Bucket: "agora-image-storage",
+                Key: keyString,
+                // other options supported by putObject, except Body and ContentLength.
+                // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+              },
+            };
+
+            var uploader = s3Client.uploadFile(params);
+            uploader.on('error', function(err) {
+              console.error("unable to upload:", err.stack);
+            });
+
+            uploader.on('progress', function() {
+              console.log("progress", uploader.progressMd5Amount,
+                        uploader.progressAmount, uploader.progressTotal);
+            });
+
+            uploader.on('end', function() {
+              console.log("done uploading");
+
+
+              var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+
+              
+            });
+
+
+
+    } else {
+
+      //##############
+      //NO IMAGE
+      //##############
+
+      //call accepts true or false depending on whether the request failed or not
+       //   //!!!remember that timestamp can be forged this way
+         postgres.createTopic(request.body.username, request.body.headline, request.body.link,
+          request.body.content, request.body.location, request.body.channel, function(success) {
+           if (success) {
+
+                     //PUT MESSAGE IN QUEUE
+                     //need a helper function to do this
+                     connection.then(function(conn) {
+                       var ok = conn.createChannel();
+                       ok = ok.then(function(ch) {
+                         ch.assertQueue(q);
+
+
+                         // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
+                         var msg = 'Trees:'+request.body.location+':'+request.body.channel;
+
+                         ch.sendToQueue(q, new Buffer(msg));
+                         console.log(" [x] Sent '%s'", msg);
+                       });
+                       return ok;
+                     }).then(null, console.warn);
+
+                     response.end('topic successfully created, sent message to queue');
+
+
+                     //THERE MUST BE A BETTER WAY TO DO THIS
+                     // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
+                     //   [request.body.username],
+                     //   function(err, result) {
+                     //     if (err) {
+                     //       console.log('error selecting from topics: ', err);
+                     //     } else {
+
+                     //       console.log("WTF", result.rows[0].id);
+                     //       var keyString = 'topicLocations:' + result.rows[0].id;
+                     //       console.log('USING KEYSTRING: ', keyString);
+                     //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
+                     //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
+                     //       //request.body.origin (ALT, this shows the author's origin on the map
+                     //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
+                     //           console.log('error setting topicLocations key: ', err);
+                     //       });
+
+                     //     }
+                     // });
+
+
+           } else {
+             response.end('error inserting into topics');
+           }
+
+         });
+
+
+
+    }
+
+
+  });
 
 
 };
+
+
+
 
 
 
@@ -1299,6 +1445,31 @@ module.exports.createReply = function(request, response) {
       }
   });
 };
+
+
+
+
+
+
+module.exports.uploadTopicImage = function(request, response) {
+
+};
+
+module.exports.uploadCommentImage = function(request, response) {
+
+};
+
+module.exports.uploadResponseImage = function(request, response) {
+
+};
+
+module.exports.uploadReplyImage = function(request, response) {
+
+};
+
+
+
+
 
 
 
