@@ -1240,9 +1240,9 @@ module.exports.createTopic = function(request, response) {
             //ugh
             console.log('whaaaaaaa: ', fields.about[0]);
 
-            client.query("INSERT INTO topics ((type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+            client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
             +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [fields.username, fields.headline, fields.link, fields.contents, fields.location, "{\""+fields.location+"\"}", fields.channel],
+            [fields.username[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]],
             function(err, result) {
 
                 if (err) {
@@ -1250,7 +1250,7 @@ module.exports.createTopic = function(request, response) {
                 } else {
 
                         client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                        [fields.username],
+                        [fields.username[0]],
                         function(err, result) {
                           if (err) {
                                 console.log('error selecting from topics: ', err);
@@ -1307,9 +1307,9 @@ module.exports.createTopic = function(request, response) {
 
 
 
-      client.query("INSERT INTO topics ((type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+      client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
       +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [fields.username, fields.headline, fields.link, fields.contents, fields.location, "{\""+fields.location+"\"}", fields.channel], 
+      [fields.username[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]], 
       function(err, result) {
         if (err) {
           console.log('error inserting into topics: ', err);
