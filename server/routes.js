@@ -1242,91 +1242,109 @@ module.exports.createTopic = function(request, response) {
 
             client.query("INSERT INTO topics ((type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
             +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [username, headline, link, contents, location, "{\""+location+"\"}", channel], function(err, result) {
+            [fields.username, fields.headline, fields.link, fields.contents, fields.location, "{\""+fields.location+"\"}", fields.channel],
+            function(err, result) {
 
                 if (err) {
                   console.log('error updating users table: ', err);
                 } else {
 
+                        client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                        [fields.username],
+                        function(err, result) {
+                          if (err) {
+                                console.log('error selecting from topics: ', err);
+                                response.end('error');
+                          } else {
+                                    //this is where we use that id we just fetched
+                                    var keyString = 'topicImage' + result.rows[0].id;
 
-                  //now fetch the id of that recently created topic by selecting and ordering by createdAt
-                  //ugh
+                                    var params = {
+                                      localFile: files.file[0].path,
+
+                                      s3Params: {
+                                        Bucket: "agora-image-storage",
+                                        Key: keyString,
+                                        // other options supported by putObject, except Body and ContentLength.
+                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                      },
+                                    };
+
+                                    var uploader = s3Client.uploadFile(params);
+                                    uploader.on('error', function(err) {
+                                      console.error("unable to upload:", err.stack);
+                                    });
+
+                                    uploader.on('progress', function() {
+                                      console.log("progress", uploader.progressMd5Amount,
+                                                uploader.progressAmount, uploader.progressTotal);
+                                    });
+
+                                    uploader.on('end', function() {
+                                      console.log("done uploading");
 
 
+                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-                  response.end('successfully inserted topic');
+                                          client.query("UPDATE topics SET image = $1 WHERE id = $2",
+                                            [imageLink, result.rows[0].id], function(err, result) {
+                                              response.end('successfully inserted topic');
+                                          });
+                                    });
+                          }
+                        });//end topic id select
                 }
-            });
+              });//end topic insert
 
 
-            //need to fetch id once topic is created and use that in the keystring
-            var keyString = 'topicImage' + fields.username[0];
-
-            var params = {
-              localFile: files.file[0].path,
-
-              s3Params: {
-                Bucket: "agora-image-storage",
-                Key: keyString,
-                // other options supported by putObject, except Body and ContentLength.
-                // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-              },
-            };
-
-            var uploader = s3Client.uploadFile(params);
-            uploader.on('error', function(err) {
-              console.error("unable to upload:", err.stack);
-            });
-
-            uploader.on('progress', function() {
-              console.log("progress", uploader.progressMd5Amount,
-                        uploader.progressAmount, uploader.progressTotal);
-            });
-
-            uploader.on('end', function() {
-              console.log("done uploading");
-
-
-              var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
-
-
-
-              
-            });
-
-
-
+            
     } else {
 
       //##############
       //NO IMAGE
       //##############
 
+
+
+      client.query("INSERT INTO topics ((type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+      +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+      [fields.username, fields.headline, fields.link, fields.contents, fields.location, "{\""+fields.location+"\"}", fields.channel], 
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into topics: ', err);
+          response.end('error');
+        } else {
+
+
+          response.end('successfully created topic (no image)');
+        }
+      });
+
       //call accepts true or false depending on whether the request failed or not
        //   //!!!remember that timestamp can be forged this way
-         postgres.createTopic(request.body.username, request.body.headline, request.body.link,
-          request.body.content, request.body.location, request.body.channel, function(success) {
-           if (success) {
+         // postgres.createTopic(request.body.username, request.body.headline, request.body.link,
+         //  request.body.content, request.body.location, request.body.channel, function(success) {
+         //   if (success) {
 
-                     //PUT MESSAGE IN QUEUE
-                     //need a helper function to do this
-                     connection.then(function(conn) {
-                       var ok = conn.createChannel();
-                       ok = ok.then(function(ch) {
-                         ch.assertQueue(q);
+         //             //PUT MESSAGE IN QUEUE
+         //             //need a helper function to do this
+         //             connection.then(function(conn) {
+         //               var ok = conn.createChannel();
+         //               ok = ok.then(function(ch) {
+         //                 ch.assertQueue(q);
 
 
-                         // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
-                         var msg = 'Trees:'+request.body.location+':'+request.body.channel;
+         //                 // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
+         //                 var msg = 'Trees:'+request.body.location+':'+request.body.channel;
 
-                         ch.sendToQueue(q, new Buffer(msg));
-                         console.log(" [x] Sent '%s'", msg);
-                       });
-                       return ok;
-                     }).then(null, console.warn);
+         //                 ch.sendToQueue(q, new Buffer(msg));
+         //                 console.log(" [x] Sent '%s'", msg);
+         //               });
+         //               return ok;
+         //             }).then(null, console.warn);
 
-                     response.end('topic successfully created, sent message to queue');
+         //             response.end('topic successfully created, sent message to queue');
 
 
                      //THERE MUST BE A BETTER WAY TO DO THIS
@@ -1351,18 +1369,9 @@ module.exports.createTopic = function(request, response) {
                      // });
 
 
-           } else {
-             response.end('error inserting into topics');
-           }
+        }
+      });//end multiparty parse
 
-         });
-
-
-
-    }
-
-
-  });
 
 
 };

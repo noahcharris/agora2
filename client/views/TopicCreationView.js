@@ -61,28 +61,33 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.append( $('<p>Location:&nbsp' + location + '</p>'))
     this.$el.append( $('<p>Channel:&nbsp' + that.app.get('channel') + '</p>'))
 
-  },
 
-  setHandlers: function() {
-    var that = this;
     this.$el.children('button').on('click', function() {
 
         if (that.app.get('login')) {
+
+
+
+          var fd = new FormData();    
+          console.log($('#imageInput'));
+          fd.append( 'file', $('#imageInput')[0].files[0] );
+          fd.append( 'username', that.app.get('username') );
+          fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
+          fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
+          fd.append( 'content', that.$el.children('textarea#topicCreationContent').val() );
+          fd.append( 'location', that.app.get('mapController').get('location') );
+          fd.append( 'origin', that.app.get('origin') );
+          fd.append( 'channel', that.app.get('channel') );
+
+          
 
           $.ajax({
             url: 'http://localhost/createTopic',
             method: 'POST',
             crossDomain: true,
-            data: {
-              username: that.app.get('username'),
-              headline: that.$el.children('input#topicCreationHeadline').val(),
-              link: that.$el.children('input#topicCreationLink').val(),
-              content: that.$el.children('textarea#topicCreationContent').val(),
-              location: that.app.get('mapController').get('location'),
-              origin: that.app.get('origin'),
-              channel: that.app.get('channel'),
-              timestamp: Date.now()
-            },
+            contentType: false,
+            processData: false,
+            data: fd,
             success: function(msg) {
               alert(msg);
               //some weird shit going on here with detailView
@@ -100,6 +105,14 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
         }
 
     });
+
+
+
+
+  },
+
+  setHandlers: function() {
+
   },
 
   close: function() {
