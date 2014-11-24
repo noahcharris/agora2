@@ -1237,8 +1237,6 @@ module.exports.createTopic = function(request, response) {
     if (files.file) {
 
             //insert and fetch id here, then upload the image to amazon
-            //ugh
-            console.log('whaaaaaaa: ', fields.about[0]);
 
             client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
             +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
@@ -1455,26 +1453,6 @@ module.exports.createReply = function(request, response) {
   });
 };
 
-
-
-
-
-
-module.exports.uploadTopicImage = function(request, response) {
-
-};
-
-module.exports.uploadCommentImage = function(request, response) {
-
-};
-
-module.exports.uploadResponseImage = function(request, response) {
-
-};
-
-module.exports.uploadReplyImage = function(request, response) {
-
-};
 
 
 

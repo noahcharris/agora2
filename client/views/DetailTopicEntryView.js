@@ -85,7 +85,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       this.$el.children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').css('width', '0px');
     } else {
       this.topicContentBox.hasImage = true; 
-      //insert the image
+      this.$el.children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').attr('src', this.model.image);
     }
 
 
@@ -160,7 +160,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $comment.children('.detailCommentClear').children('.detailCommentImage').css('width', '0px');
       } else {
         commentContentBox.hasImage = true;
-        //insert the image
+        $comment.children('.detailCommentClear').children('.detailCommentImage').attr('src', comments[i].image);
       }
       this.commentContentBoxes.push(commentContentBox);
 
@@ -249,7 +249,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           $response.children('.detailResponseClear').children('.detailResponseImage').css('width', '0px');
         } else {
           responseContentBox.hasImage = true;
-          //insert the image
+          $response.children('.detailResponseClear').children('.detailResponseImage').attr('src', comments[i].responses[j].image);
         }
 
         this.responseContentBoxes.push(responseContentBox);

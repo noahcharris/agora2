@@ -26,7 +26,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');
     } else {
-      //put the image in
+      this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').attr('src', this.model.image);
     }
 
 
