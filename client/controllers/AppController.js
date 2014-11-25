@@ -587,13 +587,58 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               $('#notificationsButton')[0].onclick = function() {
 
+                notificationTemplate = _.template( $('#notificationBoxTemplate').html() );
+
+                var cssAdjust = -75;
                 for (var i=0; i < data.contactRequests.length ;i++) {
 
-                  alert('Contact request from: ' + data.contactRequests[i].sender);
+                  var $notificationBox = $( notificationTemplate(data.contactRequests[i]) );
+
+                  (function(){
+                    var x = data.contactRequests[i].sender;
+                    $notificationBox.on('click', function() {
+                      var thet = this;
+
+                      $.ajax({
+                        url: 'http://localhost:80/user',
+                        method: 'GET',
+                        crossDomain: true,
+                        data: {
+                          username: x,
+                          extra: Math.floor((Math.random() * 10000) + 1)
+                        },
+                        success: function(data) {
+                          if (data) {
+                            that.app.get('detailView').displayed = 'Users';
+                            console.log('server returned: ', data);
+
+                            $(thet).remove();
+
+                            that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                          } else {
+                            console.log('no data returned from server');
+                          }
+                        }, error: function(err) {
+                          console.log('ajax error ocurred: ', err);
+                        }
+
+                      });
+
+
+
+                    });
+
+                  })();
+
+                  $('#notificationsDisplay').append($notificationBox);
+
+                  $notificationBox.css('bottom', cssAdjust+'px');
+                  cssAdjust -= 50;
+
 
                 }
 
-              }
+              };
 
 
             }

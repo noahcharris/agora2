@@ -29,6 +29,7 @@
      <img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>
      <img id="messagingButton" class="topbarIcon" src="/resources/images/messaging.png" height="20px" width="20px"></img>
      <img id="notificationsButton" class="topbarIcon" src="/resources/images/notifications.png" height="20px" width="20px"></img>
+     <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
      <p class="username"><%= user %></p>
      <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
@@ -41,6 +42,13 @@
 
     </script>
 
+
+    <script id="notificationBoxTemplate" type="text/template">
+      <div class="notificationBox">
+        <p>Add contact request from <%= sender %></p>
+      </div>
+
+    </script>
 
     <!--Sidebar Entry Views-->
 
