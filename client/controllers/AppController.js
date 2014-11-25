@@ -164,8 +164,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //NEW TRIGGGER
     //switch between topic filters, need to include this kind of stuff in the method above as well
-
-    this.on('reloadSidebarTopics', function(location) { 
+    //takes page for pagination of topics
+    this.on('reloadSidebarTopics', function(location, page) { 
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarTopics');
