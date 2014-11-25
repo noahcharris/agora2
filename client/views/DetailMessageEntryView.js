@@ -23,6 +23,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.$el.unbind();
     this.$el.empty();
 
+
+    this.$el.append($('<ul id="messageChain"></ul>'))
+
     //MOAR MOCK DATA LIKE THIS
     this.model = this.model || [{
       sender: 'mock data',
@@ -30,13 +33,25 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       contents: 'mockingbirg'
     }];
     
-    console.log('object: :::', this.model.entries.length);
+    var $messageChainList = this.$el.children('ul#messageChain');
+    var height = 0;
     for (var i = 0; i<this.model.length ;i++) {
-      this.$el.prepend(this.template(this.model[i]));
-      console.log(this.model[i]);
+      //append the template inside a list element
+      var $message = $('<li></li>').append(this.template(this.model[i]));
+      $messageChainList.prepend($message);
+      height += $message.height();
     }
 
-    this.$el.append('<div class="spacer"></div>')
+    $messageChainList.append('<div class="spacer"></div>');
+    console.log('hwohohwo: ', height);
+
+    //LOL this will do for now
+    setTimeout(function() {
+      console.log($messageChainList.scrollTop());
+      $messageChainList.scrollTop(9999999);
+    }, 100);
+
+
 
     //NEED TO SCROLL TO BOTTOM ONCE THESE ARE ALL PREPENDED
 

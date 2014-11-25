@@ -490,9 +490,8 @@ body {
 }
 
 .detailEntryItem {
-  background-color: #f8f8f8;
-  overflow-y: scroll;
   position: relative;
+  background-color: #f8f8f8;
   width: 97%;
   height: 100%;
   padding-top: 10px;
@@ -856,6 +855,15 @@ body {
 /*** DETAIL-MESSAGE VIEW ***/
 /***************************/
 /***************************/
+
+ul#messageChain {
+
+  list-style: none; 
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
+
+}
 
 
 #messageInputBox {
