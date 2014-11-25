@@ -35,6 +35,11 @@ Agora.Views.PaginationView = Backbone.View.extend({
 
     $(this.$el.children('.paginationIcon')[page-1]).css('text-decoration', 'underline');
 
+    if (page === 10) {
+      this.$el.children('#paginationNextButton').hide();
+    }
+
+
     this.$el.children('#paginationNextButton').on('click', function() {
       alert(that.app.get('sidebarView').page + 1);
     });

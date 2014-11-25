@@ -70,6 +70,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
       || this.displayed === 'Topics-Hot') {
 
 
+
+      // PAGINATION
+      var paginationView = new Agora.Views.PaginationView(this.app);
+      paginationView.render(this.page);
+      this.$el.append(paginationView.$el);
+
+
       //It's weird that this works even when i'm selecting the div
       //and not the select, better watch this
       var $select = $('<select id="timeframeSelect">\
@@ -129,11 +136,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
 
-
-    // INCLUDE PAGINATION HERE
-    var paginationView = new Agora.Views.PaginationView(this.app);
-    paginationView.render(this.page);
-    this.$el.append(paginationView.$el);
 
 
     var renderCollection;

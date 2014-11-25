@@ -951,6 +951,32 @@ module.exports.sendMessage = function(request, response) {
           response.end('error');
         } else {
           response.end('successfully created message');
+
+
+          client.query("SELECT * FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
+          [request.body.sender, request.body.recipient], function(err, result) {
+            if (err) {
+              console.log('error selecting from newMessageJoin: ', err);
+            } else {
+              if (result.rows.length === 0) {
+
+                  client.query("INSERT INTO newMessageJoin (sender, recipient) "
+                  +"VALUES ($1, $2);", [request.body.sender, request.body.recipient],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error inserting into newMessageJoin: ', err);
+                    } else {
+                    }
+                  });
+
+              }
+
+
+            }
+          });
+
+
+
         }
   });
 

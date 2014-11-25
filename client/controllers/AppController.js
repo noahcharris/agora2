@@ -589,12 +589,17 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               $('#notificationsButton')[0].onclick = function() {
 
-                notificationTemplate = _.template( $('#notificationBoxTemplate').html() );
+                contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
+                newMessageTemplate = _.template( $('#newMessageTemplate').html() );
+                topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
+
+
+                //CONTACT REQUESTS
 
                 var cssAdjust = -75;
                 for (var i=0; i < data.contactRequests.length ;i++) {
 
-                  var $notificationBox = $( notificationTemplate(data.contactRequests[i]) );
+                  var $notificationBox = $( contactRequestTemplate(data.contactRequests[i]) );
 
                   (function(){
                     var x = data.contactRequests[i].sender;
@@ -626,11 +631,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       });
 
-
-
                     });
 
                   })();
+
 
                   $('#notificationsDisplay').append($notificationBox);
 
@@ -639,6 +643,30 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
                 }
+
+
+                //NEW MESSAGES
+
+                for (var i=0; i < data.newMessages.length ;i++) {
+
+                  var $notificationBox = $( newMessageTemplate(data.newMessages[i]) );
+
+                  (function() {
+                    $notificationBox.on('click', function() {
+                      $(this).remove();
+                    });
+                  })();
+
+
+                  $('#notificationsDisplay').append($notificationBox);
+
+                  $notificationBox.css('bottom', cssAdjust+'px');
+                  cssAdjust -= 50;
+
+                }
+
+
+
 
               };
 
