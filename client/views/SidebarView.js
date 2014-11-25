@@ -22,6 +22,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
     this.inboxFilter = 'Messages';
     this.highlighted = 0;
 
+    //indicates the page that we are on
+    //used by pagination view
+    this.page = 1;
+
     this.timeframe = 'day'
   },
 
@@ -127,6 +131,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
     // INCLUDE PAGINATION HERE
+    var paginationView = new Agora.Views.PaginationView(this.app);
+    paginationView.render(this.page);
+    this.$el.append(paginationView.$el);
 
 
     var renderCollection;

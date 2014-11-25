@@ -10,11 +10,14 @@ Agora.Views.PaginationView = Backbone.View.extend({
   initialize: function(appController) {
 
     this.app = appController;
+    this.template = _.template( $('#paginationTemplate').html() );
 
   },
 
-  render: function() {
-    
+  render: function(page) {
+
+    this.$el.append( this.template() );
+
 
   },
 
