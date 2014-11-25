@@ -168,7 +168,6 @@ app.post('/registerUser', routes.registerUser);
 
 //SECURE
 app.post('/updateUserProfile', routes.updateUserProfile);
-app.post('/updateUserImage', routes.updateUserImage);
 app.post('/updateLocationProfile', routes.updateLocationProfile);
 app.post('/updateChannelProfile', routes.updateChannelProfile);
 

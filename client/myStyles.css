@@ -539,6 +539,11 @@ body {
   -moz-transition-duration:0.3s;
 }
 
+#imageInput {
+  position: absolute;
+  left: 0px;
+}
+
 #inputBoxButton {
   cursor: pointer;
   position: absolute;

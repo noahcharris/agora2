@@ -49,6 +49,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     //MESSAGE BOX DOESN'T POST WITHIN GROUPS YET
     this.$el.append(this.inputBoxTemplate());
     this.$el.children('div#inputBox').css('height', '0px');
+
+
+    //image input
+    var $imageInput = $('<input type="file" id="imageInput"></input>');
+    this.$el.children('div#inputBox').append($imageInput);
+
+
     this.$el.children('div#inputBox').children('div#inputBoxButton').on('click', function(e) {
 
       var headline = that.$el.children('div#inputBox').children('textarea#inputHeadlineTextArea').val();
@@ -363,7 +370,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             $reply.children('.detailReplyClear').children('.detailReplyImage').css('width', '0px');
           } else {
             replyContentBox.hasImage = true;
-            //insert the image
+            $reply.children('.detailReplyClear').children('.detailReplyImage').attr('src', comments[i].responses[j].replies[k].image);
           }
           this.replyContentBoxes.push(replyContentBox);
 
@@ -449,7 +456,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
   openInputBox: function(data) {
     var that = this;
-    console.log('respond neto: ', data);
     this.responding = true;
     this.responseData = data;
     $('textarea#inputTextArea').val('');
@@ -458,7 +464,28 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     }
     $('#inputBox').css('height', '100px');
 
+
+
     $('#inputBoxButton')[0].onclick = function() {
+
+
+      var fd = new FormData();    
+      fd.append( 'file', $('#imageInput')[0].files[0] );
+      fd.append( 'username', that.app.get('username') );
+
+      fd.append( 'headline', $(this).parent().children('textarea#inputHeadlineTextArea').val() );
+
+      fd.append( 'link', $(this).parent().children('textarea#inputTextArea').val() );
+
+      fd.append( 'contents', $(this).parent().children('textarea#inputTextArea').val() );
+
+      fd.append( 'location', data.location );
+      //fd.append( 'origin', that.app.get('origin') );
+      fd.append( 'channel', data.channel );
+
+      fd.append( 'topicId', data.topicId );
+      fd.append( 'commentId', data.commentId );
+      fd.append( 'responseId', data.responseId );
 
 
       //whaaaa
@@ -468,17 +495,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         url: 'http://localhost/' + data.urlSuffix,
         method: 'POST',
         crossDomain: true,
-        data: {
-          username: that.app.get('username'),
-          headline: $(thet).parent().children('textarea#inputHeadlineTextArea').val(),
-          link: $(thet).parent().children('textarea#inputTextArea').val(),
-          content: $(thet).parent().children('textarea#inputTextArea').val(),
-          location: data.location,
-          channel: data.channel,
-          topicId: data.topicId,
-          commentId: data.commentId,
-          responseId: data.responseId
-        },
+        contentType: false,
+        processData: false,
+        data: fd,
         success: function(msg) {
 
           $('#inputBox').css('height', '0px');

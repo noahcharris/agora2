@@ -825,6 +825,10 @@ module.exports.logout = function(request, response) {
 };
 
 
+
+
+
+
 /***************************/
 /***************************/
 /***  CREATION ROUTES    ***/
@@ -984,80 +988,6 @@ module.exports.registerUser = function(request, response) {
 
 
 
-module.exports.updateUserImage = function(request, response) {
-
-
-  if (request.method == 'POST') {
-    var body = '';
-    request.on('data', function (data) {
-        body += data;
-
-        // Too much POST data, kill the connection!
-        if (body.length > 1e6)
-            request.connection.destroy();
-    });
-    request.on('end', function () {
-        // var post = qs.parse(body);
-        console.log('BODY: ', body);
-
-        // use post['blah'], etc.
-    });
-  }
-
-
-
-  // console.log(request);
-
-  // var keyString = 'test';
-
-  // console.log('request.bodies::::');
-  // console.log(request.body.username);
-  // console.log(request.body.about);
-  // console.log(request.body.image);
-
-  // var params = {
-  //   localFile: request.body.image,
-
-  //   s3Params: {
-  //     Bucket: "agora-image-storage",
-  //     Key: keyString,
-  //     // other options supported by putObject, except Body and ContentLength.
-  //     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-  //   },
-  // };
-
-  // var uploader = s3Client.uploadFile(params);
-  // uploader.on('error', function(err) {
-  //   console.error("unable to upload:", err.stack);
-  // });
-
-  // uploader.on('progress', function() {
-  //   console.log("progress", uploader.progressMd5Amount,
-  //             uploader.progressAmount, uploader.progressTotal);
-  // });
-
-  // uploader.on('end', function() {
-  //   console.log("done uploading");
-
-  //   var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
-
-  //   client.query("UPDATE users SET image = $1 WHERE username = $2;",
-  //     [request.body.about, imageLink, request.body.username],
-  //     function(err, result) {
-  //       if (err) {
-  //         console.log('error updating users table: ', err);
-  //       } else {
-  //         response.end('successfully updated profile');
-  //       }
-  //   });
-    
-  // });
-
-  // response.end('what');
-
-
-};
-
 
 module.exports.updateUserProfile = function(request, response) {
 
@@ -1155,78 +1085,12 @@ module.exports.updateChannelProfile = function(request, response) {
 
 
 
+
+
+
 module.exports.createTopic = function(request, response) {
 
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
-  //AUTHENTICATION HERE
-  //console.log('request.session.login: ', request.session.login);
-  // console.log('username: ', request.body.username);
-
-  // if (request.mySession.login) {
-
-  //   //call accepts true or false depending on whether the request failed or not
-  //   //!!!remember that timestamp can be forged this way
-  //   postgres.createTopic(request.body.username, request.body.headline, request.body.link,
-  //    request.body.content, request.body.location, request.body.channel, function(success) {
-  //     if (success) {
-
-  //       //PUT MESSAGE IN QUEUE
-  //       //need a helper function to do this
-  //       connection.then(function(conn) {
-  //         var ok = conn.createChannel();
-  //         ok = ok.then(function(ch) {
-  //           ch.assertQueue(q);
-
-
-  //           // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
-  //           var msg = 'Trees:'+request.body.location+':'+request.body.channel;
-
-  //           ch.sendToQueue(q, new Buffer(msg));
-  //           console.log(" [x] Sent '%s'", msg);
-  //         });
-  //         return ok;
-  //       }).then(null, console.warn);
-
-  //       response.end('topic successfully created, sent message to queue');
-
-
-  //       //THERE MUST BE A BETTER WAY TO DO THIS
-  //       // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
-  //       //   [request.body.username],
-  //       //   function(err, result) {
-  //       //     if (err) {
-  //       //       console.log('error selecting from topics: ', err);
-  //       //     } else {
-
-  //       //       console.log("WTF", result.rows[0].id);
-  //       //       var keyString = 'topicLocations:' + result.rows[0].id;
-  //       //       console.log('USING KEYSTRING: ', keyString);
-  //       //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
-  //       //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
-  //       //       //request.body.origin (ALT, this shows the author's origin on the map
-  //       //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
-  //       //           console.log('error setting topicLocations key: ', err);
-  //       //       });
-
-  //       //     }
-  //       // });
-
-
-  //     } else {
-  //       response.end('error inserting into topics');
-  //     }
-
-
-
-  //   });
-  // } else {
-  //   response.end('you can\'t submit a message if you are not logged in');
-  // }
-
-
-
-
-  //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
 
   var form = new multiparty.Form();
@@ -1244,7 +1108,7 @@ module.exports.createTopic = function(request, response) {
             function(err, result) {
 
                 if (err) {
-                  console.log('error updating users table: ', err);
+                  console.log('error inserting into topics: ', err);
                 } else {
 
                         client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
@@ -1287,7 +1151,7 @@ module.exports.createTopic = function(request, response) {
 
                                           client.query("UPDATE topics SET image = $1 WHERE id = $2",
                                             [imageLink, result.rows[0].id], function(err, result) {
-                                              response.end('successfully inserted topic');
+                                              response.end('successfully submitted topic');
                                           });
                                     });
                           }
@@ -1303,8 +1167,6 @@ module.exports.createTopic = function(request, response) {
       //NO IMAGE
       //##############
 
-
-
       client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
       +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
       [fields.username[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]], 
@@ -1319,57 +1181,9 @@ module.exports.createTopic = function(request, response) {
         }
       });
 
-      //call accepts true or false depending on whether the request failed or not
-       //   //!!!remember that timestamp can be forged this way
-         // postgres.createTopic(request.body.username, request.body.headline, request.body.link,
-         //  request.body.content, request.body.location, request.body.channel, function(success) {
-         //   if (success) {
 
-         //             //PUT MESSAGE IN QUEUE
-         //             //need a helper function to do this
-         //             connection.then(function(conn) {
-         //               var ok = conn.createChannel();
-         //               ok = ok.then(function(ch) {
-         //                 ch.assertQueue(q);
-
-
-         //                 // Scheme for treebuilder messages: <task>~<location>~<channel>~<TopTopics/NewTopics/HotTopics>
-         //                 var msg = 'Trees:'+request.body.location+':'+request.body.channel;
-
-         //                 ch.sendToQueue(q, new Buffer(msg));
-         //                 console.log(" [x] Sent '%s'", msg);
-         //               });
-         //               return ok;
-         //             }).then(null, console.warn);
-
-         //             response.end('topic successfully created, sent message to queue');
-
-
-                     //THERE MUST BE A BETTER WAY TO DO THIS
-                     // client.query("SELECT id FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;", 
-                     //   [request.body.username],
-                     //   function(err, result) {
-                     //     if (err) {
-                     //       console.log('error selecting from topics: ', err);
-                     //     } else {
-
-                     //       console.log("WTF", result.rows[0].id);
-                     //       var keyString = 'topicLocations:' + result.rows[0].id;
-                     //       console.log('USING KEYSTRING: ', keyString);
-                     //       //THIS IS A VULNERABILITY !!!!!!!!!!!!
-                     //       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vvvvvvvv
-                     //       //request.body.origin (ALT, this shows the author's origin on the map
-                     //       memcached.set(keyString, [result.rows[0].location], 2592000, function(err) {
-                     //           console.log('error setting topicLocations key: ', err);
-                     //       });
-
-                     //     }
-                     // });
-
-
-        }
-      });//end multiparty parse
-
+    }
+  });//end multiparty parse
 
 
 };
@@ -1382,75 +1196,332 @@ module.exports.createTopic = function(request, response) {
 
 module.exports.createComment = function(request, response) {
 
-  console.log(request.body.username, request.body.location, request.body.channel, 
-    request.body.topicId, request.body.headline, request.body.content);
 
-  postgres.createComment(request.body.username, request.body.location, request.body.channel, 
-    request.body.topicId, request.body.headline, request.body.content, function(success) {
-    if (success) {
-      response.end('successfully created comment');
-      //put message in the queue
-      connection.then(function(conn) {
-        var ok = conn.createChannel();
-        ok = ok.then(function(ch) {
-          ch.assertQueue(q);
-          // Here we are sending the tree:<path>:<filter> command
-          var msg = 'Tree:'+request.body.location;
-          ch.sendToQueue(q, new Buffer(msg));
-          console.log(" [x] Sent '%s'", msg);
-        });
-      });
+
+
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
+
+  var form = new multiparty.Form();
+
+  form.parse(request, function(err, fields, files) {
+
+    //if an image is sent
+    if (files.file) {
+
+            //insert and fetch id here, then upload the image to amazon
+
+            client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+            +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+            [fields.username[0], fields.topicId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            function(err, result) {
+
+                if (err) {
+                  console.log('error inserting into comments: ', err);
+                } else {
+
+                        client.query("SELECT * FROM comments WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                        [fields.username[0]],
+                        function(err, result) {
+                          if (err) {
+                                console.log('error selecting from comments: ', err);
+                                response.end('error');
+                          } else {
+                                    //this is where we use that id we just fetched
+                                    var keyString = 'commentImage' + result.rows[0].id;
+
+                                    var params = {
+                                      localFile: files.file[0].path,
+
+                                      s3Params: {
+                                        Bucket: "agora-image-storage",
+                                        Key: keyString,
+                                        // other options supported by putObject, except Body and ContentLength.
+                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                      },
+                                    };
+
+                                    var uploader = s3Client.uploadFile(params);
+                                    uploader.on('error', function(err) {
+                                      console.error("unable to upload:", err.stack);
+                                    });
+
+                                    uploader.on('progress', function() {
+                                      console.log("progress", uploader.progressMd5Amount,
+                                                uploader.progressAmount, uploader.progressTotal);
+                                    });
+
+                                    uploader.on('end', function() {
+                                      console.log("done uploading");
+
+
+                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                          client.query("UPDATE comments SET image = $1 WHERE id = $2",
+                                            [imageLink, result.rows[0].id], function(err, result) {
+                                              response.end('successfully submitted comment');
+                                          });
+                                    });
+                          }
+                        });//end topic id select
+                }
+              });//end topic insert
+
+
+            
     } else {
-      response.end('error creating comment');
+
+      //##############
+      //NO IMAGE
+      //##############
+
+      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+      [fields.username[0], fields.topicId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into comments: ', err);
+          response.end('error');
+        } else {
+
+
+          response.end('successfully created comment (no image)');
+        }
+      });
+
+
     }
-  });
+  });//end multiparty parse
+
+
+
+
+
 };
+
+
+
+
 
 module.exports.createResponse = function(request, response) {
-  postgres.createResponse(request.body.username, request.body.location, request.body.channel, 
-      request.body.topicId, request.body.commentId, request.body.headline, request.body.content,
-      function(success) {
-        if (success) {
-          response.end('successfully created response');
-          //put message in the queue
-          connection.then(function(conn) {
-            var ok = conn.createChannel();
-            ok = ok.then(function(ch) {
-              ch.assertQueue(q);
-              // Here we are sending the tree:<path>:<filter> command
-              var msg = 'Tree:'+request.body.location;
-              ch.sendToQueue(q, new Buffer(msg));
-              console.log(" [x] Sent '%s'", msg);
-            });
-          });
+
+
+
+
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
+
+  var form = new multiparty.Form();
+
+  form.parse(request, function(err, fields, files) {
+
+    //if an image is sent
+    if (files.file) {
+
+            //insert and fetch id here, then upload the image to amazon
+            client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+            +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+            [fields.username[0], fields.topicId[0], fields.commentId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            function(err, result) {
+
+                if (err) {
+                  console.log('error inserting into responses: ', err);
+                } else {
+
+                        client.query("SELECT * FROM responses WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                        [fields.username[0]],
+                        function(err, result) {
+                          if (err) {
+                                console.log('error selecting from responses: ', err);
+                                response.end('error');
+                          } else {
+                                    //this is where we use that id we just fetched
+                                    var keyString = 'responseImage' + result.rows[0].id;
+
+                                    var params = {
+                                      localFile: files.file[0].path,
+
+                                      s3Params: {
+                                        Bucket: "agora-image-storage",
+                                        Key: keyString,
+                                        // other options supported by putObject, except Body and ContentLength.
+                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                      },
+                                    };
+
+                                    var uploader = s3Client.uploadFile(params);
+                                    uploader.on('error', function(err) {
+                                      console.error("unable to upload:", err.stack);
+                                    });
+
+                                    uploader.on('progress', function() {
+                                      console.log("progress", uploader.progressMd5Amount,
+                                                uploader.progressAmount, uploader.progressTotal);
+                                    });
+
+                                    uploader.on('end', function() {
+                                      console.log("done uploading");
+
+
+                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                          client.query("UPDATE responses SET image = $1 WHERE id = $2",
+                                            [imageLink, result.rows[0].id], function(err, result) {
+                                              response.end('successfully submitted response');
+                                          });
+                                    });
+                          }
+                        });//end topic id select
+                }
+              });//end topic insert
+
+
+            
+    } else {
+
+      //##############
+      //NO IMAGE
+      //##############
+
+      client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+      +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+      [fields.username[0], fields.topicId[0], fields.commentId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into responses: ', err);
+          response.end('error');
         } else {
-          response.end('error creating response');
+
+
+          response.end('successfully created response (no image)');
         }
-    });
+      });
+
+
+    }
+  });//end multiparty parse
+
+
+
+
+
 
 };
 
+
+
+
+
 module.exports.createReply = function(request, response) {
-  postgres.createReply(request.body.username, request.body.location, request.body.channel, 
-    request.body.topicId, request.body.commentId, request.body.responseId, request.body.headline, request.body.content,
-    function(success) {
-      if (success) {
-        response.end('successfully created reply');
-        //put message in the queue
-        connection.then(function(conn) {
-          var ok = conn.createChannel();
-          ok = ok.then(function(ch) {
-            ch.assertQueue(q);
-            // Here we are sending the tree:<path>:<filter> command
-            var msg = 'Tree:'+request.body.location;
-            ch.sendToQueue(q, new Buffer(msg));
-            console.log(" [x] Sent '%s'", msg);
-          });
-        });
-      } else {
-        response.end('error creating reply');
-      }
-  });
+
+
+
+
+
+  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
+
+  var form = new multiparty.Form();
+
+  form.parse(request, function(err, fields, files) {
+
+    //if an image is sent
+    if (files.file) {
+
+            //insert and fetch id here, then upload the image to amazon
+            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+            [fields.username[0], fields.topicId[0], fields.commentId[0], fields.responseId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            function(err, result) {
+
+                if (err) {
+                  console.log('error inserting into replies: ', err);
+                } else {
+
+                        client.query("SELECT * FROM replies WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                        [fields.username[0]],
+                        function(err, result) {
+                          if (err) {
+                                console.log('error selecting from replies: ', err);
+                                response.end('error');
+                          } else {
+                                    //this is where we use that id we just fetched
+                                    var keyString = 'replyImage' + result.rows[0].id;
+
+                                    var params = {
+                                      localFile: files.file[0].path,
+
+                                      s3Params: {
+                                        Bucket: "agora-image-storage",
+                                        Key: keyString,
+                                        // other options supported by putObject, except Body and ContentLength.
+                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                      },
+                                    };
+
+                                    var uploader = s3Client.uploadFile(params);
+                                    uploader.on('error', function(err) {
+                                      console.error("unable to upload:", err.stack);
+                                    });
+
+                                    uploader.on('progress', function() {
+                                      console.log("progress", uploader.progressMd5Amount,
+                                                uploader.progressAmount, uploader.progressTotal);
+                                    });
+
+                                    uploader.on('end', function() {
+                                      console.log("done uploading");
+
+
+                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                          client.query("UPDATE replies SET image = $1 WHERE id = $2",
+                                            [imageLink, result.rows[0].id], function(err, result) {
+                                              response.end('successfully submitted reply');
+                                          });
+                                    });
+                          }
+                        });//end topic id select
+                }
+              });//end topic insert
+
+
+            
+    } else {
+
+      //##############
+      //NO IMAGE
+      //##############
+
+      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+      [fields.username[0], fields.topicId[0], fields.commentId[0], fields.responseId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      function(err, result) {
+        if (err) {
+          console.log('error inserting into replies: ', err);
+          response.end('error');
+        } else {
+
+
+          response.end('successfully created reply (no image)');
+        }
+      });
+
+
+    }
+  });//end multiparty parse
+
+
+
+
+
+
+
+
+
 };
 
 
