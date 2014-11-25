@@ -567,8 +567,8 @@ module.exports.getMessageChains = function(request, response) {
       } else {
         response.json(result.rows);
       }
-
   });
+  
 
 };
 
@@ -605,6 +605,16 @@ module.exports.getMessageChain = function(request, response) {
         response.end('error');
       } else {
         response.json(result.rows);
+
+        //remove any potential send message notifications that could have existed
+        //this could be more efficient somehow...
+        client.query("DELETE FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
+        [queryArgs.contact, queryArgs.username], function(err, result) {
+          if (err) {
+            console.log('error selecting from newMessageJoin: ', err);
+          }
+        });
+
       }
   });
 
