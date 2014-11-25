@@ -124,10 +124,12 @@ module.exports.getTopTopicsDay = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
 
   console.log('location: ', location);
   console.log('channel: ', channel);
+  console.log('page: ', page);
 
   //testing memcached !!!!!!!!!!!!!!!!!
   // if (queryArgs.location === '')

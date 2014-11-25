@@ -22,13 +22,18 @@ Agora.Views.PaginationView = Backbone.View.extend({
 
     this.$el.children('.paginationIcon').on('click', function() {
       alert($(this).attr('name'));
-      that.app.get('sidebarView').page = $(this).attr('name');
+
+      that.app.get('sidebarView').page =  parseInt($(this).attr('name'));
+
+      that.app.trigger('reloadSidebarTopics',
+       that.app.get('mapController').get('location'));
 
       //reload sidebar to new page, pass it 
       //as an argument to reloadSidebarTopic,
       //which will need to be refitted
-
     });
+
+    $(this.$el.children('.paginationIcon')[page-1]).css('text-decoration', 'underline');
 
     this.$el.children('#paginationNextButton').on('click', function() {
       alert(that.app.get('sidebarView').page + 1);
