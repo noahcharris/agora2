@@ -171,7 +171,30 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       }
       this.commentContentBoxes.push(commentContentBox);
 
+      var $upvote = $comment.children('img');
+      (function() {
+        var x = comments[i].id;
+        $upvote[0].onclick = function() {
 
+          $.ajax({
+            url: 'http://localhost/upvoteComment',
+            method: 'POST',
+            crossDomain: true,
+            data: {
+              username: that.app.get('username'),
+              commentId: x
+            },
+            success: function(msg) {
+              alert(msg);
+            },
+            error: function() {
+              alert('upvote failed');
+            }
+          });
+
+        };
+        
+      })();
       
 
       var $commentReplyButton = $comment.children('.detailCommentClear').children('.commentContentBox').children('div.replyButton');
@@ -246,9 +269,30 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       for (var j=0;j < comments[i].responses.length;j++) {
 
-
-
         var $response = $(this.responseTemplate(comments[i].responses[j]));
+
+        var $upvote = $response.children('img');
+        (function() {
+          var x = comments[i].responses[j].id;
+          $upvote[0].onclick = function() {
+            $.ajax({
+              url: 'http://localhost/upvoteResponse',
+              method: 'POST',
+              crossDomain: true,
+              data: {
+                username: that.app.get('username'),
+                responseId: x
+              },
+              success: function(msg) {
+                alert(msg);
+              },
+              error: function() {
+                alert('upvote failed');
+              }
+            });
+          };
+        })();
+
 
         var responseContentBox = $response.children('.detailResponseClear').children('.responseContentBox');
         
@@ -363,6 +407,33 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         for (var k=0;k<comments[i].responses[j].replies.length;k++) {
 
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
+
+
+
+          var $upvote = $reply.children('img');
+          (function() {
+            var x = comments[i].responses[j].replies[k].id;
+            $upvote[0].onclick = function() {
+              $.ajax({
+                url: 'http://localhost/upvoteReply',
+                method: 'POST',
+                crossDomain: true,
+                data: {
+                  username: that.app.get('username'),
+                  replyId: x
+                },
+                success: function(msg) {
+                  alert(msg);
+                },
+                error: function() {
+                  alert('upvote failed');
+                }
+              });
+            };
+          })();
+
+
+
 
           var replyContentBox = $reply.children('.detailReplyClear').children('.replyContentBox');
 

@@ -1577,15 +1577,121 @@ module.exports.upvoteTopic = function(request, response) {
 };
 
 module.exports.upvoteComment = function(request, response) {
-  response.end('TODO');
+  client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
+    [request.body.username, request.body.commentId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from commentVoteJoin: ', err);
+        //should i just send the error back here?
+        response.end('error');
+      } else {
+        if (result.rowCount === 0) {
+          client.query("INSERT INTO commentVoteJoin (comment, username) "+
+            "VALUES ($1, $2);", [request.body.commentId, request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into commentVoteJoin: ', err);
+                response.end('error');
+              } else {
+
+                client.query("UPDATE comments SET rank = rank + 1 where id = $1", [request.body.commentId],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error updating comments: ', err);
+                      response.end('error');
+                    } else {
+                      console.log('user: '+request.body.username+' has successfully voted for comment: '+request.body.commentId);
+                      response.end('Succesfully voted');
+                    }
+                });
+
+              }
+            });
+        } else {
+          response.end('Already voted');
+        }
+      }
+
+  });
+
 };
 
 module.exports.upvoteResponse = function(request, response) {
-  response.end('TODO');
+  client.query("SELECT * FROM responseVoteJoin where (username=$1 AND response=$2);",
+    [request.body.username, request.body.responseId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from responseVoteJoin: ', err);
+        //should i just send the error back here?
+        response.end('error');
+      } else {
+        if (result.rowCount === 0) {
+          client.query("INSERT INTO responseVoteJoin (response, username) "+
+            "VALUES ($1, $2);", [request.body.responseId, request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into responseVoteJoin: ', err);
+                response.end('error');
+              } else {
+
+                client.query("UPDATE responses SET rank = rank + 1 where id = $1", [request.body.responseId],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error updating responses: ', err);
+                      response.end('error');
+                    } else {
+                      console.log('user: '+request.body.username+' has successfully voted for response: '+request.body.responseId);
+                      response.end('Succesfully voted');
+                    }
+                });
+
+              }
+            });
+        } else {
+          response.end('Already voted');
+        }
+      }
+
+  });
 };
 
 module.exports.upvoteReply = function(request, response) {
-  response.end('TODO');
+  client.query("SELECT * FROM replyVoteJoin where (username=$1 AND reply=$2);",
+    [request.body.username, request.body.replyId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from replyVoteJoin: ', err);
+        //should i just send the error back here?
+        response.end('error');
+      } else {
+        if (result.rowCount === 0) {
+          client.query("INSERT INTO replyVoteJoin (reply, username) "+
+            "VALUES ($1, $2);", [request.body.replyId, request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into replyVoteJoin: ', err);
+                response.end('error');
+              } else {
+
+                client.query("UPDATE replies SET rank = rank + 1 where id = $1", [request.body.replyId],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error updating replies: ', err);
+                      response.end('error');
+                    } else {
+                      console.log('user: '+request.body.username+' has successfully voted for reply: '+request.body.replyId);
+                      response.end('Succesfully voted');
+                    }
+                });
+
+              }
+            });
+        } else {
+          response.end('Already voted');
+        }
+      }
+
+  });
 };
 
 
