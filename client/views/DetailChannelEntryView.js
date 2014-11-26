@@ -20,7 +20,12 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
 
     $goTo[0].onclick = function() {
 
-
+      that.app.set('channel', that.model.name);
+      that.app.get('channelView').render();
+      that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'));
+      that.app.get('sidebarView').displayed = 'Topics-Top';
+      that.app.get('content1').show(that.app.get('sidebarView'));
+      that.app.get('content2').hide();
 
     };
 
