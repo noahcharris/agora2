@@ -152,9 +152,13 @@ module.exports.getTopTopicsDay = function(request, response) {
   // });
 
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +" ORDER BY rank DESC LIMIT 15 OFFSET $3;",
     //!!!! the concatenated % allows postgres to match, so the cascading effect occurs
-    [location + '%', channel],
+    [location + '%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);

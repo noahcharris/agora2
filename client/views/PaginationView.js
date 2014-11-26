@@ -26,7 +26,7 @@ Agora.Views.PaginationView = Backbone.View.extend({
       that.app.get('sidebarView').page =  parseInt($(this).attr('name'));
 
       that.app.trigger('reloadSidebarTopics',
-       that.app.get('mapController').get('location'));
+        that.app.get('mapController').get('location'));
 
       //reload sidebar to new page, pass it 
       //as an argument to reloadSidebarTopic,
@@ -42,6 +42,15 @@ Agora.Views.PaginationView = Backbone.View.extend({
 
     this.$el.children('#paginationNextButton').on('click', function() {
       alert(that.app.get('sidebarView').page + 1);
+
+      that.app.get('sidebarView').page =  that.app.get('sidebarView').page + 1;
+
+      that.app.trigger('reloadSidebarTopics',
+        that.app.get('mapController').get('location'));
+
+
+
+
     });
 
   },
