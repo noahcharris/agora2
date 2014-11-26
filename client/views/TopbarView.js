@@ -141,8 +141,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
 
 
-
-    //woooooo usin on('click'  wooooooo
+    //this actually gets set in cache manager right now
     $('#notificationsButton').on('click', function() {
 
     });
@@ -152,6 +151,36 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     var searching = false;
     $('#searchButton').on('click', function() {
+
+
+      if ($('#searchSelect').val() === 'Users') {
+
+        $.ajax({
+          url: 'http://localhost:80/userSearch',
+          method: 'GET',
+          crossDomain: true,
+          data: {
+            input: $('#searchInput').val()
+          },
+          success: function(data) {
+            if (data) {
+              that.app.get('sidebarView').searchCollection = data;
+              that.app.get('sidebarView').displayed = 'Search';
+              content1.show(that.app.get('sidebarView'));
+            } else {
+              alert('search returned no data');
+            }
+          }, error: function(err) {
+            console.log('ajax error ocurred: ', err);
+          }
+
+        });
+        
+      }
+
+
+
+
       // if (!searching) {
       //   searching = true;
       //   $('#searchInput').val('');

@@ -117,7 +117,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
         this.$el.children('div.rightThirdButton').css('background-color','#f8f8f8');
       }
 
-    } else if (this.displayed === 'All') {
+    } else if (this.displayed === 'Search') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //display 'results:'?
 
@@ -147,12 +147,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
       || this.displayed === 'Topics-New'
       || this.displayed === 'Topics-Hot') {
       renderCollection = this.collection;
-    } else if (this.displayed === 'All') {
-      renderCollection = this.searchCollection;
     } else if (this.displayed === 'Messages') {
       renderCollection = this.messagesCollection;
     } else if (this.displayed === 'Contacts') {
       renderCollection = this.contactsCollection;
+    } else if (this.displayed === 'Search') {
+      renderCollection = this.searchCollection;
     }
     if (renderCollection) {
 
@@ -177,6 +177,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryViewMethod = 'renderUser';
         }
 
+        console.log('MODELLLLLLLL: ', model);
         console.log(entryViewMethod);
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
@@ -239,7 +240,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 }
               });
               
-            } else if (model.type === 'User') {           
+            } else if (model.type === 'User') {    
               that.app.get('detailView').displayed = 'Contacts';
               that.app.get('content2').show(that.app.get('detailView'), model);
             }
@@ -252,6 +253,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
             that.removeHighlights();
             this.$el.addClass('highlight');
           });
+
+
+        console.log('log', entryView.$el);
 
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);

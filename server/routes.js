@@ -474,8 +474,23 @@ module.exports.topicSearch = function(request, response) {
 };
 
 module.exports.userSearch = function(request, response) {
-    //TODO
-  response.end('TODO');
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  console.log('input: ', queryArgs.input);
+
+  client.query("SELECT * FROM users WHERE username LIKE $1;",
+      [queryArgs.input + '%'],
+      function(err, result) {
+        if (err) {
+          console.log('error searching users with LIKE: ', err);
+          response.end('error');
+        } else {
+          response.json(result.rows);
+        }
+  });
+
+
 };
 
 
@@ -568,7 +583,7 @@ module.exports.getMessageChains = function(request, response) {
         response.json(result.rows);
       }
   });
-  
+
 
 };
 
