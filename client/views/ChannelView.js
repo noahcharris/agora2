@@ -72,9 +72,10 @@ Agora.Views.ChannelView = Backbone.View.extend({
       //keyup is the best way to get all the keys, not ideal
       $('#channelInput').on('keyup', function(e) {
 
+        var searchParameter = $('#channelInput').val();
+
         if ($('#channelInput').val().length > 2) {
 
-          var searchParameter = $('#channelInput').val();
           $.ajax({
             url: 'http://localhost:80/channelSearch',
             data: {
@@ -83,12 +84,17 @@ Agora.Views.ChannelView = Backbone.View.extend({
             crossDomain: true,
             success: function(data) {
               console.log(data);
-              $('#channelSearchResultList').remove();
+              $('.channelSearchResult').remove();
 
+              var cssAdjust = -30;
               for (var i=0; i < data.length ;i++) {
 
-                var $element = $('<div id="channelSearchResultList">'+data[i].name+'</div>');
+                var $element = $('<div class="channelSearchResult">'+data[i].name+'</div>');
                 that.$el.append($element);
+
+                $element.css('bottom', cssAdjust + 'px');
+
+                cssAdjust -= 30;
 
                 
               }
@@ -96,6 +102,8 @@ Agora.Views.ChannelView = Backbone.View.extend({
             }
           });
 
+        } else if (searchParameter === '') {
+          $('.channelSearchResult').remove();
         }
 
 

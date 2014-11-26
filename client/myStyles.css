@@ -155,6 +155,16 @@ body {
   z-index: 9999;
 }
 
+.locationSearchResult {
+  position: absolute;
+  bottom: -30px;
+  height: 30px;
+  left: 20px;
+  background-color: green;
+  color: orange;
+  z-index: 9999;
+}
+
 #locationSubtreeView {
   position: absolute;
   z-index: 502;
@@ -188,10 +198,13 @@ body {
   cursor: pointer;
 }
 
-#channelSearchResultList {
+.channelSearchResult {
   position: absolute;
   bottom: -30px;
+  height: 30px;
   left: 20px;
+  background-color: green;
+  color: orange;
   z-index: 9999;
 }
 

@@ -89,6 +89,8 @@ Agora.Views.LocationView = Backbone.View.extend({
 
         var searchParameter = $('#pathInput').val();
 
+        console.log('searchParameter: ', searchParameter);
+
         if (searchParameter.length > 2) {
 
           $.ajax({
@@ -99,17 +101,29 @@ Agora.Views.LocationView = Backbone.View.extend({
             crossDomain: true,
             success: function(data) {
               console.log(data);
-              $('#pathSearchResultList').remove();
+              $('.locationSearchResult').remove();
+
+              var cssAdjust = -30;
 
               for (var i=0; i < data.length ;i++) {
 
-                that.$el.append($('<div id="channelSearchResultList">'+data[i].name+'</div>'));
+                var $element = $('<div class="locationSearchResult">'+data[i].name+'</div>');
+
+                $element.css('bottom', cssAdjust + 'px');
+
+                cssAdjust -= 30;
+
+                that.$el.append($element);
+
+
                 
               }
 
             }
           });
 
+        } else if (searchParameter === '') {
+          $('.locationSearchResult').remove();
         }
 
       });
