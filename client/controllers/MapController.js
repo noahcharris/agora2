@@ -524,14 +524,14 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     if (!this.get('cities')) {  //always use this if/else to avoid initializing the polygons more than once
       var citiesLayer = L.layerGroup();
       for (var i=0;i<cities.features.length;i++) {
-        // var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
-        //   color:'#fa9e25',
-        //   fillOpacity: 0.2,
-        //   opacity: 0.5
-        // });
+        var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
+          color:'#fa9e25',
+          fillOpacity: 0.2,
+          opacity: 0.5
+        });
 
-        var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
-         {icon: greenIcon}).addTo(this.get('map'));
+        // var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
+        //  {icon: greenIcon}).addTo(this.get('map'));
         
         circle.city = cities.features[i].properties.city;
         circle.on('click', function(e) {

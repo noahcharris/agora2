@@ -13,7 +13,20 @@ Agora.Views.DetailLocationEntryView = Backbone.View.extend({
   },
 
   render: function() {
+    var that = this;
     this.$el.html( this.template(this.model) );
+
+    var $goTo = this.$el.children('#locationBox').children('#goToButton');
+
+    $goTo[0].onclick = function() {
+
+      that.app.trigger('reloadSidebarTopics', that.model.name);
+      that.app.get('mapController').goToPath(that.model.name);
+      that.app.get('sidebarView').displayed = 'Topics-Top';
+      that.app.get('content1').show(that.app.get('sidebarView'));
+      that.app.get('content2').hide();
+
+    };
 
   },
 
