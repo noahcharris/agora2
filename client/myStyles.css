@@ -190,7 +190,7 @@ body {
 
 #channelSearchResultList {
   position: absolute;
-  top: 30px;
+  bottom: -30px;
   left: 20px;
   z-index: 9999;
 }
