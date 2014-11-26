@@ -177,13 +177,19 @@ module.exports.getTopTopicsWeek = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
-    [location+'%', channel],
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
+
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY rank DESC LIMIT 15 OFFSET $3;",
+    [location+'%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -200,13 +206,17 @@ module.exports.getTopTopicsMonth = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
-    [location+'%', channel],
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY rank DESC LIMIT 15 OFFSET $3;",
+    [location+'%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -222,13 +232,18 @@ module.exports.getTopTopicsYear = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
-    [location+'%', channel],
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY rank DESC;",
+    [location+'%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -245,12 +260,17 @@ module.exports.getTopTopicsTime = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY rank DESC;",
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY rank DESC LIMIT 15 OFFSET $3;",
     [location+'%', channel],
     function(err, result) {
       if (err) {
@@ -272,13 +292,18 @@ module.exports.getNewTopics = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY createdAt DESC;",
-    [location+'%', channel],
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY createdAt DESC LIMIT 15 OFFSET $3;",
+    [location+'%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
@@ -298,13 +323,18 @@ module.exports.getHotTopics = function(request, response) {
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
+  var page = queryArgs.page;
 
   console.log('location: ', location);
   console.log('channel: ', channel);
 
+  //PAGINATION OFFSET
+  var offset = 15*(page - 1);
 
-  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) ORDER BY heat DESC;",
-    [location+'%', channel],
+
+  client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel = $2) "
+    +"ORDER BY heat DESC LIMIT 15 OFFSET $3;",
+    [location+'%', channel, offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
