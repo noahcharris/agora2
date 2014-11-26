@@ -91,6 +91,8 @@ Agora.Views.LocationView = Backbone.View.extend({
 
         console.log('searchParameter: ', searchParameter);
 
+        //SHOULD MAYBE THROTTLE THIS ???????
+
         if (searchParameter.length > 2) {
 
           $.ajax({

@@ -74,6 +74,8 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
         var searchParameter = $('#channelInput').val();
 
+        //SHOULD MAYBE THROTTLE THIS ???????
+
         if ($('#channelInput').val().length > 2) {
 
           $.ajax({
