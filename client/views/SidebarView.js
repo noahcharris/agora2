@@ -200,6 +200,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             var thet = this;
 
+            console.log('putting handler on: ', model.type);
+
             if (model.type === 'Topic') {
 
               that.app.get('detailView').displayed = 'Topics';
@@ -243,12 +245,21 @@ Agora.Views.SidebarView = Backbone.View.extend({
               });
               
             } else if (model.type === 'User') {    
+              
               that.app.get('detailView').displayed = 'Contacts';
               that.app.get('content2').show(that.app.get('detailView'), model);
+
             } else if (model.type === 'Location') {
+              console.log('render location');
               // show location detail
-            } else if (model.type === 'Channe') {
+              that.app.get('detailView').displayed = 'Locations';
+              that.app.get('content2').show(that.app.get('detailView'), model);
+            } else if (model.type === 'Channel') {
+              console.log('render channel');
+
               // show channe ldetail
+              that.app.get('detailView').displayed = 'Channels';
+              that.app.get('content2').show(that.app.get('detailView'), model);
             }
 
 

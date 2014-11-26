@@ -470,6 +470,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         case 'Contacts':
           renderMethod = 'renderUser';
           break;
+        case 'Locations':
+          renderMethod = 'renderLocation';
+          break;
+        case 'Channels':
+          renderMethod = 'renderChannel';
+          break;
         default:
           renderMethod = 'render';
           break;

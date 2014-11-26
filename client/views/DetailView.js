@@ -125,7 +125,35 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   },
 
-  renderPlace: function(model) {
+  renderLocation: function(model) {
+
+    var that = this;
+    this.$el.empty();
+    if (this.view) {
+      this.view.close();
+    }
+
+
+    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x')[0].onclick = function() {
+      that.app.get('content2').hide();
+      console.log('closing detailview');
+    };
+
+    console.log('rendering location wooooo');
+
+    console.log(Agora.Views.DetailLocationEntryView);
+    var entryView = new Agora.Views.DetailLocationEntryView(this.app);
+
+    entryView.model = model;
+    entryView.render();
+    this.$el.append(entryView.$el);
+    this.view = entryView;
+
+  },
+
+
+  renderChannel: function(model) {
 
     var that = this;
     this.$el.empty();
@@ -134,12 +162,12 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
-    this.$el.children('img.x').on('click', function() {
+    this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
-    });
+    };
 
-    var entryView = new Agora.Views.DetailPlaceEntryView(this.app);
+    var entryView = new Agora.Views.DetailChannelEntryView(this.app);
     entryView.model = model;
     entryView.render();
     this.$el.append(entryView.$el);

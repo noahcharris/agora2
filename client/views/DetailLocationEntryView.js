@@ -1,7 +1,7 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
-Agora.Views.DetailPlaceEntryView = Backbone.View.extend({
+Agora.Views.DetailLocationEntryView = Backbone.View.extend({
 
   tagName: 'div',
 
@@ -9,11 +9,12 @@ Agora.Views.DetailPlaceEntryView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#detailPlaceEntryTemplate').html() );
+    this.template = _.template( $('#detailLocationEntryTemplate').html() );
   },
 
   render: function() {
     this.$el.html( this.template(this.model) );
+
   },
 
   close: function() {
