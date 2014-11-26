@@ -14,7 +14,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   initialize: function(app) {
     this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
-    this.placeTemplate = _.template( $('#sidebarPlaceEntryTemplate').html() );
+    this.locationTemplate = _.template( $('#sidebarLocationEntryTemplate').html() );
+    this.channelTemplate = _.template( $('#sidebarChannelEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
     this.messageChainTemplate = _.template( $('#sidebarMessageChainEntryTemplate').html() );
   },
@@ -109,16 +110,14 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
   },
 
-  renderPlace: function() {
-    this.$el.html( this.placeTemplate(this.model) );
+  renderLocation: function() {
+    this.$el.html( this.locationTemplate(this.model) );
+  },
+
+  renderChannel: function() {
+    this.$el.html( this.channelTemplate(this.model) );
   },
 
   renderUser: function() {

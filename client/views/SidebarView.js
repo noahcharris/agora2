@@ -169,8 +169,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
         var entryViewMethod;
         if (model.type === 'Topic') {
           entryViewMethod = 'renderTopic';
-        } else if (model.type === 'Place') {
-          entryViewMethod = 'renderPlace';
+        } else if (model.type === 'Location') {
+          entryViewMethod = 'renderLocation';
+        } else if (model.type === 'Channel') {
+          entryViewMethod = 'renderChannel';
         } else if (model.type === 'MessageChain') {
           entryViewMethod = 'renderMessageChain';
         } else if (model.type === 'User') {
@@ -243,16 +245,19 @@ Agora.Views.SidebarView = Backbone.View.extend({
             } else if (model.type === 'User') {    
               that.app.get('detailView').displayed = 'Contacts';
               that.app.get('content2').show(that.app.get('detailView'), model);
+            } else if (model.type === 'Location') {
+              // show location detail
+            } else if (model.type === 'Channe') {
+              // show channe ldetail
             }
 
 
             //that.app.get('detailView')[entryViewMethod](model);
 
-
-
             that.removeHighlights();
             this.$el.addClass('highlight');
-          });
+
+          });//end entryview click callback
 
 
         console.log('log', entryView.$el);

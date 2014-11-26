@@ -477,7 +477,7 @@ module.exports.userSearch = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log('input: ', queryArgs.input);
+  console.log('user search input: ', queryArgs.input);
 
   client.query("SELECT * FROM users WHERE username LIKE $1;",
       [queryArgs.input + '%'],
@@ -497,18 +497,44 @@ module.exports.userSearch = function(request, response) {
 //maybe send back subtrees here
 module.exports.locationSearch = function(request, response) {
 
-    var returnCollection = [];
-    response.json(returnCollection);
+    var queryArgs = url.parse(request.url, true).query;
+
+    console.log('location search input: ', queryArgs.input);
+
+    client.query("SELECT * FROM locations WHERE name LIKE $1;",
+        ['%' + queryArgs.input + '%'],
+        function(err, result) {
+          if (err) {
+            console.log('error searching locations with LIKE: ', err);
+            response.end('error');
+          } else {
+            response.json(result.rows);
+          }
+    });
 
 };
 
 //maybe send back subtrees here
 module.exports.channelSearch = function(request, response) {
 
-  var returnCollection = [];
-  response.json(returnCollection);
+  var queryArgs = url.parse(request.url, true).query;
+
+  console.log('channel search input: ', queryArgs.input);
+
+  client.query("SELECT * FROM channels WHERE name LIKE $1;",
+      ['%' + queryArgs.input + '%'],
+      function(err, result) {
+        if (err) {
+          console.log('error searching users with LIKE: ', err);
+          response.end('error');
+        } else {
+          response.json(result.rows);
+        }
+  });
 
 };
+
+
 
 //maybe just return subtrees with the topics and locations themselves?????
 module.exports.getLocationSubtree = function(request, response) {

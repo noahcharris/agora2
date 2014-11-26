@@ -153,10 +153,25 @@ Agora.Views.TopbarView = Backbone.View.extend({
     $('#searchButton').on('click', function() {
 
 
-      if ($('#searchSelect').val() === 'Users') {
+
+        switch ($('#searchSelect').val()) {
+          case 'Users':
+            urlSuffix = 'userSearch';
+            break;
+          case 'Locations':
+            urlSuffix = 'locationSearch'
+            break;
+          case 'Channels':
+            urlSuffix = 'channelSearch'
+            break;
+          default:
+            urlSuffix = 'userSearch';
+            break;
+        }
+
 
         $.ajax({
-          url: 'http://localhost:80/userSearch',
+          url: 'http://localhost:80/' + urlSuffix,
           method: 'GET',
           crossDomain: true,
           data: {
@@ -164,6 +179,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
           },
           success: function(data) {
             if (data) {
+              console.log('search return data: ', data);
               that.app.get('sidebarView').searchCollection = data;
               that.app.get('sidebarView').displayed = 'Search';
               content1.show(that.app.get('sidebarView'));
@@ -175,8 +191,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
           }
 
         });
-        
-      }
 
 
 

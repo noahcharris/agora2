@@ -473,7 +473,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         default:
           renderMethod = 'render';
           break;
-      }
+      };
+
       console.log('render method: ', renderMethod);
 
       if (currentView && currentView.close) {
