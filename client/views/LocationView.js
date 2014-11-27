@@ -72,7 +72,6 @@ Agora.Views.LocationView = Backbone.View.extend({
 
       var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
-      searchButton.on('click', function() { alert('mah dick'); });
       that.$el.append(searchButton);
 
       that.$el.append($('<input id="pathInput"></input>'));
@@ -80,9 +79,10 @@ Agora.Views.LocationView = Backbone.View.extend({
       $('#pathInput').focus();
       $('#pathInput').focusout(function() {
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
-        that.$el.empty();
-        that.render();
-        that.setHandlers();
+        $('#pathInput').remove();
+        //that.$el.empty();
+        //that.render();
+        //that.setHandlers();
       });
       //keyup is the best way to get all the keys, not ideal
       $('#pathInput').on('keyup', function(e) {
@@ -110,6 +110,23 @@ Agora.Views.LocationView = Backbone.View.extend({
               for (var i=0; i < data.length ;i++) {
 
                 var $element = $('<div class="locationSearchResult">'+data[i].name+'</div>');
+
+
+                (function() {
+                  var x = data[i].name;
+                  $element.on('click', function(e)  {
+
+
+                    console.log('hi');
+
+                    that.app.get('mapController').goToPath(x);
+                    //that.app.trigger('reloadSidebarTopics', x);
+
+
+                  });
+                  
+                })();
+
 
                 $element.css('bottom', cssAdjust + 'px');
 

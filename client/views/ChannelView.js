@@ -65,9 +65,10 @@ Agora.Views.ChannelView = Backbone.View.extend({
       $('#channelInput').focus();
       $('#channelInput').focusout(function() {
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
-        $('.channelView').empty();
-        that.render();
-        that.setHandlers();
+        $('#channelInput').remove();
+        // $('.channelView').empty();
+        // that.render();
+        // that.setHandlers();
       });
       //keyup is the best way to get all the keys, not ideal
       $('#channelInput').on('keyup', function(e) {
@@ -93,6 +94,26 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
                 var $element = $('<div class="channelSearchResult">'+data[i].name+'</div>');
                 that.$el.append($element);
+
+
+
+                (function() {
+                  var x = data[i].name;
+                  $element.on('click', function(e)  {
+
+
+                    console.log('hi');
+
+                    that.app.set('channel', x);
+                    that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'));
+                    that.render();
+
+
+                  });
+                  
+                })();
+
+
 
                 $element.css('bottom', cssAdjust + 'px');
 
