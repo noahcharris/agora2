@@ -52,13 +52,12 @@ Agora.Views.ChannelView = Backbone.View.extend({
     var searchButton = $('<img id="channelSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
-      that.$el.empty();
-      that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));
+      // that.$el.empty();
+      // that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));
 
-      var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+      // var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
-      searchButton.on('click', function() { alert('mah dick'); });
-      that.$el.append(searchButton);
+      // that.$el.append(searchButton);
 
       that.$el.append($('<input id="channelInput"></input>'));
 
@@ -67,7 +66,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
         $('#channelInput').remove();
         // $('.channelView').empty();
-        // that.render();
+        // setTimeout(function() { that.render(); }, 100);
         // that.setHandlers();
       });
       //keyup is the best way to get all the keys, not ideal

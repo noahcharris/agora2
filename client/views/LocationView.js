@@ -67,12 +67,12 @@ Agora.Views.LocationView = Backbone.View.extend({
     var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
-      that.$el.empty();
-      that.$el.append($('<span class="channelName">&nbsp&nbspLocation:&nbsp</span>'));
+      // that.$el.empty();
+      // that.$el.append($('<span class="channelName">&nbsp&nbspLocation:&nbsp</span>'));
 
-      var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+      // var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
-      that.$el.append(searchButton);
+      // that.$el.append(searchButton);
 
       that.$el.append($('<input id="pathInput"></input>'));
 

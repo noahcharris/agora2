@@ -356,6 +356,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
     var sideWidth = $(window).width() - mapWidth;
     $('#content1').css('width', sideWidth+'px');
+
+
+
+
+    //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
+    this.trigger('reloadSidebarTopics', 'World');
     
   },
 
