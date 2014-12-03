@@ -198,7 +198,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log('ajax request to: ', urlPath);
       $.ajax({
-        url: 'http://localhost:80' + urlPath,
+        url: 'http://54.149.63.77:80' + urlPath
+        //url: 'http://localhost:80' + urlPath,
         crossDomain: true,
         method: 'GET',
         data: {
@@ -235,7 +236,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username = that.get('username');
 
       $.ajax({
-        url: 'http://localhost:80/contacts',
+        url: 'http://54.149.63.77:80/contacts',
+        //url: 'http://localhost:80/contacts',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -276,7 +278,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'http://localhost:80/messages',
+        url: 'http://54.149.63.77:80/messages',
+        //url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -623,7 +626,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       var thet = this;
 
                       $.ajax({
-                        url: 'http://localhost:80/user',
+                        url: 'http://54.149.63.77:80/user',
+                        //url: 'http://localhost:80/user',
                         method: 'GET',
                         crossDomain: true,
                         data: {

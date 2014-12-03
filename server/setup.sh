@@ -11,6 +11,8 @@ sudo yum install gcc-c++;
 y;
 git clone https://github.com/joyent/node.git;
 cd node;
+#checout latest stable version
+git checkout v0.10.33;
 sudo ./configure;
 sudo make;
 sudo make install;

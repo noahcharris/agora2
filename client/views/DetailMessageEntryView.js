@@ -63,7 +63,8 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       console.log($('#messageInputTextArea').val());
 
       $.ajax({
-        url: 'http://localhost:80/sendMessage',
+        url: 'http://54.149.63.77:80/sendMessage',
+        // url: 'http://localhost:80/sendMessage',
         method: 'POST',
         crossDomain: true,
         data: {
@@ -83,7 +84,8 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
 
             $.ajax({
-              url: 'http://localhost/messageChain',
+              url: 'http://54.149.63.77:80/messageChain',
+              // url: 'http://localhost/messageChain',
               method: 'GET',
               crossDomain: true,
               cache: false,

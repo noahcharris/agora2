@@ -104,7 +104,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $upvote[0].onclick = function() {
 
       $.ajax({
-        url: 'http://localhost/upvoteTopic',
+        url: 'http://54.149.63.77/upvoteTopic',
+        // url: 'http://localhost/upvoteTopic',
         method: 'POST',
         crossDomain: true,
         data: {
@@ -180,7 +181,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $upvote[0].onclick = function() {
 
           $.ajax({
-            url: 'http://localhost/upvoteComment',
+            url: 'http://54.149.63.77/upvoteComment',
+            // url: 'http://localhost/upvoteComment',
             method: 'POST',
             crossDomain: true,
             data: {
@@ -279,7 +281,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           var x = comments[i].responses[j].id;
           $upvote[0].onclick = function() {
             $.ajax({
-              url: 'http://localhost/upvoteResponse',
+              url: 'http://54.149.63.77/upvoteResponse',
+              // url: 'http://localhost/upvoteResponse',
               method: 'POST',
               crossDomain: true,
               data: {
@@ -414,7 +417,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             var x = comments[i].responses[j].replies[k].id;
             $upvote[0].onclick = function() {
               $.ajax({
-                url: 'http://localhost/upvoteReply',
+                url: 'http://54.149.63.77/upvoteReply',
+                // url: 'http://localhost/upvoteReply',
                 method: 'POST',
                 crossDomain: true,
                 data: {
@@ -562,7 +566,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var thet = this;
 
       $.ajax({
-        url: 'http://localhost/' + data.urlSuffix,
+        url: 'http://54.149.63.77/' + data.urlSuffix,
+        // url: 'http://localhost/' + data.urlSuffix,
         method: 'POST',
         crossDomain: true,
         contentType: false,
@@ -580,7 +585,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           setTimeout(function() {
 
             $.ajax({
-              url: 'http://localhost/topicTree',
+              url: 'http://54.149.63.77/topicTree',
+              // url: 'http://localhost/topicTree',
               method: 'GET',
               crossDomain: true,
               data: {

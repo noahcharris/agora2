@@ -207,7 +207,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
               that.app.get('detailView').displayed = 'Topics';
 
               $.ajax({
-                url: 'http://localhost/topicTree',
+                url: 'http://54.149.63.77:80/topicTree',
+                // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
                 data: {
@@ -227,7 +228,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
               that.app.get('detailView').displayed = 'Messages';
 
               $.ajax({
-                url: 'http://localhost/messageChain',
+                url: 'http://54.149.63.77:80/messageChain',
+                // url: 'http://localhost/messageChain',
                 method: 'GET',
                 crossDomain: true,
                 data: {

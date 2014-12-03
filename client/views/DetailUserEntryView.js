@@ -44,7 +44,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           that.app.get('content1').show(that.app.get('sidebarView'));
 
           $.ajax({
-            url: 'http://localhost/messageChain',
+            url: 'http://54.149.63.77/messageChain',
+            // url: 'http://localhost/messageChain',
             method: 'GET',
             crossDomain: true,
             data: {
@@ -73,7 +74,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         console.log('found no chain, gotta make one');
 
         $.ajax({
-          url: 'http://localhost/createMessageChain',
+          url: 'http://54.149.63.77/createMessageChain',
+          // url: 'http://localhost/createMessageChain',
           method: 'POST',
           crossDomain: true,
           data: {
@@ -115,7 +117,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                   (function() {
                     var x = chains[i].contact
                     $.ajax({
-                      url: 'http://localhost/messageChain',
+                      url: 'http://54.149.63.77/messageChain',
+                      // url: 'http://localhost/messageChain',
                       method: 'GET',
                       crossDomain: true,
                       data: {
@@ -172,7 +175,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     $contactButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
-        url: 'http://localhost:80/addContact',
+        url: 'http://54.149.63.77:80/addContact',
+        // url: 'http://localhost:80/addContact',
         method: 'POST',
         crossDomain: true,
         data: {

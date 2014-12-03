@@ -96,7 +96,8 @@ Agora.Views.LocationView = Backbone.View.extend({
         if (searchParameter.length > 2) {
 
           $.ajax({
-            url: 'http://localhost:80/locationSearch',
+            url: 'http://54.149.63.77:80/locationSearch',
+            // url: 'http://localhost:80/locationSearch',
             data: {
               input: searchParameter
             },
@@ -161,7 +162,8 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://localhost:80/locationSubtree',
+        url: 'http://54.149.63.77:80/locationSubtree',
+        // url: 'http://localhost:80/locationSubtree',
         crossDomain: true,
         method: 'GET',
         data: {

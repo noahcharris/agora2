@@ -28,7 +28,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $viewProfileButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
-        url: 'http://localhost:80/user',
+        url: 'http://54.149.63.77:80/user',
+        // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
         data: {

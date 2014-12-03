@@ -18,7 +18,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
     this.$el.children('span#username')[0].onclick = function() {
 
       $.ajax({
-        url: 'http://localhost:80/user',
+        url: 'http://54.149.63.77:80/user',
+        // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
         data: {
@@ -171,7 +172,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
         $.ajax({
-          url: 'http://localhost:80/' + urlSuffix,
+          url: 'http://54.149.63.77:80/' + urlSuffix,
+          // url: 'http://localhost:80/' + urlSuffix,
           method: 'GET',
           crossDomain: true,
           data: {
