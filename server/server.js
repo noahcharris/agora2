@@ -18,6 +18,8 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 
 var csrf = require('csurf');
+
+//use serve-favicon instead!!!
 var favicon = require('static-favicon');
 
 var routes = require('./routes.js');
@@ -198,6 +200,7 @@ var options = {
   cert: fs.readFileSync(__dirname + '/cert.pem'),
 };
 
+//this is messing with the cookies somehow
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
 console.log('express server listening on ports 80 and 443');  

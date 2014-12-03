@@ -3,9 +3,9 @@ var postgres = require('./postgres.js');
 
 var pg = require('pg');
 var url = require('url');
-var Memcached = require('memcached');
-var amqp = require('amqplib');
-var when = require('when');
+//var Memcached = require('memcached');
+//var amqp = require('amqplib');
+//var when = require('when');
 var bcrypt = require('bcrypt');
 var s3 = require('s3');
 
@@ -32,18 +32,19 @@ bcrypt.genSalt(10, function(err, salt) {
 
 
 //Memcached and RabbitMQ connections
-var connection = amqp.connect('amqp://localhost')
+//var connection = amqp.connect('amqp://localhost')
 var q = 'tasks';
 
 // Have to include port number in the connection string or it won't work
-var memcached = new Memcached('127.0.0.1:11211');
+//var memcached = new Memcached('127.0.0.1:11211');
 
 
 
 //####################
 //####  Postgres  ####
 //####################
-var conString = 'postgres://noahharris@localhost:5432/noahharris';
+//var conString = 'postgres://noahharris@localhost:5432/noahharris';
+var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
 //var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
 var client = new pg.Client(conString);
 client.connect();
