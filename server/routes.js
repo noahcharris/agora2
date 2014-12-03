@@ -272,7 +272,7 @@ module.exports.getTopTopicsTime = function(request, response) {
 
   client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel LIKE $2) "
     +"ORDER BY rank DESC LIMIT 15 OFFSET $3;",
-    [location+'%', channel+'%'],
+    [location+'%', channel+'%', offset],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics: ', err);
