@@ -154,6 +154,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
         var x = parsedChannelArray[i].path;
         $channelElement[0].onclick = function() {
 
+          that.app.get('sidebarView').displayed = 'Topics-Top';
           that.app.changeChannel(x);
           that.render();
 

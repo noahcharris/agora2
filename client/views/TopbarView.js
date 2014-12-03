@@ -28,7 +28,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
           extra: Math.floor((Math.random() * 10000) + 1)
         },
         success: function(data) {
-          if (data) {
+          if (data[0]) {
             that.app.get('detailView').displayed = 'Users';
             console.log('server returned: ', data);
 
@@ -39,9 +39,10 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
             //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
             //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
-            data[0].isContact = true;
 
+            data[0].isContact = true;
             that.app.get('content2').show(that.app.get('detailView'), data[0]);
+
           } else {
             console.log('no data returned from server');
           }
@@ -71,18 +72,25 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
     $('#settingsButton').on('click', function() {
-      var previousDisplayed = that.app.get('detailView').displayed;
-      that.app.get('detailView').displayed = 'Settings';
-      if (!that.app.get('expanded')) {
-        that.app.get('content2').show(that.app.get('settingsView'));
-      } else {
-        //this doesn't work
-        console.log(that.app.get('detailView').displayed);
-        if (previousDisplayed === 'Settings') {
-          that.app.get('content2').hide();
-        } else {
+
+      if (that.app.get('login')) {
+        
+        var previousDisplayed = that.app.get('detailView').displayed;
+        that.app.get('detailView').displayed = 'Settings';
+        if (!that.app.get('expanded')) {
           that.app.get('content2').show(that.app.get('settingsView'));
+        } else {
+          //this doesn't work
+          console.log(that.app.get('detailView').displayed);
+          if (previousDisplayed === 'Settings') {
+            that.app.get('content2').hide();
+          } else {
+            that.app.get('content2').show(that.app.get('settingsView'));
+          }
         }
+
+      } else {
+        alert('must be logged in to access settings');
       }
     });
     //this.$el.append($settingsButton);

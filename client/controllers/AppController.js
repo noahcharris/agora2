@@ -30,16 +30,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     
 
-    //CHANGE THESE BACK
 
-    this.set('username', 'noahcharris'); //is this secure???
-
-    this.set('origin', 'United States');
+    this.set('username', null); //is this secure???
 
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 
-    this.set('login', true);
+    this.set('login', false);
 
 
 
@@ -378,6 +375,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('channel', channel);
     this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
+    console.log('changing channel');
 
   },
 
