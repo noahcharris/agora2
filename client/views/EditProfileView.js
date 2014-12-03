@@ -114,7 +114,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
       // });
 
 
-      $.ajax({url:
+      $.ajax({
         // url: 'http://localhost:80/updateUserProfile',
         url: 'http://54.149.63.77:80/updateUserProfile',
         method: 'POST',

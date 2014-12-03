@@ -198,7 +198,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log('ajax request to: ', urlPath);
       $.ajax({
-        url: 'http://54.149.63.77:80' + urlPath
+        url: 'http://54.149.63.77:80' + urlPath,
         //url: 'http://localhost:80' + urlPath,
         crossDomain: true,
         method: 'GET',
@@ -591,7 +591,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       console.log('THIS: ', that);
 
       $.ajax({
-        url: 'http://localhost:80/notifications',
+        url: 'http://54.149.63.77:80/notifications',
+        // url: 'http://localhost:80/notifications',
         method: 'GET',
         crossDomain: true,
         data: {
