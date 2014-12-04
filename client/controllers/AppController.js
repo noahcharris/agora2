@@ -654,15 +654,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                   })();
 
-
                   $('#notificationsDisplay').append($notificationBox);
 
                   $notificationBox.css('bottom', cssAdjust+'px');
                   cssAdjust -= 50;
 
-
                 }
-
 
                 //NEW MESSAGES
 
@@ -676,16 +673,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                     });
                   })();
 
-
                   $('#notificationsDisplay').append($notificationBox);
-
                   $notificationBox.css('bottom', cssAdjust+'px');
                   cssAdjust -= 50;
-
                 }
-
-
-
 
               };
 
