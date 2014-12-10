@@ -14,6 +14,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.template = _.template( $('#detailMessageEntryTemplate').html() );
     this.messageInputTemplate = _.template( $('#messageInputBoxTemplate').html() );
     this.app = appController;
+    this.timer = null;
   },
 
   render: function(model2) {
@@ -22,7 +23,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
     this.$el.unbind();
     this.$el.empty();
-
+    clearInterval(this.timer);
 
     this.$el.append($('<ul id="messageChain"></ul>'))
 
@@ -32,24 +33,34 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       recipient: 'mock data',
       contents: 'mockingbirg'
     }];
+
+
     
     var $messageChainList = this.$el.children('ul#messageChain');
+
     var height = 0;
+    var count = 1;
     for (var i = 0; i<this.model.length ;i++) {
       //append the template inside a list element
       var $message = $('<li></li>').append(this.template(this.model[i]));
       $messageChainList.prepend($message);
       height += $message.height();
+
+      if (count === this.model.length) {
+        console.log('FUCKKKK: ', $message);
+
+
+      }
+      count++;
     }
 
-    $messageChainList.append('<div class="spacer"></div>');
-    console.log('hwohohwo: ', height);
 
     //LOL this will do for now
     setTimeout(function() {
-      console.log($messageChainList.scrollTop());
+      $messageChainList.append('<div class="spacer"></div>');
       $messageChainList.scrollTop(9999999);
-    }, 100);
+
+    }, 1);
 
 
 
@@ -124,7 +135,20 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
 
 
-    };
+    };//end sendbutton onclick
+
+
+    var timer = setInterval(function() {
+
+      //need to call cache manager here to update this shit
+      //maybe cache manager can just automatically insert into the tree
+      //instead of calling render again, that would be dope!!!!!!!!!
+
+
+      that.app.get('cacheManager').updateMessageChain();
+
+    }, 3000);
+    this.timer = timer;
 
     //need to loop through and set out all the messages in the object
 

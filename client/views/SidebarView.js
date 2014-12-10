@@ -310,7 +310,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
         for (var i=0; i < that.subViews.length ;i++) {
           if (that.subViews[i].model.image) {          
             var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-            box.css('width', (sidebarTopicWidth - 98) + 'px');
+            box.css('width', (sidebarTopicWidth - 150) + 'px');
           }
 
         };

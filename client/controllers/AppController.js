@@ -31,12 +31,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     
 
 
-    this.set('username', null); //is this secure???
+    this.set('username', 'noah'); //is this secure???
 
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 
-    this.set('login', false);
+    this.set('login', true);
 
 
 
@@ -576,6 +576,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var manager = {};
     manager.app = appController;
 
+    manager.topicTreeCollection = [];
+    manager.topicsCollection = [];
+    manager.messageChainCollection = [];
+    manager.messagesCollection = [];
+
     manager.start = function() {
 
       this.getNotifications();
@@ -696,9 +701,31 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     };
 
 
-    manager.addTopicsCollection = function() {
+
+
+
+    manager.updateMessageChain = function() {
+
+    };
+
+    manager.storeTopicTree = function() {
+
+    };
+
+    manager.storeTopicsCollection = function() {
       console.log('adding topics to cache');
     };
+
+
+    manager.storeMessageChain = function() {
+
+    };
+
+    manager.storeMessagesCollection = function() {
+
+    };
+
+
 
 
 
