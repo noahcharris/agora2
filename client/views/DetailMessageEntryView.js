@@ -17,7 +17,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.timer = null;
   },
 
-  render: function(model2) {
+  render: function(contact) {
 
     var that = this;
 
@@ -38,26 +38,18 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     
     var $messageChainList = this.$el.children('ul#messageChain');
 
-    var height = 0;
     var count = 1;
     for (var i = 0; i<this.model.length ;i++) {
       //append the template inside a list element
       var $message = $('<li></li>').append(this.template(this.model[i]));
       $messageChainList.prepend($message);
-      height += $message.height();
 
-      if (count === this.model.length) {
-        console.log('FUCKKKK: ', $message);
-
-
-      }
-      count++;
     }
 
 
     //LOL this will do for now
     setTimeout(function() {
-      $messageChainList.append('<div class="spacer"></div>');
+      $messageChainList.append('<div id="spacer"></div>');
       $messageChainList.scrollTop(9999999);
 
     }, 1);
@@ -80,8 +72,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
         crossDomain: true,
         data: {
           sender: that.app.get('username'),
-          //THIS IS THE WHOLE POINT OF MODEL2 !!!!!!!!!!!!!
-          recipient: model2.contact,
+          recipient: contact,
           contents: $('#messageInputTextArea').val()
         },
         success: function(data) {
@@ -145,7 +136,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       //instead of calling render again, that would be dope!!!!!!!!!
 
 
-      that.app.get('cacheManager').updateMessageChain();
+      that.app.get('cacheManager').updateMessageChain(contact);
 
     }, 3000);
     this.timer = timer;

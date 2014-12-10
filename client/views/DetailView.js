@@ -79,7 +79,7 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
 
-  renderMessage: function(model, model2) {
+  renderMessage: function(model, contact) {
 
     console.log('rendering message with model: ', model);
 
@@ -98,7 +98,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     var entryView = new Agora.Views.DetailMessageEntryView(this.app);
     entryView.model = model;
     this.$el.append(entryView.$el);
-    entryView.render(model2);
+    entryView.render(contact);
     this.view = entryView;
   
   },

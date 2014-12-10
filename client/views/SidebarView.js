@@ -186,9 +186,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
           entryView.model = model;
           entryView[entryViewMethod]();
 
-          var model2 = model;
-
-
 
 
           //#######################################
@@ -227,6 +224,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
             } else if (model.type === 'MessageChain') {
               that.app.get('detailView').displayed = 'Messages';
 
+              var contact = model.contact;
+
               $.ajax({
                 url: 'http://54.149.63.77:80/messageChain',
                 // url: 'http://localhost/messageChain',
@@ -234,11 +233,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 crossDomain: true,
                 data: {
                   username: that.app.get('username'),
-                  contact: model.contact
+                  contact: contact
                 },
                 success: function(model) {
                   //GAHHHHHHH SO HACKY FUCKKKK
-                  that.app.get('content2').show(that.app.get('detailView'), model, model2);
+                  //model2 is the sidebar model that the username is coming from wtf...
+                  that.app.get('content2').show(that.app.get('detailView'), model, contact);
                   thet.$el.addClass('highlight');
                 },
                 error: function() {

@@ -451,7 +451,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     //MODEL 2 is some bullshittttttt
-    region.show = function(view, model, model2) {
+    region.show = function(view, model, extra) {
 
 
       //if we're showing a topic we have to do some dumb shit apparently
@@ -503,7 +503,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       currentView = view;
       if (view) {
         //MODEL 2 FUUUUCCKKCKCKCKCK
-        view[renderMethod](model, model2);
+        view[renderMethod](model, extra);
         $(el).html(view.el);
         if (view.onShow)
           view.onShow();
@@ -580,6 +580,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.topicsCollection = [];
     manager.messageChainCollection = [];
     manager.messagesCollection = [];
+
+    manager.messageTemplate = _.template( $('#detailMessageEntryTemplate').html() );
 
     manager.start = function() {
 
@@ -704,9 +706,88 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-    manager.updateMessageChain = function() {
+    manager.updateMessageChain = function(contact) {
+
+      var that = this;
+
+      $.ajax({
+        url: 'http://54.149.63.77:80/messageChain',
+        // url: 'http://localhost/messageChain',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          contact: contact
+        },
+        success: function(model) {
+          console.log('gettin back: ', model);
+          //going to insert directly into the dom here if what we get back
+          //does not match what is there
+
+          //have to do this because of detailView bullshit
+          //need to remove that shit
+          var currentModel = that.app.get('detailView').view.model;
+          that.app.get('detailView').view.model = model;
+
+
+
+          //this way would be faster if it worked
+          // for (var i=model.length-1; i > -1 ;i--) {
+
+          //   console.log('heh');
+
+          //   if (model[i].id !== currentModel[i].id) {
+
+          //     var $message = $('<li></li>').append(this.messageTemplate(this.model[i]))
+          //     // $('ul#messageChain').append($message);
+          //     $('div#spacer').before($message);
+          //     $('ul#messageChain').scrollTop(99999999);
+
+
+          //     // var $message = $('<li></li>').append(this.template(this.model[i]));
+          //     // $messageChainList.prepend($message);
+          //   }
+
+          // }
+
+
+
+          for (var i=model.length-1; i > -1 ;i--) {
+
+            console.log('heh');
+
+            //woooo using underscore
+            if (_.pluck(currentModel, 'id').indexOf(model[i].id) === -1) {
+
+              //console.log('this shit', $('ul#messageChain').children('div#spacer'));
+              var $message = $('<li></li>').append(that.messageTemplate(model[i]))
+              $('div#spacer').before($message);
+              $('ul#messageChain').scrollTop(99999999);
+
+            }
+
+          }
+
+
+
+
+
+
+
+
+
+
+
+        },
+        error: function() {
+          alert('server error');
+        }
+      });
 
     };
+
+
+
 
     manager.storeTopicTree = function() {
 
