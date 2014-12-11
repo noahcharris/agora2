@@ -73,12 +73,14 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $locationCreationButton = $('<button>Create Location</button>');
     $locationCreationButton.on('click', function() {
+      that.app.get('detailView').displayed = 'CreateLocation';
       that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
     });
     this.$el.append($locationCreationButton);
 
     var $channelCreationButton = $('<button>Create Channel</button>');
     $channelCreationButton.on('click', function() {
+      that.app.get('detailView').displayed = 'CreateChannel';
       that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
     });
     this.$el.append($channelCreationButton);

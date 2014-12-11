@@ -11,7 +11,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#creationTemplate').html() );
+    this.template = _.template( $('#channelCreationTemplate').html() );
     this.$el.addClass('detailView');
   },
 
@@ -28,6 +28,42 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
     console.log(that.$el.children('input:radio[name=public]').val());
 
+    this.$el.children('#nextButton').on('click', function() {
+
+
+      $.ajax({
+        url: 'http://54.149.63.77:80/createChannel',
+        crossDomain: true,
+        method: 'POST',
+        data: {
+          name: that.$el.children('#channelNameInput').val(),
+          description: that.$el.children('#descriptionInput').val(),
+          parent: that.$el.children('#parentInput').val() 
+        },
+        success: function(data) {
+          if (data) {
+            alert(data);
+            that.app.get('content2').hide();
+            // topicsCollection = data;
+            // console.log('server returned: ', data);
+            // //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+            // sidebarView.collection = data;
+            // content1.show(sidebarView);
+            that.get('content2').hide(); 
+          } else {
+            // console.log('memcached returned false');
+            // sidebarView.collection = defaultCollection;
+            // content1.show(sidebarView);
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+    });
+
     // this.$el.append( $('<button>Next</button>') );
 
   },
@@ -39,7 +75,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('group creation view closing');
+    console.log('channel creation view closing');
     this.remove();
   }
 

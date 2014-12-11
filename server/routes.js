@@ -1882,20 +1882,74 @@ module.exports.upvoteReply = function(request, response) {
 
 
 module.exports.createLocation = function(request, response) {
-  postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
-    request.body.name, request.body.description, request.body.creator,
-    request.body.public, request.body.open, function(success) {
-      if (success) {
-        response.end('group successfully created');
+  // postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
+  //   request.body.name, request.body.description, request.body.creator,
+  //   request.body.public, request.body.open, function(success) {
+  //     if (success) {
+  //       response.end('group successfully created');
+  //     } else {
+  //       response.end('error creating group');
+  //     }
+  //   });
+
+
+
+
+  client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+    +" creator, population, rank, public, pointGeometry) "
+    +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
+    [request.body.name, request.body.description, request.body.parent, request.body.creator,
+    request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into locations: ', err);
       } else {
-        response.end('error creating group');
+        response.end('successfully created location');
       }
-    });
+  });
+
+
+
+
 };
+
+
+
 
 module.exports.createChannel = function(request, response) {
 
+
+  client.query("INSERT INTO channels (type, name, description, parent) "
+    +"VALUES ('Channel', $1, $2, $3);",
+    [request.body.name, request.body.description, request.body.parent],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into channels: ', err);
+      } else {
+        response.end('successfully created channel');
+      }
+  });
+
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

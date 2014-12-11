@@ -17,75 +17,75 @@ states = statesData.states.features;
 channels = channelData.channels;
 
 
-//INSERT WORLD
-client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-  +"VALUES ('Location', false, $1, 0, true);",
-  ['World'],
-  function(err, result) {
-    if (err) {
-      console.log('error inserting into locations: ', err);
-    } else {
+// //INSERT WORLD
+// client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
+//   +"VALUES ('Location', false, $1, 0, true);",
+//   ['World'],
+//   function(err, result) {
+//     if (err) {
+//       console.log('error inserting into locations: ', err);
+//     } else {
 
-    }
-});
-console.log('finished inserting world');
-
-
-
-//INSERT COUNTRIES
-for (var i=0; i < countries.length ;i++) {
-
-  client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-    +"VALUES ('Location', false, $1, 0, true);",
-    [countries[i].properties.name],
-    function(err, result) {
-      if (err) {
-        console.log('error inserting into locations: ', err);
-      } else {
-
-      }
-  });
-
-};
-console.log('finished inserting countries');
+//     }
+// });
+// console.log('finished inserting world');
 
 
 
-//INSERT CITIES
-for (var i=0; i < cities.length ;i++) {
+// //INSERT COUNTRIES
+// for (var i=0; i < countries.length ;i++) {
 
-  client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-    +"VALUES ('Location', false, $1, 0, true);",
-    [cities[i].properties.city],
-    function(err, result) {
-      if (err) {
-        console.log('error inserting into locations: ', err);
-      } else {
+//   client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
+//     +"VALUES ('Location', false, $1, 0, true);",
+//     [countries[i].properties.name],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error inserting into locations: ', err);
+//       } else {
 
-      }
-  });
+//       }
+//   });
 
-};
-console.log('finished inserting cities');
+// };
+// console.log('finished inserting countries');
 
 
 
-//INSERT STATES
-for (var i=0; i < states.length ;i++) {
+// //INSERT CITIES
+// for (var i=0; i < cities.length ;i++) {
 
-  client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-    +"VALUES ('Location', false, $1, 0, true);",
-    [states[i].properties.name],
-    function(err, result) {
-      if (err) {
-        console.log('error inserting into locations: ', err);
-      } else {
+//   client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
+//     +"VALUES ('Location', false, $1, 0, true);",
+//     [cities[i].properties.city],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error inserting into locations: ', err);
+//       } else {
 
-      }
-  });
+//       }
+//   });
 
-};
-console.log('finished inserting states');
+// };
+// console.log('finished inserting cities');
+
+
+
+// //INSERT STATES
+// for (var i=0; i < states.length ;i++) {
+
+//   client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
+//     +"VALUES ('Location', false, $1, 0, true);",
+//     [states[i].properties.name],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error inserting into locations: ', err);
+//       } else {
+
+//       }
+//   });
+
+// };
+// console.log('finished inserting states');
 
 
 
@@ -104,7 +104,7 @@ for (var i=0; i < channels.length ;i++) {
       if (err) {
         console.log('error inserting into channels: ', err);
       } else {
-
+        console.log('what?');
       }
   });
 
@@ -114,7 +114,7 @@ console.log('finished inserting channels');
 
 
 
-process.exit();
+//process.exit();
 
 
 

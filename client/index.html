@@ -303,6 +303,7 @@
     </script>
 
 
+
     <!--Topic Creation-->
     <script id="topicCreationTemplate" type="text/template">
       <br/>
@@ -316,23 +317,39 @@
 
 
 
-    <!--channel and location creation-->
-    <script id="creationTemplate" type="text/template">
+
+    <!--channel creation-->
+    <script id="channelCreationTemplate" type="text/template">
       <br/>
-      <input placeholder="Group Name"></input>
+      <input id="channelNameInput" placeholder="Channel Name"></input>
       <br/><br/>
       This group is 
       <input id="radioPublic" type="radio" name="public" value="public" checked>Public</input>
-      <input type="radio" name="public" value="private">Private</input>
+      <input type="radio" name="private" value="private">Private</input>
       <br/><br/>
-      <textarea placeholder="Description" style="width: 200px; height: 100px;"></textarea>
+      <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
-      <input placeholder="Address"></input><br/>
-      <input placeholder="City"></input><br/>
-      <input placeholder="State"></input><br/>
-      <input placeholder="Country"></input><br/>
-      <button>Next</button>
+      <input id="parentInput" placeholder="Parent Channel"></input><br/>
+      <button id="nextButton">Next</button>
     </script>
+
+
+    <!--location creation-->
+    <script id="locationCreationTemplate" type="text/template">
+      <br/>
+      <input id="locationNameInput" placeholder="Location Name"></input>
+      <br/><br/>
+      This group is 
+      <input id="radioPublic" type="radio" name="public" value="public" checked>Public</input>
+      <input type="radio" name="private" value="private">Private</input>
+      <br/><br/>
+      <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
+      <br/>
+      <input id="parentInput" placeholder="Parent Location"></input><br/>
+      <button id="nextButton">Next</button>
+    </script>
+
+
 
     <script id="placementViewTemplate" type="text/template">
     Place a point! Click Done when finished.

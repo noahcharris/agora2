@@ -26,36 +26,57 @@ Agora.Views.PlacementView = Backbone.View.extend({
 
     $('#pointPlacedButton').on('click', function() {
 
-      // pass the info along to placementView so we can
-      //make the ajax call from there
-      $.ajax({
-        url: 'createGroup',
-        method: 'POST',
-        data: {
-          location: that.app.get('mapController').get('location'),
-          latitude: that.app.get('mapController').placedLatitude,
-          longitude: that.app.get('mapController').placedLongitude,
-          name: that.data.name,
-          description: that.data.description,
-          public: that.data.public,
-          open: that.data.open
-        },
-        success: function() {
-          that.app.get('mapController').stopPlacing();
-          that.app.get('alertView').mode ='GroupCreationSuccess';
-          that.app.get('content2').show(that.app.get('alertView'));
-        },
-        error: function() {
-          alert('well shoot');
-        }
+
+        console.log('LONGTIDUE: ', that.app.get('mapController').placedLongitude);
+
+        $.ajax({
+          url: 'http://54.149.63.77:80/createLocation',
+          crossDomain: true,
+          method: 'POST',
+          data: {
+
+            name: that.data.name,
+            description: that.data.description,
+            parent: that.data.parent,
+            pub: that.data.pub,
+            creator: that.app.get('username'),
+            longitude: that.app.get('mapController').placedLongitude,
+            latitude: that.app.get('mapController').placedLatitude
+
+          },
+          success: function(data) {
+            if (data) {
+              alert(data);
+              // topicsCollection = data;
+              // console.log('server returned: ', data);
+              // //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+              // sidebarView.collection = data;
+              // content1.show(sidebarView);
+              that.app.get('content2').hide();
+              that.app.get('sidebarView').displayed = 'Topics-Top';
+              that.app.get('content1').show(that.app.get('sidebarView')); 
+            } else {
+              // console.log('memcached returned false');
+              // sidebarView.collection = defaultCollection;
+              // content1.show(sidebarView);
+              that.app.get('content2').hide(); 
+
+            }
+          }, 
+          error: function(err) {
+            console.log('ajax error ocurred: ', err);
+          }
+
+        });
+
 
       });
 
-      var emailInviteView = new Agora.Views.EmailInviteView(that.app);
-      that.app.get('content2').show(emailInviteView);
+
+      // var emailInviteView = new Agora.Views.EmailInviteView(that.app);
+      // that.app.get('content2').show(emailInviteView);
 
 
-    });
   },
 
   close: function() {

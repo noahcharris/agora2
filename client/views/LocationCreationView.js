@@ -11,7 +11,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#creationTemplate').html() );
+    this.template = _.template( $('#locationCreationTemplate').html() );
     this.$el.addClass('detailView');
   },
 
@@ -32,40 +32,27 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
   setHandlers: function() {
     var that = this;
-    this.$el.children('button').on('click', function() {
+    this.$el.children('#nextButton').on('click', function() {
 
-      // pass the info along to placementView so we can
-      //make the ajax call from there
-      // $.ajax({
-      //   url: 'createGroup',
-      //   method: 'POST',
-      //   data: {
-      //     location: that.app.get('mapController').get('location'),
-      //     latitude: 47.6097,
-      //     longitude: -122.3331,
-      //     name: 'voodoo',
-      //     description: 'magiks',
-      //     public: true,
-      //     open: true
-      //   },
-      //   success: function() {
-      //     alert('heyo');
-      //   },
-      //   error: function() {
-      //     alert('well shoot');
-      //   }
 
-      // });
+      console.log('RADIO INPUT : ', that.$el.children('input:radio[name=public]').val());
 
-      console.log(that.$el.children('input:radio[name=public]').val());
+      var pub = true;;
+      if (that.$el.children('input:radio[name=public]').val() === 'public') {
+        pub = true;
+      } else {
+        pub = false;
+      }
 
       var placementView = new Agora.Views.PlacementView(that.app);
+
       placementView.data = {
-        name: that.$el.children('input').val(),
-        description: that.$el.children('textarea').val(),
-        public: true,
-        open: true
+        name: that.$el.children('#locationNameInput').val(),
+        pub: pub,
+        description: that.$el.children('#descriptionInput').val(),
+        parent: that.$el.children('#parentInput').val()
       };
+
       that.app.get('mapController').placePoints();
       that.app.get('content1').show(placementView);
       that.app.get('content2').hide();
@@ -76,7 +63,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('group creation view closing');
+    console.log('location creation view closing');
     this.remove();
   }
 
