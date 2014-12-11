@@ -161,7 +161,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       });
       this.subViews = [];
 
-      console.log('rendering sidebar with collection: ', renderCollection);
+      //console.log('rendering sidebar with collection: ', renderCollection);
 
       _.each(renderCollection, function(model) {
 
@@ -178,9 +178,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
         } else if (model.type === 'User') {
           entryViewMethod = 'renderUser';
         }
-
-        console.log('MODELLLLLLLL: ', model);
-        console.log(entryViewMethod);
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
           entryView.model = model;
@@ -292,8 +289,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
           });//end entryview click callback
 
-
-        console.log('log', entryView.$el);
 
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);

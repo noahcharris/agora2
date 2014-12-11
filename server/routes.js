@@ -107,7 +107,26 @@ var s3Client = s3.createClient({
 
 
 
+module.exports.test = function(request, response) {
 
+  response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
+
+
+  if (request.mySession.seenyou) {
+    response.setHeader('X-Seen-You', 'true');
+  } else {
+    // setting a property will automatically cause a Set-Cookie response
+    // to be sent
+    request.mySession.seenyou = true;
+    response.setHeader('X-Seen-You', 'false');
+  }
+
+
+  console.log('hwhwhwh');
+  response.end('wooooo');
+
+
+};
 
 /********************************************/
 /***   TOPICS WITH FILTERS METHODS     ******/

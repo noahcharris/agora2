@@ -207,7 +207,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         success: function(data) {
           if (data) {
             topicsCollection = data;
-            console.log('server returned: ', data);
 
             sidebarView.collection = data;
             content1.show(sidebarView); 
@@ -362,8 +361,41 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
     this.trigger('reloadSidebarTopics', 'World');
+
+
+
+
+
+    $.ajax({
+      url: 'https://54.149.63.77:443/test',
+      crossDomain: true,
+      data: {
+      },
+      success: function(data) {
+        if (data) {
+          topicsCollection = data;
+          console.log('server returned: ', data);
+          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+          // sidebarView.collection = data;
+          // content1.show(sidebarView); 
+        } else {
+          // console.log('memcached returned false');
+          // sidebarView.collection = defaultCollection;
+          // content1.show(sidebarView);
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
+
+
+
+
+
+
     
-  },
+  },//end controller initialize
 
 
 

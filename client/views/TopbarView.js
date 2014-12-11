@@ -179,6 +179,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
         }
 
 
+
+        //LOADER START HERE
+        console.log('loader start');
         $.ajax({
           url: 'http://54.149.63.77:80/' + urlSuffix,
           // url: 'http://localhost:80/' + urlSuffix,
@@ -193,14 +196,18 @@ Agora.Views.TopbarView = Backbone.View.extend({
               that.app.get('sidebarView').searchCollection = data;
               that.app.get('sidebarView').displayed = 'Search';
               content1.show(that.app.get('sidebarView'));
+              //LOADER STOP HERE
+              console.log('loader stop');
             } else {
               alert('search returned no data');
+              //LOADER STOP HERE
             }
           }, error: function(err) {
             console.log('ajax error ocurred: ', err);
           }
 
         });
+
 
 
 

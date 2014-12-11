@@ -56,10 +56,16 @@ app.set('trust proxy', 1) // trust first proxy
 
   app.use(sessions({
     cookieName: 'mySession', // cookie name dictates the key name added to the request object
-    path: '/',
     secret: 'blargadeeblargblarg', // should be a large unguessable string
     duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
-    activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+    activeDuration: 1000 * 60 * 5, // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+    cookie: {
+        path: '/', // cookie will only be sent to requests under '/api'
+        maxAge: 60000, // duration of the cookie in milliseconds, defaults to duration above
+        ephemeral: false, // when true, cookie expires when the browser closes
+        httpOnly: true, // when true, cookie is not accessible from javascript
+        secure: true // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
+      }
   }));
 
 //   app.use(function(req, res, next) {
@@ -107,6 +113,8 @@ app.set('trust proxy', 1) // trust first proxy
 app.get('/', function(request, response) {
   response.redirect('index.html');
 });
+
+app.get('/test', routes.test);
 
 //Returns collections of topics to be displayed in sidebar (without trees)
 app.get('/topics-top-day', routes.getTopTopicsDay);
