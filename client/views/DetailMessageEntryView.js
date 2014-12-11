@@ -82,32 +82,30 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
             //reload message chain
 
+            that.app.get('cacheManager').updateMessageChain(contact);
 
 
 
-            $.ajax({
-              url: 'http://54.149.63.77:80/messageChain',
-              // url: 'http://localhost/messageChain',
-              method: 'GET',
-              crossDomain: true,
-              cache: false,
-              data: {
-                username: that.app.get('username'),
-                contact: model2.contact
-              },
-              success: function(model) {
-                //GAHHHHHHH SO HACKY FUCKKKK
-                console.log('he');
-                console.log(model);
-                that.model = model;
-                that.render(model2);
-                // that.app.get('content2').show(that.app.get('detailView'), model, model2);
-                // thet.$el.addClass('highlight');
-              },
-              error: function() {
-                alert('server error');
-              }
-            });
+
+            // $.ajax({
+            //   url: 'http://54.149.63.77:80/messageChain',
+            //   // url: 'http://localhost/messageChain',
+            //   method: 'GET',
+            //   crossDomain: true,
+            //   cache: false,
+            //   data: {
+            //     username: that.app.get('username'),
+            //     contact: contact
+            //   },
+            //   success: function(model) {
+
+            //     that.app.get('cacheManager').updateMessageChain(contact);
+
+            //   },
+            //   error: function() {
+            //     alert('server error');
+            //   }
+            // });
 
 
 
@@ -151,6 +149,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
   },
 
   close: function() {
+    clearInterval(this.timer);
     this.remove();
     this.unbind();
   }
