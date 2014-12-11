@@ -1,7 +1,7 @@
 window.Agora = window.Agora || {};
 window.Agora.View = window.Agora.Views || {};
 
-Agora.Views.PathCreationView = Backbone.View.extend({
+Agora.Views.LocationCreationView = Backbone.View.extend({
 
   //need to reflect the change in the rest of the file
 
@@ -11,7 +11,7 @@ Agora.Views.PathCreationView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#groupCreationTemplate').html() );
+    this.template = _.template( $('#creationTemplate').html() );
     this.$el.addClass('detailView');
   },
 

@@ -11,7 +11,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.app = appController;
-    this.template = _.template( $('#groupCreationTemplate').html() );
+    this.template = _.template( $('#creationTemplate').html() );
     this.$el.addClass('detailView');
   },
 

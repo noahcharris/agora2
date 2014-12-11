@@ -109,17 +109,29 @@ var s3Client = s3.createClient({
 
 module.exports.test = function(request, response) {
 
+  //need a list of servers that I can iterate through to set all the servers
   response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
 
 
-  if (request.mySession.seenyou) {
-    response.setHeader('X-Seen-You', 'true');
-  } else {
-    // setting a property will automatically cause a Set-Cookie response
-    // to be sent
-    request.mySession.seenyou = true;
-    response.setHeader('X-Seen-You', 'false');
-  }
+  // request.mySession.hello = 'hi';
+
+  // if (request.mySession.seenyou) {
+  //   response.setHeader('X-Seen-You', 'true');
+  // } else {
+  //   response.setHeader('X-Seen-You', 'false');
+  // }
+
+
+  // if (request.mySession.seenyou) {
+  //   response.setHeader('X-Seen-You', 'true');
+  // } else {
+  //   // setting a property will automatically cause a Set-Cookie response
+  //   // to be sent
+  //   request.mySession.seenyou = true;
+  //   response.setHeader('X-Seen-You', 'false');
+  // }
+
+
 
 
   console.log('hwhwhwh');
@@ -128,11 +140,11 @@ module.exports.test = function(request, response) {
 
 };
 
+
+
 /********************************************/
 /***   TOPICS WITH FILTERS METHODS     ******/
 /********************************************/
-
-
 
 
 

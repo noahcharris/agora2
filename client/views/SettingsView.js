@@ -56,6 +56,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
       that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
     };
     this.$el.append($editProfileButton);
+    this.$el.append('<br/>');
 
     var $changeLocationButton = $('<button>Change Location</button>');
     $changeLocationButton[0].onclick = function() {
@@ -68,6 +69,19 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     };
     //this.$el.append($changePasswordButton);
+
+
+    var $locationCreationButton = $('<button>Create Location</button>');
+    $locationCreationButton.on('click', function() {
+      that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
+    });
+    this.$el.append($locationCreationButton);
+
+    var $channelCreationButton = $('<button>Create Channel</button>');
+    $channelCreationButton.on('click', function() {
+      that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+    });
+    this.$el.append($channelCreationButton);
 
 
 
@@ -103,19 +117,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
 
-
-
-    var $pathCreationButton = $('<li>CREATE YR OWN PATH</li>');
-    $pathCreationButton.on('click', function() {
-      that.app.get('content2').show(new Agora.Views.PathCreationView(that.app));
-    });
-    //this.$el.children('#settingsViewList').append($pathCreationButton);
-
-    var $channelCreationButton = $('<li>CREATE YR OWN CHANNEL!!!</li>');
-    $channelCreationButton.on('click', function() {
-      that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
-    });
-    //this.$el.children('#settingsViewList').append($channelCreationButton);
 
 
   },
