@@ -203,13 +203,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               that.app.get('detailView').displayed = 'Topics';
 
+              //get specific topic tree from server
               $.ajax({
                 url: 'http://54.149.63.77:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
                 data: {
-                  //these two models are different scope!
                   topicId: model.id
                 },
                 success: function(model) {
@@ -217,9 +217,29 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('server error');
+                  alert('ajax error');
                 }
               });
+
+              //register the topic visit with the server
+              $.ajax({
+                url: 'http://54.149.63.77:80/visitedTopic',
+                // url: 'http://localhost/topicTree',
+                method: 'POST',
+                crossDomain: true,
+                data: {
+                  username: that.app.get('username'),
+                  topicId: model.id
+                },
+                success: function(data) {
+                  //alert(data);
+                },
+                error: function() {
+                  alert('ajax error');
+                }
+              });
+
+
 
             } else if (model.type === 'MessageChain') {
               that.app.get('detailView').displayed = 'Messages';
@@ -242,7 +262,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('server error');
+                  alert('ajax error');
                 }
               });
               

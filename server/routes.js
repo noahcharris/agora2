@@ -1102,6 +1102,46 @@ module.exports.registerUser = function(request, response) {
 
 
 
+module.exports.visitedTopic = function(request, response) {
+
+  client.query("INSERT INTO topicVisitJoin (username, topic, visitedAt) "
+    +"VALUES ($1, $2, now());",
+    [request.body.username, request.body.topicId],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into topicVisitJoin: ', err);
+      } else {
+        response.end('successfully visited topic');
+      }
+  });
+
+
+};
+
+
+
+
+module.exports.recentlyVisitedTopics = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+  console.log('NOTHIN');
+
+  client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
+    +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from topicVisitJoin: ', err);
+      } else {
+        response.json(result.rows);
+      }
+  });
+
+
+};
+
+
+
 
 module.exports.updateUserProfile = function(request, response) {
 

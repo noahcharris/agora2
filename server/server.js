@@ -168,6 +168,10 @@ app.post('/sendMessage', routes.sendMessage);
 
 app.post('/registerUser', routes.registerUser);
 
+
+app.post('/visitedTopic', routes.visitedTopic);
+app.get('/recentlyVisited', routes.recentlyVisitedTopics);
+
 //SECURE
 app.post('/updateUserProfile', routes.updateUserProfile);
 app.post('/updateLocationProfile', routes.updateLocationProfile);

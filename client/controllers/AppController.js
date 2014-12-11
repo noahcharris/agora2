@@ -773,11 +773,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-
-
-
-
         },
         error: function() {
           alert('server error');

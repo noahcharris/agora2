@@ -71,6 +71,34 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
 
+    var $recentlyVisted = $('<ul id="recentlyVisted"></ul>');
+    this.$el.append($recentlyVisted);
+
+    //get recently visited topics
+    $.ajax({
+      url: 'http://54.149.63.77:80/recentlyVisited',
+      // url: 'http://localhost/topicTree',
+      method: 'GET',
+      data: {
+        username: that.app.get('username'),
+      },
+      success: function(models) {
+        for (var i=0; i < models.length ;i++) {
+          console.log(models[i].contents);
+          var $topic = $('<li></li>').append(models[i].contents);
+          $('ul#recentlyVisted').append($topic)
+        }
+      },
+      error: function() {
+        alert('ajax error');
+      }
+    });
+
+
+
+
+
+
     var $pathCreationButton = $('<li>CREATE YR OWN PATH</li>');
     $pathCreationButton.on('click', function() {
       that.app.get('content2').show(new Agora.Views.PathCreationView(that.app));
