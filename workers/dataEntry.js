@@ -9,10 +9,12 @@ client.connect();
 var countryData = require('../client/resources/newCountries.js');
 var cityData = require('../client/resources/cities.js');
 var statesData = require('../client/resources/us-states.js');
+var channelData = require('../client/resources/channels.js');
 
 countries = countryData.countries.features;
 cities = cityData.cities.features;
 states = statesData.states.features;
+channels = channelData.channels;
 
 
 //INSERT WORLD
@@ -26,6 +28,8 @@ client.query("INSERT INTO locations (type, isusercreated, name, population, publ
 
     }
 });
+console.log('finished inserting world');
+
 
 
 //INSERT COUNTRIES
@@ -43,6 +47,8 @@ for (var i=0; i < countries.length ;i++) {
   });
 
 };
+console.log('finished inserting countries');
+
 
 
 //INSERT CITIES
@@ -60,6 +66,8 @@ for (var i=0; i < cities.length ;i++) {
   });
 
 };
+console.log('finished inserting cities');
+
 
 
 //INSERT STATES
@@ -77,16 +85,36 @@ for (var i=0; i < states.length ;i++) {
   });
 
 };
+console.log('finished inserting states');
+
+
+
 
 
 
 
 
 //CHANNELS
+for (var i=0; i < channels.length ;i++) {
+
+  client.query("INSERT INTO channels (type, name) "
+    +"VALUES ('Channel', $1);",
+    [channels[i].name],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into channels: ', err);
+      } else {
+
+      }
+  });
+
+
+};
+console.log('finished inserting channels');
 
 
 
-
+process.exit();
 
 
 
