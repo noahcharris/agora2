@@ -186,7 +186,7 @@ var countriesData = {"type":"FeatureCollection",
 {"type":"Feature","properties":{"name":"World/Reunion","code":"RE"},"geometry":{"type":"Polygon","coordinates":[[[55.18000031,-21.01379776],[55.45819855,-20.84998131],[55.74438858,-20.92091751],[55.85361862,-21.20603943],[55.67193985,-21.40499687],[55.2530899,-21.20372009],[55.18000031,-21.01379776],[55.18000031,-21.01379776]]]}}]}
 
 
-
+module.exports.countries = countriesData;
 
 
 
