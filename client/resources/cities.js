@@ -5956,3 +5956,10 @@ var cities = {
 		}
 	}]
 }
+
+module.exports.cities = cities;
+
+
+
+
+

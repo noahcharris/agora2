@@ -218,4 +218,3 @@ var countriesData = {"type":"FeatureCollection",
 
 
 
-
