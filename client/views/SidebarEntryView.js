@@ -130,9 +130,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     console.log('render user: ', this.model);
 
     this.$el.on('mouseover', function() {
-
       that.app.get('mapController').highlightCountry(that.model.location);
-
     });  
     this.$el.on('mouseout', function() {
       that.app.get('mapController').removeHighlightCountry(that.model.location);
@@ -140,6 +138,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   },
 
   renderMessageChain: function() {
+
+    var that = this;
 
     //have to do a little reshuffling..
     if (this.model.username1 === this.app.get('username')) {
@@ -149,6 +149,15 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     }
 
     this.$el.html( this.messageChainTemplate(this.model) );
+
+    var location = this.model.location || 'World';
+
+    this.$el.on('mouseover', function() {
+      that.app.get('mapController').highlightCountry(location);
+    });  
+    this.$el.on('mouseout', function() {
+      that.app.get('mapController').removeHighlightCountry(location);
+    }); 
   },
 
   clickTrigger: function() {

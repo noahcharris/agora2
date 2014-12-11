@@ -85,6 +85,12 @@ Agora.Views.SettingsView = Backbone.View.extend({
       success: function(models) {
         for (var i=0; i < models.length ;i++) {
           console.log(models[i].contents);
+
+          //add template here
+
+          //put click handler to take user to topic
+          //use router here once it is more advanced??
+
           var $topic = $('<li></li>').append(models[i].contents);
           $('ul#recentlyVisted').append($topic)
         }

@@ -1,8 +1,8 @@
 
 module.exports.channels = [{
-  name: 'Politics'
+  name: 'General/Politics'
 },{
-  name: 'Pictures'
+  name: 'General/Pictures'
 },{
-  name: 'Musics'
+  name: 'General/Musics'
 }];

@@ -23,6 +23,12 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     });
     this.$el.append( this.template() );
 
+    setTimeout(function() {
+
+      that.$el.children('div.login').children('input#loginUsernameInput').focus();
+    }, 1000);
+
+
     //append logout button if user is logged in:
     // if (this.app.get('login')) {
     //   this.$el.append($('<button id="logoutButton">Logout</button>'));
