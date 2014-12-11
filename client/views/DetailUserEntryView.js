@@ -17,6 +17,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     console.log(this.model);
     this.$el.html( this.template(this.model) );
     var $messageButton = $('<button>SEND MESSAGE</button>');
+
+
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
@@ -55,7 +57,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             success: function(model) {
               //horrible
 
-              that.app.get('content2').show(that.app.get('detailView'), model, { contact: chains[i].contact });
+              that.app.get('content2').show(that.app.get('detailView'), model, chains[i].contact);
               that.app.get('sidebarView').highlightCell(offsetCount);
             },
             error: function() {
@@ -65,9 +67,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           break;
         }
 
-      }
-
-
+      }//end for loop
 
       if (!foundChain) {
 
@@ -127,7 +127,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                       },
                       success: function(model) {
                         //ugh so bad
-                        that.app.get('content2').show(that.app.get('detailView'), model, {contact: x});
+                        that.app.get('content2').show(that.app.get('detailView'), model, x);
                         that.app.get('sidebarView').highlightCell(offsetCount);
                       },
                       error: function() {
@@ -144,30 +144,23 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-
-
-
             });
 
-            // that.app.get('content2').show(that.app.get('detailView'), model);
-            // that.app.get('sidebarView').highlightCell(offsetCount);
           },
           error: function() {
             alert('server error');
           }
-        });
+        });//end create chain ajax
 
         
-      }
+      }//end foundChain check
+
+
+    };//end send message button handler
 
 
 
 
-
-
-      //CREATE NEW CHAIN HERE
-
-    };
 
 
     var $contactButton = $('<button>Contact Request</button>');
