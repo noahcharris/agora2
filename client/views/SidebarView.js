@@ -226,6 +226,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 crossDomain: true,
                 data: {
                   username: that.app.get('username'),
+                  //WHY IS THIS A STRING????
                   topicId: model.id
                 },
                 success: function(data) {
@@ -422,11 +423,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
-    $('#creationButton').on('click', function() {
+    $('#creationButton')[0].onclick = function() {
+
       if (that.app.get('login')) {
         if (that.app.get('sidebarView').displayed === 'Topics-Top'
          || that.app.get('sidebarView').displayed === 'Topics-New'
-         || that.app.get('sidebarView').displayed === 'Topics-Hot') {
+         || that.app.get('sidebarView').displayed === 'Topics-Hot'
+         || that.app.get('sidebarView').displayed === 'Topics') {
 
           var topicCreation = new Agora.Views.TopicCreationView(that.app);
           that.app.get('detailView').displayed = 'TopicCreation';
@@ -435,7 +438,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       } else {
         alert('you must be logged in to create a topic');
       }
-    });
+    };
 
 
   },

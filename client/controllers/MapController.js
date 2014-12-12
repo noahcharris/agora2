@@ -317,7 +317,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-    this.app.get('sidebarView').displayed = 'Topics';
+    this.app.get('sidebarView').displayed = 'Topics-Top';
 
     if (path.split('/').length === 1) {
       this.showWorld();

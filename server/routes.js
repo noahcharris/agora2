@@ -1165,16 +1165,52 @@ module.exports.registerUser = function(request, response) {
 
 module.exports.visitedTopic = function(request, response) {
 
-  client.query("INSERT INTO topicVisitJoin (username, topic, visitedAt) "
-    +"VALUES ($1, $2, now());",
-    [request.body.username, request.body.topicId],
+
+
+  client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
+    +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error inserting into topicVisitJoin: ', err);
+        console.log('error selecting from topicVisitJoin: ', err);
       } else {
-        response.end('successfully visited topic');
+
+        //handle the case of no topics
+        if (!result.rows.length)
+          result.rows = [{id:-1}];
+
+        // console.log('typeof result id: ', typeof result.rows[0].id, ' typeof request id: ', typeof request.body.topicId);
+
+
+        if (result.rows[0].id != request.body.topicId) {
+
+
+          client.query("INSERT INTO topicVisitJoin (username, topic, visitedAt) "
+            +"VALUES ($1, $2, now());",
+            [request.body.username, request.body.topicId],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into topicVisitJoin: ', err);
+              } else {
+                response.end('successfully visited topic');
+              }
+          });
+
+
+
+
+        } else {
+          response.end('no insertion; this is already the most recent topic');
+        }
+
+
+
+
+ 
       }
-  });
+  });//end topicVisitJoin select
+
+
 
 
 };
