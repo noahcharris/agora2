@@ -393,9 +393,31 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+    var $body = $('body');
+
+    console.log('what you need: ', $body.children('#loader'));
+
+    $body.children('#loader').hide();
+
+    $(document).on({
+
+        ajaxStart: function() { 
+
+          $body.children('#loader').show();  
+          
+          setTimeout(function() {
+          }, 200)
+
+        },
+
+        ajaxStop: function() { $body.children('#loader').hide();  }    
+
+    });
+
+
 
     
-  },//end controller initialize
+  },//END CONTROLLER INITIALIZE
 
 
 
@@ -632,7 +654,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.getNotifications = function() {
 
       var that = this;
-      console.log('THIS: ', that);
 
       $.ajax({
         url: 'http://54.149.63.77:80/notifications',
