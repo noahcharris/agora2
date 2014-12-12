@@ -18,6 +18,9 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
 
     var $goTo = this.$el.children('#channelBox').children('#goToButton');
 
+    if (this.app.get('channel') === that.model.name)
+      $goTo.hide();
+
     $goTo[0].onclick = function() {
 
       that.app.set('channel', that.model.name);

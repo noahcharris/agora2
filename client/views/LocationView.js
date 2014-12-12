@@ -67,10 +67,35 @@ Agora.Views.LocationView = Backbone.View.extend({
 
     var $prefix = $('<span id="pathPrefix">&nbsp&nbspLocation:&nbsp</span>');
     $prefix.on('click', function() {
-      console.log('ehhyy');
+      
+
+      console.log('whowhow: ', that.model.get('location'));
+
+      $.ajax({
+        url: 'http://54.149.63.77:80/location',
+        crossDomain: true,
+        data: {
+          location: that.model.get('location'),
+        },
+        success: function(model) {
+          if (model) {
+
+            console.log('hihih');
+            that.app.get('detailView').displayed = 'Locations';
+            that.app.get('content2').show(that.app.get('detailView'), model);
+
+          } else {
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
     this.$el.html($prefix);
-    
+
     var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 

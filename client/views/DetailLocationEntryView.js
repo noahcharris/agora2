@@ -18,6 +18,9 @@ Agora.Views.DetailLocationEntryView = Backbone.View.extend({
 
     var $goTo = this.$el.children('#locationBox').children('#goToButton');
 
+    if (this.app.get('mapController').get('location') === that.model.name)
+      $goTo.hide();
+
     $goTo[0].onclick = function() {
 
       that.app.trigger('reloadSidebarTopics', that.model.name);

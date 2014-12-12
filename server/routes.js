@@ -806,13 +806,33 @@ module.exports.getUser = function(request, response) {
 
 module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-  postgres.retrievePlace(queryArgs.location, function(data) {
-    response.json(data);
+
+  client.query("SELECT * FROM locations WHERE name = $1;",
+    [queryArgs.location], function(err, result) {
+      if (err) {
+        console.log('error selecting from locations: ', err);
+      } else {
+        response.json(result.rows[0]);
+      }
   });
+
+
 };
 
 module.exports.getChannel = function(request, response) {
-  response.end('wooo');
+  var queryArgs = url.parse(request.url, true).query;
+
+  console.log('hohoho: ', queryArgs.channel);
+
+  client.query("SELECT * FROM channels WHERE name = $1;",
+    [queryArgs.channel], function(err, result) {
+      if (err) {
+        console.log('error selecting from channel: ', err);
+      } else {
+        console.log(result.rows);
+        response.json(result.rows[0]);
+      }
+  });
 }
 
 
@@ -916,7 +936,7 @@ module.exports.login = function(request, response) {
           console.log('before set: ', request.mySession);
 
 
-          request.mySession.login = true;
+          //request.mySession.login = true;
 
 
           console.log('after set: ', request.mySession);

@@ -53,7 +53,34 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     var $prefix = $('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')
     $prefix.on('click', function() {
-      console.log('hohowehowh');
+      
+
+
+      $.ajax({
+        url: 'http://54.149.63.77:80/channel',
+        crossDomain: true,
+        data: {
+          channel: that.app.get('channel'),
+        },
+        success: function(model) {
+          if (model) {
+
+            console.log('whaaaa');
+            that.app.get('detailView').displayed = 'Channels';
+            that.app.get('content2').show(that.app.get('detailView'), model);
+
+          } else {
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
+
+
     });
     this.$el.append($prefix);
 
