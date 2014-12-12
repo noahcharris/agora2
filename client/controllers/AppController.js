@@ -413,10 +413,17 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+  /********************************/
+  /******** VALIDATORS ************/
+  /********************************/
 
+  inputValidator: function() {
 
+  },
 
+  passwordValidator: function() {
 
+  },
 
 
 

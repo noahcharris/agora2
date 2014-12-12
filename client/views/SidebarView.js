@@ -342,18 +342,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
-
-
-
-
-    
-
     }; 
 
 
