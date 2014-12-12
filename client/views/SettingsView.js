@@ -86,6 +86,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.append($channelCreationButton);
 
 
+    this.$el.append('<br/><br/>Recently Visited Topics');
 
     var $recentlyVisted = $('<ul id="recentlyVisted"></ul>');
     this.$el.append($recentlyVisted);
@@ -107,7 +108,26 @@ Agora.Views.SettingsView = Backbone.View.extend({
           //put click handler to take user to topic
           //use router here once it is more advanced??
 
-          var $topic = $('<li></li>').append(models[i].contents);
+          var $topic = $('<li></li>').append(models[i].headline);
+
+          (function() {
+
+            var x = models[i].channel;
+            var y = models[i].location;
+            var x = models[i].channel;
+
+            $topic.on('click', function() {
+
+              that.app.set('channel', x);
+              that.app.get('mapController').goToPath(y);
+              that.app.get('channelView').render();  
+
+            });
+            
+          })();
+
+
+
           $('ul#recentlyVisted').append($topic)
         }
       },

@@ -382,7 +382,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
     }
 
-    //wtf is this for
     if (!this.placing) {
       if (this.app.get('sidebarView').displayed !== 'Topics'
       && this.app.get('sidebarView').displayed !== 'Topics-Top'

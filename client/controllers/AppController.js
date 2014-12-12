@@ -430,6 +430,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('channel', channel);
     this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
+    this.get('channelView').render();
     console.log('changing channel');
 
   },
