@@ -50,35 +50,6 @@ var client = new pg.Client(conString);
 client.connect();
 
 
-
-
-// ## SETUP CONSISTENT MESSAGE TIMERS ##
-
-//am i creating zombies when I make all these brief connections with memcached?? Need to research.
-
-// function memcachedTimers() {
-
-//   connection.then(function(conn) {
-//     var ok = conn.createChannel();
-//     ok = ok.then(function(ch) {
-//       ch.assertQueue(q);
-//       // Here we are sending the tree:<path>:<filter> command
-//       var msg = 'Tree:';
-//       ch.sendToQueue(q, new Buffer('Tree:'));
-//       ch.sendToQueue(q, new Buffer('Tree:France'));
-//       //console.log(" [x] Sent '%s'", msg);
-//     });
-//     return ok;
-//   }).then(null, console.warn);
-
-// }
-
-// memcachedTimers();
-// setInterval(memcachedTimers, 100000);
-
-//#####################################
-
-
 var s3Client = s3.createClient({
   maxAsyncS3: 20,     // this is the default
   s3RetryCount: 3,    // this is the default
@@ -92,16 +63,6 @@ var s3Client = s3.createClient({
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -130,15 +91,57 @@ module.exports.test = function(request, response) {
   //   request.mySession.seenyou = true;
   //   response.setHeader('X-Seen-You', 'false');
   // }
-
-
-
-
-  console.log('hwhwhwh');
-  response.end('wooooo');
-
+  response.end('woooo');
 
 };
+
+
+
+
+
+
+/********************************************/
+/***          VALIDATORS               ******/
+/********************************************/
+
+//these return false if input is not valid
+//
+
+var whitelists = require('./whitelists.js');
+
+function usernameValidator(input) {
+
+  if (typeof input !== 'string')
+    return false;
+  if (input.length > 35)
+    return false;
+
+  var matchFound = false;
+  for (var i=0; i < whitelists.alphabet.length ;i++) {
+    if (input[0] === whitelists.alphabet[i]) {
+      matchFound = true;
+      break;
+    }
+  }
+  if (!matchFound)
+    return false;
+
+  return input;
+
+};
+
+function passwordValidator(input) {
+
+};
+
+function xssValidator(input) {
+
+};
+
+function spamValidator(input) {
+
+};
+
 
 
 
@@ -1092,14 +1095,17 @@ module.exports.sendMessage = function(request, response) {
             }
           });
 
-
-
         }
   });
 
-
 };
 
+
+
+module.exports.checkUsername = function(request, response) {
+
+
+};
 
 
 

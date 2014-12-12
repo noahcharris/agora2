@@ -163,6 +163,8 @@ app.post('/addContact', routes.addContact);
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
+
+app.get('/checkUsername', routes.checkUsername);
 app.post('/registerUser', routes.registerUser);
 
 
