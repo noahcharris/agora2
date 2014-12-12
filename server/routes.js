@@ -134,6 +134,10 @@ function passwordValidator(input) {
 
 };
 
+function linkValidator(input) {
+
+};
+
 function xssValidator(input) {
 
 };
