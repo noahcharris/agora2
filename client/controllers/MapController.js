@@ -306,7 +306,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   //THIS SHOULD BE RENAMED 'goToLocation' !!!!!!!!!
   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
-  goToPath: function(path) {
+  //extra is for 'recently visited' and 'search'
+  goToPath: function(path, extra) {
 
 
     console.log('goingt to path', path);
@@ -390,7 +391,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         this.app.get('sidebarView').displayed = 'Topics-Top';
       }
       this.app.get('content2').hide();
-      this.app.trigger('reloadSidebarTopics', path);
+      this.app.trigger('reloadSidebarTopics', path, extra);
     }
 
   },

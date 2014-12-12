@@ -166,7 +166,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //switch between topic filters, need to include this kind of stuff in the method above as well
 
     //takes page for pagination of topics
-    this.on('reloadSidebarTopics', function(location) { 
+
+    //THIS TAKES AN 'EXTRA' TOPIC WHICH IS UNSHIFTED INTO THE TOPICSCOLLECTION
+    //THIS IS FOR SEARCH & 'RECENTLY VISITED'
+    this.on('reloadSidebarTopics', function(location, extra) { 
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarTopics');
@@ -209,6 +212,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             topicsCollection = data;
 
             sidebarView.collection = data;
+            //add extra if it's not already there
+            if (extra && _.pluck(data, 'id').indexOf(extra.id) === -1)
+              sidebarView.collection.unshift(extra);
             content1.show(sidebarView); 
           } else {
             console.log('memcached returned false');

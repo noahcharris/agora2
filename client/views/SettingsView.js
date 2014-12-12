@@ -120,7 +120,11 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               that.app.set('channel', x);
               that.app.get('mapController').goToPath(y);
-              that.app.get('channelView').render();  
+              that.app.get('channelView').render();
+
+              //need to insert topic into the front of the topics collection
+
+
 
             });
             
