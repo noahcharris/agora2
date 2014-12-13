@@ -211,6 +211,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (data) {
             topicsCollection = data;
 
+
             sidebarView.collection = data;
             //add extra if it's not already there
             if (extra && _.pluck(data, 'id').indexOf(extra.id) === -1)

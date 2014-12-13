@@ -423,7 +423,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
-    $('#creationButton')[0].onclick = function() {
+    $('#creationButton').on('click', function() {
 
       if (that.app.get('login')) {
         if (that.app.get('sidebarView').displayed === 'Topics-Top'
@@ -438,7 +438,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       } else {
         alert('you must be logged in to create a topic');
       }
-    };
+    });
 
 
   },
