@@ -18,6 +18,8 @@ var clientSessions = require('client-sessions');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 
+var ConnectRedisSessions = require( "connect-redis-sessions" );
+
 var csrf = require('csurf');
 
 //use serve-favicon instead!!!
@@ -35,6 +37,19 @@ app = express();
 // });
 
 app.use(bodyParser());
+app.use(cookieParser());
+
+app.use( ConnectRedisSessions({ 
+  app: 'agora',
+  port: 6379,
+  host: '54.149.165.147',
+  cookie: {
+    maxAge: 10000,
+    path: '/',
+    httpOnly: true
+  },
+  trustProxy: false
+}) );
 
 
 

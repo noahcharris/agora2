@@ -74,6 +74,11 @@ module.exports.test = function(request, response) {
   response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
 
 
+
+  request.session.soid(function(data) {
+    console.log('SESSION DATA: ', data);
+  });
+
   // request.mySession.hello = 'hi';
 
   // if (request.mySession.seenyou) {
@@ -159,6 +164,11 @@ function spamValidator(input) {
 
 module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
+
+
+  request.session.soid(function(data) {
+    console.log('SESSION DATA: ', data);
+  });
 
 
   var location = queryArgs.location;

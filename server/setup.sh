@@ -3,7 +3,7 @@
 echo "preparing agora server";
 
 cd ~;
-sudo yum install;
+sudo yum update;
 y;
 sudo yum install git;
 y;
