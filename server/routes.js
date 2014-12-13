@@ -167,7 +167,7 @@ function spamValidator(input) {
 module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-  //console.log("SESSION: ", request.session);
+  console.log("SESSION: ", request.session);
 
   // request.session.soid(function(data) {
   //   console.log('SESSION DATA: ', data);
