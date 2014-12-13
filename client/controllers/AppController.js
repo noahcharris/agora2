@@ -11,6 +11,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   initialize: function() {
 
+    var that = this;
+
     this.set('expanded', false);
     //whether we are displaying sidebar and map side-by-side or in lieu of each other
     this.set('mobile', false);
@@ -33,10 +35,32 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('username', 'noah'); //is this secure???
 
-    //not logged in initially
-    //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
 
     this.set('login', true);
+
+    this.set('token', null); //this is where we store token for csrf protection
+
+
+
+    //not logged in initially
+    //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
+    $.ajax({
+      url: 'http://54.149.63.77:80/checkLogin',
+      //url: 'http://localhost:80' + urlPath,
+      crossDomain: true,
+      method: 'GET',
+      data: {
+      },
+      success: function(data) {
+        if (data) {
+          alert(data);
+        } else {
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
 
 
 
@@ -125,8 +149,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     // ## LOCATIONVIEW EVENTING ##
-
-    var that = this;
 
     //sets up the highlighting interaction between sidebarView and detailView
     mapController.on('change:location', function() {
@@ -376,6 +398,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $.ajax({
       url: 'https://54.149.63.77:443/test',
       crossDomain: true,
+      method: 'GET',
       data: {
       },
       success: function(data) {

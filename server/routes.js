@@ -73,8 +73,13 @@ module.exports.test = function(request, response) {
   //need a list of servers that I can iterate through to set all the servers
   response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
 
+  response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
-  console.log("SESSION: ", request.session);
+  console.log('COOKIES: ', request.cookies);
+
+
+
+  // console.log("SESSION: ", request.session);
   
 
   // request.session.soid(function(data) {
@@ -980,6 +985,53 @@ module.exports.login = function(request, response) {
 module.exports.logout = function(request, response) {
 
   request.session.login = false;
+
+};
+
+
+module.exports.checkLogin = function(request, response) {
+
+
+  //see if the cookie is in the session database
+  //if it is, return the user a token that they can use for requests
+
+
+  response.cookie('cokkieName',1242189, { maxAge: 900000, httpOnly: true });
+
+
+  if( request.session.id == void( 0 ) ){
+
+    var rs = request.session.getRedisSessionsModule();
+
+
+    rs.create({
+      app: 'agora',
+      id: "user1001",
+      ip: "192.168.22.58",
+      ttl: 3600,
+
+      d: { 
+        foo: "bar",
+        unread_msgs: 34
+      }
+
+      },
+      function(err, resp) {
+        // resp should be something like 
+        // {token: "r30kKwv3sA6ExrJ9OmLSm4Wo3nt9MQA1yG94wn6ByFbNrVWhcwAyOM7Zhfxqh8fe"}
+        console.log(resp);
+        response.end('yup');
+      });
+
+
+    
+
+  } else {
+    response.end( "user " + request.session._meta.id + " is logged in" );
+  }
+
+
+
 
 };
 

@@ -48,7 +48,7 @@ app.use( ConnectRedisSessions({
     path: '/',
     httpOnly: true
   },
-  trustProxy: false
+  trustProxy: true
 }) );
 
 
@@ -172,6 +172,7 @@ app.get('/notifications', routes.getNotifications);
 //SECURE
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
+app.get('/checkLogin', routes.checkLogin);
 
 //SECURE
 app.post('/addContact', routes.addContact);
