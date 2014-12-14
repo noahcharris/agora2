@@ -45,10 +45,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var cacheManager = this.CacheManager(this);
     this.set('cacheManager', cacheManager);
 
-    cacheManager.start();
-
-
-
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
     $.ajax({
@@ -232,6 +228,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       console.log('ajax request to: ', urlPath);
       $.ajax({
         url: 'http://54.149.63.77:80' + urlPath,
+        //url: 'ec2-54-149-63-77.us-west-2.compute.amazonaws.com:80' + urlPath,
         //url: 'http://localhost:80' + urlPath,
         crossDomain: true,
         method: 'GET',
@@ -682,6 +679,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     manager.timer = null;
 
+    manager.tick = 0;
+
     manager.topicTreeCollection = [];
     manager.topicsCollection = [];
     manager.messageChainCollection = [];
@@ -692,7 +691,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.start = function() {
 
       clearInterval(this.timer);
-      this.timer = setInterval(this.getNotifications.bind(this) , 3000);
+      //call getNotifications every ten seconds
+      this.timer = setInterval(this.getNotifications.bind(this) , 10000);
 
       this.getNotifications();
 
@@ -703,6 +703,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       var that = this;
 
+
+      //reset credentials every 3 minutes
+      this.tick++;
+      if (this.tick > 19) {
+        this.tick = 0;
+        this.updateCredentials();
+      }
+
+
+
       $.ajax({
         url: 'http://54.149.63.77:80/notifications',
         // url: 'http://localhost:80/notifications',
@@ -712,11 +722,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           username: that.app.get('username')
         },
         success: function(data) {
-          if (data) {
+
             console.log('CACHE MANAGER');
             console.log('server returned: ', data);
 
-            if (data.contactRequests.length > 0) {
+            $('#notificationsButton').css('background-color', 'green');
+
+            if (data.contactRequests.length > 0 ||
+                data.newMessages.length > 0 ||
+                data.topicActivity.length > 0) {
 
               $('#notificationsButton').css('background-color', 'red');
 
@@ -776,9 +790,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                 }
 
+
                 //NEW MESSAGES
 
                 for (var i=0; i < data.newMessages.length ;i++) {
+
+                  console.log('what');
+
+                  $('#notificationsButton').css('background-color', 'red');
 
                   var $notificationBox = $( newMessageTemplate(data.newMessages[i]) );
 
@@ -791,22 +810,25 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                   $('#notificationsDisplay').append($notificationBox);
                   $notificationBox.css('bottom', cssAdjust+'px');
                   cssAdjust -= 50;
+
                 }
 
-              };
 
+              };//end notification click handler
 
-            }
+            }//end if (data)
 
-          } else {
-            console.log('nothing returned for notifications');
-          }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
         }
 
       });
 
+
+    };//end getNotifications
+
+
+    manager.updateCredentials = function() {
 
     };
 

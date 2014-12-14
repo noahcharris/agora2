@@ -853,6 +853,8 @@ module.exports.getNotifications = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   var notifications = {}; //master notifications object to send back at the end
 
+  console.log(queryArgs);
+
   //check for any pending contact requests
   client.query("SELECT * FROM contactRequestJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
     [queryArgs.username],
@@ -974,37 +976,7 @@ module.exports.checkLogin = function(request, response) {
   response.cookie('cokkieName',47538924, { maxAge: 900000, httpOnly: true });
   console.log('COOKIES: ',request.cookies);
 
-
-  if( request.session.id == void( 0 ) ){
-
-    var rs = request.session.getRedisSessionsModule();
-
-
-    rs.create({
-      app: 'agora',
-      id: "user1001",
-      ip: "192.168.22.58",
-      ttl: 3600,
-
-      d: { 
-        foo: "bar",
-        unread_msgs: 34
-      }
-
-      },
-      function(err, resp) {
-        // resp should be something like 
-        // {token: "r30kKwv3sA6ExrJ9OmLSm4Wo3nt9MQA1yG94wn6ByFbNrVWhcwAyOM7Zhfxqh8fe"}
-        console.log(resp);
-        response.end('yup');
-      });
-
-
-    
-
-  } else {
-    response.end( "user " + request.session._meta.id + " is logged in" );
-  }
+  response.end('yup');
 
 
 
