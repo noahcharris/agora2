@@ -42,6 +42,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+
     var cacheManager = this.CacheManager(this);
     this.set('cacheManager', cacheManager);
 
@@ -98,13 +99,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     topbarView.render();
 
 
-
-    //possible removal in agora2
-    // var dropdownView = new Agora.Views.DropdownView(this);
-    // this.set('dropdownView', dropdownView);
-    // $('#topbarWrapper').append(dropdownView.$el);
-
-    // dropdownView.render();
 
 
     var defaultCollection = [];

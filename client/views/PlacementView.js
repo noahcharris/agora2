@@ -73,9 +73,6 @@ Agora.Views.PlacementView = Backbone.View.extend({
       });
 
 
-      // var emailInviteView = new Agora.Views.EmailInviteView(that.app);
-      // that.app.get('content2').show(emailInviteView);
-
 
   },
 

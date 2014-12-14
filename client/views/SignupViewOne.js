@@ -40,8 +40,6 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
         about: $('signupAboutInput').val()
       };
 
-      //LEAVING OUT SIGNUPVIEWTWO for now
-      //that.app.get('content2').show(signupTwo);
 
 
       $.ajax({

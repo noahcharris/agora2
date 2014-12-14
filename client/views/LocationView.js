@@ -50,18 +50,6 @@ Agora.Views.LocationView = Backbone.View.extend({
 
     var path = this.model.get('location').split('/');
 
-    // var $dropButton = $('<button>DROP</button>');
-    // var collapsed = true;
-    // $dropButton.on('click', function() {
-    //   if (collapsed) {
-    //     that.app.get('dropdownView').show();
-    //     collapsed = false;
-    //   } else {
-    //     that.app.get('dropdownView').hide();
-    //     collapsed = true;
-    //   }
-    // });
-
 
     //PREFIX
 

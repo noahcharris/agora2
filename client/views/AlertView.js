@@ -59,3 +59,4 @@ Agora.Views.AlertView = Backbone.View.extend({
   }
 
 });
+
