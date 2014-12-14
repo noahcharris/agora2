@@ -30,7 +30,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('cacheManager', null);
 
-    
+    this.set('cacheTimer', null);
 
 
     this.set('username', 'noah'); //is this secure???
@@ -39,6 +39,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('login', true);
 
     this.set('token', null); //this is where we store token for csrf protection
+
+
+
+    var cacheManager = this.CacheManager(this);
+    this.set('cacheManager', cacheManager);
+
+    cacheManager.start();
 
 
 
@@ -52,15 +59,29 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       data: {
       },
       success: function(data) {
-        if (data) {
-          alert(data);
+        if (data.login) {
+
+          //login subroutine
+          that.get('topbarView').model.user = data.username;
+          that.get('topbarView').render();
+          that.set('token', data.token);
+          that.set('login', true);
+          that.set('username', data.username);
+
+          that.get('cacheManager').start();
+
+
         } else {
+          console.log('no session detected');
         }
       }, error: function(err) {
         console.log('ajax error ocurred: ', err);
       }
 
     });
+
+
+
 
 
 
@@ -164,16 +185,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     locationView.render();
     locationView.setHandlers();
 
-
-    //#######################################
-    //###########  CACHE MANAGERS  ##########
-    //#######################################
-
-
-    var cacheManager = this.CacheManager(this);
-    this.set('cacheManager', cacheManager);
-
-    cacheManager.start();
 
 
     
@@ -669,6 +680,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var manager = {};
     manager.app = appController;
 
+    manager.timer = null;
+
     manager.topicTreeCollection = [];
     manager.topicsCollection = [];
     manager.messageChainCollection = [];
@@ -677,6 +690,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.messageTemplate = _.template( $('#detailMessageEntryTemplate').html() );
 
     manager.start = function() {
+
+      clearInterval(this.timer);
+      this.timer = setInterval(this.getNotifications.bind(this) , 3000);
 
       this.getNotifications();
 

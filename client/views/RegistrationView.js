@@ -59,16 +59,19 @@ Agora.Views.RegistrationView = Backbone.View.extend({
         },
         success: function(data) {
           if (data === 'True') {
-            alert('login succeeded');
+            //login subroutine
             that.app.set('login', true);
-
             that.app.get('topbarView').model.user = username;
             that.app.get('topbarView').render();
             that.app.set('username', username);
             that.app.get('content2').hide();
-
+            //why do I need this?
             that.app.trigger('reloadSidebarContacts');
+            
             that.app.get('cacheManager').start();
+
+
+
 
           } else {
             alert('login failed');

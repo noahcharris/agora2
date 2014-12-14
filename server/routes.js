@@ -75,8 +75,6 @@ module.exports.test = function(request, response) {
 
   response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
-  console.log('COOKIES: ', request.cookies);
-
 
 
   // console.log("SESSION: ", request.session);
@@ -171,12 +169,6 @@ function spamValidator(input) {
 
 module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-
-  console.log("SESSION: ", request.session);
-
-  // request.session.soid(function(data) {
-  //   console.log('SESSION DATA: ', data);
-  // });
 
 
   var location = queryArgs.location;
@@ -938,8 +930,6 @@ module.exports.login = function(request, response) {
 
   response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
 
-  //request.session.hello = 'yo';
-  //console.log('SESSION: ', request.session.hello);
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {
@@ -949,22 +939,7 @@ module.exports.login = function(request, response) {
           //LOGIN SUCCESSFUL
 
           console.log('Login successful for user: ', request.body.username);
-          //response.setHeader('Set-Cookie', 'wooooooooooo=wooooooo');
 
-          console.log('before set: ', request.mySession);
-
-
-          //request.mySession.login = true;
-
-
-          console.log('after set: ', request.mySession);
-
-          //request.session.login = true;
-          //request.session.username = request.body.username;
-
-          //console.log('seen you: ', request.mySession.seenyou);
-
-          //do we give the csrf token here also?
 
           response.end('True');
         } else {
@@ -984,7 +959,7 @@ module.exports.login = function(request, response) {
 
 module.exports.logout = function(request, response) {
 
-  request.session.login = false;
+  response.end('aint logged out shit');
 
 };
 
@@ -996,7 +971,8 @@ module.exports.checkLogin = function(request, response) {
   //if it is, return the user a token that they can use for requests
 
 
-  response.cookie('cokkieName',1242189, { maxAge: 900000, httpOnly: true });
+  response.cookie('cokkieName',47538924, { maxAge: 900000, httpOnly: true });
+  console.log('COOKIES: ',request.cookies);
 
 
   if( request.session.id == void( 0 ) ){
