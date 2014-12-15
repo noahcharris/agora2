@@ -51,6 +51,9 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
               that.app.get('topbarView').render();
 
               that.app.get('content2').hide();
+
+              that.app.trigger('reloadSidebarContacts');
+              that.app.trigger('reloadSidebarMessageChains');
               //log user in
               //show them success screen (introduction/tutorial?)
             },

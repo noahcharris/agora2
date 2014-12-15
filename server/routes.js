@@ -1092,17 +1092,38 @@ module.exports.addContact = function(request, response) {
 
 module.exports.createMessageChain = function(request, response) {
 
-  client.query("INSERT INTO messageChains (type, username1, username2) "
-    +"VALUES ('MessageChain', $1, $2);",
+
+  client.query("SELECT * FROM messageChains WHERE (username1=$1 AND username2=$2) "
+    +"OR (username1=$2 AND username2=$1);",
     [request.body.username, request.body.contact],
     function(err, result) {
       if (err) {
-        console.log('error inserting into messageChains: ', err);
+        console.log('error selecting from messageChains: ', err);
         response.end('error');
       } else {
-        response.end('successfully created messageChain');
+
+        if (result.rows.length === 0) {
+
+          client.query("INSERT INTO messageChains (type, username1, username2) "
+            +"VALUES ('MessageChain', $1, $2);",
+            [request.body.username, request.body.contact],
+            function(err, result) {
+              if (err) {
+                console.log('error inserting into messageChains: ', err);
+                response.end('error');
+              } else {
+                response.end('successfully created messageChain');
+              }
+          });
+
+        } else {
+          response.end('messageChain already in database');
+        }
+
       }
-    });
+  });
+
+
 
 
 };

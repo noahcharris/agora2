@@ -66,6 +66,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.get('content2').hide();
             //why do I need this?
             that.app.trigger('reloadSidebarContacts');
+            that.app.trigger('reloadSidebarMessageChains');
 
             that.app.get('cacheManager').start();
 

@@ -16,9 +16,17 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     var that = this;
     console.log(this.model);
     this.$el.html( this.template(this.model) );
+
+
+
+
+
+
+
+
+
+
     var $messageButton = $('<button>SEND MESSAGE</button>');
-
-
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
@@ -157,6 +165,24 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
     };//end send message button handler
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
