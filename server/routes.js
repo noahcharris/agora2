@@ -1372,7 +1372,7 @@ module.exports.updateUserProfile = function(request, response) {
 
         console.log('whaaaaaaa: ', fields.about[0]);
         client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
-          [xssValidator(fields.about[0]), imageLink, xssValidator(fields.username[0]]),
+          [xssValidator(fields.about[0]), imageLink, xssValidator(fields.username[0])],
           function(err, result) {
             if (err) {
               console.log('error updating users table: ', err);
