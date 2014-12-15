@@ -36,7 +36,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('username', null); //is this secure???
 
 
-    this.set('login', true);
+    this.set('login', false);
 
     this.set('token', null); //this is where we store token for csrf protection
 
