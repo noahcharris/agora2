@@ -112,6 +112,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
           (function() {
 
+            var model = models[i];
+
             var x = models[i].channel;
             var y = models[i].location;
             var x = models[i].channel;
@@ -121,8 +123,53 @@ Agora.Views.SettingsView = Backbone.View.extend({
               that.app.set('channel', x);
               that.app.get('mapController').goToPath(y);
               that.app.get('channelView').render();
+              console.log('TOPIC: ', model);
+
+
+
+              //get specific topic tree from server
+              $.ajax({
+                url: 'http://54.149.63.77:80/topicTree',
+                // url: 'http://localhost/topicTree',
+                method: 'GET',
+                crossDomain: true,
+                data: {
+                  topicId: model.id
+                },
+                success: function(model) {
+                  that.app.get('detailView').displayed = 'Topics';
+                  that.app.get('content2').show(that.app.get('detailView'), model);
+
+                  // thet.$el.addClass('highlight');
+
+                },
+                error: function() {
+                  alert('ajax error');
+                }
+              });
+
 
               //need to insert topic into the front of the topics collection
+              that.app.get('sidebarView').displayed = 'Topics-Top';
+              //use this crazy callback shit to highlight
+              var cb = function() {
+                var subViews = that.app.get('sidebarView').subViews;
+                for (var i=0; i < subViews.length ;i++) {
+                  if (subViews[i].model.id === model.id) {
+                    subViews[i].$el.addClass('highlight');
+                    //maybe scroll also here
+
+                  }
+                }
+              };
+              that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+
+              // that.app.get('detailView').displayed = 'Topics';
+              // that.app.get('content2').show(that.app.get('detailView'), model);
+              
+
+
+
 
 
 

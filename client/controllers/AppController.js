@@ -177,7 +177,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //THIS TAKES AN 'EXTRA' TOPIC WHICH IS UNSHIFTED INTO THE TOPICSCOLLECTION
     //THIS IS FOR SEARCH & 'RECENTLY VISITED'
-    this.on('reloadSidebarTopics', function(location, extra) { 
+    this.on('reloadSidebarTopics', function(location, extra, cb) { 
+      cb = cb || function() {};
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarTopics');
@@ -219,17 +220,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         success: function(data) {
           if (data) {
             topicsCollection = data;
-
-
             sidebarView.collection = data;
             //add extra if it's not already there
             if (extra && _.pluck(data, 'id').indexOf(extra.id) === -1)
               sidebarView.collection.unshift(extra);
             content1.show(sidebarView); 
+
+            //this cb is used by recently-visited-topics in settingsView to set highlight
+            cb();
           } else {
-            console.log('memcached returned false');
-            sidebarView.collection = defaultCollection;
-            content1.show(sidebarView);
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
