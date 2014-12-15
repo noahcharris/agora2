@@ -29,7 +29,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     var $messageButton = $('<button>SEND MESSAGE</button>');
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
-      //OTHERWISE TAKE THE USER TO A MESSAGE CREATION VIEW
+      //OTHERWISE MAKE ONE
       var chains = that.app.get('sidebarView').messagesCollection;
       var offsetCount = -1;
       var foundChain = false;

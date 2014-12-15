@@ -48,35 +48,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //not logged in initially
     //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
-    $.ajax({
-      url: 'http://54.149.63.77:80/checkLogin',
-      //url: 'http://localhost:80' + urlPath,
-      crossDomain: true,
-      method: 'GET',
-      data: {
-      },
-      success: function(data) {
-        if (data.login) {
-
-          console.log('woooo: ', data);
-
-          //login subroutine
-          that.set('username', data.username);
-          that.get('topbarView').render();
-          that.set('token', data.token);
-          that.set('login', true);
-
-          that.get('cacheManager').start();
-
-
-        } else {
-          console.log('no session detected');
-        }
-      }, error: function(err) {
-        console.log('ajax error ocurred: ', err);
-      }
-
-    });
 
 
 
@@ -279,10 +250,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
     //TAKES A CALL BACK (USED IN DetailUserEntryView)
-    this.on('reloadSidebarMessageChains', function(cb) { 
+    this.on('reloadSidebarMessageChains', function(cb, suppress) { 
 
-    cb = cb || function() { /*oi.io*/ };
+    //takes a flag to tell it whether it should suppress reloading content1
+    //this is used in login and registration and checkLogin so that
+    //this handler does not try to reload content1, there must be a better way
 
+      cb = cb || function() { /*oi.io*/ };
+      suppress = suppress || false;
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarMessageChains');
 
@@ -301,11 +276,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
             sidebarView.messagesCollection = data;
-            content1.show(sidebarView); 
+            if (!suppress) {
+              content1.show(sidebarView); 
+            }
             cb();
           } else {
-            console.log('memcached returned false');
-            content1.show(sidebarView);
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -422,8 +397,85 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+
+    //CHECK INITIAL LOGIN STATE
+    $.ajax({
+      url: 'http://54.149.63.77:80/checkLogin',
+      //url: 'http://localhost:80' + urlPath,
+      crossDomain: true,
+      method: 'GET',
+      data: {
+      },
+      success: function(data) {
+        if (data.login) {
+
+          console.log('woooo: ', data);
+
+          //login subroutine
+          that.set('username', data.username);
+          that.get('topbarView').render();
+          that.set('token', data.token);
+          that.set('login', true);
+
+          that.trigger('reloadSidebarContacts');
+          //the last argument suppresses reloading of content1
+          that.trigger('reloadSidebarMessageChains', undefined, true);
+
+          that.get('cacheManager').start();
+
+
+        } else {
+          console.log('no session detected');
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
+
+
+
     
   },//END CONTROLLER INITIALIZE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -607,6 +659,54 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //#######################################
   //#########  CACHE MANAGER     ##########
   //#######################################
@@ -736,7 +836,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             that.app.get('detailView').displayed = 'Users';
                             console.log('server returned: ', data);
 
-                            $(thet).remove();
+                            //is this creating a memory leak????
+                            $(thet).parent().empty();
 
                             that.app.get('content2').show(that.app.get('detailView'), data[0]);
                           } else {
@@ -747,8 +848,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         }
 
                       });
+                      
+  
 
-                    });
+                    });//end notification click handler
 
                   })();
 
@@ -771,8 +874,65 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                   var $notificationBox = $( newMessageTemplate(data.newMessages[i]) );
 
                   (function() {
+                    var x = data.newMessages[i].sender;
                     $notificationBox.on('click', function() {
-                      $(this).remove();
+
+
+                      //OPEN CONVERSATION SUBROUTINE
+                      var thet = this;
+                      console.log('.sender ', x);
+
+                      var chains = that.app.get('sidebarView').messagesCollection;
+                      console.log('chainz: ', chains);
+                      var offsetCount = -1;
+                      for (var i=0; i < chains.length ;i++) {
+
+                        offsetCount++;
+
+                        if (chains[i].username1 === that.app.get('username')) {
+                          chains[i].contact = chains[i].username2;
+                        } else {
+                          chains[i].contact = chains[i].username1;
+                        }
+
+                        //will need to account for pagination here eventually
+
+                        if (chains[i].contact === x) {
+                          //open up this shit
+                          that.app.get('sidebarView').displayed = 'Messages';
+                          that.app.get('detailView').displayed = 'Messages';
+
+                          that.app.get('content1').show(that.app.get('sidebarView'));
+
+                          $.ajax({
+                            url: 'http://54.149.63.77/messageChain',
+                            // url: 'http://localhost/messageChain',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              username: that.app.get('username'),
+                              contact: chains[i].contact
+                            },
+                            success: function(model) {
+                              //horrible
+
+                              that.app.get('content2').show(that.app.get('detailView'), model, chains[i].contact);
+                              that.app.get('sidebarView').highlightCell(offsetCount);
+                              //Is this creating a memory leak?
+                              $(thet).parent().empty();
+                            },
+                            error: function() {
+                              alert('server error');
+                            }
+                          });
+                          break;
+                        }
+
+                      }//end for loop
+                      //END OPENING CONVO SUBROUTINE
+
+
+
                     });
                   })();
 
