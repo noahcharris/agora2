@@ -619,6 +619,10 @@ module.exports.channelSearch = function(request, response) {
 
 
 
+
+
+
+
 //maybe just return subtrees with the topics and locations themselves?????
 module.exports.getLocationSubtree = function(request, response) {
 
@@ -658,6 +662,9 @@ module.exports.getChannelSubtree = function(request, response) {
 
   //response.json(['Music', 'Politics', 'Guns']);
 };
+
+
+
 
 
 module.exports.getContacts = function(request, response) {
