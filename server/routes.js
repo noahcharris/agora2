@@ -866,24 +866,17 @@ module.exports.getNotifications = function(request, response) {
 
         notifications.contactRequests = result.rows;
 
-
-
-        //check for any new message alerts
-        client.query("SELECT * FROM newMessageJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+        client.query("SELECT * FROM contactRequestJoin WHERE (sender = $1);",
           [queryArgs.username],
           function(err, result) {
             if (err) {
-              console.log('error selecting from newMessageJoin: ', err);
-              response.end('error');
+              console.log('error selecting from contactRequestJoin: ', err);
             } else {
 
-              notifications.newMessages = result.rows;
+              notifications.sentRequests = result.rows;
 
-
-
-
-
-              client.query("SELECT * FROM topicActivityJoin WHERE (username = $1) ORDER BY sentAt DESC;",
+              //check for any new message alerts
+              client.query("SELECT * FROM newMessageJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
                 [queryArgs.username],
                 function(err, result) {
                   if (err) {
@@ -891,29 +884,48 @@ module.exports.getNotifications = function(request, response) {
                     response.end('error');
                   } else {
 
-                    notifications.topicActivity = result.rows;
+                    notifications.newMessages = result.rows;
 
-                    response.json(notifications);
+
+
+
+
+                    client.query("SELECT * FROM topicActivityJoin WHERE (username = $1) ORDER BY sentAt DESC;",
+                      [queryArgs.username],
+                      function(err, result) {
+                        if (err) {
+                          console.log('error selecting from newMessageJoin: ', err);
+                          response.end('error');
+                        } else {
+
+                          notifications.topicActivity = result.rows;
+
+                          response.json(notifications);
+
+
+                        }
+                    });//end topicActivityJoin select
+
+
+
+
+                    //THE STEPPES
 
 
                   }
-              });
+              });//end newMessageJoin select
 
-
-
-
-              //THE STEPPES
 
 
             }
-        });
+          });//end newMessageJoin select
 
 
 
         //OF WOE
 
       }
-  });
+  });//end contactJoin select
 
 
 };
@@ -1014,7 +1026,7 @@ module.exports.addContact = function(request, response) {
   console.log(request.body.username);
   console.log(request.body.contact);
 
-  //ADD CONTACT REQUEST KEY FORMAT:   <username>/addContactRequest/<contact>
+
   client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
       [request.body.contact, request.body.username],
       function(err, result) {
@@ -1056,7 +1068,6 @@ module.exports.addContact = function(request, response) {
                 });
 
           } else {
-              //if there is no pending request, put a request into memcached
               client.query("INSERT INTO contactRequestJoin (sender, recipient) "
                 +"VALUES ($1, $2);",
               [request.body.username, request.body.contact],
@@ -1071,20 +1082,6 @@ module.exports.addContact = function(request, response) {
       }
   });
 
-
-    
-
-
-      // memcached.append(request.body.contact + '/notifications', request.body.username, true, 2592000, function(err) {
-      //   if (err) {
-      //     console.log('error setting notification to memcached: ', err);
-      //   } else {
-      //   }
-      // });
-
-
-      //maybe alert the user some other way??
-      //their cache manager will deal with it.
 
 
 
@@ -1178,6 +1175,9 @@ module.exports.registerUser = function(request, response) {
         request.body.origin, request.body.about, function(success) {
           if (success) {
             //send back login token here????
+
+            response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
             response.end('successfully created user');
           } else {
             response.end('error creating user');

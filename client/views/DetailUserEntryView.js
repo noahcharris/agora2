@@ -163,13 +163,12 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-    var $contactButton = $('<button>Contact Request</button>');
-
-    $contactButton[0].onclick = function() {
+    var $contactRequestButton = $('<button>Contact Request</button>');
+    $contactRequestButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
         url: 'http://54.149.63.77:80/addContact',
-        // url: 'http://localhost:80/addContact',
+        // url: 'http://localhost:80/sendContactRequest',
         method: 'POST',
         crossDomain: true,
         data: {
@@ -179,15 +178,30 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         success: function(data) {
           if (data) {
             alert(data);
+            //seeing whether we confirmed or sent (because if confirmed, server sends back a 
+            //string that starts with 'y') (HACKY)
+            console.log(data);
+            if (data[0] === 's') {
+              that.app.get('cacheManager').sentRequests.push({ recipient: that.model.username });
+            } else {
+              //erase entry from cache manager's contact request list
+              var contacts = that.app.get('cacheManager').contactRequests
+              for (var i=0; i < contacts.length ;i++) {
+                if (contacts[i].sender === that.model.username)
+                  contacts[i] = {};
+              }
+
+              that.app.get('cacheManager').contacts.push({ username: that.model.username });
+
+
+            }
+            that.render(that.model);
           } else {
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
         }
-
       });
-
-
     };
 
 
@@ -203,7 +217,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
 
 
-    var contacts = this.app.contacts;
+    var contacts = this.app.get('cacheManager').contacts;
     var isContact = false;
     for (var i=0; i < contacts.length ;i++) {
       if (this.model.username === contacts[i].username) {
@@ -212,14 +226,48 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       }
     }
 
-    if (this.model.username !== that.app.get('username')) {
-
-      if (isContact) {
-        $toolColumn.append($messageButton);
-      } else {
-        $toolColumn.append($contactButton);
+    var sent = this.app.get('cacheManager').sentRequests;
+    var isSent = false;
+    for (var i=0; i < sent.length ;i++) {
+      if (this.model.username === sent[i].recipient) {
+        isSent = true;
+        break;
       }
-      
+    }
+
+    var requests = this.app.get('cacheManager').contactRequests;
+    var isPending = false;
+    for (var i=0; i < requests.length ;i++) {
+      if (this.model.username === requests[i].sender) {
+        isPending = true;
+        break;
+      }
+    }
+
+
+
+    if (that.app.get('login') && this.model.username !== that.app.get('username')) {
+
+        if (isSent) {
+
+          $toolColumn.append('Pending Request');
+
+        } else if (isPending) { 
+
+          $contactRequestButton.html('Confirm Contact Request');
+          $toolColumn.append($contactRequestButton);
+
+        } else {
+
+          if (isContact) {
+            $toolColumn.append($messageButton);
+          } else {
+            $toolColumn.append($contactRequestButton);
+          }
+
+        }
+        
+
     }
 
 

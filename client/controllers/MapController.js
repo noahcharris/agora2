@@ -53,14 +53,14 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     //CLUSTER GROUP
 
-    var clusterGroup = new L.MarkerClusterGroup({
-      disableClusteringAtZoom: 8
-    });
-    //use addLayers instead
-    clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    map.addLayer(clusterGroup);
+    // var clusterGroup = new L.MarkerClusterGroup({
+    //   disableClusteringAtZoom: 8
+    // });
+    // //use addLayers instead
+    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
+    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
+    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
+    // map.addLayer(clusterGroup);
 
 
 

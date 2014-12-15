@@ -72,7 +72,6 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
           } else {
             alert('login failed');
-            that.app.set('login', false);
           }
 
 

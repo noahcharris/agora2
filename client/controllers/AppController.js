@@ -259,6 +259,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (data) {
 
             that.contacts = data;
+            that.get('cacheManager').contacts = data;
             console.log('server returned: ', data);
             //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
 
@@ -635,7 +636,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.messagesCollection = [];
 
 
-    manager.requestsSent = [];
+    manager.sentRequests = [];
+    manager.contactRequests = [];
+    manager.newMessages = [];
+    manager.topicActivity = [];
+
+
+
+
+
     manager.contacts = [];
 
     manager.messageTemplate = _.template( $('#detailMessageEntryTemplate').html() );
@@ -685,6 +694,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             console.log('server returned: ', data);
 
             $('#notificationsButton').css('background-color', 'green');
+
+            that.sentRequests = data.sentRequests;
+            that.contactRequests = data.contactRequests;
 
             if (data.contactRequests.length > 0 ||
                 data.newMessages.length > 0 ||

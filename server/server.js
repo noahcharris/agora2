@@ -175,7 +175,14 @@ app.get('/logout', routes.logout);
 app.get('/checkLogin', routes.checkLogin);
 
 //SECURE
+
+//split this up into sendContactRequest and confirmContactRequest
 app.post('/addContact', routes.addContact);
+
+app.post('/sendContactRequest', routes.sendContactRequest);
+app.post('/confirmContactRequest', routes.sendContactRequest);
+
+
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
