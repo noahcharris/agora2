@@ -158,7 +158,8 @@ function xssValidator(input) {
     return false;
   }
 
-  var translator = {'&':'&amp', '<':'&lt', '>':'&gt', '"':'&quot', "'":'&#x27','/':'&#x2F'}
+  //DANGER! Leaving forward slash out for now because it totally fucks with the channel/location hierarchy.
+  var translator = {'&':'&amp', '<':'&lt', '>':'&gt', '"':'&quot', "'":'&#x27',/*'/':'&#x2F'*/}
 
   for (var key in translator) {
     console.log(key);
@@ -1118,6 +1119,18 @@ module.exports.addContact = function(request, response) {
 
 
 
+
+
+
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//  XSS VULNERABILITIES START HERE
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+
+
 module.exports.createMessageChain = function(request, response) {
 
 
@@ -1134,7 +1147,7 @@ module.exports.createMessageChain = function(request, response) {
 
           client.query("INSERT INTO messageChains (type, username1, username2) "
             +"VALUES ('MessageChain', $1, $2);",
-            [request.body.username, request.body.contact],
+            [xssValidator(request.body.username), xssValidator(request.body.contact)],
             function(err, result) {
               if (err) {
                 console.log('error inserting into messageChains: ', err);
@@ -1162,7 +1175,7 @@ module.exports.sendMessage = function(request, response) {
 
   client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
     +"VALUES ('Message', $1, $2, $3, now());",
-      [request.body.sender, request.body.recipient, request.body.contents],
+      [xssValidator(request.body.sender), xssValidator(request.body.recipient), xssValidator(request.body.contents)],
       function(err, result) {
         if (err) {
           console.log('error inserting into messages: ', err);
@@ -1221,8 +1234,8 @@ module.exports.registerUser = function(request, response) {
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-      postgres.createUser(request.body.username, hash, salt, 
-        request.body.origin, request.body.about, function(success) {
+      postgres.createUser(xssValidator(request.body.username), hash, salt, 
+        xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
           if (success) {
             //send back login token here????
 
@@ -1328,7 +1341,7 @@ module.exports.updateUserProfile = function(request, response) {
     //if an image is sent
     if (files.file) {
 
-      var keyString = fields.username[0];
+      var keyString = xssValidator(fields.username[0]);
 
       var params = {
         localFile: files.file[0].path,
@@ -1359,7 +1372,7 @@ module.exports.updateUserProfile = function(request, response) {
 
         console.log('whaaaaaaa: ', fields.about[0]);
         client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
-          [fields.about[0], imageLink, fields.username[0]],
+          [xssValidator(fields.about[0]), imageLink, xssValidator(fields.username[0]]),
           function(err, result) {
             if (err) {
               console.log('error updating users table: ', err);
@@ -1375,7 +1388,7 @@ module.exports.updateUserProfile = function(request, response) {
       //NO IMAGE
 
       client.query("UPDATE users SET about = $1 WHERE username = $2;",
-        [fields.about[0], fields.username[0]],
+        [xssValidator(fields.about[0]), xssValidator(fields.username[0])],
         function(err, result) {
           if (err) {
             console.log('error updating users table: ', err);
@@ -1433,7 +1446,7 @@ module.exports.createTopic = function(request, response) {
 
             client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
             +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [fields.username[0], fields.headline[0], fields.link[0], xssValidator(fields.contents[0]), fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]],
+            [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
             function(err, result) {
 
                 if (err) {
@@ -1447,6 +1460,10 @@ module.exports.createTopic = function(request, response) {
                                 console.log('error selecting from topics: ', err);
                                 response.end('error');
                           } else {
+
+
+                                  //I think I'm safe from XSS in here..
+
                                     //this is where we use that id we just fetched
                                     var keyString = 'topicImage' + result.rows[0].id;
 
@@ -1498,7 +1515,7 @@ module.exports.createTopic = function(request, response) {
 
       client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
       +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [fields.username[0], fields.headline[0], fields.link[0], xssValidator(fields.contents[0]), fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]], 
+      [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])], 
       function(err, result) {
         if (err) {
           console.log('error inserting into topics: ', err);
@@ -1542,7 +1559,7 @@ module.exports.createComment = function(request, response) {
 
             client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
             +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [fields.username[0], fields.topicId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
             function(err, result) {
 
                 if (err) {
@@ -1607,7 +1624,7 @@ module.exports.createComment = function(request, response) {
 
       client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
       +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [fields.username[0], fields.topicId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
       function(err, result) {
         if (err) {
           console.log('error inserting into comments: ', err);
@@ -1651,7 +1668,7 @@ module.exports.createResponse = function(request, response) {
             //insert and fetch id here, then upload the image to amazon
             client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
             +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-            [fields.username[0], fields.topicId[0], fields.commentId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
             function(err, result) {
 
                 if (err) {
@@ -1716,7 +1733,7 @@ module.exports.createResponse = function(request, response) {
 
       client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
       +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-      [fields.username[0], fields.topicId[0], fields.commentId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
       function(err, result) {
         if (err) {
           console.log('error inserting into responses: ', err);
@@ -1762,7 +1779,7 @@ module.exports.createReply = function(request, response) {
             //insert and fetch id here, then upload the image to amazon
             client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
             +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-            [fields.username[0], fields.topicId[0], fields.commentId[0], fields.responseId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]],
+            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
             function(err, result) {
 
                 if (err) {
@@ -1827,7 +1844,7 @@ module.exports.createReply = function(request, response) {
 
       client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
       +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-      [fields.username[0], fields.topicId[0], fields.commentId[0], fields.responseId[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], fields.channel[0]], 
+      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
       function(err, result) {
         if (err) {
           console.log('error inserting into replies: ', err);
@@ -1844,14 +1861,80 @@ module.exports.createReply = function(request, response) {
   });//end multiparty parse
 
 
+};
 
 
 
+
+
+
+
+
+
+
+
+
+
+module.exports.createLocation = function(request, response) {
+  // postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
+  //   request.body.name, request.body.description, request.body.creator,
+  //   request.body.public, request.body.open, function(success) {
+  //     if (success) {
+  //       response.end('group successfully created');
+  //     } else {
+  //       response.end('error creating group');
+  //     }
+  //   });
+
+
+
+
+  client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+    +" creator, population, rank, public, pointGeometry) "
+    +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
+    [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+    request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into locations: ', err);
+      } else {
+        response.end('successfully created location');
+      }
+  });
 
 
 
 
 };
+
+
+
+
+module.exports.createChannel = function(request, response) {
+
+
+  client.query("INSERT INTO channels (type, name, description, parent) "
+    +"VALUES ('Channel', $1, $2, $3);",
+    [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into channels: ', err);
+      } else {
+        response.end('successfully created channel');
+      }
+  });
+
+
+
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -2025,58 +2108,6 @@ module.exports.upvoteReply = function(request, response) {
 
 
 
-module.exports.createLocation = function(request, response) {
-  // postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
-  //   request.body.name, request.body.description, request.body.creator,
-  //   request.body.public, request.body.open, function(success) {
-  //     if (success) {
-  //       response.end('group successfully created');
-  //     } else {
-  //       response.end('error creating group');
-  //     }
-  //   });
-
-
-
-
-  client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-    +" creator, population, rank, public, pointGeometry) "
-    +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
-    [request.body.name, request.body.description, request.body.parent, request.body.creator,
-    request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
-    function(err, result) {
-      if (err) {
-        console.log('error inserting into locations: ', err);
-      } else {
-        response.end('successfully created location');
-      }
-  });
-
-
-
-
-};
-
-
-
-
-module.exports.createChannel = function(request, response) {
-
-
-  client.query("INSERT INTO channels (type, name, description, parent) "
-    +"VALUES ('Channel', $1, $2, $3);",
-    [request.body.name, request.body.description, request.body.parent],
-    function(err, result) {
-      if (err) {
-        console.log('error inserting into channels: ', err);
-      } else {
-        response.end('successfully created channel');
-      }
-  });
-
-
-
-};
 
 
 
