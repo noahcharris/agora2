@@ -53,6 +53,14 @@ app.use( ConnectRedisSessions({
 
 
 
+app.use(function(request, response, next) {
+
+  console.log('serving user client at ip '+request.ip);
+  next();
+});
+
+
+
 //app.use(cookieParser());
 // app.use(cookieSession({
 //   secret: 'Keyboard Cat',
