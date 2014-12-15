@@ -148,9 +148,30 @@ function linkValidator(input) {
 
 };
 
+
+
 function xssValidator(input) {
 
+  var result = input;
+
+  if (typeof result !== 'string') {
+    return false;
+  }
+
+  var translator = {'&':'&amp', '<':'&lt', '>':'&gt', '"':'&quot', "'":'&#x27','/':'&#x2F'}
+
+  for (var key in translator) {
+    console.log(key);
+    result = result.split(key).join(translator[key]);
+  }
+
+  return result;
+
+  //report attempted xss attacks
+
 };
+
+
 
 function spamValidator(input) {
 
@@ -1412,7 +1433,7 @@ module.exports.createTopic = function(request, response) {
 
             client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
             +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [fields.username[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]],
+            [fields.username[0], fields.headline[0], fields.link[0], xssValidator(fields.contents[0]), fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]],
             function(err, result) {
 
                 if (err) {
@@ -1477,7 +1498,7 @@ module.exports.createTopic = function(request, response) {
 
       client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
       +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [fields.username[0], fields.headline[0], fields.link[0], fields.contents[0], fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]], 
+      [fields.username[0], fields.headline[0], fields.link[0], xssValidator(fields.contents[0]), fields.location[0], "{\""+fields.location[0]+"\"}", fields.channel[0]], 
       function(err, result) {
         if (err) {
           console.log('error inserting into topics: ', err);
