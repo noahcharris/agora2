@@ -169,10 +169,10 @@ body {
 
 #locationSubtreeView {
   position: absolute;
+  overflow-y: scroll;
   z-index: 502;
   bottom: -100px;
   width: auto;
-  height: auto;
   background-color: green;
 }
 .channelView {
