@@ -24,13 +24,12 @@
     <script id="topbarTemplate" type="text/template">
      <!--<button id="boundsButton">Get Bounds!</button>-->
      <h1 id="title">agora</h1>
-     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="username"><%= user %></span>
+     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="username"><%= username %></span>
      <img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>
      <img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>
      <img id="messagingButton" class="topbarIcon" src="/resources/images/messaging.png" height="20px" width="20px"></img>
      <img id="notificationsButton" class="topbarIcon" src="/resources/images/notifications.png" height="20px" width="20px"></img>
      <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
-     <p class="username"><%= user %></p>
      <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
      <select id="searchSelect">
@@ -370,6 +369,9 @@
      <input id="loginUsernameInput" type="text" placeholder="username"></input>
      <br/> <input id="loginPasswordInput" type="password" placeholder="password"></input>
      <button id="loginButton">Login!</button>
+     <br/>
+     <br/>
+     <button id="logoutButton">Logout</button>
     </div>
     <hr>
     <div class="signup">

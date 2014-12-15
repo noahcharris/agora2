@@ -35,7 +35,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
     // ## RESPONSE BOX ##
     //console.log('appending response box in render responding: ',this.responding);
     //USE this.responseData here so users won't lose their changes

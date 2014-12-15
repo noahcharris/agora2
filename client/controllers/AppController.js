@@ -33,7 +33,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('cacheTimer', null);
 
 
-    this.set('username', 'noah'); //is this secure???
+    this.set('username', null); //is this secure???
 
 
     this.set('login', true);
@@ -58,12 +58,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(data) {
         if (data.login) {
 
+          console.log('woooo: ', data);
+
           //login subroutine
-          that.get('topbarView').model.user = data.username;
+          that.set('username', data.username);
           that.get('topbarView').render();
           that.set('token', data.token);
           that.set('login', true);
-          that.set('username', data.username);
 
           that.get('cacheManager').start();
 
@@ -89,31 +90,27 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
 
 
-    var topbarModel = { user: 'not logged in'};
+    var topbarModel = { username: 'not logged in'};
     var topbarView = new Agora.Views.TopbarView(this);
     topbarView.model = topbarModel;
-
     $('#topbar1').append(topbarView.$el);
     this.set('topbarView', topbarView);
-
     topbarView.render();
-
-
-
 
     var defaultCollection = [];
     var searchCollection = [];
     var messagesCollection = [];
+    var contactsCollection = [];
 
     var sidebarView = new Agora.Views.SidebarView(this); //collection from TopicsCollection
     sidebarView.collection = defaultCollection;
     sidebarView.searchCollection = searchCollection;
     sidebarView.messagesCollection = messagesCollection;
+    sidebarView.contactsCollection = contactsCollection;
     this.set('sidebarView', sidebarView);
 
     var detailView = new Agora.Views.DetailView(this);
     this.set('detailView', detailView);
-
 
     var settingsView = new Agora.Views.SettingsView(this);
     this.set('settingsView', settingsView);
@@ -133,7 +130,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     locationView.router = router;
     locationView.render();
     $('#topbar2').append(locationView.$el);
-
 
     var channelView = new Agora.Views.ChannelView({ model: mapController });
     //used by detailChannelView
@@ -164,16 +160,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //sets up the highlighting interaction between sidebarView and detailView
     mapController.on('change:location', function() {
       locationView.render();
-      locationView.setHandlers();
-    });
-
-    mapController.on('change:group', function() {
-      locationView.render();
-      locationView.setHandlers();
     });
 
     locationView.render();
-    locationView.setHandlers();
 
 
 
@@ -183,10 +172,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
     //#########  TOPIC RETRIEVAL AJAX  ######
     //#######################################
-
-
-    //NEW TRIGGGER
-    //switch between topic filters, need to include this kind of stuff in the method above as well
 
     //takes page for pagination of topics
 
@@ -255,7 +240,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
     //TAKES A CALLBACK
-    this.on('reloadSidebarContacts', function(cb) { 
+    this.on('reloadSidebarContacts', function() { 
 
       //TODO Go through cache manager here
       console.log('AppController event: reloadSidebarContacts');
@@ -284,8 +269,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             sidebarView.contactsCollection = data;
             content1.show(sidebarView); 
           } else {
-            console.log('memcached returned false');
-            content1.show(sidebarView);
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -424,27 +407,17 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
+    //LOADER ANIMATION
     var $body = $('body');
-
     console.log('what you need: ', $body.children('#loader'));
-
     $body.children('#loader').hide();
-
     $(document).on({
-
         ajaxStart: function() { 
-
           $body.children('#loader').show();  
-
         },
-
         ajaxStop: function() { 
-
           $body.children('#loader').hide();
-
         }    
-
     });
 
 
@@ -480,25 +453,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   passwordValidator: function() {
 
   },
-
-
-
-
-
-  //WHAAAAAT?????
-
-  showUser: function() {
-
-  },
-
-  showLocation: function() {
-
-  },
-
-  showChannel: function() {
-
-  },
-
 
 
 
@@ -654,7 +608,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
   //#######################################
-  //#########  HISTORY MANAGERS  ##########
+  //#########  CACHE MANAGER     ##########
   //#######################################
 
   //keep
@@ -680,6 +634,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.messageChainCollection = [];
     manager.messagesCollection = [];
 
+
+    manager.requestsSent = [];
+    manager.contacts = [];
+
     manager.messageTemplate = _.template( $('#detailMessageEntryTemplate').html() );
 
     manager.start = function() {
@@ -690,6 +648,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       this.getNotifications();
 
+
+    };
+
+    manager.stop = function() {
+
+      clearInterval(this.timer);
 
     };
 
@@ -820,6 +784,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     };//end getNotifications
+
+
 
 
     manager.updateCredentials = function() {

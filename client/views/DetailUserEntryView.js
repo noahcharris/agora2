@@ -193,12 +193,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
     //MAYBE ONLY DO THIS FOR A LITTLE WHILE AFTER THE PROFILE HAS BEEN UPDATED??????
     var suffix = '';
     if (this.model.username === this.app.get('username')) {
@@ -208,14 +202,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
 
-    //need to return whether the user is a contact or not...
-    // if (this.model.username !== this.app.get('username')) {
-    //   $toolColumn.append($messageButton);
-    //   if (!this.model.isContact) {
-    //     $toolColumn.append($('<br/>'));
-    //     $toolColumn.append($contactButton);
-    //   }
-    //}
 
     var contacts = this.app.contacts;
     var isContact = false;

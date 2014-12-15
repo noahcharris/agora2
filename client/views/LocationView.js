@@ -104,6 +104,7 @@ Agora.Views.LocationView = Backbone.View.extend({
         //that.render();
         //that.setHandlers();
       });
+      
       //keyup is the best way to get all the keys, not ideal
       $('#pathInput').on('keyup', function(e) {
 
@@ -172,14 +173,10 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
 
+    //SUBTREE BUTTON
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
     var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
     $treeButton[0].onclick = function() {
-
-      //TODO: add subpath code here
-
-      //AJAX CALL TO SERVER FOR SUBTREES
-
 
       $.ajax({
         url: 'http://54.149.63.77:80/locationSubtree',
@@ -235,13 +232,7 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
-    //NEED TO SPLIT UP THE LOCATION HERE AND CREATE A BREADCRUMB
+    //splitting up location and creating breadcrumb
 
     var parsedLocationArray = this.parseLocation(this.app.get('mapController').get('location'));
 
@@ -270,128 +261,12 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
 
-
-
-    // var $world = $('<span class="pathName">World</span>')
-    // $world.on('click', function() {
-    //   that.app.get('mapController').showWorld();
-    // })
-    // $('span.pathWrapper').append($world);
-
-    // if (path.length > 0 && path[0] !== '') {
-    //   var $country = $('<span class="pathName">/'+path[0]+'</span>');
-    //   $country.on('click', function() {
-    //     that.app.get('mapController').goToPath(path[0]);
-    //     that.router.navigate('World/'+path[0], {trigger: false});
-    //   });
-    //   $('span.pathWrapper').append($country);
-    // //Need to check against a list of the countries that have been
-    // //divided into 'states' instead of just hardcoding it..
-    // } 
-
-    // if (path.length > 1 && path[0] === 'United States') {
-    //   var $state = $('<span class="pathName">/'+path[1]+'</span>');
-    //   $state.on('click', function() {
-    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
-    //     that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
-    //   });
-    //   $('span.pathWrapper').append($state);
-    // } else if (path.length > 1) {
-    //   var $city = $('<span class="pathName">/'+path[1]+'</span>');
-    //   $city.on('click', function() {
-    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]);
-    //     that.router.navigate('World/'+path[0]+'/'+path[1], {trigger: false});
-    //   });
-    //   $('span.pathWrapper').append($city);
-    // } 
-
-    // if (path.length > 2) {
-    //   var $city = $('<span class="pathName">/'+path[2]+'</span>');
-    //   $city.on('click', function() {
-    //     that.app.get('mapController').goToPath(path[0]+'/'+path[1]+'/'+path[2]);
-    //     that.router.navigate('World/'+path[0]+'/'+path[1]+'/'+path[2], {trigger: false});
-    //   });
-    //   $('span.pathWrapper').append($city);
-    // }
-
-
-    // if (this.model.get('group')) {
-    //   if (group[0]) {
-    //     var $group = $('<span class="pathName">'+group[0]+'</span>');
-    //     $group.on('click', function() {
-    //       that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]);
-    //       that.router.navigate('World/'+that.model.get('location')+'~'+group[0], {trigger: false});
-    //     });
-    //     $('span.pathWrapper').append('~ ').append($group);
-    //   }
-
-    //   if (group.length > 1) {
-    //     var $subgroup = $('<span class="pathName">/'+group[1]+'</span>');
-    //     $subgroup.on('click', function() {
-    //       that.app.get('mapController').goToPath(that.app.get('mapController').get('location')+'~'+group[0]+'/'+group[1]);
-    //       that.router.navigate('World/'+that.model.get('location')+'~'+group[0]+'/'+group[1], {trigger: false});
-
-    //     });
-    //     $('span.pathWrapper').append($subgroup);
-    //   }
-    // }
-
-
-
-
-
   },
 
 
   setHandlers: function() {
     var that = this;
 
-    // $('#hello').on('click', function() {
-    //   $.ajax({
-    //     url: 'place',
-    //     method: 'GET',
-    //     data: {
-    //       location: that.app.get('mapController').get('location')
-    //     },
-    //     success: function(data) {
-    //       console.log(data);
-    //       that.app.get('placeView').model = data[0];
-    //       if (!that.app.get('expanded')) {
-    //         that.app.get('content2').show(that.app.get('placeView'));
-    //       } else {
-    //         if ($('#content2').children()[0].className === 'placeView') {
-    //           content2.hide();
-    //         } else {
-    //           content2.show(that.app.get('placeView'));
-    //         }
-    //       }
-    //     },
-    //   });
-
-    // });
-
-
-    // $('.pathWrapper').on('click', function(e) {
-    //   $(e.target).empty();
-    //   $(e.target).append($('<input id="pathInput"></input>'));
-    //   $('#pathInput').focus();
-    //   $('#pathInput').focusout(function() {
-    //     //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
-    //     $('.pathWrapper').empty();
-    //     that.render();
-    //     that.setHandlers();
-    //   });
-    //   //keyup is the best way to get all the keys, not ideal
-    //   $('#pathInput').on('keyup', function(e) {
-    //     console.log($('#pathInput').val());
-    //     //AJAX CALL FOR SEARCH SUGGESTIONS
-    //     //throttle this ajax call
-    //   });
-    // });
-
-
-      //will have to retrieve location data and then load up the placeview
-      //use a lockout variable so only one request is sent
 
   },
 

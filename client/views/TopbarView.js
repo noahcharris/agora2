@@ -11,7 +11,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
   render: function() {
     var that = this;
 
-    this.$el.html( this.template(this.model) );
+    var username = that.app.get('username') || 'Not Logged In'
+
+    this.$el.html( this.template({ username: username }) );
 
 
 

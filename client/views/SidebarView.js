@@ -238,8 +238,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
               });
 
 
-
             } else if (model.type === 'MessageChain') {
+
               that.app.get('detailView').displayed = 'Messages';
 
               var contact = model.contact;
@@ -254,8 +254,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   contact: contact
                 },
                 success: function(model) {
-                  //GAHHHHHHH SO HACKY FUCKKKK
-                  //model2 is the sidebar model that the username is coming from wtf...
                   that.app.get('content2').show(that.app.get('detailView'), model, contact);
                   thet.$el.addClass('highlight');
                 },

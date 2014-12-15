@@ -940,10 +940,12 @@ module.exports.login = function(request, response) {
 
           //LOGIN SUCCESSFUL
 
+          //set cookie which will be checkd in checkLogin (10 minutes here)
+          response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
           console.log('Login successful for user: ', request.body.username);
 
-
-          response.end('True');
+          response.json('True');
         } else {
 
           //LOGIN FAILED
@@ -961,7 +963,9 @@ module.exports.login = function(request, response) {
 
 module.exports.logout = function(request, response) {
 
-  response.end('aint logged out shit');
+  //delete row from security join
+  response.cookie('login','0', { maxAge: 900000, httpOnly: true });
+  response.end('True');
 
 };
 
@@ -972,11 +976,21 @@ module.exports.checkLogin = function(request, response) {
   //see if the cookie is in the session database
   //if it is, return the user a token that they can use for requests
 
+  if (request.cookies['login'] && request.cookies['login'] !== '0') {
 
-  response.cookie('cokkieName',47538924, { maxAge: 900000, httpOnly: true });
-  console.log('COOKIES: ',request.cookies);
+    // response.cookie('cokkieName',47538924, { maxAge: 30, httpOnly: true });
+    // console.log('COOKIES: ',request.cookies);
 
-  response.end('yup');
+    response.json({ login: true, username: 'noah' });
+
+    
+  } else {
+    
+    response.json({});
+  }
+
+
+
 
 
 

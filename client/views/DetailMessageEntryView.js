@@ -35,7 +35,6 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     }];
 
 
-    
     var $messageChainList = this.$el.children('ul#messageChain');
 
     var count = 1;
@@ -46,14 +45,12 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
     }
 
-
     //LOL this will do for now
     setTimeout(function() {
       $messageChainList.append('<div id="spacer"></div>');
       $messageChainList.scrollTop(9999999);
 
     }, 1);
-
 
 
     //NEED TO SCROLL TO BOTTOM ONCE THESE ARE ALL PREPENDED
@@ -81,36 +78,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
             $('#messageInputTextArea').val('');
 
             //reload message chain
-
             that.app.get('cacheManager').updateMessageChain(contact);
-
-
-
-
-            // $.ajax({
-            //   url: 'http://54.149.63.77:80/messageChain',
-            //   // url: 'http://localhost/messageChain',
-            //   method: 'GET',
-            //   crossDomain: true,
-            //   cache: false,
-            //   data: {
-            //     username: that.app.get('username'),
-            //     contact: contact
-            //   },
-            //   success: function(model) {
-
-            //     that.app.get('cacheManager').updateMessageChain(contact);
-
-            //   },
-            //   error: function() {
-            //     alert('server error');
-            //   }
-            // });
-
-
-
-
-
 
           } else {
             $('#messageInputTextArea').val('');
@@ -122,17 +90,11 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       });
 
 
-
-
     };//end sendbutton onclick
 
 
+
     var timer = setInterval(function() {
-
-      //need to call cache manager here to update this shit
-      //maybe cache manager can just automatically insert into the tree
-      //instead of calling render again, that would be dope!!!!!!!!!
-
 
       that.app.get('cacheManager').updateMessageChain(contact);
 

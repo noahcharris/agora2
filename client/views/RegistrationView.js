@@ -61,9 +61,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
           if (data === 'True') {
             //login subroutine
             that.app.set('login', true);
-            that.app.get('topbarView').model.user = username;
-            that.app.get('topbarView').render();
             that.app.set('username', username);
+            that.app.get('topbarView').render();
             that.app.get('content2').hide();
             //why do I need this?
             that.app.trigger('reloadSidebarContacts');
@@ -83,7 +82,36 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     });
 
     $('#logoutButton').on('click', function() {
-      //ajax call to server to log out
+      
+      $.ajax({
+        url: 'http://54.149.63.77:80/logout',
+        // url: 'http://localhost/login',
+        crossDomain: true,
+        method: 'GET',
+        data: {
+        },
+        success: function(data) {
+          if (data === 'True') {
+            //login subroutine
+            that.app.set('login', false);
+            that.app.get('cacheManager').stop();
+            that.app.set('username', null);
+            that.app.get('topbarView').render();
+            //why do I need this?
+            // that.app.get('sidebarView').displayed = 'Topics-Top';
+            that.app.get('mapController').showWorld();
+            that.app.get('content1').show(that.app.get('sidebarView'));
+
+          } else {
+            alert('logout failed');
+            that.app.set('login', true);
+          }
+        },
+        error: function(err) {
+          alert('ajax error: ', err);
+        }
+      });
+
       that.app.set('login', false);
     });
 

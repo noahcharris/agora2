@@ -11,6 +11,11 @@ client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER 
 
 
 
+
+response.cookie('cokkieName',47538924, { maxAge: 900000, httpOnly: true });
+console.log(response.cookies);
+
+
 var queryArgs = url.parse(request.url, true).query;
 
 
