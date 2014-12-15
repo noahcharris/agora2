@@ -90,7 +90,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
 
 
-    var topbarModel = { username: 'not logged in'};
+    var topbarModel = { username: 'Not Logged In'};
     var topbarView = new Agora.Views.TopbarView(this);
     topbarView.model = topbarModel;
     $('#topbar1').append(topbarView.$el);

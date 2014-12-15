@@ -953,7 +953,8 @@ module.exports.login = function(request, response) {
           //LOGIN SUCCESSFUL
 
           //set cookie which will be checkd in checkLogin (10 minutes here)
-          response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+          response.cookie('login',request.body.username, { maxAge: 600000, httpOnly: true });
 
           console.log('Login successful for user: ', request.body.username);
 
@@ -993,7 +994,7 @@ module.exports.checkLogin = function(request, response) {
     // response.cookie('cokkieName',47538924, { maxAge: 30, httpOnly: true });
     // console.log('COOKIES: ',request.cookies);
 
-    response.json({ login: true, username: 'noah' });
+    response.json({ login: true, username: request.cookies['login'] });
 
     
   } else {
@@ -1176,7 +1177,8 @@ module.exports.registerUser = function(request, response) {
           if (success) {
             //send back login token here????
 
-            response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+            // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+            response.cookie('login', request.body.username, { maxAge: 600000, httpOnly: true });
 
             response.end('successfully created user');
           } else {

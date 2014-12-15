@@ -179,8 +179,8 @@ app.get('/checkLogin', routes.checkLogin);
 //split this up into sendContactRequest and confirmContactRequest
 app.post('/addContact', routes.addContact);
 
-app.post('/sendContactRequest', routes.sendContactRequest);
-app.post('/confirmContactRequest', routes.sendContactRequest);
+// app.post('/sendContactRequest', routes.sendContactRequest);
+// app.post('/confirmContactRequest', routes.sendContactRequest);
 
 
 app.post('/createMessageChain', routes.createMessageChain);
