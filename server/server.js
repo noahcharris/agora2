@@ -60,6 +60,14 @@ app.use(function(request, response, next) {
 });
 
 
+app.use(function(request, response, next) {
+
+  response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
+  next();
+
+});
+
+
 
 //app.use(cookieParser());
 // app.use(cookieSession({

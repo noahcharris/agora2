@@ -11,6 +11,10 @@ client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER 
 
 
 
+response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
+
+
+
 
 response.cookie('cokkieName',47538924, { maxAge: 900000, httpOnly: true });
 console.log(response.cookies);

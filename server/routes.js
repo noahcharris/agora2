@@ -193,6 +193,7 @@ module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
 
+
   var location = queryArgs.location;
   var channel = queryArgs.channel;
   var page = queryArgs.page;
@@ -987,7 +988,7 @@ module.exports.login = function(request, response) {
   //NEED TO MAKE SURE THAT NOT HTTPS REQUESTS DO NOT WORK HERE
   //NEED CSRF PROTECTION
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+  response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
 
 
   postgres.retrieveUser(request.body.username, function(data) {
