@@ -710,6 +710,7 @@ module.exports.getChannelSubtree = function(request, response) {
 
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆  START DEFENDING CSRF  ∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆  WITH TOKEN SYSTEM     ∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
 
@@ -730,7 +731,7 @@ module.exports.getContacts = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
             client.query("SELECT * FROM users JOIN contactsjoin " 
@@ -780,7 +781,7 @@ module.exports.getMessageChains = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("SELECT * FROM messageChains WHERE "
@@ -830,7 +831,7 @@ module.exports.getMessageChain = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
            
 
@@ -950,7 +951,7 @@ module.exports.getNotifications = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
 
@@ -1135,7 +1136,7 @@ module.exports.logout = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -1189,13 +1190,13 @@ module.exports.checkLogin = function(request, response) {
               response.json({ login: true, token: result.rows[0].token, username: request.cookies['login'].split('/')[0] });
             } else {
               console.log('unauthorized access');
-              response.end({});
+              response.json({});
             }
 
 
           } else {
             console.log('no record found');
-            response.end({});
+            response.json({});
           };
         };
     });
@@ -1203,7 +1204,7 @@ module.exports.checkLogin = function(request, response) {
 
   } else {
     console.log('no cookie found');
-    response.end({});
+    response.json({});
   }
 
 
@@ -1339,7 +1340,7 @@ module.exports.createMessageChain = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                 
 
@@ -1408,7 +1409,7 @@ module.exports.sendMessage = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
                       +"VALUES ('Message', $1, $2, $3, now());",
@@ -1511,7 +1512,7 @@ module.exports.visitedTopic = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -1592,7 +1593,7 @@ module.exports.recentlyVisitedTopics = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
@@ -1642,7 +1643,7 @@ module.exports.updateUserProfile = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                         //if an image is sent
                         if (files.file) {
@@ -1768,7 +1769,7 @@ module.exports.createTopic = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                               //if an image is sent
@@ -1910,7 +1911,7 @@ module.exports.createComment = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
               //if an image is sent
@@ -2050,7 +2051,7 @@ module.exports.createResponse = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                         //if an image is sent
@@ -2190,7 +2191,7 @@ module.exports.createReply = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                     //if an image is sent
@@ -2332,7 +2333,7 @@ module.exports.createLocation = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
@@ -2380,7 +2381,7 @@ module.exports.createChannel = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("INSERT INTO channels (type, name, description, parent) "
@@ -2438,7 +2439,7 @@ module.exports.upvoteTopic = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
               client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
                 [request.body.username, request.body.topicId],
@@ -2503,7 +2504,7 @@ module.exports.upvoteComment = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
                     client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
@@ -2566,7 +2567,7 @@ module.exports.upvoteResponse = function(request, response) {
       if (err) {
         console.log('error selecting from securityJoin: ', err);
       } else {
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -2629,7 +2630,7 @@ module.exports.upvoteReply = function(request, response) {
       if (err) {
         console.log('error selecting from securityJoin: ', err);
       } else {
-        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
 

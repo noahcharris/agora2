@@ -224,7 +224,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         method: 'GET',
         data: {
           username: username,
-          token: that.get('token');
+          token: that.get('token')
         },
         success: function(data) {
           if (data) {
@@ -270,7 +270,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         method: 'GET',
         data: {
           username: that.get('username'),
-          that.get('token');
+          token: that.get('token')
         },
         success: function(data) {
           if (data) {
@@ -915,7 +915,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             data: {
                               username: that.app.get('username'),
                               contact: chains[i].contact,
-                              token: that.app.get('token');
+                              token: that.app.get('token')
                             },
                             success: function(model) {
                               //horrible
