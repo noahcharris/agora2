@@ -58,8 +58,12 @@ Agora.Views.RegistrationView = Backbone.View.extend({
           password: password
         },
         success: function(data) {
-          if (data === 'True') {
+          if (data.login === true) {
             //login subroutine
+
+            //TOKENZ!!
+            that.app.set('token', data.token);
+
             that.app.set('login', true);
             that.app.set('username', username);
             that.app.get('topbarView').render();

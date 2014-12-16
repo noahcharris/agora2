@@ -181,6 +181,8 @@ function spamValidator(input) {
 
 
 
+
+
 /********************************************/
 /***   TOPICS WITH FILTERS METHODS     ******/
 /********************************************/
@@ -706,38 +708,111 @@ module.exports.getChannelSubtree = function(request, response) {
 
 
 
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆  START DEFENDING CSRF  ∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+
+
+
 module.exports.getContacts = function(request, response) {
+
+
 
   var queryArgs = url.parse(request.url, true).query;
 
-  client.query("SELECT * FROM users JOIN contactsjoin " 
-    +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
-    +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.json(result.rows);
+
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+            client.query("SELECT * FROM users JOIN contactsjoin " 
+              +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
+              +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
+              [queryArgs.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from topics: ', err);
+                  response.end('error');
+                } else {
+                  response.json(result.rows);
+                }
+            });
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
       }
-    });
-  };
+  });//end securityJoin select
+
+
+
+
+
+
+
+
+
+};
 
 module.exports.getMessageChains = function(request, response) {
 
+
+
   var queryArgs = url.parse(request.url, true).query;
 
-  client.query("SELECT * FROM messageChains WHERE "
-    +"(username1 = $1 OR username2 = $1) ORDER BY lastMessage DESC;",
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from messageChains: ', err);
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.json(result.rows);
+
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    
+            client.query("SELECT * FROM messageChains WHERE "
+              +"(username1 = $1 OR username2 = $1) ORDER BY lastMessage DESC;",
+              [queryArgs.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from messageChains: ', err);
+                } else {
+                  response.json(result.rows);
+                }
+            });
+
+
+        } else {
+          response.end('not authorized');
+        }
+
       }
-  });
+  });//end securityJoin select
+
+
+
+
+
+
+
+
+
+  
+
+
 
 
 };
@@ -747,46 +822,52 @@ module.exports.getMessageChain = function(request, response) {
   console.log('get chain');
   console.log(queryArgs.contact, queryArgs.username);
 
-  //KIND BUMMED THAT I'M NOT USING THIS FORMAT ANYMORE.. MODEL2... smh
-  // response.json({
-  //     id: 0,
-  //     type: 'Message',
-  //     sender: 'noahcharris',
-  //     recipient: 'spw',
-  //     entries: [{
-  //       sender: 'spw',
-  //       contents: 'hey dude'
-  //     },{
-  //       sender: 'noah',
-  //       contents: 'yo'
-  //     },{
-  //       sender: 'spw',
-  //       contents: 'what it is'
-  //     }]
-  //   });
 
-
-  client.query("SELECT * FROM messages WHERE (sender=$1 AND recipient=$2) "
-    +"OR (sender=$2 AND recipient=$1) ORDER BY sentAt DESC;",
-    [queryArgs.username, queryArgs.contact],
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from messages: ', err);
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.json(result.rows);
 
-        //remove any potential send message notifications that could have existed
-        //this could be more efficient somehow...
-        client.query("DELETE FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
-        [queryArgs.contact, queryArgs.username], function(err, result) {
-          if (err) {
-            console.log('error selecting from newMessageJoin: ', err);
-          }
-        });
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+           
+
+            client.query("SELECT * FROM messages WHERE (sender=$1 AND recipient=$2) "
+              +"OR (sender=$2 AND recipient=$1) ORDER BY sentAt DESC;",
+              [queryArgs.username, queryArgs.contact],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from messages: ', err);
+                  response.end('error');
+                } else {
+                  response.json(result.rows);
+
+                  //remove any potential send message notifications that could have existed
+                  //this could be more efficient somehow...
+                  client.query("DELETE FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
+                  [queryArgs.contact, queryArgs.username], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from newMessageJoin: ', err);
+                    }
+                  });
+
+                }
+            });
+
+
+        } else {
+          response.end('not authorized');
+        }
 
       }
-  });
+  });//end securityJoin select
+
+
+
+
+
 
 
 
@@ -806,9 +887,6 @@ module.exports.getPoints = function(request, response) {
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-  //SECURITY HOLE, THIS MEANS SOMEONE CAN FIND OUT IF TWO PEOPLE ARE CONTACTS OR NOT
-
-  // if (!queryArgs.asker) {
 
   console.log('NOOO ASKERRR');
   client.query("SELECT * FROM users WHERE username=$1;", [queryArgs.username], function(err, result) {
@@ -819,40 +897,6 @@ module.exports.getUser = function(request, response) {
         response.json(result.rows);
       }
   });
-
-  // } else {
-
-
-    //wont have to do this once the cache manager is working..
-    // client.query("SELECT * FROM users JOIN contactsjoin ON "
-    // +"(contactsjoin.username1 = $2 "
-    // +"AND contactsjoin.username2 = $1 "
-    // +"AND users.username = $1) "
-    // +"OR "
-    // +"(contactsjoin.username1 = $1 "
-    // +"AND contactsjoin.username2 = $2 "
-    // +"AND users.username = $1);", [queryArgs.username, queryArgs.asker],
-    // function(err, result) {
-
-    //   if (err) {
-    //     console.log('error selecting from users join contactsjoin: ', err);
-    //   } else {
-
-    //     if (result.rows[0].username1) {
-    //       result.rows[0]
-
-    //       }
-    //     }
-
-
-    //     response.json(result.rows);
-    //   }
-
-    // });
-
-
-  // }
-
 
 
 
@@ -899,79 +943,95 @@ module.exports.getNotifications = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   var notifications = {}; //master notifications object to send back at the end
 
-  console.log(queryArgs);
-
-  //check for any pending contact requests
-  client.query("SELECT * FROM contactRequestJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from contactRequestJoin: ', err);
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
 
-        notifications.contactRequests = result.rows;
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-        client.query("SELECT * FROM contactRequestJoin WHERE (sender = $1);",
-          [queryArgs.username],
-          function(err, result) {
-            if (err) {
-              console.log('error selecting from contactRequestJoin: ', err);
-            } else {
-
-              notifications.sentRequests = result.rows;
-
-              //check for any new message alerts
-              client.query("SELECT * FROM newMessageJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
-                [queryArgs.username],
-                function(err, result) {
-                  if (err) {
-                    console.log('error selecting from newMessageJoin: ', err);
-                    response.end('error');
-                  } else {
-
-                    notifications.newMessages = result.rows;
+                    
 
 
 
+            //check for any pending contact requests
+            client.query("SELECT * FROM contactRequestJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+              [queryArgs.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from contactRequestJoin: ', err);
+                  response.end('error');
+                } else {
+
+                  notifications.contactRequests = result.rows;
+
+                  client.query("SELECT * FROM contactRequestJoin WHERE (sender = $1);",
+                    [queryArgs.username],
+                    function(err, result) {
+                      if (err) {
+                        console.log('error selecting from contactRequestJoin: ', err);
+                      } else {
+
+                        notifications.sentRequests = result.rows;
+
+                        //check for any new message alerts
+                        client.query("SELECT * FROM newMessageJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
+                          [queryArgs.username],
+                          function(err, result) {
+                            if (err) {
+                              console.log('error selecting from newMessageJoin: ', err);
+                              response.end('error');
+                            } else {
+
+                              notifications.newMessages = result.rows;
 
 
-                    client.query("SELECT * FROM topicActivityJoin WHERE (username = $1) ORDER BY sentAt DESC;",
-                      [queryArgs.username],
-                      function(err, result) {
-                        if (err) {
-                          console.log('error selecting from newMessageJoin: ', err);
-                          response.end('error');
-                        } else {
 
-                          notifications.topicActivity = result.rows;
+                              client.query("SELECT * FROM topicActivityJoin WHERE (username = $1) ORDER BY sentAt DESC;",
+                                [queryArgs.username],
+                                function(err, result) {
+                                  if (err) {
+                                    console.log('error selecting from newMessageJoin: ', err);
+                                    response.end('error');
+                                  } else {
 
-                          response.json(notifications);
+                                    notifications.topicActivity = result.rows;
 
-
-                        }
-                    });//end topicActivityJoin select
+                                    response.json(notifications);
 
 
+                                  }
+                              });//end topicActivityJoin select
+
+                              //THE STEPPES
+
+                            }
+                        });//end newMessageJoin select
+
+                      }
+                    });//end newMessageJoin select
+
+                  //OF WOE
+
+                }
+            });//end contactJoin select
 
 
-                    //THE STEPPES
-
-
-                  }
-              });//end newMessageJoin select
 
 
 
-            }
-          });//end newMessageJoin select
 
 
 
-        //OF WOE
+        } else {
+          response.end('not authorized');
+        }
 
       }
-  });//end contactJoin select
+  });//end securityJoin select
+
 
 
 };
@@ -985,10 +1045,6 @@ module.exports.getNotifications = function(request, response) {
 module.exports.login = function(request, response) {
 
 
-  //NEED TO MAKE SURE THAT NOT HTTPS REQUESTS DO NOT WORK HERE
-  //NEED CSRF PROTECTION
-
-  response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
 
 
   postgres.retrieveUser(request.body.username, function(data) {
@@ -996,15 +1052,60 @@ module.exports.login = function(request, response) {
       bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
         if (res) {
 
-          //LOGIN SUCCESSFUL
 
-          //set cookie which will be checkd in checkLogin (10 minutes here)
-          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-          response.cookie('login',request.body.username, { maxAge: 600000, httpOnly: true });
 
-          console.log('Login successful for user: ', request.body.username);
+          //insert into security join
+          client.query("DELETE FROM securityJoin WHERE username = $1;",
+            [request.body.username], function(err, result) {
+              if (err) {
+                console.log('error deleting from securityJoin: ', err);
+              } else {
 
-          response.json('True');
+
+
+                var token = 'secret'; //generate token here
+                var cookie = 'secret';  //generate cookie here
+
+
+
+                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                  +"VALUES ($1, $2, $3, now());",
+                  [request.body.username, cookie, token],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error insertin into securityJoin: ', err);
+                    } else {
+
+
+
+
+
+
+                        //LOGIN SUCCESSFUL
+
+                        //set cookie which will be checkd in checkLogin (10 minutes here)
+                        // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 600000, httpOnly: true });
+
+                        console.log('Login successful for user: ', request.body.username);
+
+                        response.json({ login: true, token: token });
+
+
+
+
+
+
+                    }
+                });//end security join insert
+
+
+
+              }
+          });//end security join delete
+
+
+
         } else {
 
           //LOGIN FAILED
@@ -1022,9 +1123,50 @@ module.exports.login = function(request, response) {
 
 module.exports.logout = function(request, response) {
 
-  //delete row from security join
-  response.cookie('login','0', { maxAge: 900000, httpOnly: true });
-  response.end('True');
+
+
+  var queryArgs = url.parse(request.url, true).query;
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1 ORDER BY registeredAt DESC;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+
+
+          client.query("DELETE FROM securityJoin WHERE username = $1",
+            [queryArgs.username],
+            function(err, result) {
+              if (err) {
+                console.log('error deleting from securityJoin: ', err);
+              } else {
+
+                //delete row from security join
+                response.cookie('login','0/0', { maxAge: 900000, httpOnly: true });
+                response.end('True');
+                
+
+              }
+          });
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+
+
+
 
 };
 
@@ -1032,29 +1174,64 @@ module.exports.logout = function(request, response) {
 module.exports.checkLogin = function(request, response) {
 
 
-  //see if the cookie is in the session database
-  //if it is, return the user a token that they can use for requests
+  if (request.cookies['login']) {
 
-  if (request.cookies['login'] && request.cookies['login'] !== '0') {
 
-    // response.cookie('cokkieName',47538924, { maxAge: 30, httpOnly: true });
-    // console.log('COOKIES: ',request.cookies);
+    client.query("SELECT * FROM securityJoin WHERE username = $1 ORDER BY registeredAt DESC;",
+      [request.cookies['login'].split('/')[0]], function(err, result) {
+        if (err) {
+          console.log('error selecting from securityJoin: ', err);
+        } else {
+          if (result.rows.length > 0) {
 
-    response.json({ login: true, username: request.cookies['login'] });
 
-    
+            if (request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+              response.json({ login: true, token: result.rows[0].token, username: request.cookies['login'].split('/')[0] });
+            } else {
+              console.log('unauthorized access');
+              response.end({});
+            }
+
+
+          } else {
+            console.log('no record found');
+            response.end({});
+          };
+        };
+    });
+
+
   } else {
-    
-    response.json({});
+    console.log('no cookie found');
+    response.end({});
   }
 
 
 
 
-
-
-
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1084,7 +1261,7 @@ module.exports.addContact = function(request, response) {
 
           //ONCE WE CHECK
 
-          //IF THERE IS AN ENTRY THAN INSERT INTO CONTACTSJOIN
+          //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
           if (result.rows.length) {
             //if they have, add to the contact join and delete data from memcached
 
@@ -1151,35 +1328,66 @@ module.exports.addContact = function(request, response) {
 module.exports.createMessageChain = function(request, response) {
 
 
-  client.query("SELECT * FROM messageChains WHERE (username1=$1 AND username2=$2) "
-    +"OR (username1=$2 AND username2=$1);",
-    [request.body.username, request.body.contact],
+
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from messageChains: ', err);
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (result.rows.length === 0) {
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-          client.query("INSERT INTO messageChains (type, username1, username2) "
-            +"VALUES ('MessageChain', $1, $2);",
-            [xssValidator(request.body.username), xssValidator(request.body.contact)],
+                
+
+          client.query("SELECT * FROM messageChains WHERE (username1=$1 AND username2=$2) "
+            +"OR (username1=$2 AND username2=$1);",
+            [request.body.username, request.body.contact],
             function(err, result) {
               if (err) {
-                console.log('error inserting into messageChains: ', err);
+                console.log('error selecting from messageChains: ', err);
                 response.end('error');
               } else {
-                response.end('successfully created messageChain');
+
+                if (result.rows.length === 0) {
+
+                  client.query("INSERT INTO messageChains (type, username1, username2) "
+                    +"VALUES ('MessageChain', $1, $2);",
+                    [xssValidator(request.body.username), xssValidator(request.body.contact)],
+                    function(err, result) {
+                      if (err) {
+                        console.log('error inserting into messageChains: ', err);
+                        response.end('error');
+                      } else {
+                        response.end('successfully created messageChain');
+                      }
+                  });
+
+                } else {
+                  response.end('messageChain already in database');
+                }
+
               }
           });
 
+
+
         } else {
-          response.end('messageChain already in database');
+          response.end('not authorized');
         }
 
       }
-  });
+  });//end securityJoin select
+
+
+
+
+
+
+
 
 
 
@@ -1190,41 +1398,64 @@ module.exports.createMessageChain = function(request, response) {
 module.exports.sendMessage = function(request, response) {
 
 
-  client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
-    +"VALUES ('Message', $1, $2, $3, now());",
-      [xssValidator(request.body.sender), xssValidator(request.body.recipient), xssValidator(request.body.contents)],
-      function(err, result) {
-        if (err) {
-          console.log('error inserting into messages: ', err);
-          response.end('error');
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
+                      +"VALUES ('Message', $1, $2, $3, now());",
+                        [xssValidator(request.body.sender), xssValidator(request.body.recipient), xssValidator(request.body.contents)],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error inserting into messages: ', err);
+                            response.end('error');
+                          } else {
+                            response.end('successfully created message');
+
+
+                            client.query("SELECT * FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
+                            [request.body.sender, request.body.recipient], function(err, result) {
+                              if (err) {
+                                console.log('error selecting from newMessageJoin: ', err);
+                              } else {
+                                if (result.rows.length === 0) {
+
+                                    client.query("INSERT INTO newMessageJoin (sender, recipient) "
+                                    +"VALUES ($1, $2);", [request.body.sender, request.body.recipient],
+                                    function(err, result) {
+                                      if (err) {
+                                        console.log('error inserting into newMessageJoin: ', err);
+                                      } else {
+                                      }
+                                    });
+
+                                }
+
+
+                              }
+                            });
+
+                          }
+                    });
+                    
+
+
         } else {
-          response.end('successfully created message');
-
-
-          client.query("SELECT * FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
-          [request.body.sender, request.body.recipient], function(err, result) {
-            if (err) {
-              console.log('error selecting from newMessageJoin: ', err);
-            } else {
-              if (result.rows.length === 0) {
-
-                  client.query("INSERT INTO newMessageJoin (sender, recipient) "
-                  +"VALUES ($1, $2);", [request.body.sender, request.body.recipient],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error inserting into newMessageJoin: ', err);
-                    } else {
-                    }
-                  });
-
-              }
-
-
-            }
-          });
-
+          response.end('not authorized');
         }
-  });
+
+      }
+  });//end securityJoin select
+
+
 
 };
 
@@ -1240,13 +1471,9 @@ module.exports.checkUsername = function(request, response) {
 
 module.exports.registerUser = function(request, response) {
 
-  //NEED TO MAKE SURE THAT THE USER DOES NOT ALREADY EXITS
-  //Actually, this is a larger question of how to alert 
-  //to the user whether or not his field input is valid
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
 
-  console.log(request);
+
 
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(request.body.password, salt, function(err, hash) {
@@ -1275,48 +1502,75 @@ module.exports.visitedTopic = function(request, response) {
 
 
 
-  client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
-    +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from topicVisitJoin: ', err);
+        console.log('error selecting from securityJoin: ', err);
       } else {
 
-        //handle the case of no topics
-        if (!result.rows.length)
-          result.rows = [{id:-1}];
-
-        // console.log('typeof result id: ', typeof result.rows[0].id, ' typeof request id: ', typeof request.body.topicId);
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-        if (result.rows[0].id != request.body.topicId) {
 
 
-          client.query("INSERT INTO topicVisitJoin (username, topic, visitedAt) "
-            +"VALUES ($1, $2, now());",
-            [request.body.username, request.body.topicId],
-            function(err, result) {
-              if (err) {
-                console.log('error inserting into topicVisitJoin: ', err);
-              } else {
-                response.end('successfully visited topic');
-              }
-          });
+                    client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
+                      +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+                      [request.body.username],
+                      function(err, result) {
+                        if (err) {
+                          console.log('error selecting from topicVisitJoin: ', err);
+                        } else {
 
+                          //handle the case of no topics
+                          if (!result.rows.length)
+                            result.rows = [{id:-1}];
+
+                          // console.log('typeof result id: ', typeof result.rows[0].id, ' typeof request id: ', typeof request.body.topicId);
+
+
+                          if (result.rows[0].id != request.body.topicId) {
+
+
+                            client.query("INSERT INTO topicVisitJoin (username, topic, visitedAt) "
+                              +"VALUES ($1, $2, now());",
+                              [request.body.username, request.body.topicId],
+                              function(err, result) {
+                                if (err) {
+                                  console.log('error inserting into topicVisitJoin: ', err);
+                                } else {
+                                  response.end('successfully visited topic');
+                                }
+                            });
+
+
+
+
+                          } else {
+                            response.end('no insertion; this is already the most recent topic');
+                          }
+
+
+
+
+                   
+                        }
+                    });//end topicVisitJoin select
+                    
 
 
 
         } else {
-          response.end('no insertion; this is already the most recent topic');
+          response.end('not authorized');
         }
 
-
-
-
- 
       }
-  });//end topicVisitJoin select
+  });//end securityJoin select
+
+
+
 
 
 
@@ -1328,19 +1582,41 @@ module.exports.visitedTopic = function(request, response) {
 
 module.exports.recentlyVisitedTopics = function(request, response) {
 
-  var queryArgs = url.parse(request.url, true).query;
-  console.log('NOTHIN');
 
-  client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
-    +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from topicVisitJoin: ', err);
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.json(result.rows);
+
+        if (queryArgs.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    
+            client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
+              +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+              [queryArgs.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from topicVisitJoin: ', err);
+                } else {
+                  response.json(result.rows);
+                }
+            });
+
+
+        } else {
+          response.end('not authorized');
+        }
+
       }
-  });
+  });//end securityJoin select
+
+  
+
+
 
 
 };
@@ -1351,75 +1627,107 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 module.exports.updateUserProfile = function(request, response) {
 
 
+
+
+
+
+
+
+
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
 
-    //if an image is sent
-    if (files.file) {
-
-      var keyString = xssValidator(fields.username[0]);
-
-      var params = {
-        localFile: files.file[0].path,
-
-        s3Params: {
-          Bucket: "agora-image-storage",
-          Key: keyString,
-          // other options supported by putObject, except Body and ContentLength.
-          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-        },
-      };
-
-      var uploader = s3Client.uploadFile(params);
-      uploader.on('error', function(err) {
-        console.error("unable to upload:", err.stack);
-      });
-
-      uploader.on('progress', function() {
-        console.log("progress", uploader.progressMd5Amount,
-                  uploader.progressAmount, uploader.progressTotal);
-      });
-
-      uploader.on('end', function() {
-        console.log("done uploading");
-
-        var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-        console.log('whaaaaaaa: ', fields.about[0]);
-        client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
-          [xssValidator(fields.about[0]), imageLink, xssValidator(fields.username[0])],
-          function(err, result) {
-            if (err) {
-              console.log('error updating users table: ', err);
-            } else {
-              response.end('successfully updated profile');
-            }
-        });
-        
-      });
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [fields.username[0]],
+      function(err, result) {
+        if (err) {
+          console.log('error selecting from securityJoin: ', err);
+        } else {
 
-    } else {
+          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-      //NO IMAGE
+                        //if an image is sent
+                        if (files.file) {
 
-      client.query("UPDATE users SET about = $1 WHERE username = $2;",
-        [xssValidator(fields.about[0]), xssValidator(fields.username[0])],
-        function(err, result) {
-          if (err) {
-            console.log('error updating users table: ', err);
+                          var keyString = xssValidator(fields.username[0]);
+
+                          var params = {
+                            localFile: files.file[0].path,
+
+                            s3Params: {
+                              Bucket: "agora-image-storage",
+                              Key: keyString,
+                              // other options supported by putObject, except Body and ContentLength.
+                              // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                            },
+                          };
+
+                          var uploader = s3Client.uploadFile(params);
+                          uploader.on('error', function(err) {
+                            console.error("unable to upload:", err.stack);
+                          });
+
+                          uploader.on('progress', function() {
+                            console.log("progress", uploader.progressMd5Amount,
+                                      uploader.progressAmount, uploader.progressTotal);
+                          });
+
+                          uploader.on('end', function() {
+                            console.log("done uploading");
+
+                            var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                            console.log('whaaaaaaa: ', fields.about[0]);
+                            client.query("UPDATE users SET about = $1, image = $2 WHERE username = $3;",
+                              [xssValidator(fields.about[0]), imageLink, xssValidator(fields.username[0])],
+                              function(err, result) {
+                                if (err) {
+                                  console.log('error updating users table: ', err);
+                                } else {
+                                  response.end('successfully updated profile');
+                                }
+                            });
+                            
+                          });
+
+                        } else {
+
+                          //NO IMAGE
+
+                          client.query("UPDATE users SET about = $1 WHERE username = $2;",
+                            [xssValidator(fields.about[0]), xssValidator(fields.username[0])],
+                            function(err, result) {
+                              if (err) {
+                                console.log('error updating users table: ', err);
+                              } else {
+                                response.end('successfully updated profile (no image)');
+                              }
+                          });
+
+                        }
+                      
+
+
           } else {
-            response.end('successfully updated profile (no image)');
+            response.end('not authorized');
           }
-      });
+
+        }
+    });//end securityJoin select
 
 
 
 
 
 
-    }
+
+
+
+
 
 
   });
@@ -1449,103 +1757,130 @@ module.exports.updateChannelProfile = function(request, response) {
 
 module.exports.createTopic = function(request, response) {
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+
 
 
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
 
-    //if an image is sent
-    if (files.file) {
-
-            //insert and fetch id here, then upload the image to amazon
-
-            client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
-            +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
-            function(err, result) {
-
-                if (err) {
-                  console.log('error inserting into topics: ', err);
-                } else {
-
-                        client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                        [fields.username[0]],
-                        function(err, result) {
-                          if (err) {
-                                console.log('error selecting from topics: ', err);
-                                response.end('error');
-                          } else {
 
 
-                                  //I think I'm safe from XSS in here..
-
-                                    //this is where we use that id we just fetched
-                                    var keyString = 'topicImage' + result.rows[0].id;
-
-                                    var params = {
-                                      localFile: files.file[0].path,
-
-                                      s3Params: {
-                                        Bucket: "agora-image-storage",
-                                        Key: keyString,
-                                        // other options supported by putObject, except Body and ContentLength.
-                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                                      },
-                                    };
-
-                                    var uploader = s3Client.uploadFile(params);
-                                    uploader.on('error', function(err) {
-                                      console.error("unable to upload:", err.stack);
-                                    });
-
-                                    uploader.on('progress', function() {
-                                      console.log("progress", uploader.progressMd5Amount,
-                                                uploader.progressAmount, uploader.progressTotal);
-                                    });
-
-                                    uploader.on('end', function() {
-                                      console.log("done uploading");
-
-
-                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
-
-
-                                          client.query("UPDATE topics SET image = $1 WHERE id = $2",
-                                            [imageLink, result.rows[0].id], function(err, result) {
-                                              response.end('successfully submitted topic');
-                                          });
-                                    });
-                          }
-                        });//end topic id select
-                }
-              });//end topic insert
-
-
-            
-    } else {
-
-      //##############
-      //NO IMAGE
-      //##############
-
-      client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
-      +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])], 
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [fields.username[0]],
       function(err, result) {
         if (err) {
-          console.log('error inserting into topics: ', err);
-          response.end('error');
+          console.log('error selecting from securityJoin: ', err);
         } else {
 
+          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-          response.end('successfully created topic (no image)');
+                      
+                              //if an image is sent
+                              if (files.file) {
+
+                                      //insert and fetch id here, then upload the image to amazon
+
+                                      client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+                                      +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                                      [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
+                                      function(err, result) {
+
+                                          if (err) {
+                                            console.log('error inserting into topics: ', err);
+                                          } else {
+
+                                                  client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                                                  [fields.username[0]],
+                                                  function(err, result) {
+                                                    if (err) {
+                                                          console.log('error selecting from topics: ', err);
+                                                          response.end('error');
+                                                    } else {
+
+
+                                                            //I think I'm safe from XSS in here..
+
+                                                              //this is where we use that id we just fetched
+                                                              var keyString = 'topicImage' + result.rows[0].id;
+
+                                                              var params = {
+                                                                localFile: files.file[0].path,
+
+                                                                s3Params: {
+                                                                  Bucket: "agora-image-storage",
+                                                                  Key: keyString,
+                                                                  // other options supported by putObject, except Body and ContentLength.
+                                                                  // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                                                },
+                                                              };
+
+                                                              var uploader = s3Client.uploadFile(params);
+                                                              uploader.on('error', function(err) {
+                                                                console.error("unable to upload:", err.stack);
+                                                              });
+
+                                                              uploader.on('progress', function() {
+                                                                console.log("progress", uploader.progressMd5Amount,
+                                                                          uploader.progressAmount, uploader.progressTotal);
+                                                              });
+
+                                                              uploader.on('end', function() {
+                                                                console.log("done uploading");
+
+
+                                                                    var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                                                    client.query("UPDATE topics SET image = $1 WHERE id = $2",
+                                                                      [imageLink, result.rows[0].id], function(err, result) {
+                                                                        response.end('successfully submitted topic');
+                                                                    });
+                                                              });
+                                                    }
+                                                  });//end topic id select
+                                          }
+                                        });//end topic insert
+
+
+                                      
+                              } else {
+
+                                //##############
+                                //NO IMAGE
+                                //##############
+
+                                client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+                                +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                                [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])], 
+                                function(err, result) {
+                                  if (err) {
+                                    console.log('error inserting into topics: ', err);
+                                    response.end('error');
+                                  } else {
+
+
+                                    response.end('successfully created topic (no image)');
+                                  }
+                                });
+
+
+                              }
+
+
+          } else {
+            response.end('not authorized');
+          }
+
         }
-      });
+    });//end securityJoin select
 
 
-    }
+
+
+
+    
+
   });//end multiparty parse
 
 
@@ -1562,99 +1897,130 @@ module.exports.createComment = function(request, response) {
 
 
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
 
 
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
 
-    //if an image is sent
-    if (files.file) {
-
-            //insert and fetch id here, then upload the image to amazon
-
-            client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
-            +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
-            function(err, result) {
-
-                if (err) {
-                  console.log('error inserting into comments: ', err);
-                } else {
-
-                        client.query("SELECT * FROM comments WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                        [fields.username[0]],
-                        function(err, result) {
-                          if (err) {
-                                console.log('error selecting from comments: ', err);
-                                response.end('error');
-                          } else {
-                                    //this is where we use that id we just fetched
-                                    var keyString = 'commentImage' + result.rows[0].id;
-
-                                    var params = {
-                                      localFile: files.file[0].path,
-
-                                      s3Params: {
-                                        Bucket: "agora-image-storage",
-                                        Key: keyString,
-                                        // other options supported by putObject, except Body and ContentLength.
-                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                                      },
-                                    };
-
-                                    var uploader = s3Client.uploadFile(params);
-                                    uploader.on('error', function(err) {
-                                      console.error("unable to upload:", err.stack);
-                                    });
-
-                                    uploader.on('progress', function() {
-                                      console.log("progress", uploader.progressMd5Amount,
-                                                uploader.progressAmount, uploader.progressTotal);
-                                    });
-
-                                    uploader.on('end', function() {
-                                      console.log("done uploading");
 
 
-                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-                                          client.query("UPDATE comments SET image = $1 WHERE id = $2",
-                                            [imageLink, result.rows[0].id], function(err, result) {
-                                              response.end('successfully submitted comment');
-                                          });
-                                    });
-                          }
-                        });//end topic id select
-                }
-              });//end topic insert
 
-
-            
-    } else {
-
-      //##############
-      //NO IMAGE
-      //##############
-
-      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
-      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [fields.username[0]],
       function(err, result) {
         if (err) {
-          console.log('error inserting into comments: ', err);
-          response.end('error');
+          console.log('error selecting from securityJoin: ', err);
         } else {
 
+          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-          response.end('successfully created comment (no image)');
+                      
+              //if an image is sent
+              if (files.file) {
+
+                      //insert and fetch id here, then upload the image to amazon
+
+                      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+                      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                      function(err, result) {
+
+                          if (err) {
+                            console.log('error inserting into comments: ', err);
+                          } else {
+
+                                  client.query("SELECT * FROM comments WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                                  [fields.username[0]],
+                                  function(err, result) {
+                                    if (err) {
+                                          console.log('error selecting from comments: ', err);
+                                          response.end('error');
+                                    } else {
+                                              //this is where we use that id we just fetched
+                                              var keyString = 'commentImage' + result.rows[0].id;
+
+                                              var params = {
+                                                localFile: files.file[0].path,
+
+                                                s3Params: {
+                                                  Bucket: "agora-image-storage",
+                                                  Key: keyString,
+                                                  // other options supported by putObject, except Body and ContentLength.
+                                                  // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                                },
+                                              };
+
+                                              var uploader = s3Client.uploadFile(params);
+                                              uploader.on('error', function(err) {
+                                                console.error("unable to upload:", err.stack);
+                                              });
+
+                                              uploader.on('progress', function() {
+                                                console.log("progress", uploader.progressMd5Amount,
+                                                          uploader.progressAmount, uploader.progressTotal);
+                                              });
+
+                                              uploader.on('end', function() {
+                                                console.log("done uploading");
+
+
+                                                    var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                                    client.query("UPDATE comments SET image = $1 WHERE id = $2",
+                                                      [imageLink, result.rows[0].id], function(err, result) {
+                                                        response.end('successfully submitted comment');
+                                                    });
+                                              });
+                                    }
+                                  });//end topic id select
+                          }
+                        });//end topic insert
+
+
+                      
+              } else {
+
+                //##############
+                //NO IMAGE
+                //##############
+
+                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                function(err, result) {
+                  if (err) {
+                    console.log('error inserting into comments: ', err);
+                    response.end('error');
+                  } else {
+
+
+                    response.end('successfully created comment (no image)');
+                  }
+                });
+
+
+              }
+
+
+          } else {
+            response.end('not authorized');
+          }
+
         }
-      });
+    });//end securityJoin select
 
 
-    }
+    
+
+
+
+
+
+
   });//end multiparty parse
 
 
@@ -1672,98 +2038,124 @@ module.exports.createResponse = function(request, response) {
 
 
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
 
 
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
 
-    //if an image is sent
-    if (files.file) {
-
-            //insert and fetch id here, then upload the image to amazon
-            client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
-            +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
-            function(err, result) {
-
-                if (err) {
-                  console.log('error inserting into responses: ', err);
-                } else {
-
-                        client.query("SELECT * FROM responses WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                        [fields.username[0]],
-                        function(err, result) {
-                          if (err) {
-                                console.log('error selecting from responses: ', err);
-                                response.end('error');
-                          } else {
-                                    //this is where we use that id we just fetched
-                                    var keyString = 'responseImage' + result.rows[0].id;
-
-                                    var params = {
-                                      localFile: files.file[0].path,
-
-                                      s3Params: {
-                                        Bucket: "agora-image-storage",
-                                        Key: keyString,
-                                        // other options supported by putObject, except Body and ContentLength.
-                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                                      },
-                                    };
-
-                                    var uploader = s3Client.uploadFile(params);
-                                    uploader.on('error', function(err) {
-                                      console.error("unable to upload:", err.stack);
-                                    });
-
-                                    uploader.on('progress', function() {
-                                      console.log("progress", uploader.progressMd5Amount,
-                                                uploader.progressAmount, uploader.progressTotal);
-                                    });
-
-                                    uploader.on('end', function() {
-                                      console.log("done uploading");
 
 
-                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-                                          client.query("UPDATE responses SET image = $1 WHERE id = $2",
-                                            [imageLink, result.rows[0].id], function(err, result) {
-                                              response.end('successfully submitted response');
-                                          });
-                                    });
-                          }
-                        });//end topic id select
-                }
-              });//end topic insert
-
-
-            
-    } else {
-
-      //##############
-      //NO IMAGE
-      //##############
-
-      client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
-      +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [fields.username[0]],
       function(err, result) {
         if (err) {
-          console.log('error inserting into responses: ', err);
-          response.end('error');
+          console.log('error selecting from securityJoin: ', err);
         } else {
 
+          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-          response.end('successfully created response (no image)');
+                      
+                        //if an image is sent
+                        if (files.file) {
+
+                                //insert and fetch id here, then upload the image to amazon
+                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+                                +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                                function(err, result) {
+
+                                    if (err) {
+                                      console.log('error inserting into responses: ', err);
+                                    } else {
+
+                                            client.query("SELECT * FROM responses WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                                            [fields.username[0]],
+                                            function(err, result) {
+                                              if (err) {
+                                                    console.log('error selecting from responses: ', err);
+                                                    response.end('error');
+                                              } else {
+                                                        //this is where we use that id we just fetched
+                                                        var keyString = 'responseImage' + result.rows[0].id;
+
+                                                        var params = {
+                                                          localFile: files.file[0].path,
+
+                                                          s3Params: {
+                                                            Bucket: "agora-image-storage",
+                                                            Key: keyString,
+                                                            // other options supported by putObject, except Body and ContentLength.
+                                                            // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                                          },
+                                                        };
+
+                                                        var uploader = s3Client.uploadFile(params);
+                                                        uploader.on('error', function(err) {
+                                                          console.error("unable to upload:", err.stack);
+                                                        });
+
+                                                        uploader.on('progress', function() {
+                                                          console.log("progress", uploader.progressMd5Amount,
+                                                                    uploader.progressAmount, uploader.progressTotal);
+                                                        });
+
+                                                        uploader.on('end', function() {
+                                                          console.log("done uploading");
+
+
+                                                              var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                                              client.query("UPDATE responses SET image = $1 WHERE id = $2",
+                                                                [imageLink, result.rows[0].id], function(err, result) {
+                                                                  response.end('successfully submitted response');
+                                                              });
+                                                        });
+                                              }
+                                            });//end topic id select
+                                    }
+                                  });//end topic insert
+
+
+                                
+                        } else {
+
+                          //##############
+                          //NO IMAGE
+                          //##############
+
+                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                          function(err, result) {
+                            if (err) {
+                              console.log('error inserting into responses: ', err);
+                              response.end('error');
+                            } else {
+
+
+                              response.end('successfully created response (no image)');
+                            }
+                          });
+
+
+                        }
+
+
+          } else {
+            response.end('not authorized');
+          }
+
         }
-      });
+    });//end securityJoin select
 
 
-    }
+
+    
+
   });//end multiparty parse
 
 
@@ -1783,98 +2175,129 @@ module.exports.createReply = function(request, response) {
 
 
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://localhost');
-
 
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
 
-    //if an image is sent
-    if (files.file) {
-
-            //insert and fetch id here, then upload the image to amazon
-            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
-            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
-            function(err, result) {
-
-                if (err) {
-                  console.log('error inserting into replies: ', err);
-                } else {
-
-                        client.query("SELECT * FROM replies WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                        [fields.username[0]],
-                        function(err, result) {
-                          if (err) {
-                                console.log('error selecting from replies: ', err);
-                                response.end('error');
-                          } else {
-                                    //this is where we use that id we just fetched
-                                    var keyString = 'replyImage' + result.rows[0].id;
-
-                                    var params = {
-                                      localFile: files.file[0].path,
-
-                                      s3Params: {
-                                        Bucket: "agora-image-storage",
-                                        Key: keyString,
-                                        // other options supported by putObject, except Body and ContentLength.
-                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                                      },
-                                    };
-
-                                    var uploader = s3Client.uploadFile(params);
-                                    uploader.on('error', function(err) {
-                                      console.error("unable to upload:", err.stack);
-                                    });
-
-                                    uploader.on('progress', function() {
-                                      console.log("progress", uploader.progressMd5Amount,
-                                                uploader.progressAmount, uploader.progressTotal);
-                                    });
-
-                                    uploader.on('end', function() {
-                                      console.log("done uploading");
 
 
-                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
 
-                                          client.query("UPDATE replies SET image = $1 WHERE id = $2",
-                                            [imageLink, result.rows[0].id], function(err, result) {
-                                              response.end('successfully submitted reply');
-                                          });
-                                    });
-                          }
-                        });//end topic id select
-                }
-              });//end topic insert
 
 
-            
-    } else {
 
-      //##############
-      //NO IMAGE
-      //##############
 
-      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
-      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [fields.username[0]],
       function(err, result) {
         if (err) {
-          console.log('error inserting into replies: ', err);
-          response.end('error');
+          console.log('error selecting from securityJoin: ', err);
         } else {
 
+          if (fields.token[0] === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-          response.end('successfully created reply (no image)');
+                      
+                    //if an image is sent
+                    if (files.file) {
+
+                            //insert and fetch id here, then upload the image to amazon
+                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                            function(err, result) {
+
+                                if (err) {
+                                  console.log('error inserting into replies: ', err);
+                                } else {
+
+                                        client.query("SELECT * FROM replies WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                                        [fields.username[0]],
+                                        function(err, result) {
+                                          if (err) {
+                                                console.log('error selecting from replies: ', err);
+                                                response.end('error');
+                                          } else {
+                                                    //this is where we use that id we just fetched
+                                                    var keyString = 'replyImage' + result.rows[0].id;
+
+                                                    var params = {
+                                                      localFile: files.file[0].path,
+
+                                                      s3Params: {
+                                                        Bucket: "agora-image-storage",
+                                                        Key: keyString,
+                                                        // other options supported by putObject, except Body and ContentLength.
+                                                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                                      },
+                                                    };
+
+                                                    var uploader = s3Client.uploadFile(params);
+                                                    uploader.on('error', function(err) {
+                                                      console.error("unable to upload:", err.stack);
+                                                    });
+
+                                                    uploader.on('progress', function() {
+                                                      console.log("progress", uploader.progressMd5Amount,
+                                                                uploader.progressAmount, uploader.progressTotal);
+                                                    });
+
+                                                    uploader.on('end', function() {
+                                                      console.log("done uploading");
+
+
+                                                          var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                                          client.query("UPDATE replies SET image = $1 WHERE id = $2",
+                                                            [imageLink, result.rows[0].id], function(err, result) {
+                                                              response.end('successfully submitted reply');
+                                                          });
+                                                    });
+                                          }
+                                        });//end topic id select
+                                }
+                              });//end topic insert
+
+
+                            
+                    } else {
+
+                      //##############
+                      //NO IMAGE
+                      //##############
+
+                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                      function(err, result) {
+                        if (err) {
+                          console.log('error inserting into replies: ', err);
+                          response.end('error');
+                        } else {
+
+
+                          response.end('successfully created reply (no image)');
+                        }
+                      });
+
+
+                    }
+
+
+          } else {
+            response.end('not authorized');
+          }
+
         }
-      });
+    });//end securityJoin select
 
 
-    }
+
+
+
+
+
   });//end multiparty parse
 
 
@@ -1906,18 +2329,41 @@ module.exports.createLocation = function(request, response) {
 
 
 
-  client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-    +" creator, population, rank, public, pointGeometry) "
-    +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
-    [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-    request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error inserting into locations: ', err);
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.end('successfully created location');
+
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    
+              client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+                +" creator, population, rank, public, pointGeometry) "
+                +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
+                [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
+                function(err, result) {
+                  if (err) {
+                    console.log('error inserting into locations: ', err);
+                  } else {
+                    response.end('successfully created location');
+                  }
+              });
+
+
+        } else {
+          response.end('not authorized');
+        }
+
       }
-  });
+  });//end securityJoin select
+
+
+
+
 
 
 
@@ -1930,16 +2376,40 @@ module.exports.createLocation = function(request, response) {
 module.exports.createChannel = function(request, response) {
 
 
-  client.query("INSERT INTO channels (type, name, description, parent) "
-    +"VALUES ('Channel', $1, $2, $3);",
-    [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error inserting into channels: ', err);
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        response.end('successfully created channel');
+
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    
+            client.query("INSERT INTO channels (type, name, description, parent) "
+              +"VALUES ('Channel', $1, $2, $3);",
+              [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+              function(err, result) {
+                if (err) {
+                  console.log('error inserting into channels: ', err);
+                } else {
+                  response.end('successfully created channel');
+                }
+            });
+
+
+        } else {
+          response.end('not authorized');
+        }
+
       }
-  });
+  });//end securityJoin select
+
+  
+
+
 
 
 
@@ -1963,164 +2433,261 @@ module.exports.createChannel = function(request, response) {
 module.exports.upvoteTopic = function(request, response) {
 
 
-  client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
-    [request.body.username, request.body.topicId],
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from topicVoteJoin: ', err);
-        //should i just send the error back here?
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        if (result.rowCount === 0) {
-          client.query("INSERT INTO topicVoteJoin (topic, username) "+
-            "VALUES ($1, $2);", [request.body.topicId, request.body.username],
-            function(err, result) {
-              if (err) {
-                console.log('error inserting into topicVoteJoin: ', err);
-                response.end('error');
-              } else {
 
-                client.query("UPDATE topics SET rank = rank + 1 where id = $1", [request.body.topicId],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error updating topics: ', err);
-                      response.end('error');
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+              client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
+                [request.body.username, request.body.topicId],
+                function(err, result) {
+                  if (err) {
+                    console.log('error selecting from topicVoteJoin: ', err);
+                    //should i just send the error back here?
+                    response.end('error');
+                  } else {
+                    if (result.rowCount === 0) {
+                      client.query("INSERT INTO topicVoteJoin (topic, username) "+
+                        "VALUES ($1, $2);", [request.body.topicId, request.body.username],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error inserting into topicVoteJoin: ', err);
+                            response.end('error');
+                          } else {
+
+                            client.query("UPDATE topics SET rank = rank + 1 where id = $1", [request.body.topicId],
+                              function(err, result) {
+                                if (err) {
+                                  console.log('error updating topics: ', err);
+                                  response.end('error');
+                                } else {
+                                  console.log('user: '+request.body.username+' has successfully voted for topic: '+request.body.topicId);
+                                  response.end('Succesfully voted');
+                                }
+                            });
+
+                          }
+                        });
                     } else {
-                      console.log('user: '+request.body.username+' has successfully voted for topic: '+request.body.topicId);
-                      response.end('Succesfully voted');
+                      response.end('Already voted');
                     }
-                });
+                  }
 
-              }
-            });
+              });
+                    
+
+
         } else {
-          response.end('Already voted');
+          response.end('not authorized');
         }
+
       }
-
-  });
-
+  });//end securityJoin select
 
 
 
 };
 
+
+
 module.exports.upvoteComment = function(request, response) {
-  client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
-    [request.body.username, request.body.commentId],
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from commentVoteJoin: ', err);
-        //should i just send the error back here?
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        if (result.rowCount === 0) {
-          client.query("INSERT INTO commentVoteJoin (comment, username) "+
-            "VALUES ($1, $2);", [request.body.commentId, request.body.username],
-            function(err, result) {
-              if (err) {
-                console.log('error inserting into commentVoteJoin: ', err);
-                response.end('error');
-              } else {
 
-                client.query("UPDATE comments SET rank = rank + 1 where id = $1", [request.body.commentId],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error updating comments: ', err);
-                      response.end('error');
-                    } else {
-                      console.log('user: '+request.body.username+' has successfully voted for comment: '+request.body.commentId);
-                      response.end('Succesfully voted');
-                    }
-                });
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-              }
-            });
+
+                    client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
+                      [request.body.username, request.body.commentId],
+                      function(err, result) {
+                        if (err) {
+                          console.log('error selecting from commentVoteJoin: ', err);
+                          //should i just send the error back here?
+                          response.end('error');
+                        } else {
+                          if (result.rowCount === 0) {
+                            client.query("INSERT INTO commentVoteJoin (comment, username) "+
+                              "VALUES ($1, $2);", [request.body.commentId, request.body.username],
+                              function(err, result) {
+                                if (err) {
+                                  console.log('error inserting into commentVoteJoin: ', err);
+                                  response.end('error');
+                                } else {
+
+                                  client.query("UPDATE comments SET rank = rank + 1 where id = $1", [request.body.commentId],
+                                    function(err, result) {
+                                      if (err) {
+                                        console.log('error updating comments: ', err);
+                                        response.end('error');
+                                      } else {
+                                        console.log('user: '+request.body.username+' has successfully voted for comment: '+request.body.commentId);
+                                        response.end('Succesfully voted');
+                                      }
+                                  });
+
+                                }
+                              });
+                          } else {
+                            response.end('Already voted');
+                          }
+                        }
+
+                    });
+                    
+
+
         } else {
-          response.end('Already voted');
+          response.end('not authorized');
         }
-      }
 
-  });
+      }
+  });//end securityJoin select
+
+  
 
 };
 
 module.exports.upvoteResponse = function(request, response) {
-  client.query("SELECT * FROM responseVoteJoin where (username=$1 AND response=$2);",
-    [request.body.username, request.body.responseId],
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from responseVoteJoin: ', err);
-        //should i just send the error back here?
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        if (result.rowCount === 0) {
-          client.query("INSERT INTO responseVoteJoin (response, username) "+
-            "VALUES ($1, $2);", [request.body.responseId, request.body.username],
-            function(err, result) {
-              if (err) {
-                console.log('error inserting into responseVoteJoin: ', err);
-                response.end('error');
-              } else {
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-                client.query("UPDATE responses SET rank = rank + 1 where id = $1", [request.body.responseId],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error updating responses: ', err);
-                      response.end('error');
+
+
+              client.query("SELECT * FROM responseVoteJoin where (username=$1 AND response=$2);",
+                [request.body.username, request.body.responseId],
+                function(err, result) {
+                  if (err) {
+                    console.log('error selecting from responseVoteJoin: ', err);
+                    //should i just send the error back here?
+                    response.end('error');
+                  } else {
+                    if (result.rowCount === 0) {
+                      client.query("INSERT INTO responseVoteJoin (response, username) "+
+                        "VALUES ($1, $2);", [request.body.responseId, request.body.username],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error inserting into responseVoteJoin: ', err);
+                            response.end('error');
+                          } else {
+
+                            client.query("UPDATE responses SET rank = rank + 1 where id = $1", [request.body.responseId],
+                              function(err, result) {
+                                if (err) {
+                                  console.log('error updating responses: ', err);
+                                  response.end('error');
+                                } else {
+                                  console.log('user: '+request.body.username+' has successfully voted for response: '+request.body.responseId);
+                                  response.end('Succesfully voted');
+                                }
+                            });
+
+                          }
+                        });
                     } else {
-                      console.log('user: '+request.body.username+' has successfully voted for response: '+request.body.responseId);
-                      response.end('Succesfully voted');
+                      response.end('Already voted');
                     }
-                });
+                  }
 
-              }
-            });
+              });
+                    
+
+
+
         } else {
-          response.end('Already voted');
+          response.end('not authorized');
         }
       }
+  });//end securityJoin select
 
-  });
+  
 };
 
 module.exports.upvoteReply = function(request, response) {
-  client.query("SELECT * FROM replyVoteJoin where (username=$1 AND reply=$2);",
-    [request.body.username, request.body.replyId],
+
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
     function(err, result) {
       if (err) {
-        console.log('error selecting from replyVoteJoin: ', err);
-        //should i just send the error back here?
-        response.end('error');
+        console.log('error selecting from securityJoin: ', err);
       } else {
-        if (result.rowCount === 0) {
-          client.query("INSERT INTO replyVoteJoin (reply, username) "+
-            "VALUES ($1, $2);", [request.body.replyId, request.body.username],
-            function(err, result) {
-              if (err) {
-                console.log('error inserting into replyVoteJoin: ', err);
-                response.end('error');
-              } else {
+        if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
 
-                client.query("UPDATE replies SET rank = rank + 1 where id = $1", [request.body.replyId],
+                    
+
+                client.query("SELECT * FROM replyVoteJoin where (username=$1 AND reply=$2);",
+                  [request.body.username, request.body.replyId],
                   function(err, result) {
                     if (err) {
-                      console.log('error updating replies: ', err);
+                      console.log('error selecting from replyVoteJoin: ', err);
+                      //should i just send the error back here?
                       response.end('error');
                     } else {
-                      console.log('user: '+request.body.username+' has successfully voted for reply: '+request.body.replyId);
-                      response.end('Succesfully voted');
+                      if (result.rowCount === 0) {
+                        client.query("INSERT INTO replyVoteJoin (reply, username) "+
+                          "VALUES ($1, $2);", [request.body.replyId, request.body.username],
+                          function(err, result) {
+                            if (err) {
+                              console.log('error inserting into replyVoteJoin: ', err);
+                              response.end('error');
+                            } else {
+
+                              client.query("UPDATE replies SET rank = rank + 1 where id = $1", [request.body.replyId],
+                                function(err, result) {
+                                  if (err) {
+                                    console.log('error updating replies: ', err);
+                                    response.end('error');
+                                  } else {
+                                    console.log('user: '+request.body.username+' has successfully voted for reply: '+request.body.replyId);
+                                    response.end('Succesfully voted');
+                                  }
+                              });
+
+                            }
+                          });
+                      } else {
+                        response.end('Already voted');
+                      }
                     }
+
                 });
 
-              }
-            });
+
+
         } else {
-          response.end('Already voted');
+          response.end('not authorized');
         }
       }
+  });//end securityJoin select
 
-  });
+
+
+
+
+  
 };
 
 

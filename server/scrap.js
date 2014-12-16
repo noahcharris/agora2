@@ -51,3 +51,53 @@ AWSSecretKey=I6+23P00UaDT70x0y9EPpKy5t0BeE/h0fjGdD8IV
 
 ANON LINK
 'http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg'
+
+
+
+
+
+
+
+
+
+
+
+//cookie and token check 
+
+
+client.query("SELECT * FROM securityJoin WHERE username = $1;",
+  [request.body.username],
+  function(err, result) {
+    if (err) {
+      console.log('error selecting from securityJoin: ', err);
+    } else {
+
+      if (request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                  
+
+
+      } else {
+        response.end('not authorized');
+      }
+
+    }
+});//end securityJoin select
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
