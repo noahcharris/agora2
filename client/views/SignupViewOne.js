@@ -66,6 +66,97 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
 
 
     });
+
+
+
+
+
+
+    $('#signupOriginInput').on('keyup', function(e) {
+
+      var searchParameter = $('#signupOriginInput').val();
+
+      console.log('searchParameter: ', searchParameter);
+
+      //SHOULD MAYBE THROTTLE THIS ???????
+
+      if (searchParameter.length > 2) {
+
+        $.ajax({
+          url: 'http://54.149.63.77:80/locationSearch',
+          // url: 'http://localhost:80/locationSearch',
+          data: {
+            input: searchParameter
+          },
+          crossDomain: true,
+          success: function(data) {
+            console.log(data);
+            $('.signupLocationSearchResult').remove();
+
+            var cssAdjust = -30;
+
+            for (var i=0; i < data.length ;i++) {
+
+              var $element = $('<div style="position:relative" class="signupLocationSearchResult">'+data[i].name+'</div>');
+
+
+              (function() {
+                var x = data[i].name;
+                $element.on('click', function(e)  {
+
+
+                  console.log('hi');
+
+                  // that.app.get('mapController').goToPath(x);
+                  //that.app.trigger('reloadSidebarTopics', x);
+
+                  $('#signupOriginInput').val(x);
+                  $('.signupLocationSearchResult').remove();
+
+
+                });
+                
+              })();
+
+
+              $element.css('bottom', cssAdjust + 'px');
+
+              cssAdjust -= 15;
+
+              $('#signupLocation').append($element);
+
+
+              
+            }
+
+          }
+        });
+
+      } else if (searchParameter === '') {
+        $('.signupLocationSearchResult').remove();
+      }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   },
 
   close: function() {

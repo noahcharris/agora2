@@ -167,6 +167,16 @@ body {
   z-index: 9999;
 }
 
+.signupLocationSearchResult {
+  position: absolute;
+  bottom: -30px;
+  height: 30px;
+  left: 20px;
+  background-color: green;
+  color: orange;
+  z-index: 9999;
+}
+
 #locationSubtreeView {
   position: absolute;
   overflow-y: scroll;
