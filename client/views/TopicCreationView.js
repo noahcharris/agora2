@@ -72,6 +72,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
           console.log($('#imageInput'));
           fd.append( 'file', $('#imageInput')[0].files[0] );
           fd.append( 'username', that.app.get('username') );
+          fd.append( 'token', that.app.get('token') );
           fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
           fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
           fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );

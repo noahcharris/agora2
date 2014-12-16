@@ -1629,11 +1629,6 @@ module.exports.updateUserProfile = function(request, response) {
 
 
 
-
-
-
-
-
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {

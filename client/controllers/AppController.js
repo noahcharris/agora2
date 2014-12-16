@@ -223,7 +223,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         crossDomain: true,
         method: 'GET',
         data: {
-          username: username
+          username: username,
+          token: that.get('token');
         },
         success: function(data) {
           if (data) {
@@ -268,7 +269,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         crossDomain: true,
         method: 'GET',
         data: {
-          username: that.get('username')
+          username: that.get('username'),
+          that.get('token');
         },
         success: function(data) {
           if (data) {
@@ -785,7 +787,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         method: 'GET',
         crossDomain: true,
         data: {
-          username: that.app.get('username')
+          username: that.app.get('username'),
+          token: that.app.get('token')
         },
         success: function(data) {
 
@@ -911,7 +914,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             crossDomain: true,
                             data: {
                               username: that.app.get('username'),
-                              contact: chains[i].contact
+                              contact: chains[i].contact,
+                              token: that.app.get('token');
                             },
                             success: function(model) {
                               //horrible
@@ -978,7 +982,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         crossDomain: true,
         data: {
           username: that.app.get('username'),
-          contact: contact
+          contact: contact,
+          token: that.app.get('token')
         },
         success: function(model) {
           console.log('gettin back: ', model);

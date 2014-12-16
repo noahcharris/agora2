@@ -226,6 +226,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 crossDomain: true,
                 data: {
                   username: that.app.get('username'),
+                  token: that.app.get('token'),
                   //WHY IS THIS A STRING????
                   topicId: model.id
                 },
@@ -251,7 +252,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
                 crossDomain: true,
                 data: {
                   username: that.app.get('username'),
-                  contact: contact
+                  contact: contact,
+                  token: that.app.get('token')
                 },
                 success: function(model) {
                   that.app.get('content2').show(that.app.get('detailView'), model, contact);

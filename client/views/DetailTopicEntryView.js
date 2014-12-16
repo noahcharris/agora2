@@ -109,6 +109,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         crossDomain: true,
         data: {
           username: that.app.get('username'),
+          token: that.app.get('token'),
           topicId: that.model.id
         },
         success: function(msg) {
@@ -186,6 +187,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             crossDomain: true,
             data: {
               username: that.app.get('username'),
+              token: that.app.get('token'),
               commentId: x
             },
             success: function(msg) {
@@ -286,6 +288,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               crossDomain: true,
               data: {
                 username: that.app.get('username'),
+                token: that.app.get('token'),
                 responseId: x
               },
               success: function(msg) {
@@ -422,6 +425,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 crossDomain: true,
                 data: {
                   username: that.app.get('username'),
+                  token: that.app.get('token'),
                   replyId: x
                 },
                 success: function(msg) {
@@ -545,6 +549,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var fd = new FormData();    
       fd.append( 'file', $('#imageInput')[0].files[0] );
       fd.append( 'username', that.app.get('username') );
+      fd.append( 'token', that.app.get('token') );
 
       fd.append( 'headline', $(this).parent().children('textarea#inputHeadlineTextArea').val() );
 

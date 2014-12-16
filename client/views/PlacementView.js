@@ -35,6 +35,8 @@ Agora.Views.PlacementView = Backbone.View.extend({
           method: 'POST',
           data: {
 
+            username: that.app.get('username'),
+            token: that.app.get('token'),
             name: that.data.name,
             description: that.data.description,
             parent: that.data.parent,

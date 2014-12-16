@@ -94,6 +94,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
         crossDomain: true,
         method: 'GET',
         data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
         },
         success: function(data) {
           if (data === 'True') {

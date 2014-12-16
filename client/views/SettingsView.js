@@ -100,6 +100,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
       method: 'GET',
       data: {
         username: that.app.get('username'),
+        token: that.app.get('token')
       },
       success: function(models) {
         for (var i=0; i < models.length ;i++) {

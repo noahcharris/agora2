@@ -36,6 +36,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         crossDomain: true,
         method: 'POST',
         data: {
+          username: that.app.get('username'),
+          token: that.app.get('token'),
           name: that.$el.children('#channelNameInput').val(),
           description: that.$el.children('#descriptionInput').val(),
           parent: that.$el.children('#parentInput').val() 

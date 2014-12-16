@@ -60,7 +60,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             crossDomain: true,
             data: {
               username: that.app.get('username'),
-              contact: chains[i].contact
+              contact: chains[i].contact,
+              token: that.app.get('token')
             },
             success: function(model) {
               //horrible
@@ -88,7 +89,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           crossDomain: true,
           data: {
             username: that.app.get('username'),
-            contact: that.model.username
+            contact: that.model.username,
+            token: that.app.get('token')
           },
           success: function(data) {
             alert(data);
@@ -131,7 +133,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                       crossDomain: true,
                       data: {
                         username: that.app.get('username'),
-                        contact: chains[i].contact
+                        contact: chains[i].contact,
+                        token: that.app.get('token')
                       },
                       success: function(model) {
                         //ugh so bad
@@ -199,7 +202,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         crossDomain: true,
         data: {
           username: that.app.get('username'),
-          contact: that.model.username
+          contact: that.model.username,
+          token: that.app.get('token')
         },
         success: function(data) {
           if (data) {

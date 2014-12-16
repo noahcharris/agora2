@@ -70,7 +70,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
         data: {
           sender: that.app.get('username'),
           recipient: contact,
-          contents: $('#messageInputTextArea').val()
+          contents: $('#messageInputTextArea').val(),
+          token: that.app.get('token'),
+          username: that.app.get('username')
         },
         success: function(data) {
           if (data) {
