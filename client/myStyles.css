@@ -705,7 +705,7 @@ body {
   float: left;
   height: 150px;
   width: 97%;
-  background-color: green;
+  background-color: #f8f8f8;
 }
 .topicHeader {
   font-size: 20px;
@@ -750,7 +750,7 @@ body {
   float: left;
   height: 100px;
   width: 94%;
-  background-color: green;
+  background-color: #f8f8f8;
 }
 .detailCommentImage {
   position: relative;
@@ -817,7 +817,7 @@ body {
   float: left;
   height: 100px;
   width: 94%;
-  background-color: green;
+  background-color: #f8f8f8;
 }
 .responseHeader {
   font-size: 20px;
@@ -870,7 +870,7 @@ body {
   float: left;
   height: 100px;
   width: 97%;
-  background-color: red;
+  background-color: #f8f8f8;
 }
 .replyHeader {
   font-size: 20px;

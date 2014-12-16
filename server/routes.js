@@ -604,10 +604,18 @@ module.exports.locationSearch = function(request, response) {
 
     var queryArgs = url.parse(request.url, true).query;
 
+    var parsedInput = queryArgs.input.split(' ');
+    for (var i=0; i < parsedInput.length ;i++) {
+      parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+    }
+    var input = parsedInput.join(' ');
+
+    console.log(input);
+
     console.log('location search input: ', queryArgs.input);
 
     client.query("SELECT * FROM locations WHERE name LIKE $1;",
-        ['%' + queryArgs.input + '%'],
+        ['%' + input + '%'],
         function(err, result) {
           if (err) {
             console.log('error searching locations with LIKE: ', err);
@@ -624,10 +632,18 @@ module.exports.channelSearch = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
+  var parsedInput = queryArgs.input.split(' ');
+  for (var i=0; i < parsedInput.length ;i++) {
+    parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+  }
+  var input = parsedInput.join(' ');
+
+  console.log(input);
+
   console.log('channel search input: ', queryArgs.input);
 
   client.query("SELECT * FROM channels WHERE name LIKE $1;",
-      ['%' + queryArgs.input + '%'],
+      ['%' + input + '%'],
       function(err, result) {
         if (err) {
           console.log('error searching users with LIKE: ', err);
