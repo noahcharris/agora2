@@ -540,7 +540,12 @@
     <script>
       $(function(){
 
-        var appController = new Agora.Controllers.AppController();
+        var params = {
+          mobile: false,
+          language: 'en'
+        }
+
+        var appController = new Agora.Controllers.AppController(params);
 
       });
     </script>

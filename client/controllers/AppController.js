@@ -9,48 +9,35 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-  initialize: function() {
-
+  initialize: function(params) {
     var that = this;
+
+    this.set('mobile', params.mobile);
+    this.set('language', params.language);
 
     this.set('expanded', false);
     //whether we are displaying sidebar and map side-by-side or in lieu of each other
     this.set('mobile', false);
-    //whether in 'mobile' mode, whether it is displaying map or topics
+    //in 'mobile' mode, whether it is displaying map or topics
     this.set('mobilemap', true);
-    //keep track of channel here, could be somewhere else probably
+
+    //keep track of channel here, i wish location was here too.. but it is so tightly coupled right now
     this.set('channel', 'General');
-    // ## INSTANTIATE REGION MANAGERS ##
+
+    // ## REGION MANAGERS ##
     content1 = this.RegionManager1('#content1');
     content2 = this.RegionManager2('#content2');
     this.set('content1', content1);
     this.set('content2', content2);
 
-    this.contacts = [];
-
-    this.set('cacheManager', null);
-
-    this.set('cacheTimer', null);
-
-
-    this.set('username', null); //is this secure???
-
-
-    this.set('login', false);
-
-    this.set('token', 'secret'); //this is where we store token for csrf protection
-
-
-
-
     var cacheManager = this.CacheManager(this);
     this.set('cacheManager', cacheManager);
+    this.set('cacheTimer', null);
 
-    //not logged in initially
-    //BUT NEED TO ASK SERVER HERE WHETHER WE ARE OR NOT
-
-
-
+    //at the end of initialization we ajax checkLogin to set these if user has a session
+    this.set('username', null); //this is vulnerable to XSS
+    this.set('login', false);
+    this.set('token', null); //this is where we store token for csrf protection
 
 
 
@@ -629,8 +616,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-
     region.hide = function() {
       if (that.get('expanded')) {
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
@@ -743,9 +728,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.topicActivity = [];
 
 
-
-
-
     manager.contacts = [];
 
     manager.messageTemplate = _.template( $('#detailMessageEntryTemplate').html() );
@@ -791,6 +773,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           token: that.app.get('token')
         },
         success: function(data) {
+
+          //contactRequests is an arbitrary choice here
+          if (data.contactRequests) {
 
             console.log('CACHE MANAGER');
             console.log('server returned: ', data);
@@ -949,7 +934,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               };//end notification click handler
 
-            }//end if (data)
+            }//end if notification
+          }/**/ else {
+            console.log('data: ', data);
+          }
 
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);

@@ -71,7 +71,7 @@ var s3Client = s3.createClient({
 module.exports.test = function(request, response) {
 
   //need a list of servers that I can iterate through to set all the servers
-  response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
+  //response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
 
   response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
@@ -731,7 +731,7 @@ module.exports.getContacts = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
             client.query("SELECT * FROM users JOIN contactsjoin " 
@@ -781,7 +781,7 @@ module.exports.getMessageChains = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("SELECT * FROM messageChains WHERE "
@@ -831,7 +831,7 @@ module.exports.getMessageChain = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
            
 
@@ -951,7 +951,8 @@ module.exports.getNotifications = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        //need to add this to all of the security checks
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
 
@@ -1136,7 +1137,7 @@ module.exports.logout = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -1186,7 +1187,7 @@ module.exports.checkLogin = function(request, response) {
           if (result.rows.length > 0) {
 
 
-            if (request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+            if (request.cookies['login'] && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
               response.json({ login: true, token: result.rows[0].token, username: request.cookies['login'].split('/')[0] });
             } else {
               console.log('unauthorized access');
@@ -1252,60 +1253,86 @@ module.exports.addContact = function(request, response) {
   console.log(request.body.contact);
 
 
-  client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
-      [request.body.contact, request.body.username],
-      function(err, result) {
-        if (err) {
-          console.log('error selecting from contactRequestJoin: ', err);
-          response.end('error');
+
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+
+                    client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
+                        [request.body.contact, request.body.username],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error selecting from contactRequestJoin: ', err);
+                            response.end('error');
+                          } else {
+
+                            //ONCE WE CHECK
+
+                            //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
+                            if (result.rows.length) {
+                              //if they have, add to the contact join and delete data from memcached
+
+                                  client.query("INSERT INTO contactsjoin (username1, username2) "
+                                    +"VALUES ($1, $2);",
+                                  [request.body.username, request.body.contact],
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into contactsjoin: ', err);
+                                    } else {
+                                          console.log('successfully inserted into contactsjoin');
+                                          //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
+                                          //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
+                                          client.query("DELETE FROM contactRequestJoin WHERE (sender = $1 AND recipient = $2)"
+                                            +" OR (sender = $2 AND recipient = $1);",
+                                              [request.body.username, request.body.contact],
+                                              function(err, result) {
+                                                if (err) {
+                                                  console.log('error selecting from topics: ', err);
+                                                  response.end('error');
+                                                } else {
+                                                  //reword this fo sho
+                                                  response.end('you and '+ request.body.contact +' are now contacts');
+                                                }
+                                          });
+                                    }
+
+                                  });
+
+                            } else {
+                                client.query("INSERT INTO contactRequestJoin (sender, recipient) "
+                                  +"VALUES ($1, $2);",
+                                [request.body.username, request.body.contact],
+                                function(err, result) {
+                                  if (err) {
+                                    console.log('error inserting into contactsRequestJoin: ', err);
+                                  } else {
+                                    response.end('sent contact request');
+                                  }
+                                });
+                            }
+                        }
+                    });
+                    
+
+
         } else {
+          response.end('not authorized');
+        }
 
-          //ONCE WE CHECK
-
-          //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
-          if (result.rows.length) {
-            //if they have, add to the contact join and delete data from memcached
-
-                client.query("INSERT INTO contactsjoin (username1, username2) "
-                  +"VALUES ($1, $2);",
-                [request.body.username, request.body.contact],
-                function(err, result) {
-                  if (err) {
-                    console.log('error inserting into contactsjoin: ', err);
-                  } else {
-                        console.log('successfully inserted into contactsjoin');
-                        //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
-                        //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
-                        client.query("DELETE FROM contactRequestJoin WHERE (sender = $1 AND recipient = $2)"
-                          +" OR (sender = $2 AND recipient = $1);",
-                            [request.body.username, request.body.contact],
-                            function(err, result) {
-                              if (err) {
-                                console.log('error selecting from topics: ', err);
-                                response.end('error');
-                              } else {
-                                //reword this fo sho
-                                response.end('you and '+ request.body.contact +' are now contacts');
-                              }
-                        });
-                  }
-
-                });
-
-          } else {
-              client.query("INSERT INTO contactRequestJoin (sender, recipient) "
-                +"VALUES ($1, $2);",
-              [request.body.username, request.body.contact],
-              function(err, result) {
-                if (err) {
-                  console.log('error inserting into contactsRequestJoin: ', err);
-                } else {
-                  response.end('sent contact request');
-                }
-              });
-          }
       }
-  });
+  });//end securityJoin select
+
+
+
+  
+
+
 
 
 
@@ -1340,7 +1367,7 @@ module.exports.createMessageChain = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                 
 
@@ -1409,7 +1436,7 @@ module.exports.sendMessage = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     client.query("INSERT INTO messages (type, sender, recipient, contents, sentAt) "
                       +"VALUES ('Message', $1, $2, $3, now());",
@@ -1512,7 +1539,7 @@ module.exports.visitedTopic = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -1593,7 +1620,7 @@ module.exports.recentlyVisitedTopics = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
@@ -1643,7 +1670,7 @@ module.exports.updateUserProfile = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                         //if an image is sent
                         if (files.file) {
@@ -1769,7 +1796,7 @@ module.exports.createTopic = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                               //if an image is sent
@@ -1911,7 +1938,7 @@ module.exports.createComment = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
               //if an image is sent
@@ -2051,7 +2078,7 @@ module.exports.createResponse = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                         //if an image is sent
@@ -2191,7 +2218,7 @@ module.exports.createReply = function(request, response) {
           console.log('error selecting from securityJoin: ', err);
         } else {
 
-          if (fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                     //if an image is sent
@@ -2333,7 +2360,7 @@ module.exports.createLocation = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
@@ -2381,7 +2408,7 @@ module.exports.createChannel = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
             client.query("INSERT INTO channels (type, name, description, parent) "
@@ -2439,7 +2466,7 @@ module.exports.upvoteTopic = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
               client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
                 [request.body.username, request.body.topicId],
@@ -2504,7 +2531,7 @@ module.exports.upvoteComment = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
                     client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
@@ -2567,7 +2594,7 @@ module.exports.upvoteResponse = function(request, response) {
       if (err) {
         console.log('error selecting from securityJoin: ', err);
       } else {
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
 
@@ -2630,7 +2657,7 @@ module.exports.upvoteReply = function(request, response) {
       if (err) {
         console.log('error selecting from securityJoin: ', err);
       } else {
-        if (request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     
 
