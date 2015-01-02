@@ -1063,10 +1063,10 @@ module.exports.login = function(request, response) {
                 console.log('error deleting from securityJoin: ', err);
               } else {
 
+                //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
 
-
-                var token = 'secret'; //generate token here
-                var cookie = 'secret';  //generate cookie here
+                var token = Math.floor(Math.random()*100000000000000000000000000000001); //generate token here
+                var cookie = Math.floor(Math.random()*100000000000000000000000000000001);  //generate cookie here
 
 
 
