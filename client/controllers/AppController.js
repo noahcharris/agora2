@@ -345,7 +345,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     $.ajax({
-      url: 'https://54.69.226.228:443/test',
+      url: 'https://liveworld.io:443/test',
       crossDomain: true,
       method: 'GET',
       data: {
