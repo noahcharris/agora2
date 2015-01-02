@@ -71,7 +71,7 @@ var s3Client = s3.createClient({
 module.exports.test = function(request, response) {
 
   //need a list of servers that I can iterate through to set all the servers
-  //response.setHeader('Access-Control-Allow-Origin', 'http://54.69.226.228');
+  //response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
 
   response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
@@ -804,19 +804,8 @@ module.exports.getMessageChains = function(request, response) {
   });//end securityJoin select
 
 
-
-
-
-
-
-
-
-  
-
-
-
-
 };
+
 
 module.exports.getMessageChain = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
@@ -954,10 +943,6 @@ module.exports.getNotifications = function(request, response) {
         //need to add this to all of the security checks
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-                    
-
-
-
             //check for any pending contact requests
             client.query("SELECT * FROM contactRequestJoin WHERE (recipient = $1) ORDER BY sentAt DESC;",
               [queryArgs.username],
@@ -1065,8 +1050,8 @@ module.exports.login = function(request, response) {
 
                 //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
 
-                var token = Math.floor(Math.random()*100000000000000000000000000000001); //generate token here
-                var cookie = Math.floor(Math.random()*100000000000000000000000000000001);  //generate cookie here
+                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
 
 
 

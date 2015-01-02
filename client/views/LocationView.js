@@ -60,7 +60,7 @@ Agora.Views.LocationView = Backbone.View.extend({
       console.log('whowhow: ', that.model.get('location'));
 
       $.ajax({
-        url: 'http://54.69.226.228:80/location',
+        url: 'http://liveworld.io:80/location',
         crossDomain: true,
         data: {
           location: that.model.get('location'),
@@ -117,7 +117,7 @@ Agora.Views.LocationView = Backbone.View.extend({
         if (searchParameter.length > 2) {
 
           $.ajax({
-            url: 'http://54.69.226.228:80/locationSearch',
+            url: 'http://liveworld.io:80/locationSearch',
             // url: 'http://localhost:80/locationSearch',
             data: {
               input: searchParameter
@@ -179,7 +179,7 @@ Agora.Views.LocationView = Backbone.View.extend({
     $treeButton[0].onclick = function() {
 
       $.ajax({
-        url: 'http://54.69.226.228:80/locationSubtree',
+        url: 'http://liveworld.io:80/locationSubtree',
         // url: 'http://localhost:80/locationSubtree',
         crossDomain: true,
         method: 'GET',

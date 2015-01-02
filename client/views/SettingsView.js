@@ -28,7 +28,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $viewProfileButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
-        url: 'http://54.69.226.228:80/user',
+        url: 'http://liveworld.io:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -95,7 +95,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     //get recently visited topics
     $.ajax({
-      url: 'http://54.69.226.228:80/recentlyVisited',
+      url: 'http://liveworld.io:80/recentlyVisited',
       // url: 'http://localhost/topicTree',
       method: 'GET',
       data: {
@@ -132,7 +132,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               //get specific topic tree from server
               $.ajax({
-                url: 'http://54.69.226.228:80/topicTree',
+                url: 'http://liveworld.io:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,

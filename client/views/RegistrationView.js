@@ -49,7 +49,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       //CHANGING THIS BACK TO HTTP BECAUSE IT SEEMS TO BREAK COOKIES, HAVE TO TRY WITH A REAL SERVER
 
       $.ajax({
-        url: 'http://54.69.226.228:80/login',
+        url: 'http://liveworld.io:80/login',
         // url: 'http://localhost/login',
         crossDomain: true,
         method: 'POST',
@@ -89,7 +89,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     $('#logoutButton').on('click', function() {
       
       $.ajax({
-        url: 'http://54.69.226.228:80/logout',
+        url: 'http://liveworld.io:80/logout',
         // url: 'http://localhost/login',
         crossDomain: true,
         method: 'GET',
