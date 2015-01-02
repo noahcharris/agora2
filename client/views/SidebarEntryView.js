@@ -36,7 +36,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://54.149.63.77:80/user',
+        url: 'http://54.69.226.228:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -75,7 +75,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       //woooooooo
       var thet = this;
       $.ajax({
-        url: 'http://54.149.63.77:80/topicLocations',
+        url: 'http://54.69.226.228:80/topicLocations',
         // url: 'http://localhost:80/topicLocations',
         method: 'GET',
         crossDomain: true,

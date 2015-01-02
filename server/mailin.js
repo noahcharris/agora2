@@ -1,5 +1,4 @@
 var mailin = require('mailin');
-    
 /* Start the Mailin server. The available options are:
  *  options = {
  *     port: 25,

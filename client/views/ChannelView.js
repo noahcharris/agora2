@@ -57,7 +57,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://54.149.63.77:80/channel',
+        url: 'http://54.69.226.228:80/channel',
         crossDomain: true,
         data: {
           channel: that.app.get('channel'),
@@ -114,7 +114,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
         if ($('#channelInput').val().length > 2) {
 
           $.ajax({
-            url: 'http://54.149.63.77:80/channelSearch',
+            url: 'http://54.69.226.228:80/channelSearch',
             //url: 'http://localhost:80/channelSearch',
             data: {
               input: searchParameter
@@ -215,7 +215,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://54.149.63.77:80/channelSubtree',
+        url: 'http://54.69.226.228:80/channelSubtree',
         //url: 'http://localhost:80/channelSubtree',
         crossDomain: true,
         method: 'GET',

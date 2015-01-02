@@ -202,7 +202,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               //get specific topic tree from server
               $.ajax({
-                url: 'http://54.149.63.77:80/topicTree',
+                url: 'http://54.69.226.228:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
@@ -220,7 +220,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               //register the topic visit with the server
               $.ajax({
-                url: 'http://54.149.63.77:80/visitedTopic',
+                url: 'http://54.69.226.228:80/visitedTopic',
                 // url: 'http://localhost/topicTree',
                 method: 'POST',
                 crossDomain: true,
@@ -246,7 +246,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
               var contact = model.contact;
 
               $.ajax({
-                url: 'http://54.149.63.77:80/messageChain',
+                url: 'http://54.69.226.228:80/messageChain',
                 // url: 'http://localhost/messageChain',
                 method: 'GET',
                 crossDomain: true,

@@ -32,7 +32,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://54.149.63.77:80/createChannel',
+        url: 'http://54.69.226.228:80/createChannel',
         crossDomain: true,
         method: 'POST',
         data: {

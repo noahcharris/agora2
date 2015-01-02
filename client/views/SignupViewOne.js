@@ -33,7 +33,7 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
 
           $.ajax({
 
-            url: 'http://54.149.63.77:80/registerUser',
+            url: 'http://54.69.226.228:80/registerUser',
             // url: 'https://localhost:443/registerUser',
             method: 'POST',
             crossDomain: true,
@@ -83,7 +83,7 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
       if (searchParameter.length > 2) {
 
         $.ajax({
-          url: 'http://54.149.63.77:80/locationSearch',
+          url: 'http://54.69.226.228:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
             input: searchParameter

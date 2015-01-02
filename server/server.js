@@ -238,8 +238,8 @@ app.use(favicon(__dirname + '/../client/media/favicon.png'));
 app.use(express.static(__dirname + '/../client'));
 
 var options = {
-  key: fs.readFileSync(__dirname + '/key.pem'),
-  cert: fs.readFileSync(__dirname + '/cert.pem'),
+  key: fs.readFileSync(__dirname + '/agoraSSL.key'),
+  cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
 };
 
 //this is messing with the cookies somehow

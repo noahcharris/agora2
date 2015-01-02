@@ -71,7 +71,7 @@ var s3Client = s3.createClient({
 module.exports.test = function(request, response) {
 
   //need a list of servers that I can iterate through to set all the servers
-  //response.setHeader('Access-Control-Allow-Origin', 'http://54.149.63.77');
+  //response.setHeader('Access-Control-Allow-Origin', 'http://54.69.226.228');
 
   response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
