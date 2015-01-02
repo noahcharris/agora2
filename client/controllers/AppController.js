@@ -389,12 +389,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //CHECK INITIAL LOGIN STATE
     $.ajax({
-      url: 'http://liveworld.io:80/checkLogin',
+      url: 'https://liveworld.io:443/checkLogin',
       //url: 'http://localhost:80' + urlPath,
       crossDomain: true,
-      method: 'GET',
-      data: {
+      xhrFields: {
+        withCredentials: true
       },
+      method: 'GET',
       success: function(data) {
         if (data.login) {
 
@@ -764,10 +765,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'http://liveworld.io:80/notifications',
+        url: 'https://liveworld.io:443/notifications',
         // url: 'http://localhost:80/notifications',
         method: 'GET',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: that.app.get('username'),
           token: that.app.get('token')

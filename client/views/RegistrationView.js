@@ -49,9 +49,12 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       //CHANGING THIS BACK TO HTTP BECAUSE IT SEEMS TO BREAK COOKIES, HAVE TO TRY WITH A REAL SERVER
 
       $.ajax({
-        url: 'http://liveworld.io:80/login',
+        url: 'https://liveworld.io:443/login',
         // url: 'http://localhost/login',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         method: 'POST',
         data: {
           username: username,

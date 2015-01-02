@@ -1072,7 +1072,7 @@ module.exports.login = function(request, response) {
 
                         //set cookie which will be checkd in checkLogin (10 minutes here)
                         // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 600000, httpOnly: true });
+                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 6000000, httpOnly: true, secure: true });
 
                         console.log('Login successful for user: ', request.body.username);
 
