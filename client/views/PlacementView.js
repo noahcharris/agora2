@@ -30,8 +30,11 @@ Agora.Views.PlacementView = Backbone.View.extend({
         console.log('LONGTIDUE: ', that.app.get('mapController').placedLongitude);
 
         $.ajax({
-          url: 'http://liveworld.io:80/createLocation',
+          url: 'https://liveworld.io:443/createLocation',
           crossDomain: true,
+          xhrFields: {
+            withCredentials: true
+          },
           method: 'POST',
           data: {
 

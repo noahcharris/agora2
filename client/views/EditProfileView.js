@@ -117,9 +117,12 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
       $.ajax({
         // url: 'http://localhost:80/updateUserProfile',
-        url: 'http://liveworld.io:80/updateUserProfile',
+        url: 'https://liveworld.io:443/updateUserProfile',
         method: 'POST',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         contentType: false,
         processData: false,
         data: fd,

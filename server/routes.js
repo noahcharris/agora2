@@ -877,8 +877,6 @@ module.exports.getPoints = function(request, response) {
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-
-  console.log('NOOO ASKERRR');
   client.query("SELECT * FROM users WHERE username=$1;", [queryArgs.username], function(err, result) {
       if (err) {
         console.log('error selecting from users: ', err);

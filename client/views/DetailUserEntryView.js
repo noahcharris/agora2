@@ -54,10 +54,13 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           that.app.get('content1').show(that.app.get('sidebarView'));
 
           $.ajax({
-            url: 'http://liveworld.io/messageChain',
+            url: 'https://liveworld.io:443/messageChain',
             // url: 'http://localhost/messageChain',
             method: 'GET',
             crossDomain: true,
+            xhrFields: {
+              withCredentials: true
+            },
             data: {
               username: that.app.get('username'),
               contact: chains[i].contact,
@@ -83,10 +86,13 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         console.log('found no chain, gotta make one');
 
         $.ajax({
-          url: 'http://liveworld.io/createMessageChain',
+          url: 'https://liveworld.io:433/createMessageChain',
           // url: 'http://localhost/createMessageChain',
           method: 'POST',
           crossDomain: true,
+          xhrFields: {
+            withCredentials: true
+          },
           data: {
             username: that.app.get('username'),
             contact: that.model.username,
@@ -127,10 +133,13 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                   (function() {
                     var x = chains[i].contact
                     $.ajax({
-                      url: 'http://liveworld.io/messageChain',
+                      url: 'https://liveworld.io:443/messageChain',
                       // url: 'http://localhost/messageChain',
                       method: 'GET',
                       crossDomain: true,
+                      xhrFields: {
+                        withCredentials: true
+                      },
                       data: {
                         username: that.app.get('username'),
                         contact: chains[i].contact,
@@ -196,10 +205,13 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     $contactRequestButton[0].onclick = function() {
       console.log('hi');
       $.ajax({
-        url: 'http://liveworld.io:80/addContact',
+        url: 'https://liveworld.io:443/addContact',
         // url: 'http://localhost:80/sendContactRequest',
         method: 'POST',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: that.app.get('username'),
           contact: that.model.username,

@@ -33,10 +33,13 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
 
           $.ajax({
 
-            url: 'http://liveworld.io:80/registerUser',
+            url: 'https://liveworld.io:443/registerUser',
             // url: 'https://localhost:443/registerUser',
             method: 'POST',
             crossDomain: true,
+            xhrFields: {
+              withCredentials: true
+            },
             data: {
               username: $('#signupUsernameInput').val(),
               password: $('#signupPasswordInput').val(),

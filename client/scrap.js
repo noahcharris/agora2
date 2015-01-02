@@ -81,6 +81,11 @@ var greenIcon = L.icon({
 
 
 
+xhrFields: {
+  withCredentials: true
+},
+
+
 
 
 

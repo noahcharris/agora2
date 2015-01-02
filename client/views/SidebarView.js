@@ -220,10 +220,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               //register the topic visit with the server
               $.ajax({
-                url: 'http://liveworld.io:80/visitedTopic',
+                url: 'https://liveworld.io:443/visitedTopic',
                 // url: 'http://localhost/topicTree',
                 method: 'POST',
                 crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
                 data: {
                   username: that.app.get('username'),
                   token: that.app.get('token'),
@@ -246,10 +249,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
               var contact = model.contact;
 
               $.ajax({
-                url: 'http://liveworld.io:80/messageChain',
+                url: 'https://liveworld.io:443/messageChain',
                 // url: 'http://localhost/messageChain',
                 method: 'GET',
                 crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
                 data: {
                   username: that.app.get('username'),
                   contact: contact,

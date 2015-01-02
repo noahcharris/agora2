@@ -103,10 +103,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $upvote[0].onclick = function() {
 
       $.ajax({
-        url: 'http://liveworld.io/upvoteTopic',
+        url: 'https://liveworld.io:443/upvoteTopic',
         // url: 'http://localhost/upvoteTopic',
         method: 'POST',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: that.app.get('username'),
           token: that.app.get('token'),
@@ -181,10 +184,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $upvote[0].onclick = function() {
 
           $.ajax({
-            url: 'http://liveworld.io/upvoteComment',
+            url: 'https://liveworld.io:443/upvoteComment',
             // url: 'http://localhost/upvoteComment',
             method: 'POST',
             crossDomain: true,
+            xhrFields: {
+              withCredentials: true
+            },
             data: {
               username: that.app.get('username'),
               token: that.app.get('token'),
@@ -282,10 +288,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           var x = comments[i].responses[j].id;
           $upvote[0].onclick = function() {
             $.ajax({
-              url: 'http://liveworld.io/upvoteResponse',
+              url: 'https://liveworld.io:443/upvoteResponse',
               // url: 'http://localhost/upvoteResponse',
               method: 'POST',
               crossDomain: true,
+              xhrFields: {
+                withCredentials: true
+              },
               data: {
                 username: that.app.get('username'),
                 token: that.app.get('token'),
@@ -419,10 +428,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             var x = comments[i].responses[j].replies[k].id;
             $upvote[0].onclick = function() {
               $.ajax({
-                url: 'http://liveworld.io/upvoteReply',
+                url: 'https://liveworld.io:443/upvoteReply',
                 // url: 'http://localhost/upvoteReply',
                 method: 'POST',
                 crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
                 data: {
                   username: that.app.get('username'),
                   token: that.app.get('token'),
@@ -570,10 +582,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       var thet = this;
 
       $.ajax({
-        url: 'http://liveworld.io/' + data.urlSuffix,
+        url: 'https://liveworld.io:443/' + data.urlSuffix,
         // url: 'http://localhost/' + data.urlSuffix,
         method: 'POST',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         contentType: false,
         processData: false,
         data: fd,

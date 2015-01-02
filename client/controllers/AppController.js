@@ -205,10 +205,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username = that.get('username');
 
       $.ajax({
-        url: 'http://liveworld.io:80/contacts',
+        url: 'https://liveworld.io:443/contacts',
         //url: 'http://localhost:80/contacts',
         crossDomain: true,
         method: 'GET',
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: username,
           token: that.get('token')
@@ -251,10 +254,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'http://liveworld.io:80/messages',
+        url: 'https://liveworld.io:443/messages',
         //url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: that.get('username'),
           token: that.get('token')
@@ -897,10 +903,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                           that.app.get('content1').show(that.app.get('sidebarView'));
 
                           $.ajax({
-                            url: 'http://liveworld.io/messageChain',
+                            url: 'https://liveworld.io:443/messageChain',
                             // url: 'http://localhost/messageChain',
                             method: 'GET',
                             crossDomain: true,
+                            xhrFields: {
+                              withCredentials: true
+                            },
                             data: {
                               username: that.app.get('username'),
                               contact: chains[i].contact,
@@ -968,10 +977,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
       $.ajax({
-        url: 'http://liveworld.io:80/messageChain',
+        url: 'https://liveworld.io:443/messageChain',
         // url: 'http://localhost/messageChain',
         method: 'GET',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           username: that.app.get('username'),
           contact: contact,

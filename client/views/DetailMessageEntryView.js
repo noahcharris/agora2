@@ -63,10 +63,13 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
       console.log($('#messageInputTextArea').val());
 
       $.ajax({
-        url: 'http://liveworld.io:80/sendMessage',
+        url: 'https://liveworld.io:443/sendMessage',
         // url: 'http://localhost:80/sendMessage',
         method: 'POST',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         data: {
           sender: that.app.get('username'),
           recipient: contact,

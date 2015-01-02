@@ -32,8 +32,11 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://liveworld.io:80/createChannel',
+        url: 'https://liveworld.io:443/createChannel',
         crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
         method: 'POST',
         data: {
           username: that.app.get('username'),
