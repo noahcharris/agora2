@@ -95,16 +95,20 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     //get recently visited topics
     $.ajax({
-      url: 'http://liveworld.io:80/recentlyVisited',
+      url: 'https://liveworld.io:443/recentlyVisited',
       // url: 'http://localhost/topicTree',
       method: 'GET',
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
       data: {
         username: that.app.get('username'),
         token: that.app.get('token')
       },
       success: function(models) {
         for (var i=0; i < models.length ;i++) {
-          console.log(models[i].contents);
+          console.log(models[i]);
 
           //add template here
 
