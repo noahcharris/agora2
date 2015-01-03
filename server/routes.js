@@ -1746,9 +1746,57 @@ module.exports.recentlyVisitedTopics = function(request, response) {
       }
   });//end securityJoin select
 
-  
+};
 
 
+
+module.exports.getContactTopics = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  var deferred = Q.defer();
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          //authorized
+          deferred.resolve()
+
+        } else {
+          deferred.reject(new Error('authorization failed for getContactTopics'));
+        }
+
+      }
+  });
+  return deferred.promise
+  .then(function() {
+
+    var deferred = Q.defer();
+    client.query("SELECT * FROM topics INNER JOIN contactsJoin ON "
+      +"(contactsJoin.username1 = $1 AND topics.username = contactsJoin.username2) "
+      +"OR (contactsJoin.username2 = $1 AND topics.username = contactsJoin.username1);",
+      [queryArgs.username], function(err, result) {
+        if (err) {
+          console.log('error selecting contacts topics');
+          deferred.reject(new Error('error join selecting topics and contactsJoin'));
+        } else {
+          deferred.resolve(result.rows);
+        }
+    })
+    return deferred.promise;
+
+  }, function() {
+    response.end('not authorized');
+  })
+  .then(function(data) {
+    response.json(data);
+  }, function() {
+    response.end('error');
+  });
 
 
 };
@@ -2809,8 +2857,6 @@ module.exports.upvoteReply = function(request, response) {
         }
       }
   });//end securityJoin select
-
-
 
 
 

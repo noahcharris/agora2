@@ -193,43 +193,34 @@ app.get('/checkLogin', routes.checkLogin);
 
 //SECURE
 
-//split this up into sendContactRequest and confirmContactRequest
+//split this up into sendContactRequest and confirmContactRequest?
 app.post('/addContact', routes.addContact);
-
-// app.post('/sendContactRequest', routes.sendContactRequest);
-// app.post('/confirmContactRequest', routes.sendContactRequest);
-
 
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
-
 app.get('/checkUsername', routes.checkUsername);
 app.post('/registerUser', routes.registerUser);
-
 
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
 
-//SECURE
+app.get('/contactTopics', routes.getContactTopics);
+
 app.post('/updateUserProfile', routes.updateUserProfile);
 app.post('/updateLocationProfile', routes.updateLocationProfile);
 app.post('/updateChannelProfile', routes.updateChannelProfile);
 
-//SECURE
 app.post('/createTopic', routes.createTopic);
 app.post('/createComment', routes.createComment);
 app.post('/createResponse', routes.createResponse);
 app.post('/createReply', routes.createReply);
 
-
-//SECURE
 app.post('/upvoteTopic', routes.upvoteTopic);
 app.post('/upvoteComment', routes.upvoteComment);
 app.post('/upvoteResponse', routes.upvoteResponse);
 app.post('/upvoteReply', routes.upvoteReply);
 
-//SECURE
 app.post('/createLocation', routes.createLocation);
 app.post('/createChannel', routes.createChannel);
 
