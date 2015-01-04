@@ -118,8 +118,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
         var previousDisplayed = that.app.get('detailView').displayed;
 
-        that.app.get('sidebarView').displayed = 'Messages';
-        that.app.get('detailView').displayed = 'Messages';
+        that.app.get('sidebarView').displayed = 'Contacts';
+        that.app.get('detailView').displayed = 'Contacts';
 
         that.app.trigger('reloadSidebarContacts');
         that.app.trigger('reloadSidebarMessageChains');
@@ -140,7 +140,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
           //that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);
         } else {
 
-          if (previousDisplayed === 'Messages') {
+          if (previousDisplayed === 'Messages'
+           || previousDisplayed === 'Contacts') {
             that.app.get('content2').hide();
           } else {
            // that.app.get('content2').show(that.app.get('detailView'), that.app.get('sidebarView').messagesCollection[0]);

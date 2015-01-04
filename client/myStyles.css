@@ -451,7 +451,7 @@ img#fullscreenImage {
   height: 84%;
 }
 
-.leftHalfButton {
+#contactsButton {
   position: relative;
   cursor: pointer;
 /*  border-style: solid;
@@ -463,7 +463,7 @@ img#fullscreenImage {
   display: inline-block;
 }
 
-.rightHalfButton {
+#messagesButton {
   position: absolute;
   cursor: pointer;
 /*  border-style: solid;
