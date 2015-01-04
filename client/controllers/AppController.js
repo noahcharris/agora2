@@ -489,7 +489,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(data) {
         if (data[0]) {
           that.get('detailView').displayed = 'Users';
-          console.log('server returned: ', data);
+
 
 
           //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
@@ -499,7 +499,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
           //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
 
-          data[0].isContact = true;
           that.get('content2').show(that.get('detailView'), data[0]);
 
         } else {
@@ -588,6 +587,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   //but way easier
 
   changeChannel: function(channel) {
+
+    //TODO Check if channel is real before blindly switching to it
 
     this.set('channel', channel);
     this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));

@@ -14,7 +14,8 @@ Agora.Router = Backbone.Router.extend({
     'location/:location': 'location',
     'Location/:location': 'location',
     'channel/:channel': 'channel',
-    'Channel/:channel': 'channel'
+    'Channel/:channel': 'channel',
+    'World*path': 'path'
   },
 
   initialize: function(appController) {
@@ -64,11 +65,56 @@ Agora.Router = Backbone.Router.extend({
 
   },
 
+  path: function(path) {
+    var temp = path.split('#');
+    if (temp[0] === '') {
+      this.app.get('mapController').showWorld();
+    } else {
+      this.app.get('mapController').goToPath('World'+temp[0]);
+    }
+    console.log(path);
+    this.app.changeChannel(temp[1]);
+  },
+
 
 
   user: function(username) {
-    //SHOW THE USER PROFILE
-    this.app.showUserDetailView(username);
+    var that = this;
+    $.ajax({
+      url: 'http://liveworld.io:80/user',
+      // url: 'http://localhost:80/user',
+      method: 'GET',
+      crossDomain: true,
+      data: {
+        username: username,
+        //so that this is never cached
+        extra: Math.floor((Math.random() * 10000) + 1)
+      },
+      success: function(data) {
+        if (data[0]) {
+          that.app.get('detailView').displayed = 'Users';
+
+          
+          that.app.get('mapController').goToPath(data[0].location);
+
+          //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
+          //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
+          //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
+
+          //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
+          //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
+
+          that.app.get('content2').show(that.app.get('detailView'), data[0]);
+
+        } else {
+          console.log('no data returned from server');
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
+
   },
 
   location: function(location) {
@@ -91,6 +137,7 @@ Agora.Router = Backbone.Router.extend({
     //SHOW THE USER PROFILE
     this.app.showLocationDetailView('World/'+input);
     this.app.get('mapController').goToPath('World/'+input);
+    this.app.changeChannel('General');
   },
 
   channel: function(channel) {
@@ -112,6 +159,7 @@ Agora.Router = Backbone.Router.extend({
     //SHOW THE USER PROFILE
     this.app.showChannelDetailView('General/'+input);
     this.app.changeChannel('General/'+input);
+    this.app.get('mapController').showWorld();
   },
 
 

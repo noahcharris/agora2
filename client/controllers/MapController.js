@@ -187,7 +187,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.get('map').fitBounds(worldBounds);
     this.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
-    this.router.navigate('World', { trigger:false });
+    //this.router.navigate('World', { trigger:false });
     if (!this.placing) {
       this.app.get('content2').hide();
       //remember to switch this to the new system
