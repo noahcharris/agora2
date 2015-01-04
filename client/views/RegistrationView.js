@@ -76,6 +76,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             //the last argument suppresses reloading of content1
             that.app.trigger('reloadSidebarMessageChains');
 
+            that.app.trigger('reloadSidebarTopics');
+
             that.app.get('cacheManager').start();
 
 

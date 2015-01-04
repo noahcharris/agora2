@@ -453,12 +453,12 @@ body {
 }
 
 
-.leftThirdButton {
+#topButton {
   position: relative;
   cursor: pointer;
 /*  border-style: solid;
   border-width: 1px;*/
-  width:33%;
+  width:25%;
   height:8%;
   left:0px;
   background-color: #E8E8E8;
@@ -471,29 +471,43 @@ body {
   left: -20px;
 }
 
-.middleThirdButton {
+#newButton {
   position: relative;
   cursor: pointer;
  /* border-style: solid;
   border-width: 1px;*/
-  width:34%;
+  width:25%;
   height:8%;
   background-color: #E8E8E8;
   display: inline-block;
 
 }
 
-.rightThirdButton {
-  position: absolute;
+#hotButton {
+  position: relative;
   cursor: pointer;
 /*  border-style: solid;
   border-width: 1px;*/
-  width:33%;
+  width:25%;
   height:8%;
   right:0px;
   background-color: #E8E8E8;
   display: inline-block;
 }
+
+#friendsButton {
+  position: absolute;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:25%;
+  height:8%;
+  right:0px;
+  background-color: #E8E8E8;
+  display: inline-block;
+}
+
+
 
 .tabLabel {
   position: relative;
@@ -503,6 +517,7 @@ body {
 
 #creationButton {
   background-color: #E9573F;
+  cursor: pointer;
   color: white;
   font-family: "clearBold";
   position: absolute;

@@ -539,6 +539,10 @@ module.exports.getTopicTree = function(request, response) {
 
 };
 
+
+//I DON'T THINK I NEED THIS ROUTE!!! I'M PRETTY SURE I'M ALREADY SENDING
+// THE DATA ALONG WITH THE TOPICS THE FIRST TIME
+
 module.exports.getTopicLocations = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
@@ -551,7 +555,11 @@ module.exports.getTopicLocations = function(request, response) {
           console.log('error selecting from topics: ', err);
           response.end('error');
         } else {
-          response.json(result.rows[0].locations);
+          if (result.rows[0]) {
+            response.json(result.rows[0].locations);
+          } else {
+            response.json([]);
+          }
         }
   });
 
@@ -1750,11 +1758,20 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 
 
 
+
+
+
+
+
+
+
 module.exports.getContactTopics = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
   var deferred = Q.defer();
+
+  console.log(queryArgs);
 
   client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
@@ -1764,6 +1781,7 @@ module.exports.getContactTopics = function(request, response) {
       } else {
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
           //authorized
+          console.log('whaaaajdaslfjdsla');
           deferred.resolve()
 
         } else {
@@ -1772,17 +1790,24 @@ module.exports.getContactTopics = function(request, response) {
 
       }
   });
+
   return deferred.promise
   .then(function() {
 
     var deferred = Q.defer();
-    client.query("SELECT * FROM topics INNER JOIN contactsJoin ON "
-      +"(contactsJoin.username1 = $1 AND topics.username = contactsJoin.username2) "
-      +"OR (contactsJoin.username2 = $1 AND topics.username = contactsJoin.username1);",
-      [queryArgs.username], function(err, result) {
+
+    //the contactsJoin ID was conflicting with the topics ID
+    //DO I EVEN NEED THAT TOPIC LOCATIONS ROUTE IF I AM SENDING IT WITH THE TOPIC ANYWAYS???
+    //I DON'T THINK SO
+    client.query("SELECT topics.id, authorOrigin, channel, contents, createdAt, editedAt, headline, heat, image, link, location, locations, participants, rank, type, username "
+      +"FROM topics INNER JOIN contactsJoin ON "
+      +"(contactsJoin.username1 = $1 AND topics.username = contactsJoin.username2 AND topics.location LIKE $2) "
+      +"OR (contactsJoin.username2 = $1 AND topics.username = contactsJoin.username1 AND topics.location LIKE $2) "
+      +"ORDER BY createdAt DESC LIMIT 15 OFFSET $3;",
+      [queryArgs.username, queryArgs.location + '%', 15*(queryArgs.page - 1)], function(err, result) {
         if (err) {
           console.log('error selecting contacts topics');
-          deferred.reject(new Error('error join selecting topics and contactsJoin'));
+          deferred.reject(new Error());
         } else {
           deferred.resolve(result.rows);
         }
@@ -1804,15 +1829,14 @@ module.exports.getContactTopics = function(request, response) {
 
 
 
+
+
+
 module.exports.updateUserProfile = function(request, response) {
-
-
-
 
   var form = new multiparty.Form();
 
   form.parse(request, function(err, fields, files) {
-
 
 
     client.query("SELECT * FROM securityJoin WHERE username = $1;",

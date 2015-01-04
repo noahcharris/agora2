@@ -144,6 +144,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var location = location || that.get('mapController').get('location');
 
       var urlPath;
+      var secure = false;
       switch(that.get('sidebarView').displayed) {
         case 'Topics-Top':
           urlPath = '/topics-top';
@@ -157,6 +158,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         case 'Topics-Hot':
           urlPath = '/topics-hot';
           break;
+        case 'Topics-Contacts':
+          urlPath = '/contactTopics';
+          secure = true;
+          break;
         default:
           //LOL BECAUSE THE DEFAULT WAS '' I WAS GETTING index.html back
           urlPath = '/topics-top-day';
@@ -164,19 +169,40 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }
 
       console.log('ajax request to: ', urlPath);
+
+      var url;
+      var token;
+      var username;
+      if (secure) {
+        //only send token and username if we are on SSL!!
+        url = 'https://liveworld.io:443' + urlPath;
+        token = that.get('token');
+        username = that.get('username');
+      } else {
+        url = 'http://liveworld.io:80' + urlPath;
+      }
+
       $.ajax({
-        url: 'http://liveworld.io:80' + urlPath,
-        //url: 'ec2-54-149-63-77.us-west-2.compute.amazonaws.com:80' + urlPath,
-        //url: 'http://localhost:80' + urlPath,
+        url: url,
         crossDomain: true,
+        //but this is only for ssl, hope that's ok
+        xhrFields: {
+          withCredentials: true
+        },
         method: 'GET',
         data: {
           location: location,
           channel: that.get('channel'),
-          page: that.get('sidebarView').page
+          page: that.get('sidebarView').page,
+          //THESE ARE ONLY ASSIGNED IF WE ARE SENDING OVER SSL FOR FRIENDS
+          token: token,
+          username: username
         },
         success: function(data) {
           if (data) {
+
+            console.log('omg: ', data);
+
             topicsCollection = data;
             sidebarView.collection = data;
             //add extra if it's not already there
@@ -563,6 +589,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           renderMethod = 'renderTopic';
           break;
         case 'Topics-Hot':
+          renderMethod = 'renderTopic';
+          break;
+        case 'Topics-Contacts':
           renderMethod = 'renderTopic';
           break;
         case 'Topics':

@@ -64,10 +64,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
     });
     this.subViews = [];
     
-    if (this.displayed === 'Topics' 
-      || this.displayed === 'Topics-Top'
+    if (this.displayed === 'Topics-Top'
       || this.displayed === 'Topics-New'
-      || this.displayed === 'Topics-Hot') {
+      || this.displayed === 'Topics-Hot'
+      || this.displayed === 'Topics-Contacts') {
 
 
 
@@ -91,7 +91,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div class="leftThirdButton" id="topButton"><span class="tabLabel">Top'
+      this.$el.append($('<div id="topButton"><span class="tabLabel">Top'
         +'</span></div>'));
 
       $select.change(function() {
@@ -102,19 +102,22 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.app.trigger('reloadSidebarTopics');
       });
 
-      this.$el.children('div.leftThirdButton').children('span').append($select);
+      this.$el.children('div#topButton').children('span').append($select);
 
-      this.$el.append($('<div class="middleThirdButton" id="newButton"><span class="tabLabel">New</span></div>'));
-      this.$el.append($('<div class="rightThirdButton" id="hotButton"><span class="tabLabel">Hot</span></div>'));
+      this.$el.append($('<div id="newButton"><span class="tabLabel">New</span></div>'));
+      this.$el.append($('<div id="hotButton"><span class="tabLabel">Hot</span></div>'));
+      this.$el.append($('<div id="friendsButton"><span class="tabLabel">Friends</span></div>'));
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       this.$el.append($('<div id="creationButton"><span class="createLabel">Create Topic</span></div>'));
       //Set the correct button lighter
       if (this.displayed === 'Topics-Top') {
-        this.$el.children('div.leftThirdButton').css('background-color','#f8f8f8');
+        this.$el.children('div#topButton').css('background-color','#f8f8f8');
       } else if (this.displayed === 'Topics-New') {
-        this.$el.children('div.middleThirdButton').css('background-color','#f8f8f8');
+        this.$el.children('div#newButton').css('background-color','#f8f8f8');
       } else if (this.displayed === 'Topics-Hot') {
-        this.$el.children('div.rightThirdButton').css('background-color','#f8f8f8');
+        this.$el.children('div#hotButton').css('background-color','#f8f8f8');
+      } else if (this.displayed === 'Topics-Contacts') {
+        this.$el.children('div#friendsButton').css('background-color','#f8f8f8');
       }
 
     } else if (this.displayed === 'Search') {
@@ -145,7 +148,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
     if (this.displayed === 'Topics' 
       || this.displayed === 'Topics-Top'
       || this.displayed === 'Topics-New'
-      || this.displayed === 'Topics-Hot') {
+      || this.displayed === 'Topics-Hot'
+      || this.displayed === 'Topics-Contacts') {
       renderCollection = this.collection;
     } else if (this.displayed === 'Messages') {
       renderCollection = this.messagesCollection;
@@ -377,9 +381,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
         //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
       }
-      $('.leftThirdButton').css('background-color', '#f8f8f8');
-      $('.middleThirdButton').css('background-color', '#E8E8E8');
-      $('.rightThirdButton').css('background-color', '#E8E8E8');
+      $('#topButton').css('background-color', '#f8f8f8');
+      $('#newButton').css('background-color', '#E8E8E8');
+      $('#hotButton').css('background-color', '#E8E8E8');
+      $('#friendsButton').css('background-color', '#E8E8E8');
     });
 
     $('#newButton').on('click', function() {
@@ -389,9 +394,11 @@ Agora.Views.SidebarView = Backbone.View.extend({
         //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
       }
-      $('.leftThirdButton').css('background-color', '#E8E8E8');
-      $('.middleThirdButton').css('background-color', '#f8f8f8');
-      $('.rightThirdButton').css('background-color', '#E8E8E8');
+      $('#topButton').css('background-color', '#E8E8E8');
+      $('#newButton').css('background-color', '#f8f8f8');
+      $('#hotButton').css('background-color', '#E8E8E8');
+      $('#friendsButton').css('background-color', '#E8E8E8');
+
     });
 
     $('#hotButton').on('click', function() {
@@ -401,10 +408,35 @@ Agora.Views.SidebarView = Backbone.View.extend({
         //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
       }
-      $('.leftThirdButton').css('background-color', '#E8E8E8');
-      $('.middleThirdButton').css('background-color', '#E8E8E8');
-      $('.rightThirdButton').css('background-color', '#f8f8f8');
+      $('#topButton').css('background-color', '#E8E8E8');
+      $('#newButton').css('background-color', '#E8E8E8');
+      $('#hotButton').css('background-color', '#f8f8f8');
+      $('#friendsButton').css('background-color', '#E8E8E8');
+
     });
+
+
+      $('#friendsButton').on('click', function() {
+        if (that.app.get('login') === true) {
+          if (that.topicFilter !== 'Friends') {
+
+            that.displayed = 'Topics-Contacts';
+            //this call results in a sidebar render
+            that.app.trigger('reloadSidebarTopics');
+          }
+          $('#topButton').css('background-color', '#E8E8E8');
+          $('#newButton').css('background-color', '#E8E8E8');
+          $('#hotButton').css('background-color', '#E8E8E8');
+          $('#friendsButton').css('background-color', '#f8f8f8');
+        } else {
+          alert('must be logged in to sort topics by friends');
+        }
+
+      });
+      
+
+
+
 
 
     //MESSAGES/CONTACTS
@@ -435,7 +467,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
         if (that.app.get('sidebarView').displayed === 'Topics-Top'
          || that.app.get('sidebarView').displayed === 'Topics-New'
          || that.app.get('sidebarView').displayed === 'Topics-Hot'
-         || that.app.get('sidebarView').displayed === 'Topics') {
+         || that.app.get('sidebarView').displayed === 'Topics-Contacts') {
 
           var topicCreation = new Agora.Views.TopicCreationView(that.app);
           that.app.get('detailView').displayed = 'TopicCreation';
