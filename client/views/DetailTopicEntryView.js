@@ -91,10 +91,30 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
 
     if (!this.model.image) {
-      this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').css('width', '0px');
+        this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').css('width', '0px');
     } else {
-      this.topicContentBox.hasImage = true; 
-      this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').attr('src', this.model.image);
+        this.topicContentBox.hasImage = true; 
+        this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage').attr('src', this.model.image);
+        //IMAGE OVERLAY
+        (function() {
+          var on = false;
+          that.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage')[0].onclick = function(e) {
+            e.stopPropagation();
+            if (!on) {
+              on = true;
+              var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
+              $overlayImage.on('click', function() {
+                $(this).fadeOut(333, function() {
+                  $(this).remove();
+                  on = false;
+                });
+              });
+              $('#mainWrapper').append($overlayImage);
+              $overlayImage.hide();
+              $overlayImage.fadeIn(333);
+            }
+          };
+        })();
     }
 
 
@@ -173,8 +193,29 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       if (!comments[i].image) {
         $comment.children('.detailCommentClear').children('.detailCommentImage').css('width', '0px');
       } else {
-        commentContentBox.hasImage = true;
-        $comment.children('.detailCommentClear').children('.detailCommentImage').attr('src', comments[i].image);
+            commentContentBox.hasImage = true;
+            $comment.children('.detailCommentClear').children('.detailCommentImage').attr('src', comments[i].image);
+            //IMAGE OVERLAY
+            (function() {
+              var image = comments[i].image;
+              var on = false;
+              $comment.children('.detailCommentClear').children('.detailCommentImage')[0].onclick = function(e) {
+                e.stopPropagation();
+                if (!on) {
+                  on = true;
+                  var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
+                  $overlayImage.on('click', function() {
+                    $(this).fadeOut(333, function() {
+                      $(this).remove();
+                      on = false;
+                    });
+                  });
+                  $('#mainWrapper').append($overlayImage);
+                  $overlayImage.hide();
+                  $overlayImage.fadeIn(333);
+                }
+              };
+            })();
       }
       this.commentContentBoxes.push(commentContentBox);
 
@@ -316,8 +357,28 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         if (!comments[i].responses[j].image) {
           $response.children('.detailResponseClear').children('.detailResponseImage').css('width', '0px');
         } else {
-          responseContentBox.hasImage = true;
-          $response.children('.detailResponseClear').children('.detailResponseImage').attr('src', comments[i].responses[j].image);
+            responseContentBox.hasImage = true;
+            $response.children('.detailResponseClear').children('.detailResponseImage').attr('src', comments[i].responses[j].image);
+            (function() {
+              var image = comments[i].responses[j].image;
+              var on = false;
+              $response.children('.detailResponseClear').children('.detailResponseImage')[0].onclick = function(e) {
+                e.stopPropagation();
+                if (!on) {
+                  on = true;
+                  var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
+                  $overlayImage.on('click', function() {
+                    $(this).fadeOut(333, function() {
+                      $(this).remove();
+                      on = false;
+                    });
+                  });
+                  $('#mainWrapper').append($overlayImage);
+                  $overlayImage.hide();
+                  $overlayImage.fadeIn(333);
+                }
+              };
+            })();
         }
 
         this.responseContentBoxes.push(responseContentBox);
@@ -460,6 +521,26 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           } else {
             replyContentBox.hasImage = true;
             $reply.children('.detailReplyClear').children('.detailReplyImage').attr('src', comments[i].responses[j].replies[k].image);
+            (function() {
+              var image = comments[i].responses[j].replies[k].image;
+              var on = false;
+              $reply.children('.detailReplyClear').children('.detailReplyImage')[0].onclick = function(e) {
+                e.stopPropagation();
+                if (!on) {
+                  on = true;
+                  var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
+                  $overlayImage.on('click', function() {
+                    $(this).fadeOut(333, function() {
+                      $(this).remove();
+                      on = false;
+                    });
+                  });
+                  $('#mainWrapper').append($overlayImage);
+                  $overlayImage.hide();
+                  $overlayImage.fadeIn(333);
+                }
+              };
+            })();
           }
           this.replyContentBoxes.push(replyContentBox);
 

@@ -237,6 +237,27 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     }
     this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image + suffix);
 
+    //IMAGE OVERLAY
+    (function() {
+      var on = false;
+      that.$el.children('#profileColumnWrapper').children('#profilePicture')[0].onclick = function(e) {
+        e.stopPropagation();
+        if (!on) {
+          on = true;
+          var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image + suffix +'"></img></div>')
+          $overlayImage.on('click', function() {
+            $(this).fadeOut(333, function() {
+              $(this).remove();
+              on = false;
+            });
+          });
+          $('#mainWrapper').append($overlayImage);
+          $overlayImage.hide();
+          $overlayImage.fadeIn(333);
+        }
+      };
+    })();
+
     var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
 
 

@@ -37,8 +37,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     (function() {
       var on = false;
       that.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').on('click', function(e) {
-        //e.stopPropagation();
-
+        e.stopPropagation();
         if (!on) {
           on = true;
           var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
@@ -52,9 +51,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
           $overlayImage.hide();
           $overlayImage.fadeIn(333);
         }
-
       });
-      
     })();
 
 
