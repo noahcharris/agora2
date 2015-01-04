@@ -1813,10 +1813,10 @@ module.exports.getContactTopics = function(request, response) {
     //I DON'T THINK SO
     client.query("SELECT topics.id, authorOrigin, channel, contents, createdAt, editedAt, headline, heat, image, link, location, locations, participants, rank, type, username "
       +"FROM topics INNER JOIN contactsJoin ON "
-      +"(contactsJoin.username1 = $1 AND topics.username = contactsJoin.username2 AND topics.location LIKE $2) "
-      +"OR (contactsJoin.username2 = $1 AND topics.username = contactsJoin.username1 AND topics.location LIKE $2) "
-      +"ORDER BY createdAt DESC LIMIT 15 OFFSET $3;",
-      [queryArgs.username, queryArgs.location + '%', 15*(queryArgs.page - 1)], function(err, result) {
+      +"(contactsJoin.username1 = $1 AND topics.username = contactsJoin.username2 AND topics.location LIKE $2 AND topics.channel LIKE $3) "
+      +"OR (contactsJoin.username2 = $1 AND topics.username = contactsJoin.username1 AND topics.location LIKE $2 AND topics.channel LIKE $3) "
+      +"ORDER BY createdAt DESC LIMIT 15 OFFSET $4;",
+      [queryArgs.username, queryArgs.location + '%', queryArgs.channel + '%', 15*(queryArgs.page - 1)], function(err, result) {
         if (err) {
           console.log('error selecting contacts topics');
           deferred.reject(new Error());
