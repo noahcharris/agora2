@@ -210,6 +210,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
               sidebarView.collection.unshift(extra);
             content1.show(sidebarView); 
 
+
             //this cb is used by recently-visited-topics in settingsView to set highlight
             cb();
           } else {
@@ -310,6 +311,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       });
 
     });
+
+
+
 
 
     //#######################################
@@ -595,6 +599,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.get('channelView').render();
     console.log('changing channel');
 
+    var location = this.get('mapController').get('location')
+    //this.get('mapController').router.navigate('World'+location.slice(6, location.length)+'#'+this.get('channel'), { trigger:false });
+
   },
 
 
@@ -640,6 +647,19 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           view.setHandlers();
         }
       }
+
+      //adjust URL
+      if (!that.get('expanded')) {
+        var location = that.get('mapController').get('location');
+        //slice off the 'World/', because 'World' is used as an identifier by the router
+        if (location === 'World') {
+          that.get('mapController').router.navigate('World#'+that.get('channel'), { trigger:false });
+        } else {
+          that.get('mapController').router.navigate('World/'+location.slice(6, location.length)+'#'+that.get('channel'), { trigger:false });
+        }
+      }
+
+
     };
 
     region.hide = function() {
@@ -667,33 +687,49 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       switch (that.get('detailView').displayed) {
         case 'Topics-Top':
           renderMethod = 'renderTopic';
+          that.get('mapController').router.navigate('topic/'+model.id, { trigger:false });
           break;
         case 'Topics-New':
           renderMethod = 'renderTopic';
+          that.get('mapController').router.navigate('topic/'+model.id, { trigger:false });
           break;
         case 'Topics-Hot':
           renderMethod = 'renderTopic';
+          that.get('mapController').router.navigate('topic/'+model.id, { trigger:false });
           break;
         case 'Topics-Contacts':
           renderMethod = 'renderTopic';
+          that.get('mapController').router.navigate('topic/'+model.id, { trigger:false });
           break;
         case 'Topics':
           renderMethod = 'renderTopic';
+          that.get('mapController').router.navigate('topic/'+model.id, { trigger:false });
           break;
         case 'Messages':
           renderMethod = 'renderMessage';
           break;
         case 'Users':
           renderMethod = 'renderUser';
+          that.get('mapController').router.navigate('user/'+model.username, { trigger:false });
           break;
         case 'Contacts':
           renderMethod = 'renderUser';
           break;
         case 'Locations':
           renderMethod = 'renderLocation';
+          if (that.get('mapController').get('location') === 'World') {
+            that.get('mapController').router.navigate('location/World', { trigger:false });
+          } else {
+            that.get('mapController').router.navigate('location/'+model.name.slice(6, model.name.length), { trigger:false });
+          }
           break;
         case 'Channels':
           renderMethod = 'renderChannel';
+          if (that.get('channel') === 'General') {
+            that.get('mapController').router.navigate('channel/General', { trigger:false });
+          } else {
+            that.get('mapController').router.navigate('channel/'+model.name.slice(8, model.name.length), { trigger:false });
+          }
           break;
         default:
           renderMethod = 'render';
@@ -755,6 +791,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           currentView.close();
         }
         currentView = null;
+      }
+
+      //change the URL to non-expanded mode
+      var location = that.get('mapController').get('location');
+      //slice off the 'World/', because 'World' is used as an identifier by the router
+      if (location === 'World') {
+        that.get('mapController').router.navigate('World#'+that.get('channel'), { trigger:false });
+      } else {
+        that.get('mapController').router.navigate('World/'+location.slice(6, location.length)+'#'+that.get('channel'), { trigger:false });
       }
 
 

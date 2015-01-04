@@ -187,7 +187,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.get('map').fitBounds(worldBounds);
     this.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
-    //this.router.navigate('World', { trigger:false });
+
+    this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
+
+
     if (!this.placing) {
       this.app.get('content2').hide();
       //remember to switch this to the new system
@@ -538,7 +541,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.get('map').setZoom(12, { animate:false });
           that.get('map').panTo(e.target._latlng, { animate:false });
           that.set('location', e.target.city);
-          that.router.navigate('World/'+e.target.city, { trigger:false });
+          //that.router.navigate('World/'+e.target.city, { trigger:false });
           if (!that.placing) {
             if (that.app.get('sidebarView').displayed !== 'Topics'
               && that.app.get('sidebarView').displayed !== 'Topics-Top'
@@ -630,7 +633,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           that.app.trigger('reloadSidebarTopics', e.target.feature.properties.name);
         }
         that.set('location', e.target.feature.properties.name);
-        that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
+        //that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
       };
   
       function onEachFeature(feature, layer) {
@@ -735,7 +738,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         }
         that.app.trigger('reloadSidebarTopics', name);
         that.set('location', name);
-        that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
+        //that.router.navigate('World/'+e.target.feature.properties.name, { trigger:false });
       };
       function onEachFeature(feature, layer) {
         layer.on({

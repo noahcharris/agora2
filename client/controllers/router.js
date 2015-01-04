@@ -66,14 +66,19 @@ Agora.Router = Backbone.Router.extend({
   },
 
   path: function(path) {
-    var temp = path.split('#');
-    if (temp[0] === '') {
+    if (!path) {
       this.app.get('mapController').showWorld();
     } else {
-      this.app.get('mapController').goToPath('World'+temp[0]);
+      var temp = path.split('#');
+      if (temp[0] === '') {
+        this.app.get('mapController').showWorld();
+      } else {
+        this.app.get('mapController').goToPath('World'+temp[0]);
+      }
+      console.log(path);
+      this.app.changeChannel(temp[1]);
+
     }
-    console.log(path);
-    this.app.changeChannel(temp[1]);
   },
 
 

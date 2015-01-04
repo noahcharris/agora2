@@ -111,7 +111,7 @@ xhrFields: {
 })();
 
 
-
+this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
 
 
