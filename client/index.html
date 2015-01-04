@@ -83,9 +83,6 @@
 
 
 
-
-
-
     <script id="sidebarLocationEntryTemplate" type="text/template">
      <strong> <%= name %> </strong>
     </script>
@@ -100,8 +97,15 @@
     <!-- CONTACTS AND MESSAGE PREVIEWS -->
 
     <script id="sidebarUserEntryTemplate" type="text/template">
-      <p class="sidebarEntryContent"><%= username %></p>
-      <p class="sidebarEntryTopicOrigin">Location: <%= location %></p>
+      <div class="sidebarFloatClear">
+       <img class="sidebarTopicImage"></img>
+       <div class="contentAndToFromWrapper">
+         <div class="sidebarContentWrapper">
+            <%= username %></br>
+            Location: <%= location %>
+         </div>
+        </div>
+      </div>
     </script>
 
     <script id="sidebarMessageChainEntryTemplate" type="text/template">

@@ -30,7 +30,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').attr('src', this.model.image);
     }
 
-    console.log(this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage'));
 
 
     //IMAGE OVERLAY
@@ -152,7 +151,33 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
     this.$el.html( this.userTemplate(this.model) );
-    console.log('render user: ', this.model);
+
+    if (!this.model.image) {
+      this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');
+    } else {
+      this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').attr('src', this.model.image);
+    }
+
+    //IMAGE OVERLAY
+    (function() {
+      var on = false;
+      that.$el.children('.sidebarFloatClear').children('.sidebarTopicImage')[0].onclick = function(e) {
+        e.stopPropagation();
+        if (!on) {
+          on = true;
+          var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
+          $overlayImage.on('click', function() {
+            $(this).fadeOut(333, function() {
+              $(this).remove();
+              on = false;
+            });
+          });
+          $('#mainWrapper').append($overlayImage);
+          $overlayImage.hide();
+          $overlayImage.fadeIn(333);
+        }
+      };
+    })();
 
     this.$el.on('mouseover', function() {
       that.app.get('mapController').highlightCountry(that.model.location);
