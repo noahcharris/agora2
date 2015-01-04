@@ -30,6 +30,34 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').attr('src', this.model.image);
     }
 
+    console.log(this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage'));
+
+
+    //IMAGE OVERLAY
+    (function() {
+      var on = false;
+      that.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').on('click', function(e) {
+        //e.stopPropagation();
+
+        if (!on) {
+          on = true;
+          var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
+          $overlayImage.on('click', function() {
+            $(this).fadeOut(333, function() {
+              $(this).remove();
+              on = false;
+            });
+          });
+          $('#mainWrapper').append($overlayImage);
+          $overlayImage.hide();
+          $overlayImage.fadeIn(333);
+        }
+
+      });
+      
+    })();
+
+
 
     var $username = that.$el.children('.topString').children('.sidebarUsername');
     $username.on('click', function(e) {

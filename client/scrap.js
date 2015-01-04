@@ -89,3 +89,28 @@ xhrFields: {
 
 
 
+var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ $(this).attr('url') +'"></img></div>')
+
+$overlayImage.on('click', function() {
+
+  $(this).fadeOut(333, function() {
+    $(this).remove();
+  });
+
+});
+
+$('#content2').append($overlayImage);
+$overlayImage.hide();
+$overlayImage.fadeIn(333);
+
+
+
+
+
+
+
+
+
+
+
+
