@@ -463,6 +463,13 @@ img#fullscreenImage {
   display: inline-block;
 }
 
+/* temporarily herrrreeeee */
+.contactTitle {
+  position: relative;
+  padding: 10px;
+  margin: 0px;
+}
+
 #messagesButton {
   position: absolute;
   cursor: pointer;
