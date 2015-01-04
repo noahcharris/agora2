@@ -181,24 +181,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //CONTACT REQUEST FLOW STUFF
 
 
     var $contactRequestButton = $('<button>Contact Request</button>');
@@ -247,8 +230,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     };
 
 
-
-
     //MAYBE ONLY DO THIS FOR A LITTLE WHILE AFTER THE PROFILE HAS BEEN UPDATED??????
     var suffix = '';
     if (this.model.username === this.app.get('username')) {
@@ -289,28 +270,23 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
     if (that.app.get('login') && this.model.username !== that.app.get('username')) {
-
         if (isSent) {
-
           $toolColumn.append('Pending Request');
-
         } else if (isPending) { 
-
           $contactRequestButton.html('Confirm Contact Request');
           $toolColumn.append($contactRequestButton);
-
         } else {
-
           if (isContact) {
             $toolColumn.append($messageButton);
           } else {
             $toolColumn.append($contactRequestButton);
           }
-
         }
-        
-
     }
+
+
+
+    //TODO - DISPLAY RECENTLY POSTED TOPICS (I.E. THE USER FEED) !!!!!∆∆∆∆∆!!!!!
 
 
 
