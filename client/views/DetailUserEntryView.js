@@ -289,6 +289,28 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     //TODO - DISPLAY RECENTLY POSTED TOPICS (I.E. THE USER FEED) !!!!!∆∆∆∆∆!!!!!
 
 
+    //get recently visited topics
+    $.ajax({
+      url: 'http://liveworld.io:80/recentlyPosted',
+      // url: 'http://localhost/topicTree',
+      method: 'GET',
+      crossDomain: true,
+      data: {
+        username: that.app.get('username'),
+      },
+      success: function(models) {
+        for (var i=0; i < models.length ;i++) {
+          $('#recentlyPostedList').append($('<li>'+models[i].id+'</li>'));
+          console.log(models[i]);
+        }
+      },
+      error: function() {
+        alert('ajax error');
+      }
+    });
+
+
+
 
 
   },

@@ -174,7 +174,6 @@ app.get('/points', routes.getPoints);
 
 //location profiles and user profiles and channel profiles
 app.get('/user', routes.getUser);
-
 app.get('/recentlyPosted', routes.getRecentlyPostedTopics);
 
 app.get('/location', routes.getLocation);
