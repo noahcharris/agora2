@@ -924,6 +924,8 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
+  console.log(queryArgs);
+
   client.query("SELECT * FROM locations WHERE name = $1;",
     [queryArgs.location], function(err, result) {
       if (err) {

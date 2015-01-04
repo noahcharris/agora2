@@ -518,6 +518,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   showLocationDetailView: function(location) {
     var that = this;
 
+    console.log('the thing');
     $.ajax({
       url: 'http://liveworld.io:80/location',
       crossDomain: true,
@@ -527,6 +528,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(model) {
         if (model) {
 
+          console.log('whatjfdskaldfjsa');
           that.get('detailView').displayed = 'Locations';
           that.get('content2').show(that.get('detailView'), model);
 

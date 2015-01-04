@@ -152,9 +152,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
               that.app.set('channel', x);
               that.app.get('mapController').goToPath(y);
               that.app.get('channelView').render();
-              console.log('TOPIC: ', model);
-
-
 
               //get specific topic tree from server
               $.ajax({
