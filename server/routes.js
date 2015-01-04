@@ -617,11 +617,17 @@ module.exports.locationSearch = function(request, response) {
 
     var queryArgs = url.parse(request.url, true).query;
 
-    var parsedInput = queryArgs.input.split(' ');
-    for (var i=0; i < parsedInput.length ;i++) {
-      parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+    var input;
+    if (queryArgs.input != '') {
+      var parsedInput = queryArgs.input.split(' ');
+      for (var i=0; i < parsedInput.length ;i++) {
+        parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+      }
+      input = parsedInput.join(' ');
+    } else {
+      input = '';
     }
-    var input = parsedInput.join(' ');
+
 
     console.log(input);
 
@@ -645,15 +651,16 @@ module.exports.channelSearch = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  var parsedInput = queryArgs.input.split(' ');
-  for (var i=0; i < parsedInput.length ;i++) {
-    parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+  var input;
+  if (queryArgs.input != '') {
+    var parsedInput = queryArgs.input.split(' ');
+    for (var i=0; i < parsedInput.length ;i++) {
+      parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+    }
+    input = parsedInput.join(' ');
+  } else {
+    input = '';
   }
-  var input = parsedInput.join(' ');
-
-  console.log(input);
-
-  console.log('channel search input: ', queryArgs.input);
 
   client.query("SELECT * FROM channels WHERE name LIKE $1;",
       ['%' + input + '%'],
