@@ -317,7 +317,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       method: 'GET',
       crossDomain: true,
       data: {
-        username: that.app.get('username'),
+        username: this.model.username,
       },
       success: function(models) {
         for (var i=0; i < models.length ;i++) {

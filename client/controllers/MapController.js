@@ -122,7 +122,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         that.removePoints();
       }
     });
-  },
+
+  },//end initialization
 
 
   logBounds: function() {
@@ -290,13 +291,26 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
 
 
+  closeMapPopup: function() {
+
+    $('#mapPopup').remove();
+
+  },
+
+
+  showMapPopup: function(data) {
+
+    //data will store info for the popup, as well as mouse X and Y 
+
+    //TODO - determine whether the cursor is on the right
+    //or left side of the map. Then load the data into the correct
+    //one and display it
+    $('#mapPopup').remove();
+    $('#map').append($('<div id="mapPopup">'+data.name+'</div>'));
 
 
 
-
-
-
-
+  },
 
 
 
@@ -553,6 +567,16 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             that.app.trigger('reloadSidebarTopics', e.target.city);
           }
         });
+        circle.on('mouseover', function(e) {
+          console.log('city: ',e);
+          var data = {
+            name: e.target.city
+          }
+          that.showMapPopup(data);
+        });
+        circle.on('mouseout', function(e) {
+          that.closeMapPopup();
+        });
         citiesLayer.addLayer(circle);
       }
       citiesLayer.addTo(this.get('map'));
@@ -600,7 +624,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         };
       }
   
-      function highlightFeature(e) {
+      function mouseover(e) {
         var layer = e.target;
         layer.setStyle({
             weight: 5,
@@ -608,10 +632,16 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             dashArray: '',
             fillOpacity: 0.8
         });
+
+        var data = {
+          name: e.target.feature.properties.name
+        }
+        that.showMapPopup(data);
       };
   
-      function resetHighlight(e) {
+      function mouseout(e) {
         statesLayer.resetStyle(e.target);
+        that.closeMapPopup();
       };
   
       //this has been altered to deal with new country data with /'s
@@ -638,8 +668,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   
       function onEachFeature(feature, layer) {
         layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
+            mouseover: mouseover,
+            mouseout: mouseout,
             click: clickFeature
         });
       }
@@ -692,8 +722,18 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             fillOpacity: 0.0
         };
       }
-      function highlightFeature(e) {
+
+
+      function mouseover(e) {
         var layer = e.target;
+
+        //put the mouseover code in here for now
+        //var x = e.originalEvent.pageX - that.app.get('sidebarView').$el.width();
+        console.log(e);
+        var data = {
+          name: e.target.feature.properties.name
+        }
+        that.showMapPopup(data);
 
         layer.setStyle({
             weight: 0,
@@ -703,9 +743,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             fillOpacity: 0.3
         });
       };
-      function resetHighlight(e) {
+      function mouseout(e) {
         countriesLayer.resetStyle(e.target);
+        that.closeMapPopup();
       };
+
+
+
       function clickFeature(e) {
         var name = e.target.feature.properties.name;
 
@@ -742,8 +786,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       };
       function onEachFeature(feature, layer) {
         layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
+            mouseover: mouseover,
+            mouseout: mouseout,
             click: clickFeature
         });
       }
