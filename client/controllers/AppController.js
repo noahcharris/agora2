@@ -456,7 +456,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
 
-
     
   },//END CONTROLLER INITIALIZE
 
@@ -471,22 +470,103 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+  //HERE ARE THE SUBROUTINES THAT WILL MAKE ALL THE CLICKTHROUGH EASIER
+  //they all take an argument to specify user/location/channel
+
+  showUserDetailView: function(username) {
+    var that = this;
+
+    $.ajax({
+      url: 'http://liveworld.io:80/user',
+      // url: 'http://localhost:80/user',
+      method: 'GET',
+      crossDomain: true,
+      data: {
+        username: username,
+        //so that this is never cached
+        extra: Math.floor((Math.random() * 10000) + 1)
+      },
+      success: function(data) {
+        if (data[0]) {
+          that.get('detailView').displayed = 'Users';
+          console.log('server returned: ', data);
+
+
+          //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
+          //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
+          //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
+
+          //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
+          //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
+
+          data[0].isContact = true;
+          that.get('content2').show(that.get('detailView'), data[0]);
+
+        } else {
+          console.log('no data returned from server');
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
 
 
 
+  },
+
+  showLocationDetailView: function(location) {
+    var that = this;
+
+    $.ajax({
+      url: 'http://liveworld.io:80/location',
+      crossDomain: true,
+      data: {
+        location: location,
+      },
+      success: function(model) {
+        if (model) {
+
+          that.get('detailView').displayed = 'Locations';
+          that.get('content2').show(that.get('detailView'), model);
+
+        } else {
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
 
 
 
+  },
 
+  showChannelDetailView: function(channel) {
+    var that = this;
 
+    $.ajax({
+      url: 'http://liveworld.io:80/channel',
+      crossDomain: true,
+      data: {
+        channel: channel,
+      },
+      success: function(model) {
+        if (model) {
 
+          console.log('whaaaa');
+          that.get('detailView').displayed = 'Channels';
+          that.get('content2').show(that.get('detailView'), model);
 
+        } else {
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
 
+    });
 
-
-
-
-
+  },
 
 
 
@@ -1106,7 +1186,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     return manager;
 
-  }
+  }//END CACHE MANAGER CONSTRUCTOR
 
 
 

@@ -19,6 +19,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     this.$el.children('span#username')[0].onclick = function() {
 
+      //that.app.showUserDetailView(that.app.get('username'));
+
       $.ajax({
         url: 'http://liveworld.io:80/user',
         // url: 'http://localhost:80/user',

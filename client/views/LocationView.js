@@ -56,30 +56,7 @@ Agora.Views.LocationView = Backbone.View.extend({
     var $prefix = $('<span id="pathPrefix">&nbsp&nbspLocation:&nbsp</span>');
     $prefix.on('click', function() {
       
-
-      console.log('whowhow: ', that.model.get('location'));
-
-      $.ajax({
-        url: 'http://liveworld.io:80/location',
-        crossDomain: true,
-        data: {
-          location: that.model.get('location'),
-        },
-        success: function(model) {
-          if (model) {
-
-            console.log('hihih');
-            that.app.get('detailView').displayed = 'Locations';
-            that.app.get('content2').show(that.app.get('detailView'), model);
-
-          } else {
-          }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
-
-      });
-
+      that.app.showLocationDetailView(that.model.get('location'));
 
     });
     this.$el.html($prefix);
