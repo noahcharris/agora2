@@ -891,6 +891,33 @@ module.exports.getPoints = function(request, response) {
 };
 
 
+
+
+module.exports.getHeatPoints = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT location From topics "
+    +"WHERE location LIKE $1 AND channel LIKE $2 ORDER BY heat DESC LIMIT 100;",
+    [queryArgs.location+'%', queryArgs.channel+'%'], function(err, result) {
+      if (err) {
+        console.log('error selecting for heatPoints');
+        response.end('error');
+      } else {
+        response.json(result.rows);
+      }
+
+  });
+
+
+
+};
+
+
+
+
+
+
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   client.query("SELECT * FROM users WHERE username = $1;", [queryArgs.username], function(err, result) {

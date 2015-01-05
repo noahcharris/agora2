@@ -116,6 +116,26 @@ this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
 
 
+    if (location.split('/').length === 2) {
+      //COUNTRY
+    
+
+
+    } else if (location.split('/').length === 3 && location.split('/')[1] === 'United States') {
+      //PROVINCE
+      //TODO
+
+
+
+    } else {
+      //CITY
+
+
+
+
+    }
+
+
 
 
 

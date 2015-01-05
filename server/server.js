@@ -172,6 +172,8 @@ app.get('/messageChain', routes.getMessageChain);
 //MAP POINTS
 app.get('/points', routes.getPoints);
 
+app.get('/heatPoints', routes.getHeatPoints);
+
 //location profiles and user profiles and channel profiles
 app.get('/user', routes.getUser);
 app.get('/recentlyPosted', routes.getRecentlyPostedTopics);

@@ -64,6 +64,64 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+
+
+    //HEATPOINTSSSSSS 
+    //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+    $.ajax({
+      url: 'http://liveworld.io:80/heatPoints',
+      crossDomain: true,
+      data: {
+        location: this.get('location'),
+        channel: this.app.get('channel')
+      },
+      success: function(data) {
+        if (data) {
+
+          //RECEIVE TOP 100 TOPICS FOR HEAT,
+          //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
+          //EXCLUDING WORLD, COMBINED W/ # OF OCCURRENCES
+          var result = {};
+          var count = 0;
+          for (var i=0; i < data.length ;i++) {
+            if (data[i].location === 'World')
+              continue;
+            if (count > 9)
+              break;
+            if (Object.keys(result).indexOf(data[i].location) === -1) {
+              result[data[i].location] = 1;
+              count++;
+            } else {
+              result[data[i].location] = result[data[i].location] + 1;
+            }
+          }
+
+          console.log("RESULT: ", result);
+
+          for (var key in result) {
+
+            //TODO - GIVE THE CORRESPONDING LOCATION A 
+            //DOPE LITTLE ICON, WHICH INCREASES IN INTENSITY
+            //AS THERE ARE MORE OCCURRENCES WITHIN THE 
+            //TOP 10 OBJECT
+            that.showHeatPoint(key, result[key]);
+
+          }
+          
+          console.log('server returned fadsJKFLD:SJL:JF: ', data);
+        } else {
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
+
+
+
+
+
     //SYSTEM FOR HANDLING CUSTOM COUNTRY ZOOM BOUNDS
 
     var southWest = L.latLng(15.284185114076445, -107.025390625);
@@ -201,6 +259,37 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+  showHeatPoint: function(location, occurrences) {
+
+    //TODO - determine whether it is a country, province, or city,
+    //take appropriate action to paint a DOPE icon on the map
+
+    //change the intensity of the icon as occurrences increases
+    if (location.split('/').length === 2) {
+      //COUNTRY
+      //put it at the center of the bounds
+
+
+    } else if (location.split('/').length === 3 && location.split('/')[1] === 'United States') {
+      //PROVINCE
+      //TODO
+
+      //put it at the center of the bounds
+
+    } else {
+      //CITY
+
+      //put it at the coordinates of the city
+
+
+    }
+
+
+
+  },
+
+
+
 
   //LATER ON ADD A hightlightCountries function that does many at a time more efficiently
 
@@ -303,9 +392,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   removeHighlightCity: function(cityName) {
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
-      if (cities._layers[key].city === cityName) {
-        cities.resetStyle(cities._layers[key]);
-      }
+      // if (cities._layers[key].city === cityName) {
+      //   cities.resetStyle(cities._layers[key]);
+      // }
     }
   },
   hightlightPlace: function(placeName) {
