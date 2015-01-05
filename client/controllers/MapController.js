@@ -205,15 +205,55 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   //LATER ON ADD A hightlightCountries function that does many at a time more efficiently
 
 
+
+  highlightWorld: function() {
+    var countries = this.get('countries') || {};
+    for (var key in countries._layers) {
+
+
+      countries._layers[key].setStyle({
+              // weight: 5,
+              // color: '#666',
+              // dashArray: '',
+              // fillOpacity: 0.8
+              weight: 0,
+              //color: '#666',
+              dashArray: '',
+              opacity: 1,
+              fillOpacity: 0.3
+          });
+
+
+    }
+
+
+
+  },
+
+  removeHighlightWorld: function() {
+    var countries = this.get('countries') || {};
+    for (var key in countries._layers) {
+
+      countries.resetStyle(countries._layers[key]);
+
+    }
+
+  },
+
   highlightCountry: function(countryName) {
     var countries = this.get('countries') || {};
     for (var key in countries._layers) {
       if (countries._layers[key].feature.properties.name === countryName) {
         countries._layers[key].setStyle({
-                weight: 5,
-                color: '#666',
+                // weight: 5,
+                // color: '#666',
+                // dashArray: '',
+                // fillOpacity: 0.8
+                weight: 0,
+                //color: '#666',
                 dashArray: '',
-                fillOpacity: 0.8
+                opacity: 1,
+                fillOpacity: 0.3
             });
       }
     }
@@ -250,20 +290,20 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   highlightCity: function(cityName) {
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
-      if (cities._layers[key].feature.properties.name === cityName) {
-        cities._layers[key].setStyle({
-                weight: 5,
-                color: '#666',
-                dashArray: '',
-                fillOpacity: 0.8
-            });
-      }
+      // if (cities._layers[key].city === cityName) {
+      //   cities._layers[key].setStyle({
+      //           weight: 5,
+      //           color: '#666',
+      //           dashArray: '',
+      //           fillOpacity: 0.8
+      //       });
+      // }
     }
   },
   removeHighlightCity: function(cityName) {
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
-      if (cities._layers[key].feature.properties.name === cityName) {
+      if (cities._layers[key].city === cityName) {
         cities.resetStyle(cities._layers[key]);
       }
     }
@@ -271,14 +311,14 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   hightlightPlace: function(placeName) {
     var places = this.get('places') || {};
     for (var key in places._layers) {
-      if (places._layers[key].feature.properties.name === placeName) {
-        places._layers[key].setStyle({
-                weight: 5,
-                color: '#666',
-                dashArray: '',
-                fillOpacity: 0.8
-            });
-      }
+      // if (places._layers[key].city === placeName) {
+      //   places._layers[key].setStyle({
+      //           weight: 5,
+      //           color: '#666',
+      //           dashArray: '',
+      //           fillOpacity: 0.8
+      //       });
+      // }
     }
   },
   removeHighlightPlace: function(placeName) {

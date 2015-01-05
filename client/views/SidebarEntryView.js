@@ -96,41 +96,115 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
     var mouseoverHandler = _.once(function () {
-      //woooooooo
-      var thet = this;
-      $.ajax({
-        url: 'http://liveworld.io:80/topicLocations',
-        // url: 'http://localhost:80/topicLocations',
-        method: 'GET',
-        crossDomain: true,
-        data: {
-          topicId: that.model.id
-        },
-        success: function(data) {
-            console.log('oaaaá222222server returned: ', data);
-            console.log(typeof data);
+      
+        var data = that.model.locations;
 
-          for (var i=0; i < data.length ;i++) {
+        for (var i=0; i < data.length ;i++) {
 
-            var f = function() {
-              var x = data[i];
+          var f = function() {
+            var x = data[i];
+
+            //DISPLAYING POSTED TO
+
+            var temp = data[i];
+
+            if (temp === 'World') {
+
               that.$el.on('mouseover', function() {
-                that.app.get('mapController').highlightCountry(x);
+                that.app.get('mapController').highlightWorld();
               });
               that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightCountry(x);
+                that.app.get('mapController').removeHighlightWorld();
               });
-            };
-            f();
 
-          }
+            } 
 
-            
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
+            if (temp.split('/').length === 2) {
+              //COUNTRY
+              console.log('fjdaslkfjasklfjas');
+              that.$el.on('mouseover', function() {
+                that.app.get('mapController').highlightCountry(temp);
+                console.log('highlight');
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightCountry(temp);
+              });
+
+
+            } else if (temp.split('/').length === 3 && temp.split('/')[1] === 'United States') {
+              //COUNTRY WITH PROVINCES
+              //TODO
+
+
+              var temp1 = temp.split('/');
+              temp1.pop();
+              var temp2 = temp1.join('/');
+
+
+              that.$el.on('mouseover', function() {
+                var zoom = that.app.get('mapController').get('map').getZoom();
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
+                if (zoom > 3) {
+                  //HIGHLIGHT STATE
+                  that.app.get('mapController').highlightState(temp);
+                } else {
+                  that.app.get('mapController').highlightCountry(temp2);
+                }
+              });
+
+
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightState(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+
+
+            } else {
+              //CITY
+
+              var temp1 = temp.split('/');
+              var temp2;
+              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
+              if (temp1[1] === 'United States') {
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              } else {
+                temp1.pop();
+                temp2 = temp1.join('/');
+              }
+
+              var zoom = that.app.get('mapController').get('map').getZoom();
+
+              that.$el.on('mouseover', function() {
+                var zoom = that.app.get('mapController').get('map').getZoom();
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE CITY
+                if (zoom > 3) {
+                  //HIGHLIGHT CITY
+                  that.app.get('mapController').highlightCity(temp);
+                } else {
+                  that.app.get('mapController').highlightCountry(temp2)
+                }
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightCity(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+
+
+
+            }
+
+
+
+
+
+          };
+          f();
         }
 
-      });
     });
     this.$el.on('mouseover', mouseoverHandler);
 

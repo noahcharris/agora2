@@ -26,10 +26,12 @@ div#mapPopup {
   position: absolute;
   height: 20px;
   width: 45%;
-  background-color: red;
+  background-color: rgba(175, 236, 238, 0.6);
   top: 0px;
   left: 29%;
   z-index: 700;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
 }
 
 
