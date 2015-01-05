@@ -18,6 +18,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
 
   initialize: function(appController) {
+    var that = this;
 
     this.router = null;
     this.app = appController;
@@ -61,7 +62,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
     // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
     // map.addLayer(clusterGroup);
-
 
 
 
@@ -122,6 +122,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+
     //SYSTEM FOR HANDLING CUSTOM COUNTRY ZOOM BOUNDS
 
     var southWest = L.latLng(15.284185114076445, -107.025390625);
@@ -171,7 +172,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
     //LAZY POINT LOADING
-    var that = this;
     map.on('moveend', function() {
       if (map.getZoom() > 7) {
         center = map.getCenter();
@@ -261,6 +261,20 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   showHeatPoint: function(location, occurrences) {
 
+    console.log(location, occurrences);
+
+
+    var greenIcon = L.icon({
+        iconUrl: '/resources/images/leaf-green.png',
+        shadowUrl: '/resources/images/leaf-shadow.png',
+
+        iconSize:     [38, 95], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
     //TODO - determine whether it is a country, province, or city,
     //take appropriate action to paint a DOPE icon on the map
 
@@ -268,18 +282,61 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     if (location.split('/').length === 2) {
       //COUNTRY
       //put it at the center of the bounds
+      if (!this.get('countries')) {  //DON'T DO THIS PLEASE!!!!!!
+        this.addCountries();
+        this.removeCountries();
+      }
+      var countries = this.get('countries') || {};
+
+      console.log(countries);
+
+      var countryName = location;
+      for (var key in countries._layers) {
+        if (countries._layers[key].feature.properties.name === countryName) {
+          console.log('HEATPOINT AT: ', countries._layers[key].getBounds().getCenter());
+          var circle = L.marker(countries._layers[key].getBounds().getCenter(),
+          {icon: greenIcon}).addTo(this.get('map'));
+        }
+      }
+
 
 
     } else if (location.split('/').length === 3 && location.split('/')[1] === 'United States') {
       //PROVINCE
       //TODO
-
+      if (!this.get('states')) {  //DON'T DO THIS PLEASE!!!!!!
+        this.addStates();
+        this.removeStates();
+      }
+      var states = this.get('states') || {};
       //put it at the center of the bounds
+      console.log(states);
+      var stateName = location;
+      for (var key in states._layers) {
+        if (states._layers[key].feature.properties.name === stateName) {
+          console.log('HEATPOINT AT: ', states._layers[key].getBounds().getCenter());
+          var circle = L.marker(states._layers[key].getBounds().getCenter(),
+          {icon: greenIcon}).addTo(this.get('map'));
+        }
+      }
 
     } else {
       //CITY
-
+      if (!this.get('cities')) {  //DON'T DO THIS PLEASE!!!!!!
+        this.addCities();
+        this.removeCities();
+      }
+      var cities = this.get('cities') || {};
+      var cityName = location;
+      console.log(cities);
       //put it at the coordinates of the city
+      for (var key in cities._layers) {
+        if (cities._layers[key].city === cityName) {
+          console.log('HEATPOINT AT: ', cities._layers[key]._latlng);
+          var circle = L.marker(cities._layers[key]._latlng,
+          {icon: greenIcon}).addTo(this.get('map'));
+        }
+      }
 
 
     }
