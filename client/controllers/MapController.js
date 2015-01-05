@@ -128,6 +128,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     var southWest = L.latLng(15.284185114076445, -107.025390625);
     var northEast = L.latLng(56.17002298293205, -90.23046875);
     var usBounds = L.latLngBounds(southWest, northEast);
+    this.usBounds = usBounds;
 
     southWest = L.latLng(33.87041555094183, -97.119140625);
     northEast = L.latLng(66.01801815922042, -69.169921875);
@@ -295,11 +296,16 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       for (var key in countries._layers) {
         if (countries._layers[key].feature.properties.name === countryName) {
           console.log('HEATPOINT AT: ', countries._layers[key].getBounds().getCenter());
-          var circle = L.marker(countries._layers[key].getBounds().getCenter(),
-          {icon: greenIcon}).addTo(this.get('map'));
-          circle.on('click', function(e) {
-            that.goToPath(location);
-          });
+          // if (location === 'World/United States') {
+          //   var circle = L.marker(that.usBounds.getCenter(),
+          //   {icon: greenIcon}).addTo(this.get('map'));
+          // } else {
+          //   var circle = L.marker(countries._layers[key].getBounds().getCenter(),
+          //   {icon: greenIcon}).addTo(this.get('map'));
+          // }
+          // circle.on('click', function(e) {
+          //   that.goToPath(location);
+          // });
         }
       }
 
@@ -319,11 +325,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       for (var key in states._layers) {
         if (states._layers[key].feature.properties.name === stateName) {
           console.log('HEATPOINT AT: ', states._layers[key].getBounds().getCenter());
-          var circle = L.marker(states._layers[key].getBounds().getCenter(),
-          {icon: greenIcon}).addTo(this.get('map'));
-          circle.on('click', function(e) {
-            that.goToPath(location);
-          });
+          // var circle = L.marker(states._layers[key].getBounds().getCenter(),
+          // {icon: greenIcon}).addTo(this.get('map'));
+          // circle.on('click', function(e) {
+          //   that.goToPath(location);
+          // });
         }
       }
 
