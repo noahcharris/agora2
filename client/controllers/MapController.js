@@ -260,6 +260,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
   showHeatPoint: function(location, occurrences) {
+    var that = this;
 
     console.log(location, occurrences);
 
@@ -296,6 +297,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           console.log('HEATPOINT AT: ', countries._layers[key].getBounds().getCenter());
           var circle = L.marker(countries._layers[key].getBounds().getCenter(),
           {icon: greenIcon}).addTo(this.get('map'));
+          circle.on('click', function(e) {
+            that.goToPath(location);
+          });
         }
       }
 
@@ -317,6 +321,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           console.log('HEATPOINT AT: ', states._layers[key].getBounds().getCenter());
           var circle = L.marker(states._layers[key].getBounds().getCenter(),
           {icon: greenIcon}).addTo(this.get('map'));
+          circle.on('click', function(e) {
+            that.goToPath(location);
+          });
         }
       }
 
@@ -335,6 +342,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           console.log('HEATPOINT AT: ', cities._layers[key]._latlng);
           var circle = L.marker(cities._layers[key]._latlng,
           {icon: greenIcon}).addTo(this.get('map'));
+          circle.on('click', function(e) {
+            that.goToPath(location);
+          });
         }
       }
 
