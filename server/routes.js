@@ -1422,7 +1422,7 @@ module.exports.addContact = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
-        if (request.cookies['login'] && request.body.token === result.rows[0].token && req.cookie['login'].split('/')[1] === result.rows[0].cookie) {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                     client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
                         [request.body.contact, request.body.username],

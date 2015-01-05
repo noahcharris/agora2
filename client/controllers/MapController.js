@@ -267,12 +267,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
     var greenIcon = L.icon({
-        iconUrl: '/resources/images/leaf-green.png',
-        shadowUrl: '/resources/images/leaf-shadow.png',
+        iconUrl: '/resources/images/logo.png',
+        shadowUrl: '/resources/images/logo.png',
 
-        iconSize:     [38, 95], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        iconSize:     [20, 26], // size of the icon
+        shadowSize:   [0, 0], // size of the shadow
+        iconAnchor:   [4.5, 26], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });

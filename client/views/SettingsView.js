@@ -70,15 +70,15 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     };
-    this.$el.append($viewProfileButton);
+    this.$el.children('#buttonBox').append($viewProfileButton);
 
     var $editProfileButton = $('<button>Edit My Profile</button>');
     $editProfileButton[0].onclick = function() {
       that.app.get('detailView').displayed = 'Edit Profile';
       that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
     };
-    this.$el.append($editProfileButton);
-    this.$el.append('<br/>');
+    this.$el.children('#buttonBox').append($editProfileButton);
+    this.$el.children('#buttonBox').append('<br/>');
 
     var $changeLocationButton = $('<button>Change Location</button>');
     $changeLocationButton[0].onclick = function() {
@@ -99,7 +99,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
       // that.app.get('detailView').displayed = 'CreateLocation';
       // that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
     });
-    this.$el.append($locationCreationButton);
+    this.$el.children('#buttonBox').append($locationCreationButton);
 
     var $channelCreationButton = $('<button>Create Channel</button>');
     $channelCreationButton.on('click', function() {
@@ -107,13 +107,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
       // that.app.get('detailView').displayed = 'CreateChannel';
       // that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
     });
-    this.$el.append($channelCreationButton);
+    this.$el.children('#buttonBox').append($channelCreationButton);
 
-
-    this.$el.append('<br/><br/>Recently Visited Topics');
-
-    var $recentlyVisted = $('<ul id="recentlyVisted"></ul>');
-    this.$el.append($recentlyVisted);
 
     //get recently visited topics
     $.ajax({
@@ -130,14 +125,16 @@ Agora.Views.SettingsView = Backbone.View.extend({
       },
       success: function(models) {
         for (var i=0; i < models.length ;i++) {
-          console.log(models[i]);
 
-          //add template here
 
-          //put click handler to take user to topic
-          //use router here once it is more advanced??
-
-          var $topic = $('<li></li>').append(models[i].headline);
+          var entryView = new Agora.Views.SidebarEntryView(that.app);
+          entryView.model = models[i];
+          entryView.renderTopic();
+          var $listItem = $('<li class="recentlyPostedItem"></li>');
+          $listItem.append(entryView.$el);
+          console.log($listItem);
+          console.log($('#recentlyVisted'));
+          $('#recentlyVisited').append($listItem);
 
           (function() {
 
@@ -145,9 +142,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
             var x = models[i].channel;
             var y = models[i].location;
-            var x = models[i].channel;
 
-            $topic.on('click', function() {
+            entryView.on('click', function() {
 
               that.app.set('channel', x);
               that.app.get('mapController').goToPath(y);
@@ -168,6 +164,29 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
                   // thet.$el.addClass('highlight');
 
+                },
+                error: function() {
+                  alert('ajax error');
+                }
+              });
+
+              //register the topic visit with the server
+              $.ajax({
+                url: 'https://liveworld.io:443/visitedTopic',
+                // url: 'http://localhost/topicTree',
+                method: 'POST',
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                data: {
+                  username: that.app.get('username'),
+                  token: that.app.get('token'),
+                  //WHY IS THIS A STRING????
+                  topicId: model.id
+                },
+                success: function(data) {
+                  //alert(data);
                 },
                 error: function() {
                   alert('ajax error');
@@ -195,18 +214,11 @@ Agora.Views.SettingsView = Backbone.View.extend({
               
 
 
-
-
-
-
-            });
+            });//end entryView click
             
           })();
 
-
-
-          $('ul#recentlyVisted').append($topic)
-        }
+        }//end models for loop
       },
       error: function() {
         alert('ajax error');

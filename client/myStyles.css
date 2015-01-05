@@ -59,6 +59,11 @@ img#fullscreenImage {
 
 
 
+.recentlyPostedItem {
+  height: auto;
+  width: auto;
+}
+
 
 /****************/
 /***  TOPBAR  ***/
@@ -1159,6 +1164,9 @@ textarea {
 /* ## SETTINGS ## */
 
 .settingsView {
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
 
 }
 

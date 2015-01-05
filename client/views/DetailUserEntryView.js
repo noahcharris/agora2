@@ -86,7 +86,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         console.log('found no chain, gotta make one');
 
         $.ajax({
-          url: 'https://liveworld.io:433/createMessageChain',
+          url: 'https://liveworld.io:443/createMessageChain',
           // url: 'http://localhost/createMessageChain',
           method: 'POST',
           crossDomain: true,
@@ -310,7 +310,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     //TODO - DISPLAY RECENTLY POSTED TOPICS (I.E. THE USER FEED) !!!!!∆∆∆∆∆!!!!!
 
 
-    //get recently visited topics
     $.ajax({
       url: 'http://liveworld.io:80/recentlyPosted',
       // url: 'http://localhost/topicTree',
@@ -321,8 +320,111 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       },
       success: function(models) {
         for (var i=0; i < models.length ;i++) {
-          $('#recentlyPostedList').append($('<li>'+models[i].id+'</li>'));
-          console.log(models[i]);
+          var entryView = new Agora.Views.SidebarEntryView(that.app);
+          entryView.model = models[i];
+          entryView.renderTopic();
+          var $listItem = $('<li class="recentlyPostedItem"></li>');
+          $listItem.append(entryView.$el);
+          $('#recentlyPostedList').append($listItem);
+          
+          (function() {
+            var topicId = models[i].id;
+            var model = models[i];
+            var x = models[i].channel;
+            var y = models[i].location;
+
+              entryView.on('click', function() {
+
+                that.app.get('detailView').displayed = 'Topics';
+
+                //get specific topic tree from server
+
+
+                that.app.set('channel', x);
+                that.app.get('mapController').goToPath(y);
+                that.app.get('channelView').render();
+
+                //get specific topic tree from server
+                $.ajax({
+                  url: 'http://liveworld.io:80/topicTree',
+                  // url: 'http://localhost/topicTree',
+                  method: 'GET',
+                  crossDomain: true,
+                  data: {
+                    topicId: model.id
+                  },
+                  success: function(model) {
+                    that.app.get('detailView').displayed = 'Topics';
+                    that.app.get('content2').show(that.app.get('detailView'), model);
+
+                    // thet.$el.addClass('highlight');
+
+                  },
+                  error: function() {
+                    alert('ajax error');
+                  }
+                });
+
+                //register the topic visit with the server
+                $.ajax({
+                  url: 'https://liveworld.io:443/visitedTopic',
+                  // url: 'http://localhost/topicTree',
+                  method: 'POST',
+                  crossDomain: true,
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  data: {
+                    username: that.app.get('username'),
+                    token: that.app.get('token'),
+                    //WHY IS THIS A STRING????
+                    topicId: model.id
+                  },
+                  success: function(data) {
+                    //alert(data);
+                  },
+                  error: function() {
+                    alert('ajax error');
+                  }
+                });
+
+
+
+                //need to insert topic into the front of the topics collection
+                that.app.get('sidebarView').displayed = 'Topics-Top';
+                //use this crazy callback shit to highlight
+                var cb = function() {
+                  var subViews = that.app.get('sidebarView').subViews;
+                  for (var i=0; i < subViews.length ;i++) {
+                    if (subViews[i].model.id === model.id) {
+                      subViews[i].$el.addClass('highlight');
+                      //maybe scroll also here
+
+                    }
+                  }
+                };
+                that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+
+                // that.app.get('detailView').displayed = 'Topics';
+                // that.app.get('content2').show(that.app.get('detailView'), model);
+
+
+
+
+
+
+              });//end entryView onclick
+
+
+          })();
+
+
+
+
+
+
+
+
         }
       },
       error: function() {
