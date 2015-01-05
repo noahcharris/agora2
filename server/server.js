@@ -8,7 +8,6 @@ var fs = require('fs');
 
 var cookie = require('cookie');
 
-
 var session = require('express-session');
 
 var bodyParser = require('body-parser');
@@ -24,6 +23,9 @@ var csrf = require('csurf');
 
 //use serve-favicon instead!!!
 var favicon = require('static-favicon');
+
+var timeEventLoop = require('time-eventloop');
+timeEventLoop.start(/* { options } */);
 
 var routes = require('./routes.js');
 
