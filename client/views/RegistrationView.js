@@ -76,6 +76,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.get('topbarView').render();
             that.app.get('content2').hide();
             //why do I need this?
+            that.app.get('mapController').placing = false;
             that.app.trigger('reloadSidebarContacts');
             //the last argument suppresses reloading of content1
             that.app.trigger('reloadSidebarMessageChains');
@@ -118,6 +119,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.get('topbarView').render();
             //why do I need this?
             // that.app.get('sidebarView').displayed = 'Topics-Top';
+            that.app.get('mapController').placing = false;
             that.app.get('mapController').showWorld();
             that.app.get('content1').show(that.app.get('sidebarView'));
 

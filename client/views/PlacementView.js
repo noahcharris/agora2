@@ -27,6 +27,9 @@ Agora.Views.PlacementView = Backbone.View.extend({
     $('#pointPlacedButton').on('click', function() {
 
 
+        that.app.get('mapController').placing = false;
+        that.app.get('mapController').stopPlacing();
+
         console.log('LONGTIDUE: ', that.app.get('mapController').placedLongitude);
 
         $.ajax({
@@ -59,7 +62,12 @@ Agora.Views.PlacementView = Backbone.View.extend({
               // content1.show(sidebarView);
               that.app.get('content2').hide();
               that.app.get('sidebarView').displayed = 'Topics-Top';
-              that.app.get('content1').show(that.app.get('sidebarView')); 
+              that.app.set('channel', 'World');
+              that.app.get('mapController').showWorld();
+              //that.app.get('mapController').goToPath(that.data.parent+'/'+that.data.name);
+
+
+
             } else {
               // console.log('memcached returned false');
               // sidebarView.collection = defaultCollection;

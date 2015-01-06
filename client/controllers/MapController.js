@@ -192,36 +192,42 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   setZoomEvents: function() {
     var that = this;
     this.get('map').on('moveend', function() {
-      zoomDestination = that.get('map').getZoom();
-      if (zoomDestination > 3) {
-        if (!that.get('citiesOn'))
-          that.addCities();
-      };
-      if (zoomDestination > 3 && zoomDestination < 8) {
-        if (!that.get('statesOn'))
-          that.addStates();
-      };
-      if (zoomDestination < 4) {
-        if (that.get('citiesOn'))
-          that.removeCities();
-      };
-      if (zoomDestination < 4) {
-        if (that.get('statesOn'))
-          that.removeStates();
-      };
-      if (zoomDestination < 8) {
-        if (!that.get('countriesOn'))
-          that.addCountries();
-      };
-      if (zoomDestination > 7) {
-        if (that.get('countriesOn'))
-          that.removeCountries();
-        if (that.get('statesOn'))
-          that.removeStates();
-      };
-      //Make sure the countries are always in the back. They are also brought to back in the adding functions.
-      if (that.get('statesOn') && that.get('countriesOn'))
-        that.get('countries').bringToBack();
+
+      if (!that.placing) {
+
+        zoomDestination = that.get('map').getZoom();
+        if (zoomDestination > 3) {
+          if (!that.get('citiesOn'))
+            that.addCities();
+        };
+        if (zoomDestination > 3 && zoomDestination < 8) {
+          if (!that.get('statesOn'))
+            that.addStates();
+        };
+        if (zoomDestination < 4) {
+          if (that.get('citiesOn'))
+            that.removeCities();
+        };
+        if (zoomDestination < 4) {
+          if (that.get('statesOn'))
+            that.removeStates();
+        };
+        if (zoomDestination < 8) {
+          if (!that.get('countriesOn'))
+            that.addCountries();
+        };
+        if (zoomDestination > 7) {
+          if (that.get('countriesOn'))
+            that.removeCountries();
+          if (that.get('statesOn'))
+            that.removeStates();
+        };
+        //Make sure the countries are always in the back. They are also brought to back in the adding functions.
+        if (that.get('statesOn') && that.get('countriesOn'))
+          that.get('countries').bringToBack();
+
+      }
+
     });
   },
 
@@ -250,12 +256,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
+    this.app.get('content2').hide();
+    this.app.trigger('reloadSidebarTopics', 'World');
 
-    if (!this.placing) {
-      this.app.get('content2').hide();
-      //remember to switch this to the new system
-      this.app.trigger('reloadSidebarTopics', 'World');
-    }
   },
 
 
@@ -630,8 +633,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   placePoints: function() {
     var that = this;
-    this.placing = true;
+    this.removeCountries();
+    this.removeStates();
+    this.removeCities();
+    //remove all map features
+
     var markerLayer = L.layerGroup();
+
     this.handler = function(e) {
       that.placedLatitude = e.latlng.lat;
       that.placedLongitude = e.latlng.lng;
@@ -645,7 +653,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   stopPlacing: function() {
     //this.get('map').off('click.placingPoints');
     this.get('map').off('click', this.handler);
-    this.placing = false;
     //remove the click handler
   },
 

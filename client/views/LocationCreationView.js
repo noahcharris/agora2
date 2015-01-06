@@ -35,16 +35,18 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     this.$el.children('#nextButton').on('click', function() {
 
 
-      console.log('RADIO INPUT : ', that.$el.children('input:radio[name=public]').val());
 
-      var pub = true;;
-      if (that.$el.children('input:radio[name=public]').val() === 'public') {
+      console.log('RADIO INPUT : ', that.$el.children('input:radio[name=publicPrivate]').val());
+
+      var pub = true;
+      if (that.$el.children('input:radio[name=publicPrivate]').val() === 'public') {
         pub = true;
       } else {
         pub = false;
       }
 
       var placementView = new Agora.Views.PlacementView(that.app);
+      console.log(placementView);
 
       placementView.data = {
         name: that.$el.children('#locationNameInput').val(),
@@ -53,12 +55,65 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
         parent: that.$el.children('#parentInput').val()
       };
 
-      that.app.get('mapController').placePoints();
       that.app.get('content1').show(placementView);
       that.app.get('content2').hide();
+      that.app.get('mapController').placePoints();
+      that.app.get('mapController').placing = true;
 
 
     });
+
+
+
+      this.$el.children('#parentInput').on('keyup', function(e) {
+
+        var searchParameter = $('#parentInput').val();
+
+        //SHOULD MAYBE THROTTLE THIS ???????
+
+        if ($('#parentInput').val().length > 1) {
+
+          $.ajax({
+            url: 'http://liveworld.io:80/locationSearch',
+            //url: 'http://localhost:80/channelSearch',
+            data: {
+              input: searchParameter
+            },
+            crossDomain: true,
+            success: function(data) {
+              console.log(data);
+              $('.creationChannelSearchResult').remove();
+
+              var cssAdjust = -30;
+              for (var i=0; i < data.length ;i++) {
+
+                var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
+                that.$el.append($element);
+
+                (function() {
+                  var x = data[i].name;
+                  $element.on('click', function(e)  {
+                    that.$el.children('#parentInput').val(x);
+                    $('.creationChannelSearchResult').remove();
+                  });
+                  
+                })();
+
+                $element.css('bottom', cssAdjust + 'px');
+
+                cssAdjust -= 30;
+              }
+
+            }
+          });
+
+        } else if (searchParameter === '') {
+          $('.creationChannelSearchResult').remove();
+        }
+
+    });//end parent input keyup event
+
+
 
   },
 

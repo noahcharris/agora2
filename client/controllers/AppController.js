@@ -631,31 +631,39 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
   
     region.show = function(view) {
-      if (view) {
-        if (currentView && currentView.close) {
-          currentView.close();
+
+      //used by PlacementView to prevent user from breaking out of placement mode
+      if (!that.get('mapController').placing) {
+
+
+        if (view) {
+          if (currentView && currentView.close) {
+            currentView.close();
+          }
+          currentView = view;
+          view.render();  
+          $(el).html(view.el);
+          if (view.onShow) {
+            view.onShow();
+          }
+          if (view.setHandlers) {
+            view.setHandlers();
+          }
         }
-        currentView = view;
-        view.render();  
-        $(el).html(view.el);
-        if (view.onShow) {
-          view.onShow();
+
+        //adjust URL
+        if (!that.get('expanded')) {
+          var location = that.get('mapController').get('location');
+          //slice off the 'World/', because 'World' is used as an identifier by the router
+          if (location === 'World') {
+            that.get('mapController').router.navigate('World#'+that.get('channel'), { trigger:false });
+          } else {
+            that.get('mapController').router.navigate('World/'+location.slice(6, location.length)+'#'+that.get('channel'), { trigger:false });
+          }
         }
-        if (view.setHandlers) {
-          view.setHandlers();
-        }
+        
       }
 
-      //adjust URL
-      if (!that.get('expanded')) {
-        var location = that.get('mapController').get('location');
-        //slice off the 'World/', because 'World' is used as an identifier by the router
-        if (location === 'World') {
-          that.get('mapController').router.navigate('World#'+that.get('channel'), { trigger:false });
-        } else {
-          that.get('mapController').router.navigate('World/'+location.slice(6, location.length)+'#'+that.get('channel'), { trigger:false });
-        }
-      }
 
 
     };
