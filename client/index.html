@@ -295,6 +295,9 @@
       <h3>About:</h3>
       <p><%= about %></p>
       <p>Recently Posted</p>
+      <br/>
+      <br/>
+      <br/>
       <ul id="recentlyPostedList"></ul>
 
 
@@ -329,8 +332,10 @@
       <input id="channelNameInput" placeholder="Channel Name"></input>
       <br/><br/>
       This group is 
-      <input id="radioPublic" type="radio" name="public" value="public" checked>Public</input>
-      <input type="radio" name="private" value="private">Private</input>
+      <form action="">
+      <input type="radio" name="publicPrivate" value="public" checked>Public</input>
+      <input type="radio" name="publicPrivate" value="private">Private</input>
+      </form>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>

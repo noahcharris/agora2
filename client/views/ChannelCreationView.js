@@ -26,7 +26,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       that.app.get('content2').hide();
     });
 
-    console.log(that.$el.children('input:radio[name=public]').val());
+    console.log(this.$el.children('input:radio[name=publicPrivate]').val());
 
     this.$el.children('#nextButton').on('click', function() {
 
@@ -49,12 +49,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
           if (data) {
             alert(data);
             that.app.get('content2').hide();
-            // topicsCollection = data;
-            // console.log('server returned: ', data);
-            // //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-            // sidebarView.collection = data;
-            // content1.show(sidebarView);
-            that.get('content2').hide(); 
+            that.app.changeChannel(that.$el.children('#channelNameInput').val());
+            that.app.get('mapController').showWorld();
           } else {
             // console.log('memcached returned false');
             // sidebarView.collection = defaultCollection;

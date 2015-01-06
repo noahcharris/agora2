@@ -947,7 +947,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             console.log('CACHE MANAGER');
             console.log('server returned: ', data);
 
-            $('#notificationsButton').css('background-color', 'green');
+            $('#notificationsButton').css('background-color', 'transparent');
 
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
