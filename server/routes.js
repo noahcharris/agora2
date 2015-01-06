@@ -1680,10 +1680,34 @@ module.exports.registerUser = function(request, response) {
           if (success) {
             //send back login token here????
 
-            // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-            response.cookie('login', request.body.username, { maxAge: 600000, httpOnly: true });
+            var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+            var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
 
-            response.end('successfully created user');
+            // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+            client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+              +"VALUES ($1, $2, $3, now());",
+              [request.body.username, cookie, token],
+              function(err, result) {
+                if (err) {
+                  console.log('error inserting into securityJoin: ', err);
+                } else {
+
+                  console.log('whaaaa');
+                  //LOGIN SUCCESSFUL
+
+                  //set cookie which will be checkd in checkLogin (10 minutes here)
+                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                  response.cookie('login', request.body.username+'/'+cookie, { maxAge: 3000000000, httpOnly: true, secure: true });
+
+                  console.log('Login successful for user: ', request.body.username);
+
+                  response.json({ login: true, token: token });
+
+
+                }
+            });
+
           } else {
             response.end('error creating user');
           }

@@ -95,6 +95,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $locationCreationButton = $('<button>Create Location</button>');
     $locationCreationButton.on('click', function() {
+      //alert('Location creation coming soon. For now, please send channel creation requests to ...');
       // that.app.get('detailView').displayed = 'CreateLocation';
       // that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
     });
@@ -102,8 +103,9 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $channelCreationButton = $('<button>Create Channel</button>');
     $channelCreationButton.on('click', function() {
-      that.app.get('detailView').displayed = 'CreateChannel';
-      that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+      //alert('Channel creation coming soon. For now, please send channel creation requests to ...');
+      // that.app.get('detailView').displayed = 'CreateChannel';
+      // that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 

@@ -20,12 +20,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
-
-
     var $messageButton = $('<button>SEND MESSAGE</button>');
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
@@ -205,7 +199,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             alert(data);
             //seeing whether we confirmed or sent (because if confirmed, server sends back a 
             //string that starts with 'y') (HACKY)
-            console.log(data);
             if (data[0] === 's') {
               that.app.get('cacheManager').sentRequests.push({ recipient: that.model.username });
             } else {
