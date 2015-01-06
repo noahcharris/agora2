@@ -261,6 +261,13 @@ img#fullscreenImage {
   z-index: 9999;
 }
 
+.creationChannelSearchResult {
+  position: relative;
+  background-color: green;
+  color: orange;
+  z-index: 9999;
+}
+
 #channelSubtreeView {
   position: absolute;
   z-index: 502;

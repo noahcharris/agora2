@@ -2670,7 +2670,7 @@ module.exports.createChannel = function(request, response) {
                     
             client.query("INSERT INTO channels (type, name, description, parent) "
               +"VALUES ('Channel', $1, $2, $3);",
-              [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+              [xssValidator(request.body.parent+'/'+request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
               function(err, result) {
                 if (err) {
                   console.log('error inserting into channels: ', err);
