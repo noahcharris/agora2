@@ -781,6 +781,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             },
             error: function() {
               alert('server error');
+              ajaxing = false;
             }
           });
 

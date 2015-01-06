@@ -58,41 +58,51 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.$el.append( $(this.messageInputTemplate()) );
 
     var $sendButton = this.$el.children('#messageInputBox').children('#messageInputBoxButton');
+
+    var ajaxing = false;
     $sendButton[0].onclick = function() {
 
-      console.log($('#messageInputTextArea').val());
+      if (!ajaxing) {
 
-      $.ajax({
-        url: 'https://liveworld.io:443/sendMessage',
-        // url: 'http://localhost:80/sendMessage',
-        method: 'POST',
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        data: {
-          sender: that.app.get('username'),
-          recipient: contact,
-          contents: $('#messageInputTextArea').val(),
-          token: that.app.get('token'),
-          username: that.app.get('username')
-        },
-        success: function(data) {
-          if (data) {
-            alert(data);
-            $('#messageInputTextArea').val('');
+        ajaxing = true;
+        $.ajax({
+          url: 'https://liveworld.io:443/sendMessage',
+          // url: 'http://localhost:80/sendMessage',
+          method: 'POST',
+          crossDomain: true,
+          xhrFields: {
+            withCredentials: true
+          },
+          data: {
+            sender: that.app.get('username'),
+            recipient: contact,
+            contents: $('#messageInputTextArea').val(),
+            token: that.app.get('token'),
+            username: that.app.get('username')
+          },
+          success: function(data) {
+            if (data) {
+              alert(data);
+              ajaxing = false;
+              $('#messageInputTextArea').val('');
 
-            //reload message chain
-            that.app.get('cacheManager').updateMessageChain(contact);
+              //reload message chain
+              that.app.get('cacheManager').updateMessageChain(contact);
 
-          } else {
-            $('#messageInputTextArea').val('');
+            } else {
+              ajaxing = false;
+              $('#messageInputTextArea').val('');
+            }
+          }, error: function(err) {
+            ajaxing = false;
+            console.log('ajax error ocurred: ', err);
           }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
 
-      });
+        });
+
+        
+      }
+
 
 
     };//end sendbutton onclick

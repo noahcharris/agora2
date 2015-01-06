@@ -179,47 +179,55 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
     var $contactRequestButton = $('<button>Contact Request</button>');
+    var ajaxing = false;
     $contactRequestButton[0].onclick = function() {
-      console.log('hi');
-      $.ajax({
-        url: 'https://liveworld.io:443/addContact',
-        // url: 'http://localhost:80/sendContactRequest',
-        method: 'POST',
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        data: {
-          username: that.app.get('username'),
-          contact: that.model.username,
-          token: that.app.get('token')
-        },
-        success: function(data) {
-          if (data) {
-            alert(data);
-            //seeing whether we confirmed or sent (because if confirmed, server sends back a 
-            //string that starts with 'y') (HACKY)
-            if (data[0] === 's') {
-              that.app.get('cacheManager').sentRequests.push({ recipient: that.model.username });
-            } else {
-              //erase entry from cache manager's contact request list
-              var contacts = that.app.get('cacheManager').contactRequests
-              for (var i=0; i < contacts.length ;i++) {
-                if (contacts[i].sender === that.model.username)
-                  contacts[i] = {};
+
+      if (!ajaxing) {
+
+          ajaxing = true;
+          $.ajax({
+            url: 'https://liveworld.io:443/addContact',
+            // url: 'http://localhost:80/sendContactRequest',
+            method: 'POST',
+            crossDomain: true,
+            xhrFields: {
+              withCredentials: true
+            },
+            data: {
+              username: that.app.get('username'),
+              contact: that.model.username,
+              token: that.app.get('token')
+            },
+            success: function(data) {
+              if (data) {
+                alert(data);
+                ajaxing = false;
+                //seeing whether we confirmed or sent (because if confirmed, server sends back a 
+                //string that starts with 'y') (HACKY)
+                if (data[0] === 's') {
+                  that.app.get('cacheManager').sentRequests.push({ recipient: that.model.username });
+                } else {
+                  //erase entry from cache manager's contact request list
+                  var contacts = that.app.get('cacheManager').contactRequests
+                  for (var i=0; i < contacts.length ;i++) {
+                    if (contacts[i].sender === that.model.username)
+                      contacts[i] = {};
+                  }
+
+                  that.app.get('cacheManager').contacts.push({ username: that.model.username });
+
+
+                }
+                that.render(that.model);
+              } else {
               }
-
-              that.app.get('cacheManager').contacts.push({ username: that.model.username });
-
-
+            }, error: function(err) {
+              console.log('ajax error ocurred: ', err);
+              ajaxing = false;
             }
-            that.render(that.model);
-          } else {
-          }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
-      });
+          });
+        
+      }
     };
 
 

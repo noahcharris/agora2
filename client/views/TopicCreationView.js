@@ -106,6 +106,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
               },
               error: function() {
                 alert('post creation failed');
+                ajaxing = false;
               }
             });
 
