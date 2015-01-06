@@ -11,6 +11,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.template = _.template( $('#settingsViewTemplate').html() );
     this.app = appController;
     this.$el.addClass('detailView');
+    this.subViews = [];
   },
 
   render: function() {
@@ -128,6 +129,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
+          that.subViews.push(entryView);
           entryView.model = models[i];
           entryView.renderTopic();
           var $listItem = $('<li class="recentlyPostedItem"></li>');
@@ -219,6 +221,39 @@ Agora.Views.SettingsView = Backbone.View.extend({
           })();
 
         }//end models for loop
+
+
+
+
+        var throttledResize = _.throttle(function() {
+
+                //this is how region manager calculates sidebar width
+          var detailWidth = $(window).width() * 0.75 - $('#content1').width();
+
+          console.log('WIDTH: ', detailWidth);
+          
+
+          for (var i=0; i < that.subViews.length ;i++) {
+            if (that.subViews[i].model.image) {          
+              var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
+              box.css('width', (detailWidth - 180) + 'px');
+            }
+
+          };
+
+          //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+        }, 100);
+
+
+        $(window).on('resize', throttledResize);
+
+        throttledResize();
+
+        //NEED TO UNBIND THIS HANDLER SOMEHOW
+
+
+
+
       },
       error: function() {
         alert('ajax error');

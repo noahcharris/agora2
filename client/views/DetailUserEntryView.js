@@ -10,6 +10,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
     this.template = _.template( $('#detailUserEntryTemplate').html() );
+
+    this.subViews = [];
   },
 
   render: function() {
@@ -307,8 +309,9 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     }
 
 
-
-    //TODO - DISPLAY RECENTLY POSTED TOPICS (I.E. THE USER FEED) !!!!!∆∆∆∆∆!!!!!
+   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+   // RECENTLY POSTED AKA FEEEEEEEEEEED
+   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
 
     $.ajax({
@@ -322,6 +325,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       success: function(models) {
         for (var i=0; i < models.length ;i++) {
           var entryView = new Agora.Views.SidebarEntryView(that.app);
+          that.subViews.push(entryView);
           entryView.model = models[i];
           entryView.renderTopic();
           var $listItem = $('<li class="recentlyPostedItem"></li>');
@@ -359,6 +363,21 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                     that.app.get('content2').show(that.app.get('detailView'), model);
 
                     // thet.$el.addClass('highlight');
+                    //need to insert topic into the front of the topics collection
+                    that.app.get('sidebarView').displayed = 'Topics-Top';
+                    //use this crazy callback shit to highlight
+                    var cb = function() {
+                      var subViews = that.app.get('sidebarView').subViews;
+                      for (var i=0; i < subViews.length ;i++) {
+                        if (subViews[i].model.id === model.id) {
+                          subViews[i].$el.addClass('highlight');
+                          //maybe scroll also here
+
+                        }
+                      }
+                    };
+                    that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+
 
                   },
                   error: function() {
@@ -389,49 +408,48 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                   }
                 });
 
-
-
-                //need to insert topic into the front of the topics collection
-                that.app.get('sidebarView').displayed = 'Topics-Top';
-                //use this crazy callback shit to highlight
-                var cb = function() {
-                  var subViews = that.app.get('sidebarView').subViews;
-                  for (var i=0; i < subViews.length ;i++) {
-                    if (subViews[i].model.id === model.id) {
-                      subViews[i].$el.addClass('highlight');
-                      //maybe scroll also here
-
-                    }
-                  }
-                };
-                that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
-
-                // that.app.get('detailView').displayed = 'Topics';
-                // that.app.get('content2').show(that.app.get('detailView'), model);
-
-
-
-
-
-
               });//end entryView onclick
-
 
           })();
 
+        };//end models for loop
+
+
+
+        var throttledResize = _.throttle(function() {
+
+                //this is how region manager calculates sidebar width
+          var detailWidth = $(window).width() * 0.75 - $('#content1').width();
+
+          console.log('WIDTH: ', detailWidth);
+          
+
+          for (var i=0; i < that.subViews.length ;i++) {
+            if (that.subViews[i].model.image) {          
+              var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
+              box.css('width', (detailWidth - 180) + 'px');
+            }
+
+          };
+
+          //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+        }, 100);
+
+
+        $(window).on('resize', throttledResize);
+
+        throttledResize();
+
+        //NEED TO UNBIND THIS HANDLER SOMEHOW
 
 
 
 
-
-
-
-        }
       },
       error: function() {
         alert('ajax error');
       }
-    });
+    });//end recetlyPosted ajax
 
 
 
