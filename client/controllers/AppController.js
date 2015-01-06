@@ -435,13 +435,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(data) {
         if (data.login) {
 
-          console.log('woooo: ', data);
-
           //login subroutine
           that.set('username', data.username);
           that.get('topbarView').render();
           that.set('token', data.token);
           that.set('login', true);
+
+          that.cacheManager.start();
 
           that.trigger('reloadSidebarContacts');
           //the last argument suppresses reloading of content1
