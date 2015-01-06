@@ -709,6 +709,20 @@ img#fullscreenImage {
   cursor: pointer;
 }
 
+#detailUserString {
+  cursor: pointer;
+}
+
+#detailChannelString {
+  cursor: pointer;
+
+}
+
+#detailLocationString {
+  cursor: pointer;
+  
+}
+
 .replyButton {
   cursor: pointer;
   position: absolute;

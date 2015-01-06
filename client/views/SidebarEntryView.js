@@ -57,8 +57,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     var $username = that.$el.children('.topString').children('.sidebarUsername');
     $username.on('click', function(e) {
-
-
       $.ajax({
         url: 'http://liveworld.io:80/user',
         // url: 'http://localhost:80/user',
@@ -66,9 +64,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
         crossDomain: true,
         data: {
           username: that.model.username,
-          asker: that.app.get('username'),
           //so that this is never cached
-          extra: Math.floor((Math.random() * 10000) + 1)
         },
         success: function(data) {
           if (data) {

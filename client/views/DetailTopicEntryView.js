@@ -117,6 +117,48 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         })();
     }
 
+    var $userString = this.$el.children('#conversationWrapper').children('.topicBox').children('.topicTopString').children('#detailUserString');
+    $userString[0].onclick = function() {
+
+      console.log('heyyyy');
+
+
+      $.ajax({
+        url: 'http://liveworld.io:80/user',
+        // url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.model.username,
+          //so that this is never cached
+        },
+        success: function(data) {
+          if (data) {
+
+            console.log('whaaa');
+            that.app.get('detailView').displayed = 'Users';
+            console.log('server returned: ', data);
+
+            //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
+
+            that.app.get('content2').show(that.app.get('detailView'), data[0]);
+          } else {
+            console.log('no data returned from server');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+    };
+
+    var $channelString = this.$el.children('#conversationWrapper').children('.topicBox').children('.topicTopString').children('#detailChannelString');;
+    $channelString[0].onclick = function() {
+
+      that.app.changeChannel(that.model.channel);
+
+    };
 
     //add upvote handling
     var $upvote = this.$el.children('#conversationWrapper').children('div.topicBox').children('img');
