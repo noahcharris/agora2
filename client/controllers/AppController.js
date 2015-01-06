@@ -1230,6 +1230,25 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+    manager.emptyCache = function() {
+
+
+      manager.topicTreeCollection = [];
+      manager.topicsCollection = [];
+      manager.messageChainCollection = [];
+      manager.messagesCollection = [];
+
+      manager.sentRequests = [];
+      manager.contactRequests = [];
+      manager.newMessages = [];
+      manager.topicActivity = [];
+
+
+
+    };
+
+
+
 
 
     return manager;

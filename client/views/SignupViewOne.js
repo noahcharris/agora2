@@ -51,8 +51,14 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
               if (data.login) {
                 alert('registration successful');
                 that.app.set('token', data.token);
+
                 that.app.set('login', true);
                 that.app.set('username', $('#signupUsernameInput').val());
+
+                that.app.get('cacheManager').stop();
+                that.app.get('cacheManager').emptyCache();
+                that.app.get('cacheManager').start();
+                
                 that.app.get('topbarView').render();
                 that.app.get('content2').hide();
 

@@ -69,13 +69,16 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
             that.app.set('login', true);
             that.app.set('username', username);
+
+            that.app.get('cacheManager').stop();
+            that.app.get('cacheManager').emptyCache();
+
             that.app.get('topbarView').render();
             that.app.get('content2').hide();
             //why do I need this?
             that.app.trigger('reloadSidebarContacts');
             //the last argument suppresses reloading of content1
             that.app.trigger('reloadSidebarMessageChains');
-
             that.app.trigger('reloadSidebarTopics');
 
             that.app.get('cacheManager').start();
@@ -110,6 +113,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             //login subroutine
             that.app.set('login', false);
             that.app.get('cacheManager').stop();
+            that.app.get('cacheManager').emptyCache();
             that.app.set('username', null);
             that.app.get('topbarView').render();
             //why do I need this?

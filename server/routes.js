@@ -1348,7 +1348,9 @@ module.exports.checkLogin = function(request, response) {
 
 
             if (request.cookies['login'] && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+              //respond with token
               response.json({ login: true, token: result.rows[0].token, username: request.cookies['login'].split('/')[0] });
+
             } else {
               console.log('unauthorized access');
               response.json({});

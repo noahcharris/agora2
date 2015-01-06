@@ -68,8 +68,6 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
     this.$el.children('#parentInput').on('keyup', function(e) {
 
-      console.log('fjdas');
-
       var searchParameter = $('#parentInput').val();
 
       //SHOULD MAYBE THROTTLE THIS ???????
@@ -92,8 +90,6 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
               var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
               that.$el.append($element);
-
-
 
               (function() {
                 var x = data[i].name;
