@@ -240,6 +240,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
     $('#title').on('click', function() {
+      that.app.changeChannel('General');
       that.app.get('mapController').showWorld();
     });
 

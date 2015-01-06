@@ -407,15 +407,19 @@ img#fullscreenImage {
   padding: 0px;
 
 }
+.sidebarUsername {
+  cursor: pointer;
+}
 .toString {
+  cursor: pointer;
   font-family: 'clearThin';
   position: relative;
   font-size: 60%;
   margin: 0px;
   padding: 0px;
 }
-
 .fromString {
+  cursor: pointer;
   font-family: 'clearThin';
   position: relative;
   font-size: 60%;

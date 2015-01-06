@@ -92,7 +92,30 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       e.stopPropagation();
 
     });
-      
+
+    var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.toString');
+    $toString.on('click', function(e) {
+
+      that.app.get('mapController').goToPath(that.model.location);
+
+
+      e.stopPropagation();
+    });
+    var $fromString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.fromString');
+    $fromString.on('click', function(e) {
+
+      if (that.model.authororigin) {
+        that.app.get('mapController').goToPath(that.model.authororigin);
+      }
+
+      e.stopPropagation();
+    });
+    var $channelString = that.$el.children('.topString').children('.sidebarChannelString');
+    $channelString.on('click', function(e) {
+
+      that.app.changeChannel(that.model.channel);
+      e.stopPropagation();
+    });
 
 
     var mouseoverHandler = _.once(function () {

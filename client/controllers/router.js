@@ -39,29 +39,29 @@ Agora.Router = Backbone.Router.extend({
       },
       success: function(model) {
         that.app.get('detailView').displayed = 'Topics';
-        that.app.get('content2').show(that.app.get('detailView'), model);
         that.app.get('mapController').goToPath(model.location);
         that.app.changeChannel(model.channel);
-        // thet.$el.addClass('highlight');
+        
+        //need to insert topic into the front of the topics collection
+        that.app.get('sidebarView').displayed = 'Topics-Top';
+        //use this crazy callback shit to highlight
+        var cb = function() {
+          var subViews = that.app.get('sidebarView').subViews;
+          for (var i=0; i < subViews.length ;i++) {
+            if (subViews[i].model.id === model.id) {
+              subViews[i].$el.addClass('highlight');
+              //maybe scroll also here
+            }
+          }
+        };
+        that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+        that.app.get('content2').show(that.app.get('detailView'), model);
       },
       error: function() {
         alert('ajax error');
       }
     });
 
-    //need to insert topic into the front of the topics collection
-    that.app.get('sidebarView').displayed = 'Topics-Top';
-    //use this crazy callback shit to highlight
-    var cb = function() {
-      var subViews = that.app.get('sidebarView').subViews;
-      for (var i=0; i < subViews.length ;i++) {
-        if (subViews[i].model.id === model.id) {
-          subViews[i].$el.addClass('highlight');
-          //maybe scroll also here
-        }
-      }
-    };
-    that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
 
   },
 
