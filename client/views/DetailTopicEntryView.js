@@ -119,36 +119,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     var $userString = this.$el.children('#conversationWrapper').children('.topicBox').children('.topicTopString').children('#detailUserString');
     $userString[0].onclick = function() {
-
-
-      $.ajax({
-        url: 'http://liveworld.io:80/user',
-        // url: 'http://localhost:80/user',
-        method: 'GET',
-        crossDomain: true,
-        data: {
-          username: that.model.username,
-          //so that this is never cached
-        },
-        success: function(data) {
-          if (data) {
-
-            console.log('whaaa');
-            that.app.get('detailView').displayed = 'Users';
-            console.log('server returned: ', data);
-
-            //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
-
-            that.app.get('content2').show(that.app.get('detailView'), data[0]);
-          } else {
-            console.log('no data returned from server');
-          }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
-
-      });
-
+      that.goToUser(that.model.username);
     };
 
     var $channelString = this.$el.children('#conversationWrapper').children('.topicBox').children('.topicTopString').children('#detailChannelString');;
@@ -226,6 +197,17 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       
       //CREATE AND APPEND COMMENT TO OUTERBOX
       var $comment = $(this.commentTemplate(comments[i]));
+
+      (function() {
+        var x = comments[i].username;
+        var $commentUserString = $comment.children('.commentTopString').children('.detailCommentUserString');
+        $commentUserString[0].onclick = function() {
+          that.goToUser(x);
+        };
+      })();
+
+
+
       this.$el.children('#conversationWrapper').append( $comment );
 
       var commentContentBox = $comment.children('.detailCommentClear').children('.commentContentBox');
@@ -363,6 +345,14 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       for (var j=0;j < comments[i].responses.length;j++) {
 
         var $response = $(this.responseTemplate(comments[i].responses[j]));
+
+        (function() {
+          var x = comments[i].responses[j].username;
+          var $responseUserString = $response.children('.responseTopString').children('.detailResponseUserString');
+          $responseUserString[0].onclick = function() {
+            that.goToUser(x);
+          };
+        })();
 
         var $upvote = $response.children('img');
         (function() {
@@ -522,6 +512,14 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
 
+          (function() {
+            var x = comments[i].responses[j].replies[k].username;
+            var $replyUserString = $reply.children('.replyTopString').children('.detailReplyUserString');
+            $replyUserString[0].onclick = function() {
+              that.goToUser(x);
+            };
+          })();
+
 
 
           var $upvote = $reply.children('img');
@@ -658,6 +656,38 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     setTimeout(throttledResize, 20);
 
 
+  },//end render()
+
+
+  goToUser: function(user) {
+    var that = this;
+    $.ajax({
+      url: 'http://liveworld.io:80/user',
+      // url: 'http://localhost:80/user',
+      method: 'GET',
+      crossDomain: true,
+      data: {
+        username: user,
+        //so that this is never cached
+      },
+      success: function(data) {
+        if (data) {
+
+          console.log('whaaa');
+          that.app.get('detailView').displayed = 'Users';
+          console.log('server returned: ', data);
+
+          //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
+
+          that.app.get('content2').show(that.app.get('detailView'), data[0]);
+        } else {
+          console.log('no data returned from server');
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
   },
 
 
