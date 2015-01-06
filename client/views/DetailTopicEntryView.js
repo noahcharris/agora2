@@ -120,8 +120,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     var $userString = this.$el.children('#conversationWrapper').children('.topicBox').children('.topicTopString').children('#detailUserString');
     $userString[0].onclick = function() {
 
-      console.log('heyyyy');
-
 
       $.ajax({
         url: 'http://liveworld.io:80/user',
