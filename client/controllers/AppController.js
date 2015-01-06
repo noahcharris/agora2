@@ -441,8 +441,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           that.set('token', data.token);
           that.set('login', true);
 
-          that.cacheManager.start();
-
           that.trigger('reloadSidebarContacts');
           //the last argument suppresses reloading of content1
           that.trigger('reloadSidebarMessageChains', undefined, true);

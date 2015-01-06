@@ -62,54 +62,61 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.append( $('<p>Channel:&nbsp' + that.app.get('channel') + '</p>'))
 
 
+    var ajaxing = false;
     this.$el.children('button').on('click', function() {
 
         if (that.app.get('login')) {
 
+          if (!ajaxing) {
+
+            ajaxing = true;
+
+            var fd = new FormData();    
+            console.log($('#imageInput'));
+            fd.append( 'file', $('#imageInput')[0].files[0] );
+            fd.append( 'username', that.app.get('username') );
+            fd.append( 'token', that.app.get('token') );
+            fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
+            fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
+            fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
+            fd.append( 'location', that.app.get('mapController').get('location') );
+            fd.append( 'origin', that.app.get('origin') );
+            fd.append( 'channel', that.app.get('channel') );
+
+            
+
+            $.ajax({
+              url: 'https://liveworld.io:443/createTopic',
+              // url: 'http://localhost/createTopic',
+              method: 'POST',
+              crossDomain: true,
+              xhrFields: {
+                withCredentials: true
+              },
+              contentType: false,
+              processData: false,
+              data: fd,
+              success: function(msg) {
+                alert(msg);
+                ajaxing = false;
+                //some weird shit going on here with detailView
+                that.app.get('sidebarView').displayed = 'Topics-New'
+                that.app.get('content2').hide();
+                that.app.trigger('reloadSidebarTopics');
+              },
+              error: function() {
+                alert('post creation failed');
+              }
+            });
 
 
-          var fd = new FormData();    
-          console.log($('#imageInput'));
-          fd.append( 'file', $('#imageInput')[0].files[0] );
-          fd.append( 'username', that.app.get('username') );
-          fd.append( 'token', that.app.get('token') );
-          fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
-          fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
-          fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
-          fd.append( 'location', that.app.get('mapController').get('location') );
-          fd.append( 'origin', that.app.get('origin') );
-          fd.append( 'channel', that.app.get('channel') );
-
-          
-
-          $.ajax({
-            url: 'https://liveworld.io:443/createTopic',
-            // url: 'http://localhost/createTopic',
-            method: 'POST',
-            crossDomain: true,
-            xhrFields: {
-              withCredentials: true
-            },
-            contentType: false,
-            processData: false,
-            data: fd,
-            success: function(msg) {
-              alert(msg);
-              //some weird shit going on here with detailView
-              that.app.get('sidebarView').displayed = 'Topics-New'
-              that.app.get('content2').hide();
-              that.app.trigger('reloadSidebarTopics');
-            },
-            error: function() {
-              alert('post creation failed');
-            }
-          });
+          }
 
         } else {
           alert('must be logged in to create a topic');
         }
 
-    });
+    });//end create topic button
 
 
 
