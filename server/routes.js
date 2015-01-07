@@ -1876,6 +1876,7 @@ module.exports.getRecentLocations = function(request, response) {
     response.end('not authorized');
   });
 
+
 };
 
 
@@ -1916,11 +1917,9 @@ module.exports.getRecentChannels = function(request, response) {
     });
 
 
+
+
 };
-
-
-
-
 
 
 module.exports.getContactTopics = function(request, response) {
@@ -3044,6 +3043,22 @@ module.exports.upvoteReply = function(request, response) {
 
   
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

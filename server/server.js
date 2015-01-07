@@ -211,7 +211,7 @@ app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
 
 app.get('/recentLocations', routes.getRecentLocations);
-app.get('/recentChannels', routes.getRecentChannel);
+app.get('/recentChannels', routes.getRecentChannels);
 
 app.get('/contactTopics', routes.getContactTopics);
 

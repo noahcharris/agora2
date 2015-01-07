@@ -234,8 +234,13 @@ img#fullscreenImage {
 }
 
 .channelWrapper {
+  cursor: pointer;
   position: relative;
   color: #f8f8f8;
+}
+
+.locationWrapper {
+  cursor: pointer;
 }
 
 #channelInput {
