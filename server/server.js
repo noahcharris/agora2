@@ -210,6 +210,9 @@ app.post('/registerUser', routes.registerUser);
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
 
+app.get('/recentLocations', routes.getRecentLocations);
+app.get('/recentChannels', routes.getRecentChannel);
+
 app.get('/contactTopics', routes.getContactTopics);
 
 app.post('/updateUserProfile', routes.updateUserProfile);

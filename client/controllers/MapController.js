@@ -725,39 +725,30 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   addCities: function() {
 
-
-
-
     var greenIcon = L.icon({
-        iconUrl: '/resources/images/leaf-green.png',
+        iconUrl: '/resources/images/city.png',
         shadowUrl: '/resources/images/leaf-shadow.png',
 
-        iconSize:     [38, 95], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        iconSize:     [32, 40], // size of the icon
+        shadowSize:   [0, 0], // size of the shadow
+        iconAnchor:   [8, 17], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
-
-
     //L.marker([51.5, -0.09], {icon: greenIcon}).addTo(this.get('map'));
-
-
-
-
 
     var that = this;
     if (!this.get('cities')) {  //always use this if/else to avoid initializing the polygons more than once
       var citiesLayer = L.layerGroup();
       for (var i=0;i<cities.features.length;i++) {
-        var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
-          color:'#fa9e25',
-          fillOpacity: 0.2,
-          opacity: 0.5
-        });
+        // var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
+        //   color:'#fa9e25',
+        //   fillOpacity: 0.2,
+        //   opacity: 0.5
+        // });
 
-        // var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
-        //  {icon: greenIcon}).addTo(this.get('map'));
+        var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
+         {icon: greenIcon});//.addTo(this.get('map'));
         
         circle.city = cities.features[i].properties.city;
         circle.on('click', function(e) {

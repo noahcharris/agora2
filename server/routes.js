@@ -1841,7 +1841,82 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 
 
 
+module.exports.getRecentLocations = function(request, response) {
 
+  var queryArgs = url.parse(request.url, true).query;
+
+  var deferred = Q.defer();
+
+  console.log(queryArgs);
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+          //authorized
+          deferred.resolve()
+
+        } else {
+          deferred.reject(new Error('authorization failed for getContactTopics'));
+        }
+
+      }
+  });
+
+  return deferred.promise
+  .then(function() {
+
+    //query for and return locations
+
+
+  }, function() {
+    response.end('not authorized');
+  });
+
+};
+
+
+module.exports.getRecentChannels = function(request, response) {
+
+    var queryArgs = url.parse(request.url, true).query;
+
+    var deferred = Q.defer();
+
+    console.log(queryArgs);
+
+    client.query("SELECT * FROM securityJoin WHERE username = $1;",
+      [queryArgs.username],
+      function(err, result) {
+        if (err) {
+          console.log('error selecting from securityJoin: ', err);
+        } else {
+          if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+            //authorized
+            deferred.resolve()
+
+          } else {
+            deferred.reject(new Error('authorization failed for getContactTopics'));
+          }
+
+        }
+    });
+
+    return deferred.promise
+    .then(function() {
+
+      //query for and return channels
+
+
+
+    }, function() {
+      response.end('not authorized');
+    });
+
+
+};
 
 
 

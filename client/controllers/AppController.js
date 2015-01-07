@@ -458,6 +458,38 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
 
+
+    //ESCAPE KEY BEHAVIOR
+
+    // $(window).keypress(function(e) {
+
+    //   console.log(e);
+
+
+    // });
+
+
+
+    $(document).keyup(function(e) {
+
+      if (e.keyCode == 27) {
+        that.get('content2').hide();
+      }   // esc
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
   },//END CONTROLLER INITIALIZE
 

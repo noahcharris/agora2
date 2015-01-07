@@ -139,5 +139,37 @@ this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
 
 
+//HIDING OFFSCREEN MARKERS
+
+var myMarkers = [... this is an array of all the L.Marker for your data... ];
+
+map.on('moveend', placeMarkersInBounds);
+
+placeMarkersInBounds();
+
+function placeMarkersInBounds() {
+    var mapBounds = map.getBounds();
+    for (var i = myMarkers.length -1; i >= 0; i--) {
+        var m = myMarkers[i];
+        var shouldBeVisible = mapBounds.contains(m.getLatLng());
+        if (m._icon && !shouldBeVisible) {
+            map.removeLayer(m);
+        } else if (!m._icon && shouldBeVisible) {
+            map.addLayer(m);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
