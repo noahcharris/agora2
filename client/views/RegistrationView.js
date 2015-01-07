@@ -11,7 +11,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     this.app = appController;
     this.template = _.template( $('#registrationViewTemplate').html() );
     this.$el.addClass('detailView');
-    this.resizeHandler = null;
+    this.enterHandler = null;
   },
 
   render: function() {
@@ -100,7 +100,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     };
 
 
-    this.resizeHandler = $(window).keypress(function(e) {
+    this.enterHandler = $(window).keypress(function(e) {
 
       if (e.keyCode === 13 && $('#loginPasswordInput').is(':focus')) {
 
@@ -178,6 +178,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
   close: function() {
     console.log('registrationView closing');
     console.log(this);
+    this.enterHandler.unbind();
     this.remove();
   }
 

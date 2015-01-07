@@ -15,6 +15,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     this.messageInputTemplate = _.template( $('#messageInputBoxTemplate').html() );
     this.app = appController;
     this.timer = null;
+    this.enterHandler = null;
   },
 
   render: function(contact) {
@@ -60,7 +61,8 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     var $sendButton = this.$el.children('#messageInputBox').children('#messageInputBoxButton');
 
     var ajaxing = false;
-    $sendButton[0].onclick = function() {
+
+    var sendHandler = function() {
 
       if (!ajaxing) {
 
@@ -82,7 +84,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
           },
           success: function(data) {
             if (data) {
-              alert(data);
+              //alert(data);
               ajaxing = false;
               $('#messageInputTextArea').val('');
 
@@ -103,6 +105,26 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
         
       }
 
+    }
+
+
+    this.enterHandler = function(e) {
+
+      if (e.keyCode === 13 && $('#messageInputTextArea').is(':focus') && $('#messageInputTextArea').val() !== '') {
+
+        sendHandler();
+
+      }
+
+    };
+
+
+    $(window).keypress(this.enterHandler);
+
+
+    $sendButton[0].onclick = function() {
+
+      sendHandler();
 
 
     };//end sendbutton onclick
@@ -119,6 +141,11 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     //need to loop through and set out all the messages in the object
 
 
+    setTimeout(function() {
+      $('#messageInputTextArea').focus();
+    }, 1000);
+
+
 
 
 
@@ -126,8 +153,10 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
   },
 
   close: function() {
+    console.log('closing message view');
     clearInterval(this.timer);
     this.remove();
+    $(window).unbind('keypress', this.enterHandler);
     this.unbind();
   }
 

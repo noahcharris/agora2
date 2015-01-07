@@ -461,20 +461,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //ESCAPE KEY BEHAVIOR
 
-    // $(window).keypress(function(e) {
-
-    //   console.log(e);
-
-
-    // });
-
-
-
     $(document).keyup(function(e) {
 
       if (e.keyCode == 27) {
         that.get('content2').hide();
-      }   // esc
+      } 
+
     });
 
 
@@ -717,6 +709,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //MODEL 2 is some bullshittttttt
     region.show = function(view, model, extra) {
 
+      //debugger;
+
 
       //if we're showing a topic we have to do some dumb shit apparently
       var renderMethod;
@@ -810,20 +804,23 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     region.hide = function() {
+      //debugger;
       if (that.get('expanded')) {
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
+          console.log('WHHAHAHAHHAHA');
+          //debugger;
           if (currentView && currentView.close) {
             currentView.close();
           }
           currentView = null;
+          $('#sidebarContainer').unbind();
         });
         
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
         $('#sidebarContainer').css('width', sideWidth+'px');
         that.set('expanded', false);
-        $('#sidebarContainer').unbind();
       } else {
         if (currentView && currentView.close) {
           currentView.close();
