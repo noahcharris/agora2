@@ -163,10 +163,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     //pressing enter should trigger search
 
-    var searching = false;
-    $('#searchButton').on('click', function() {
-
-
+    var searchHandler = function() {
 
         switch ($('#searchSelect').val()) {
           case 'Users':
@@ -183,10 +180,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
             break;
         }
 
-
-
-        //LOADER START HERE
-        console.log('loader start');
         $.ajax({
           url: 'http://liveworld.io:80/' + urlSuffix,
           // url: 'http://localhost:80/' + urlSuffix,
@@ -201,11 +194,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
               that.app.get('sidebarView').searchCollection = data;
               that.app.get('sidebarView').displayed = 'Search';
               content1.show(that.app.get('sidebarView'));
-              //LOADER STOP HERE
-              console.log('loader stop');
             } else {
               alert('search returned no data');
-              //LOADER STOP HERE
             }
           }, error: function(err) {
             console.log('ajax error ocurred: ', err);
@@ -213,28 +203,25 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
         });
 
+    }
 
 
 
 
-      // if (!searching) {
-      //   searching = true;
-      //   $('#searchInput').val('');
-      //   that.app.get('alertView').mode = 'Search';
-      //   that.app.get('content2').show(that.app.get('alertView'));
-      //   //to simulate search time
-      //   setTimeout(function() {
-      //     //if failed, display the search failed template on alertView
 
-      //     //if successful, load the search results setup
-      //     //updated the search collection AND then:
-      //     that.app.get('sidebarView').displayed = 'All';
-      //     that.app.get('content2').show(that.get('detailView'));
-      //     that.app.get('content1').show(that.get('sidebarView'));
-      //     searching = false;
-      //   },2000);
-        
-      // }
+    $(window).keypress(function(e) {
+
+      if (e.keyCode === 13 && $('#searchInput').is(':focus')) {
+
+        searchHandler();
+
+
+      }
+
+    });
+
+    $('#searchButton').on('click', function() {
+      searchHandler();
     });
 
 

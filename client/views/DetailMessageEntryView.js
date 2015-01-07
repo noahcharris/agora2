@@ -126,8 +126,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
       sendHandler();
 
-
-    };//end sendbutton onclick
+    };
 
 
 

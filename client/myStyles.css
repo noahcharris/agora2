@@ -121,7 +121,7 @@ img#fullscreenImage {
   margin-right: 8px;
 }
 
-.username {
+#username {
   display: none;
   position: relative;
   float: right;
@@ -1262,7 +1262,8 @@ textarea {
     left:       100px;
     height:     40px;
     width:      40px;
-    background: url('http://i.stack.imgur.com/FhHRx.gif') no-repeat;
+    /*background: url('http://i.stack.imgur.com/FhHRx.gif') no-repeat;*/
+    background: url('http://liveworld.io/resources/images/loading.gif') no-repeat;
 }
 
 

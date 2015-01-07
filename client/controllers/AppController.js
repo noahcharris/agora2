@@ -413,10 +413,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $body.children('#loader').hide();
     $(document).on({
         ajaxStart: function() { 
-          $body.children('#loader').show();  
+          $body.children('#loader').show();
         },
         ajaxStop: function() { 
-          $body.children('#loader').hide();
+          //$body.children('#loader').hide();
         }    
     });
 
@@ -468,9 +468,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       } 
 
     });
-
-
-
 
 
 

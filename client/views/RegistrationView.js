@@ -100,7 +100,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     };
 
 
-    this.enterHandler = $(window).keypress(function(e) {
+    this.enterHandler = function(e) {
 
       if (e.keyCode === 13 && $('#loginPasswordInput').is(':focus')) {
 
@@ -109,7 +109,10 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
       }
 
-    });
+    };
+
+
+    $(window).keypress(enterHandler);
 
     $('#loginButton').on('click', function() {
 

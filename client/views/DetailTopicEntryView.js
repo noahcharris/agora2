@@ -27,6 +27,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.responseContentBoxes = [];
     this.replyContentBoxes = [];
 
+    this.enterHandler = null;
   },
 
   render: function() {
@@ -705,8 +706,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $('#inputBox').css('height', '100px');
 
 
+
+
+
     var ajaxing = false;
-    $('#inputBoxButton')[0].onclick = function() {
+    var sendHandler = function() {
 
       if (!ajaxing) {
 
@@ -717,11 +721,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           fd.append( 'username', that.app.get('username') );
           fd.append( 'token', that.app.get('token') );
 
-          fd.append( 'headline', $(this).parent().children('textarea#inputHeadlineTextArea').val() );
+          fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
 
-          fd.append( 'link', $(this).parent().children('textarea#inputTextArea').val() );
+          fd.append( 'link', $('textarea#inputTextArea').val() );
 
-          fd.append( 'contents', $(this).parent().children('textarea#inputTextArea').val() );
+          fd.append( 'contents', $('textarea#inputTextArea').val() );
 
           fd.append( 'location', data.location );
           //fd.append( 'origin', that.app.get('origin') );
@@ -730,7 +734,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           fd.append( 'topicId', data.topicId );
           fd.append( 'commentId', data.commentId );
           fd.append( 'responseId', data.responseId );
-
 
           //whaaaa
           var thet = this;
@@ -794,16 +797,33 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
+    this.enterHandler = function(e) {
+
+      if (e.keyCode === 13 && $('#inputTextArea').is(':focus') && $('#inputTextArea').val() !== '') {
+
+        sendHandler();
+
+      }
+
+    };
+
+
+    $(window).keypress(this.enterHandler);
+
+    console.log(this.$el);
+    this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
+
+      sendHandler();
+
+    };
+
+    
   },
 
-  //for selecting different replies/comments/topics
-  respondTo: function(data) {
-
-  },
 
   closeInputBox: function() {
     //why lol
-    console.log('whooaahahahah');
+    $(window).unbind('keypress', this.enterHandler);
     this.responding = false;
     $('#inputBox').css('height', '0px');
 
@@ -814,6 +834,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   close: function() {
+    console.log('CLOSING DETAIL TOPIC ENTRY VIEW');
+    this.closeInputBox;
+    $(window).unbind('keypress', this.enterHandler);
     this.$el.empty();
     this.remove();
     this.unbind();
