@@ -66,7 +66,7 @@
 
     <script id="sidebarTopicEntryTemplate" type="text/template">
 
-     <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername">User:&nbsp<%= username %></span>&nbsp Chan:&nbsp<span class="sidebarChannelString"><%= channel %></span></p>
+     <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername">User:&nbsp<%= username %></span>&nbsp Channel:&nbsp<span class="sidebarChannelString"><%= channel %></span></p>
      <div class="sidebarFloatClear">
       <img class="sidebarTopicImage"></img>
       <div class="contentAndToFromWrapper">
@@ -329,7 +329,7 @@
     <!--channel creation-->
     <script id="channelCreationTemplate" type="text/template">
       <br/>
-      <input id="channelNameInput" placeholder="Topic Name"></input>
+      <input id="channelNameInput" placeholder="Channel Name"></input>
       <br/><br/>
       This group is 
       <form action="">
@@ -339,7 +339,7 @@
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
-      <input id="parentInput" placeholder="Parent Topic"></input><br/>
+      <input id="parentInput" placeholder="Parent Channel"></input><br/>
       <button id="nextButton">Next</button>
     </script>
 
@@ -542,6 +542,7 @@
     </div>
 
     <div id="loader"></div>
+    <div id="loaderMask"></div>
       
 
 

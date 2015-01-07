@@ -1268,6 +1268,17 @@ textarea {
     /*background-color: green;*/
 }
 
+#loaderMask {
+  background-color: #f8f8f8;
+  position:   absolute;
+  z-index:    1001;
+  opacity: 0.5;
+  top:        20px;
+  left:       100px;
+  height:     40px;
+  width:      40px;
+}
+
 
 
 

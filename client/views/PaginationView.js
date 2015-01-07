@@ -21,7 +21,6 @@ Agora.Views.PaginationView = Backbone.View.extend({
     this.$el.append( this.template() );
 
     this.$el.children('.paginationIcon').on('click', function() {
-      alert($(this).attr('name'));
 
       that.app.get('sidebarView').page =  parseInt($(this).attr('name'));
 
@@ -41,7 +40,6 @@ Agora.Views.PaginationView = Backbone.View.extend({
 
 
     this.$el.children('#paginationNextButton').on('click', function() {
-      alert(that.app.get('sidebarView').page + 1);
 
       that.app.get('sidebarView').page =  that.app.get('sidebarView').page + 1;
 

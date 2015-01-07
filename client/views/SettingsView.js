@@ -102,7 +102,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($locationCreationButton);
 
-    var $channelCreationButton = $('<button>Create Topic</button>');
+    var $channelCreationButton = $('<button>Create Channel</button>');
     $channelCreationButton.on('click', function() {
       //alert('Channel creation coming soon. For now, please send channel creation requests to ...');
       that.app.get('detailView').displayed = 'CreateChannel';
