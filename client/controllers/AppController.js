@@ -416,7 +416,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $body.children('#loader').show();
         },
         ajaxStop: function() { 
-          //$body.children('#loader').hide();
+          $body.children('#loader').hide();
         }    
     });
 
