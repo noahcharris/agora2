@@ -30,6 +30,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //this holds the user-created points currently loaded on the map
     this.pointsLayer = L.layerGroup();
 
+    this.markerLayer = null;
+
 
     var southWest = L.latLng(-90, -300);
     var northEast = L.latLng(90, 300);
@@ -176,9 +178,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     map.on('moveend', function() {
       if (map.getZoom() > 7) {
         center = map.getCenter();
-        that.addPointsWithinRadius(center.lat, center.lng);
+        console.log(center);
+        that.addPlacesWithinRadius(center.lat, center.lng);
       } else {
-        that.removePoints();
+        that.removePlaces();
       }
     });
 
@@ -638,22 +641,21 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.removeCities();
     //remove all map features
 
-    var markerLayer = L.layerGroup();
+    this.markerLayer = L.layerGroup();
 
     this.handler = function(e) {
       that.placedLatitude = e.latlng.lat;
       that.placedLongitude = e.latlng.lng;
-      markerLayer.clearLayers();
-      markerLayer.addLayer(L.marker(e.latlng));
-      markerLayer.addTo(that.get('map'));
+      that.markerLayer.clearLayers();
+      that.markerLayer.addLayer(L.marker(e.latlng));
+      that.markerLayer.addTo(that.get('map'));
     };
     this.get('map').on('click', this.handler);
   },
 
   stopPlacing: function() {
-    //this.get('map').off('click.placingPoints');
     this.get('map').off('click', this.handler);
-    //remove the click handler
+    this.markerLayer.clearLayers();
   },
 
   
@@ -667,50 +669,56 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   // ## ADDING AND REMOVING FEATURES ##
   //###################################
 
-  addPointsWithinRadius: function(latitude, longitude) {
+  addPlacesWithinRadius: function(latitude, longitude) {
+
+    console.log('CHECKIGN FOR POINTXXX');
 
     var that = this;
 
     $.ajax({
-      url: 'points',
+      //this is not for 'placing' points, it is retrieving points of 'Places'
+      url: 'http://liveworld.io:80/placePoints',
       method: 'GET',
-      data: { latitude: latitude, longitude: longitude },
+      data: { 
+        latitude: latitude,
+        longitude: longitude
+      },
       success: function(data) {
+
+        console.log('POINTSSZZZZZ::::: ', data);
         that.pointsLayer.clearLayers();
-        for (var i=0;i<data.length;i++) {
-          //apparently longitude comes first when instantiating a marker?
-          var what = data[i];
-          var marker = L.marker([data[i].latitude, data[i].longitude], {
-            title: 'marker'
-          });
-          marker.on('click', function(e) {
 
-            // ### GOING TO GROUP WHEN YOU CLICK THE MARKER ###
+        if (data.length) {
 
-            console.log('hello');
-            console.log(e);
-            that.get('map').setView(e.latlng);
-            that.set('location', what.location);
-            //will this variable name be renamed?
-            that.set('group', what.name);
-            that.app.get('sidebarView').displayed = 'GroupTopics';
-            that.trigger('reloadGroupSidebar', {
-              location: what.location,
-              group: what.name
+          for (var i=0;i<data.length;i++) {
+            //apparently longitude comes first when instantiating a marker?
+            var what = data[i];
+            var marker = L.marker([data[i].latitude, data[i].longitude], {
+              title: 'marker'
             });
+            marker.on('click', function(e) {
+
+              // ### GOING TO GROUP WHEN YOU CLICK THE MARKER ###
+
+              console.log('hello');
+              console.log(e);
+              that.get('map').setView(e.latlng);
+              that.set('location', what.location);
+              //will this variable name be renamed?
 
 
+              //probably need to change locationView, reloadSidebar, and firbounds to the point,
+              //don't go through goToPath, it will not center on the marker
 
-            //probably need to change locationView, reloadSidebar, and firbounds to the point,
-            //don't go through goToPath, it will not center on the marker
 
+              // ###################################
+            });
+            that.pointsLayer.addLayer(marker);
+            that.pointsLayer.addTo(that.get('map'));
+          }
 
-            // ###################################
-          });
-          that.pointsLayer.addLayer(marker);
-          that.pointsLayer.addTo(that.get('map'));
         }
-
+          
       }
     });
     //AJAX call to the server, get back the cities,
@@ -718,9 +726,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //load them
   },
 
-  removePoints: function() {
+  removePlaces: function() {
     this.pointsLayer.clearLayers();
   },
+
 
 
   addCities: function() {
@@ -768,7 +777,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           }
         });
         circle.on('mouseover', function(e) {
-          console.log('city: ',e);
           var data = {
             name: e.target.city
           }
@@ -929,7 +937,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
         //put the mouseover code in here for now
         //var x = e.originalEvent.pageX - that.app.get('sidebarView').$el.width();
-        console.log(e);
         var data = {
           name: e.target.feature.properties.name
         }

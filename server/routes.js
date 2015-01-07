@@ -883,11 +883,23 @@ module.exports.getMessageChain = function(request, response) {
 
 
 module.exports.getPoints = function(request, response) {
-  // var queryArgs = url.parse(request.url, true).query;
+  var queryArgs = url.parse(request.url, true).query;
+
   // postgres.retrievePointsWithinRadius(queryArgs.latitude, queryArgs.longitude, function(data) {
   //   response.json(data);
   // });
-  response.json([]);
+
+  client.query("SELECT * FROM locations "
+    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);", function(err, result) {
+    if (err) {
+      console.log('error retrieving points: ', err);
+      response.end('server error');
+    } else {
+      response.json(result.rows);
+    }
+  });
+
+
 };
 
 
@@ -2697,10 +2709,10 @@ module.exports.createLocation = function(request, response) {
 
                     
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                +" creator, population, rank, public, pointGeometry) "
-                +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269));",
+                +" creator, population, rank, public, pointGeometry, latitude, longitude) "
+                +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
                 [xssValidator(request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-                request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')'],
+                request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
                 function(err, result) {
                   if (err) {
                     console.log('error inserting into locations: ', err);

@@ -172,7 +172,7 @@ app.get('/messages', routes.getMessageChains);
 app.get('/messageChain', routes.getMessageChain);
 
 //MAP POINTS
-app.get('/points', routes.getPoints);
+app.get('/placePoints', routes.getPoints);
 
 app.get('/heatPoints', routes.getHeatPoints);
 
