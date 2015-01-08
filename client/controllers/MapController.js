@@ -729,7 +729,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   addPlacesWithinRadius: function(latitude, longitude) {
 
-    console.log('CHECKIGN FOR POINTXXX');
 
     var that = this;
 
@@ -748,23 +747,44 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
         if (data.length) {
 
+
+          //CHECK TO SEE WHAT ZOOM LEVEL WE ARE AT AND PUT DOWN EITHER CIRCLES OR ICONS DEPENDING
+
+          var placeIcon = L.icon({
+              iconUrl: '/resources/images/house.png',
+              shadowUrl: '/resources/images/leaf-shadow.png',
+
+              iconSize:     [17, 20], // size of the icon
+              shadowSize:   [0, 0], // size of the shadow
+              iconAnchor:   [8.5, 19], // point of the icon which will correspond to marker's location
+              shadowAnchor: [4, 62],  // the same for the shadow
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+          });
+
           for (var i=0;i<data.length;i++) {
-            //apparently longitude comes first when instantiating a marker?
-            var marker = L.marker([data[i].latitude, data[i].longitude], {
-              title: 'marker'
-            });
+
+            var latlng = L.latLng(data[i].latitude, data[i].longitude);
+
+            if (that.get('map').getZoom() < 12) {
+
+              var marker = L.circle(latlng, 250, {
+                color:'#0066FF',
+                fillOpacity: 0.3,
+                opacity: 0.5
+              });
+
+            } else {
+              var marker = L.marker(latlng, {icon: placeIcon});
+            }
 
             (function() { 
               var temp = data[i].name;
+              var temp2 = latlng;
               marker.on('click', function(e) {
-                // ### GOING TO PLACE WHEN YOU CLICK THE MARKER ###
                 that.get('map').setView(e.latlng);
+                that.get('map').setZoom(12);
                 that.set('location', temp);
                 that.app.trigger('reloadSidebarTopics', temp);
-                //will this variable name be renamed?
-                //probably need to change locationView, reloadSidebar, and firbounds to the point,
-                //don't go through goToPath, it will not center on the marker
-                // ###################################
               });
 
 
@@ -795,7 +815,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   addCities: function() {
 
-    var greenIcon = L.icon({
+
+
+
+    var cityIcon = L.icon({
         iconUrl: '/resources/images/city.png',
         shadowUrl: '/resources/images/leaf-shadow.png',
 
@@ -811,14 +834,20 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     if (!this.get('cities')) {  //always use this if/else to avoid initializing the polygons more than once
       var citiesLayer = L.layerGroup();
       for (var i=0;i<cities.features.length;i++) {
-        // var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
-        //   color:'#fa9e25',
-        //   fillOpacity: 0.2,
-        //   opacity: 0.5
-        // });
 
-        var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
-         {icon: greenIcon});//.addTo(this.get('map'));
+        //CHECK TO SEE WHAT ZOOM LEVEL WE ARE AT AND PUT DOWN EITHER CIRCLES OR ICONS DEPENDING
+
+        if (that.get('map').getZoom() < 10) {
+          var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
+            color:'#fa9e25',
+            fillOpacity: 0.2,
+            opacity: 0.5
+          });
+        } else {
+          var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
+           {icon: cityIcon});//.addTo(this.get('map')); 
+        }
+
         
         circle.city = cities.features[i].properties.city;
         circle.on('click', function(e) {
