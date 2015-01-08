@@ -200,7 +200,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
         zoomDestination = that.get('map').getZoom();
         if (zoomDestination > 3) {
-          if (!that.get('citiesOn'))
+          // if (!that.get('citiesOn'))
+            that.removeCities();
             that.addCities();
         };
         if (zoomDestination > 3 && zoomDestination < 8) {
@@ -208,7 +209,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             that.addStates();
         };
         if (zoomDestination < 4) {
-          if (that.get('citiesOn'))
+          // if (that.get('citiesOn'))
             that.removeCities();
         };
         if (zoomDestination < 4) {
@@ -769,7 +770,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
               var marker = L.circle(latlng, 250, {
                 color:'#0066FF',
-                fillOpacity: 0.3,
+                fillOpacity: 0.7,
                 opacity: 0.5
               });
 
@@ -782,7 +783,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               var temp2 = latlng;
               marker.on('click', function(e) {
                 that.get('map').setView(e.latlng);
-                that.get('map').setZoom(12);
+                that.get('map').setZoom(14);
+                L.Util.requestAnimFrame(that.get('map').invalidateSize, that.get('map'), false, that.get('map')._container)
                 that.set('location', temp);
                 that.app.trigger('reloadSidebarTopics', temp);
               });
@@ -833,24 +835,20 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     var that = this;
     if (!this.get('cities')) {  //always use this if/else to avoid initializing the polygons more than once
       var citiesLayer = L.layerGroup();
+      var citiesIconLayer = L.layerGroup();
       for (var i=0;i<cities.features.length;i++) {
 
-        //CHECK TO SEE WHAT ZOOM LEVEL WE ARE AT AND PUT DOWN EITHER CIRCLES OR ICONS DEPENDING
+        //CREATE TWO LAYER GROUPS AND CALL ONE OR THE OTHER DEPENDING
+        var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
+          color:'#fa9e25',
+          fillOpacity: 0.7,
+          opacity: 0.5
+        });
 
-        if (that.get('map').getZoom() < 10) {
-          var circle = L.circle(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates), 10000, {
-            color:'#fa9e25',
-            fillOpacity: 0.2,
-            opacity: 0.5
-          });
-        } else {
-          var circle = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
-           {icon: cityIcon});//.addTo(this.get('map')); 
-        }
+        var icon = L.marker(L.GeoJSON.coordsToLatLng(cities.features[i].geometry.coordinates),
+         {icon: cityIcon});//.addTo(this.get('map')); 
 
-        
-        circle.city = cities.features[i].properties.city;
-        circle.on('click', function(e) {
+        var clickHandler = function(e) {
           that.get('map').setZoom(12, { animate:false });
           that.get('map').panTo(e.target._latlng, { animate:false });
           that.set('location', e.target.city);
@@ -865,29 +863,54 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             that.set('group', undefined);
             that.app.trigger('reloadSidebarTopics', e.target.city);
           }
-        });
-        circle.on('mouseover', function(e) {
+        };
+        var mouseoverHandler = function(e) {
           var data = {
             name: e.target.city
           }
           that.showMapPopup(data);
-        });
-        circle.on('mouseout', function(e) {
+        };
+        var mouseoutHandler = function(e) {
           that.closeMapPopup();
-        });
+        };
+
+        
+        circle.city = cities.features[i].properties.city;
+        icon.city = cities.features[i].properties.city;
+
+        circle.on('click', clickHandler);
+        icon.on('click', clickHandler);
+
+        circle.on('mouseover', mouseoverHandler);
+        icon.on('mouseover', mouseoverHandler);
+
+        circle.on('mouseout', mouseoutHandler);
+        circle.on('mouseout', mouseoutHandler);
         citiesLayer.addLayer(circle);
+        citiesIconLayer.addLayer(icon);
       }
-      citiesLayer.addTo(this.get('map'));
+
+      if (that.get('map').getZoom() < 9) {      
+        citiesLayer.addTo(this.get('map'));
+      } else {
+        citiesIconLayer.addTo(this.get('map'));
+      }
       this.set('cities', citiesLayer);
+      this.set('cityIcons', citiesIconLayer);
       this.set('citiesOn', true);
     } else {
-      this.get('map').addLayer(this.get('cities'));
+      if (that.get('map').getZoom() < 9) {      
+        this.get('map').addLayer(this.get('cities'));
+      } else {
+        this.get('map').addLayer(this.get('cityIcons'));
+      }
       this.set('citiesOn', true);
     }
   },
 
   removeCities: function() {
     this.get('map').removeLayer(this.get('cities'));
+    this.get('map').removeLayer(this.get('cityIcons'));
     this.set('citiesOn', false);
   },
 

@@ -373,15 +373,21 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     throttledResize();
 
-    var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-    var sideWidth = $(window).width() - mapWidth;
-    $('#content1').css('width', sideWidth+'px');
+    setTimeout(function() {
 
-    //do i need this extra bit down here??
-    // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
-    var height = $(window).height() - $('#topbarWrapper').height();
-    $('#sidebarContainer').css('height', height);
-    //$('#map').css('height', height);
+
+      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+      var sideWidth = $(window).width() - mapWidth;
+      $('#content1').css('width', sideWidth+'px');
+
+      //do i need this extra bit down here??
+      // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
+      var height = $(window).height() - $('#topbarWrapper').height();
+      $('#sidebarContainer').css('height', height);
+      //$('#map').css('height', height);
+      
+    }, 100);
+
 
 
     //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
