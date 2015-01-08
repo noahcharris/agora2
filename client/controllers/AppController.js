@@ -322,6 +322,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     var throttledResize = _.throttle(function() {
 
+
+      //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
+      var height = $(window).height() - $('#topbarWrapper').height();
+      $('#sidebarContainer').css('height', height);
+      //$('#map').css('height', height);
+
+
       if ($(window).width() > 500) {
 
         that.set('mobile', false);
@@ -370,7 +377,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var sideWidth = $(window).width() - mapWidth;
     $('#content1').css('width', sideWidth+'px');
 
-
+    //do i need this extra bit down here??
+    // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
+    var height = $(window).height() - $('#topbarWrapper').height();
+    $('#sidebarContainer').css('height', height);
+    //$('#map').css('height', height);
 
 
     //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT

@@ -2732,7 +2732,7 @@ module.exports.createLocation = function(request, response) {
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
                 +" creator, population, rank, public, pointGeometry, latitude, longitude) "
                 +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                [xssValidator(request.body.parent+'/'+request.body.name, xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                [xssValidator(request.body.parent+'/'+request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
                 request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
                 function(err, result) {
                   if (err) {

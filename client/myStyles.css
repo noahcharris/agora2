@@ -288,6 +288,9 @@ img#fullscreenImage {
 }
 
 
+
+
+
 /*MAP*/
 
 #map {
@@ -303,6 +306,10 @@ img#fullscreenImage {
 
 
 
+
+
+
+
 #content1 {
   position: relative;
   height: 100%;
@@ -315,7 +322,7 @@ img#fullscreenImage {
   position: absolute;
   right: 0px;
   width: 510px;
-  height: 600px;
+  height: 100%;
   position: absolute;
   border-bottom-style: solid;
   border-left-style: solid;
