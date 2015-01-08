@@ -2728,11 +2728,17 @@ module.exports.createLocation = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+              //capitalize the name
+              var temp = request.body.name.split(' ');
+              for (var i=0; i < temp.length ;i++) {
+                temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+              }
+              var name = temp.join(' ');
                     
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
                 +" creator, population, rank, public, pointGeometry, latitude, longitude) "
                 +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                [xssValidator(request.body.parent+'/'+request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
                 request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
                 function(err, result) {
                   if (err) {
@@ -2776,10 +2782,16 @@ module.exports.createChannel = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+            //capitalize the name
+            var temp = request.body.name.split(' ');
+            for (var i=0; i < temp.length ;i++) {
+              temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+            }
+            var name = temp.join(' ');
                     
             client.query("INSERT INTO channels (type, name, description, parent) "
               +"VALUES ('Channel', $1, $2, $3);",
-              [xssValidator(request.body.parent+'/'+request.body.name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+              [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
               function(err, result) {
                 if (err) {
                   console.log('error inserting into channels: ', err);

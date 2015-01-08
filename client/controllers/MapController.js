@@ -909,8 +909,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
 
   removeCities: function() {
-    this.get('map').removeLayer(this.get('cities'));
-    this.get('map').removeLayer(this.get('cityIcons'));
+    if (this.get('cities')) {    
+      this.get('map').removeLayer(this.get('cities'));
+      this.get('map').removeLayer(this.get('cityIcons'));
+    }
     this.set('citiesOn', false);
   },
 
@@ -1006,7 +1008,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
 
   removeStates: function() {
-    this.get('map').removeLayer(this.get('states'));
+    if (this.get('states'))
+      this.get('map').removeLayer(this.get('states'));
     this.set('statesOn', false);
   },
 
@@ -1124,8 +1127,14 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
 
   removeCountries: function() {
-    this.get('map').removeLayer(this.get('countries'));
+    if (this.get('countries'))
+      this.get('map').removeLayer(this.get('countries'));
     this.set('countriesOn', false);
   }
 
 });
+
+
+
+
+
