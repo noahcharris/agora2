@@ -2666,18 +2666,6 @@ module.exports.createReply = function(request, response) {
 
 
 module.exports.createLocation = function(request, response) {
-  // postgres.createGroup(request.body.location, request.body.latitude, request.body.longitude,
-  //   request.body.name, request.body.description, request.body.creator,
-  //   request.body.public, request.body.open, function(success) {
-  //     if (success) {
-  //       response.end('group successfully created');
-  //     } else {
-  //       response.end('error creating group');
-  //     }
-  //   });
-
-
-
 
 
   client.query("SELECT * FROM securityJoin WHERE username = $1;",
@@ -2695,6 +2683,10 @@ module.exports.createLocation = function(request, response) {
                 temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
               }
               var name = temp.join(' ');
+
+              //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
+              //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
+
                     
               client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
                 +" creator, population, rank, public, pointGeometry, latitude, longitude) "
