@@ -612,6 +612,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             var coords = L.latLng(data[0].latitude, data[0].longitude);
             that.get('map').panTo(coords);
             that.set('location', path);
+            that.app.trigger('reloadSidebarTopics', path);
           } else {
           }
         }, error: function(err) {
@@ -710,27 +711,30 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
           for (var i=0;i<data.length;i++) {
             //apparently longitude comes first when instantiating a marker?
-            var what = data[i];
             var marker = L.marker([data[i].latitude, data[i].longitude], {
               title: 'marker'
             });
-            marker.on('click', function(e) {
 
-              // ### GOING TO GROUP WHEN YOU CLICK THE MARKER ###
+            (function() { 
+              var temp = data[i].name;
+              marker.on('click', function(e) {
+                // ### GOING TO PLACE WHEN YOU CLICK THE MARKER ###
+                that.get('map').setView(e.latlng);
+                that.set('location', temp);
+                that.app.trigger('reloadSidebarTopics', temp);
+                //will this variable name be renamed?
+                //probably need to change locationView, reloadSidebar, and firbounds to the point,
+                //don't go through goToPath, it will not center on the marker
+                // ###################################
+              });
 
-              console.log('hello');
-              console.log(e);
-              that.get('map').setView(e.latlng);
-              that.set('location', what.location);
-              //will this variable name be renamed?
 
 
-              //probably need to change locationView, reloadSidebar, and firbounds to the point,
-              //don't go through goToPath, it will not center on the marker
+
+              
+            })();
 
 
-              // ###################################
-            });
             that.pointsLayer.addLayer(marker);
             that.pointsLayer.addTo(that.get('map'));
           }
