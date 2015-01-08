@@ -134,8 +134,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
           entryView.renderTopic();
           var $listItem = $('<li class="recentlyPostedItem"></li>');
           $listItem.append(entryView.$el);
-          console.log($listItem);
-          console.log($('#recentlyVisted'));
           $('#recentlyVisited').append($listItem);
 
           (function() {

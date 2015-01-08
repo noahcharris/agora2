@@ -266,11 +266,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
+
+  //NEED TO CHANGE THIS WHEN I ADD IN THE USER-PLACES
+
   showHeatPoint: function(location, occurrences) {
     var that = this;
-
-    console.log(location, occurrences);
-
 
     var greenIcon = L.icon({
         iconUrl: '/resources/images/logo.png',
@@ -296,22 +296,14 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
       var countries = this.get('countries') || {};
 
-      console.log(countries);
-
       var countryName = location;
       for (var key in countries._layers) {
         if (countries._layers[key].feature.properties.name === countryName) {
-          console.log('HEATPOINT AT: ', countries._layers[key].getBounds().getCenter());
-          // if (location === 'World/United States') {
-          //   var circle = L.marker(that.usBounds.getCenter(),
-          //   {icon: greenIcon}).addTo(this.get('map'));
-          // } else {
-          //   var circle = L.marker(countries._layers[key].getBounds().getCenter(),
-          //   {icon: greenIcon}).addTo(this.get('map'));
-          // }
-          // circle.on('click', function(e) {
-          //   that.goToPath(location);
-          // });
+
+
+
+
+
         }
       }
 
@@ -330,7 +322,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       var stateName = location;
       for (var key in states._layers) {
         if (states._layers[key].feature.properties.name === stateName) {
-          console.log('HEATPOINT AT: ', states._layers[key].getBounds().getCenter());
           // var circle = L.marker(states._layers[key].getBounds().getCenter(),
           // {icon: greenIcon}).addTo(this.get('map'));
           // circle.on('click', function(e) {
@@ -351,7 +342,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //put it at the coordinates of the city
       for (var key in cities._layers) {
         if (cities._layers[key].city === cityName) {
-          console.log('HEATPOINT AT: ', cities._layers[key]._latlng);
           var circle = L.marker(cities._layers[key]._latlng,
           {icon: greenIcon}).addTo(this.get('map'));
           circle.on('click', function(e) {
@@ -545,12 +535,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.app.get('sidebarView').displayed = 'Topics-Top';
 
     if (path.split('/').length === 1) {
+      //WORLD
       this.showWorld();
-    }
-
-
-    //COUNTRY
-    if (path.split('/').length === 2) {
+    } else if (path.split('/').length === 2) {
+      //COUNTRY
 
       var name = path
 
@@ -593,7 +581,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
 
     //IF IT'S A CITY
-    } else {
+    } else if (path.split('/').length === 3 || (path.split('/').length === 4 && path.split('/')[1] === 'United States')) {
 
       if (!this.get('cities')) {  //DON'T DO THIS PLEASE!!!!!!
         this.addCities();
@@ -606,6 +594,36 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           this.set('location', path);
         }
       }
+    } else {
+      //USE-GENERATED PLACE
+
+      //MAKE AN AJAX CALL TO GET LAT AND LNG OF THE PLACE
+      $.ajax({
+        url: 'http://liveworld.io:80/placeLatLng',
+        crossDomain: true,
+        method: 'GET',
+        data: {
+          name: path
+        },
+        success: function(data) {
+          if (data) {
+            that.get('map').setZoom(12);
+            console.log('wjeklajk: ', data[0].latitude, data[0].longitude);
+            var coords = L.latLng(data[0].latitude, data[0].longitude);
+            that.get('map').panTo(coords);
+            that.set('location', path);
+          } else {
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
+
+
     }
 
     if (!this.placing) {

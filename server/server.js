@@ -171,9 +171,11 @@ app.get('/contacts', routes.getContacts);
 app.get('/messages', routes.getMessageChains);
 app.get('/messageChain', routes.getMessageChain);
 
-//MAP POINTS
+//USER-CREATED POINTS
 app.get('/placePoints', routes.getPoints);
+app.get('/placeLatLng', routes.getPlaceLatLng);
 
+//HEAT POINTS (returns countries/states as well)
 app.get('/heatPoints', routes.getHeatPoints);
 
 //location profiles and user profiles and channel profiles

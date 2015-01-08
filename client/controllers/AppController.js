@@ -807,7 +807,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       if (that.get('expanded')) {
         $('#sidebarContainer').css('-webkit-transition-duration', '1s');
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
-          console.log('WHHAHAHAHHAHA');
           //debugger;
           if (currentView && currentView.close) {
             currentView.close();
@@ -979,7 +978,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (data.contactRequests) {
 
             console.log('CACHE MANAGER');
-            console.log('server returned: ', data);
 
             $('#notificationsButton').css('background-color', 'transparent');
 
