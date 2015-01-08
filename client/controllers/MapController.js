@@ -30,8 +30,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //this holds the user-created points currently loaded on the map
     this.pointsLayer = L.layerGroup();
 
+    //for placing points
     this.markerLayer = null;
 
+    //for topic hover highlighting
+    this.cityMarker = null;
+    this.placeMarker = null;
 
     var southWest = L.latLng(-90, -300);
     var northEast = L.latLng(90, 300);
@@ -402,8 +406,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   //LATER ON ADD A hightlightCountries function that does many at a time more efficiently
 
-
-
   highlightWorld: function() {
     var countries = this.get('countries') || {};
     for (var key in countries._layers) {
@@ -414,11 +416,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               // color: '#666',
               // dashArray: '',
               // fillOpacity: 0.8
-              weight: 0,
+              color: '#000000',
+              weight: 2,
               //color: '#666',
               dashArray: '',
               opacity: 1,
-              fillOpacity: 0.3
+              fillOpacity: 0.0
           });
 
 
@@ -443,15 +446,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     for (var key in countries._layers) {
       if (countries._layers[key].feature.properties.name === countryName) {
         countries._layers[key].setStyle({
-                // weight: 5,
-                // color: '#666',
-                // dashArray: '',
-                // fillOpacity: 0.8
-                weight: 0,
+                color: '#000000',
+                weight: 2,
                 //color: '#666',
                 dashArray: '',
                 opacity: 1,
-                fillOpacity: 0.3
+                fillOpacity: 0.0
             });
       }
     }
@@ -472,7 +472,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
                 weight: 5,
                 color: '#666',
                 dashArray: '',
-                fillOpacity: 0.8
+                opacity: 1,
+                fillOpacity: 0.0
             });
       }
     }
@@ -486,46 +487,40 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     }
   },
   highlightCity: function(cityName) {
+
+    console.log('trying to highlight: ', cityName);
+
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
-      // if (cities._layers[key].city === cityName) {
-      //   cities._layers[key].setStyle({
-      //           weight: 5,
-      //           color: '#666',
-      //           dashArray: '',
-      //           fillOpacity: 0.8
-      //       });
-      // }
+      if (cities._layers[key].city === cityName) {
+
+
+        this.cityMarker = L.layerGroup();
+        var marker = L.marker(cities._layers[key]._latlng);
+        this.cityMarker.addLayer(marker);
+        this.cityMarker.addTo(this.get('map'));
+
+      }
     }
   },
   removeHighlightCity: function(cityName) {
     var cities = this.get('cities') || {};
-    for (var key in cities._layers) {
-      // if (cities._layers[key].city === cityName) {
-      //   cities.resetStyle(cities._layers[key]);
-      // }
-    }
+    if (this.cityMarker)
+      this.get('map').removeLayer(this.cityMarker);
+
   },
-  hightlightPlace: function(placeName) {
-    var places = this.get('places') || {};
-    for (var key in places._layers) {
-      // if (places._layers[key].city === placeName) {
-      //   places._layers[key].setStyle({
-      //           weight: 5,
-      //           color: '#666',
-      //           dashArray: '',
-      //           fillOpacity: 0.8
-      //       });
-      // }
-    }
+  //need to pass in lat and long because we don't store it like the others
+  highlightPlace: function(placeName, latitude, longitude) {
+    if (this.placeMarker)
+      this.get('map').removeLayer(this.placeMarker);
+    this.placeMarker = L.layerGroup();
+    var marker = L.marker([latitude, longitude]);
+    this.placeMarker.addLayer(marker);
+    this.placeMarker.addTo(this.get('map'));
   },
   removeHighlightPlace: function(placeName) {
-    var places = this.get('places') || {};
-    for (var key in places._layers) {
-      if (places._layers[key].feature.properties.name === placeName) {
-        places.resetStyle(places._layers[key]);
-      }
-    }
+    if (this.placeMarker)
+      this.get('map').removeLayer(this.placeMarker);
   },
 
 

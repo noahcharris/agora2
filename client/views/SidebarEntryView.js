@@ -18,6 +18,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     this.channelTemplate = _.template( $('#sidebarChannelEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
     this.messageChainTemplate = _.template( $('#sidebarMessageChainEntryTemplate').html() );
+
+    this.coordsObject = {};
   },
 
   renderTopic: function() {
@@ -116,16 +118,16 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     var mouseoverHandler = _.once(function () {
       
-        var data = that.model.locations;
+        //var data = that.model.locations;
 
-        for (var i=0; i < data.length ;i++) {
+        //for (var i=0; i < data.length ;i++) {
 
           var f = function() {
-            var x = data[i];
+            var x = that.model.location;
 
             //DISPLAYING POSTED TO
 
-            var temp = data[i];
+            var temp = that.model.location;
 
             if (temp === 'World') {
 
@@ -179,7 +181,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
 
-            } else {
+            } else if (temp.split('/').length === 3 || (temp.split('/').length === 4 && temp.split('/')[1] === 'United States')) {
               //CITY
 
               var temp1 = temp.split('/');
@@ -194,17 +196,16 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
                 temp2 = temp1.join('/');
               }
 
-              var zoom = that.app.get('mapController').get('map').getZoom();
 
               that.$el.on('mouseover', function() {
-                var zoom = that.app.get('mapController').get('map').getZoom();
+                that.app.get('mapController').highlightCity(temp);
                 //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE CITY
-                if (zoom > 3) {
-                  //HIGHLIGHT CITY
-                  that.app.get('mapController').highlightCity(temp);
-                } else {
-                  that.app.get('mapController').highlightCountry(temp2)
-                }
+                // var zoom = that.app.get('mapController').get('map').getZoom();
+                // if (zoom > 3) {
+                //   //HIGHLIGHT CITY
+                // } else {
+                //   that.app.get('mapController').highlightCountry(temp2)
+                // }
               });
               that.$el.on('mouseout', function() {
                 that.app.get('mapController').removeHighlightCity(temp);
@@ -214,7 +215,87 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
 
-            }
+            } else {
+              //USER 'PLACE'
+
+              var temp1 = temp.split('/');
+              var temp2;
+              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
+              if (temp1[1] === 'United States') {
+                temp1.pop();
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              } else {
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              }
+
+
+
+
+
+              that.$el.on('mouseover', function() {
+
+                if (that.coordsObject[temp]) {
+
+
+                  that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                  //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                  // var zoom = that.app.get('mapController').get('map').getZoom();
+                  // if (zoom > 3) {
+                  //   //HIGHLIGHT PLACE
+                  //   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                  // } else {
+                  //   that.app.get('mapController').highlightCountry(temp2)
+                  // }
+
+
+
+                } else {
+
+                  $.ajax({
+                    url: 'http://liveworld.io:80/placeLatLng',
+                    crossDomain: true,
+                    method: 'GET',
+                    data: {
+                      name: temp
+                    },
+                    success: function(data) {
+                      if (data.length) {
+                        that.coordsObject[temp] = [data[0].latitude, data[0].longitude];
+
+                        var zoom = that.app.get('mapController').get('map').getZoom();
+                        //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                        that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+
+                        // if (zoom > 3) {
+                        //   //HIGHLIGHT PLACE
+                        //   that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+                        // } else {
+                        //   that.app.get('mapController').highlightCountry(temp2)
+                        // }
+
+                      } else {
+                      }
+                    }, error: function(err) {
+                      console.log('ajax error ocurred: ', err);
+                    }
+
+                  });
+                }
+
+
+
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightPlace(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+
+            }//end if-else chain
 
 
 
@@ -222,7 +303,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
           };
           f();
-        }
+        //}
 
     });
     this.$el.on('mouseover', mouseoverHandler);
