@@ -272,6 +272,10 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   showHeatPoint: function(location, occurrences) {
     var that = this;
 
+
+
+    console.log('SETTING HEAT POINT WITH LOCATION: ', location);
+
     var greenIcon = L.icon({
         iconUrl: '/resources/images/logo.png',
         shadowUrl: '/resources/images/logo.png',
@@ -300,9 +304,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       for (var key in countries._layers) {
         if (countries._layers[key].feature.properties.name === countryName) {
 
-
-
-
+          // var circle = L.marker(countries._layers[key]._latlng,
+          // {icon: greenIcon}).addTo(this.get('map'));
+          // circle.on('click', function(e) {
+          //   that.goToPath(location);
+          // });
 
         }
       }
@@ -318,19 +324,18 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
       var states = this.get('states') || {};
       //put it at the center of the bounds
-      console.log(states);
       var stateName = location;
       for (var key in states._layers) {
         if (states._layers[key].feature.properties.name === stateName) {
-          // var circle = L.marker(states._layers[key].getBounds().getCenter(),
-          // {icon: greenIcon}).addTo(this.get('map'));
-          // circle.on('click', function(e) {
-          //   that.goToPath(location);
-          // });
+          var circle = L.marker(states._layers[key].getBounds().getCenter(),
+          {icon: greenIcon}).addTo(this.get('map'));
+          circle.on('click', function(e) {
+            that.goToPath(location);
+          });
         }
       }
 
-    } else {
+    } else if (location.split('/').length === 3 || (location.split('/').length === 4 && location.split('/')[1] === 'United States')) {
       //CITY
       if (!this.get('cities')) {  //DON'T DO THIS PLEASE!!!!!!
         this.addCities();
@@ -349,6 +354,40 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           });
         }
       }
+
+
+    } else {
+      //USER-CREATED PLACE
+
+      console.log("USER AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv")
+
+      $.ajax({
+        url: 'http://liveworld.io:80/placeLatLng',
+        crossDomain: true,
+        method: 'GET',
+        data: {
+          name: location
+        },
+        success: function(data) {
+          if (data) {
+            var coords = L.latLng(data[0].latitude, data[0].longitude);
+
+            console.log("WJOEJEWJFWO COOOORDINATES::: ", coords);
+            var circle = L.marker(coords,
+            {icon: greenIcon}).addTo(that.get('map'));
+            circle.on('click', function(e) {
+              that.goToPath(location);
+            });
+          } else {
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
 
 
     }
