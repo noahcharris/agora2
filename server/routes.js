@@ -181,52 +181,15 @@ function spamValidator(input) {
 };
 
 
-
-
-
-
 /********************************************/
 /***   TOPICS WITH FILTERS METHODS     ******/
 /********************************************/
-
-
-
-
-
 module.exports.getTopTopicsDay = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-
-
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
   var page = queryArgs.page;
-
-
-  console.log('location: ', location);
-  console.log('channel: ', channel);
-  console.log('page: ', page);
-
-  //testing memcached !!!!!!!!!!!!!!!!!
-  // if (queryArgs.location === '')
-  //   location = 'World';
-
-  var keyString = location + '~' + channel + '~TopTopicsDay';
-
-
-  // console.log('attempting to retrieve topics from: '+keyString);
-  // memcached.get(keyString, function (err, data) {
-  //   if (data) {
-  //     console.log('sending data from memcached to client');
-  //     console.log(data[0]);
-  //     response.json(data);
-  //   } else {    
-  //     console.log('memcached returned false for ', keyString);
-  //     response.json(false);
-  //   }
-
-  // });
-
 
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
@@ -243,8 +206,6 @@ module.exports.getTopTopicsDay = function(request, response) {
         response.json(result.rows);
       }
   });
-
-
 };
 
 
@@ -254,11 +215,6 @@ module.exports.getTopTopicsWeek = function(request, response) {
   var location = queryArgs.location;
   var channel = queryArgs.channel;
   var page = queryArgs.page;
-
-  console.log('location: ', location);
-  console.log('channel: ', channel);
-
-
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
 
@@ -284,9 +240,6 @@ module.exports.getTopTopicsMonth = function(request, response) {
   var channel = queryArgs.channel;
   var page = queryArgs.page;
 
-  console.log('location: ', location);
-  console.log('channel: ', channel);
-
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
 
@@ -310,15 +263,12 @@ module.exports.getTopTopicsYear = function(request, response) {
   var channel = queryArgs.channel;
   var page = queryArgs.page;
 
-  console.log('location: ', location);
-  console.log('channel: ', channel);
-
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
 
 
   client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel LIKE $2) "
-    +"ORDER BY rank DESC;",
+    +"ORDER BY rank DESC LIMIT 15 OFFSET $3;",
     [location+'%', channel+'%', offset],
     function(err, result) {
       if (err) {
@@ -337,9 +287,6 @@ module.exports.getTopTopicsTime = function(request, response) {
   var location = queryArgs.location;
   var channel = queryArgs.channel;
   var page = queryArgs.page;
-
-  console.log('location: ', location);
-  console.log('channel: ', channel);
 
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
@@ -360,18 +307,13 @@ module.exports.getTopTopicsTime = function(request, response) {
 };
 
 
-
 //## NEW TOPICS ####
-
 module.exports.getNewTopics = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
   var location = queryArgs.location;
   var channel = queryArgs.channel;
   var page = queryArgs.page;
-
-  console.log('location: ', location);
-  console.log('channel: ', channel);
 
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
@@ -422,10 +364,23 @@ module.exports.getHotTopics = function(request, response) {
 
 };
 
+
+
+
+
+
+
+
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆  BUILD TOPIC TREE         ∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+//TODO: CACHING !!!!!!!!!! THIS IS THE FIRST CACHING I NEED TO DOOOOO!!!!!!!!!!!!
+
 module.exports.getTopicTree = function(request, response) {
-
-
-
 
   var queryArgs = url.parse(request.url, true).query;
 
@@ -540,6 +495,23 @@ module.exports.getTopicTree = function(request, response) {
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //I DON'T THINK I NEED THIS ROUTE!!! I'M PRETTY SURE I'M ALREADY SENDING
 // THE DATA ALONG WITH THE TOPICS THE FIRST TIME
 
@@ -564,20 +536,9 @@ module.exports.getTopicLocations = function(request, response) {
   });
 
 
-
-
-  // console.log('heyyyy', queryArgs.topicId);
-  // var keyString = 'topicLocations:' + queryArgs.topicId;
-  // memcached.get(keyString, function(err, data) {
-  //   if (err) {
-  //     console.log('error getting topic locations from memcached: ', err);
-  //   } else {
-  //     console.log('PULLED: ', data, ' OUT OF MEMCACHED');
-  //     response.json(data);
-  //   }
-  // })
-
 };
+
+
 
 
 //##########################################
