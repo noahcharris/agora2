@@ -309,11 +309,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       for (var key in countries._layers) {
         if (countries._layers[key].feature.properties.name === countryName) {
 
-          // var circle = L.marker(countries._layers[key]._latlng,
-          // {icon: greenIcon}).addTo(this.get('map'));
-          // circle.on('click', function(e) {
-          //   that.goToPath(location);
-          // });
+          countries._layers[key].setStyle({
+                  fillColor: '#ff0000',
+                  weight: 2,
+                  dashArray: '',
+                  opacity: 0.0,
+                  fillOpacity: 0.5
+              });
 
         }
       }
@@ -332,11 +334,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       var stateName = location;
       for (var key in states._layers) {
         if (states._layers[key].feature.properties.name === stateName) {
-          var circle = L.marker(states._layers[key].getBounds().getCenter(),
-          {icon: greenIcon}).addTo(this.get('map'));
-          circle.on('click', function(e) {
-            that.goToPath(location);
-          });
+          states._layers[key].setStyle({
+                  fillColor: '#ff0000',
+                  weight: 2,
+                  dashArray: '',
+                  opacity: 0.0,
+                  fillOpacity: 0.5
+              });
         }
       }
 
@@ -512,6 +516,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
   //need to pass in lat and long because we don't store it like the others
   highlightPlace: function(placeName, latitude, longitude) {
+    console.log('highlishting place: ', latitude, longitude);
     if (this.placeMarker)
       this.get('map').removeLayer(this.placeMarker);
     this.placeMarker = L.layerGroup();

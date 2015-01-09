@@ -130,9 +130,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
                 that.app.get('mapController').removeHighlightWorld();
               });
 
-            } 
-
-            if (temp.split('/').length === 2) {
+            } else if (temp.split('/').length === 2) {
               //COUNTRY
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightCountry(temp);
