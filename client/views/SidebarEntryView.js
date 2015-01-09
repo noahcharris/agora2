@@ -57,7 +57,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
 
-    var $username = that.$el.children('.topString').children('.sidebarUsername');
+    var $username = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.sidebarUsername');
     $username.on('click', function(e) {
       $.ajax({
         url: 'http://liveworld.io:80/user',
@@ -91,7 +91,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     });
 
-    var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.toString');
+    var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('locationString');
     $toString.on('click', function(e) {
 
       that.app.get('mapController').goToPath(that.model.location);
@@ -99,16 +99,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
       e.stopPropagation();
     });
-    var $fromString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.fromString');
-    $fromString.on('click', function(e) {
 
-      if (that.model.authororigin) {
-        that.app.get('mapController').goToPath(that.model.authororigin);
-      }
-
-      e.stopPropagation();
-    });
-    var $channelString = that.$el.children('.topString').children('.sidebarChannelString');
+    var $channelString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.sidebarChannelString');
     $channelString.on('click', function(e) {
 
       that.app.changeChannel(that.model.channel);
@@ -142,7 +134,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
             if (temp.split('/').length === 2) {
               //COUNTRY
-              console.log('fjdaslkfjasklfjas');
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightCountry(temp);
                 console.log('highlight');

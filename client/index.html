@@ -66,7 +66,6 @@
 
     <script id="sidebarTopicEntryTemplate" type="text/template">
 
-     <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername">User:&nbsp<%= username %></span>&nbsp Channel:&nbsp<span class="sidebarChannelString"><%= channel %></span></p>
      <div class="sidebarFloatClear">
       <img class="sidebarTopicImage"></img>
       <div class="contentAndToFromWrapper">
@@ -74,8 +73,7 @@
           <%= headline %>
         </div>
         <div class="sidebarToFromWrapper">
-          <p class="toString">TO:&nbsp<%= location %></p>
-          <p class="fromString">FROM: JOJFDKSL:JFLDSKJ</p>
+          <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername">User:&nbsp<%= username %></span>&nbspTo:&nbsp<span class="sidebarChannelString"><%= channel %></span>~<span class="locationString">&nbsp<%= location %></span></p>
         </div>
       </div>
      </div>
@@ -145,6 +143,7 @@
        &nbsp(<%= rank %>)
        &nbsp<span id="detailUserString">User:&nbsp<%= username %></span>
        &nbsp<span id="detailChannelString">Channel:&nbsp<%= channel %></span>
+       &nbsp<span id="topicTimestamp">Posted At:&nbsp<%= createdat %></span>
        </span>
 
        <div id="detailTopicClear">
@@ -154,8 +153,8 @@
         <div id="topicContentBox">
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
-          <div class="replyButton"><span class="replyLabel">Reply</span></div>
         </div>
+        <div class="replyButton">Reply</div>
 
        </div>
      
@@ -184,8 +183,8 @@
         <div class="commentContentBox">
           <p class="commentHeader"> <%= headline %> </p>
           <p class="comment"> <%= contents %> </p>
-          <div class="replyButton"><span class="replyLabel">Reply</span></div>
         </div>
+        <div class="replyButton">Reply</div>
 
       </div>
 
@@ -213,8 +212,8 @@
         <div class="responseContentBox">
           <p class="responseHeader"> <%= headline %> </p>
           <p class="response"> <%= contents %> </p>
-          <div class="replyButton"><span class="replyLabel">Reply</span></div>
         </div>
+        <div class="replyButton">Reply</div>
 
       </div>
 
@@ -240,8 +239,8 @@
         <div class="replyContentBox">
           <p class="replyHeader"> <%= headline %> </p>
           <p class="reply"> <%= contents %> </p>
-          <div class="replyButton"><span class="replyLabel">Reply</span></div>
         </div>
+        <div class="replyButton">Reply</div>
 
       </div>
 

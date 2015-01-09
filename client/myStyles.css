@@ -422,15 +422,7 @@ img#fullscreenImage {
 .sidebarUsername {
   cursor: pointer;
 }
-.toString {
-  cursor: pointer;
-  font-family: 'clearThin';
-  position: relative;
-  font-size: 60%;
-  margin: 0px;
-  padding: 0px;
-}
-.fromString {
+.locationString {
   cursor: pointer;
   font-family: 'clearThin';
   position: relative;
@@ -443,6 +435,10 @@ img#fullscreenImage {
   float: left;
   height: 84px;
   width: 84px;
+}
+
+.sidebarChannelString {
+  cursor: pointer;
 }
 
 .contentAndToFromWrapper {
@@ -760,11 +756,6 @@ img#fullscreenImage {
   border-radius: 2px;
   color: white;
   font-family: "clearBold";
-}
-
-.replyLabel {
-  position: relative;
-  padding: 6px;
 }
 
 #spacer {

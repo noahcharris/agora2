@@ -416,7 +416,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               // color: '#666',
               // dashArray: '',
               // fillOpacity: 0.8
-              color: '#000000',
+              //color: '#000000',
               weight: 2,
               //color: '#666',
               dashArray: '',
@@ -446,7 +446,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     for (var key in countries._layers) {
       if (countries._layers[key].feature.properties.name === countryName) {
         countries._layers[key].setStyle({
-                color: '#000000',
+                //color: '#000000',
                 weight: 2,
                 //color: '#666',
                 dashArray: '',
@@ -470,7 +470,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       if (states._layers[key].feature.properties.name === stateName) {
         states._layers[key].setStyle({
                 weight: 5,
-                color: '#666',
+                //color: '#000000',
+                // color: '#666',
                 dashArray: '',
                 opacity: 1,
                 fillOpacity: 0.0
