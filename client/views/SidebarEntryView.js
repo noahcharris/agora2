@@ -24,7 +24,14 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
   renderTopic: function() {
     var that = this;
-    this.$el.html( this.topicTemplate(this.model) );
+
+    //have to change location just for the templating:
+    var model2 = JSON.parse(JSON.stringify(this.model));
+    var temp = model2.location.split('/');
+    model2.location = temp[temp.length-1];
+    //model2.location = model2.location.split('/')[model2.location.split('/')];
+
+    this.$el.html( this.topicTemplate(model2) );
 
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');
@@ -91,11 +98,11 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     });
 
-    var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('locationString');
+    var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.locationString');
     $toString.on('click', function(e) {
 
+      console.log(that.model.location);
       that.app.get('mapController').goToPath(that.model.location);
-
 
       e.stopPropagation();
     });

@@ -480,6 +480,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //ESCAPE KEY BEHAVIOR
 
+    //TODO 3 layers of escape
+
     $(document).keyup(function(e) {
 
       if (e.keyCode == 27) {
@@ -489,9 +491,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     });
 
 
-
-
-
+    
 
 
 
