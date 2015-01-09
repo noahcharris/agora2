@@ -46,13 +46,15 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       var on = false;
       that.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').on('click', function(e) {
         e.stopPropagation();
-        if (!on) {
+        if (!that.app.get('imageFullscreen')) {
           on = true;
+          that.app.set('imageFullscreen', true);
           var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
           $overlayImage.on('click', function() {
             $(this).fadeOut(333, function() {
               $(this).remove();
               on = false;
+              that.app.set('imageFullscreen', false);
             });
           });
           $('#mainWrapper').append($overlayImage);
@@ -333,13 +335,15 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       var on = false;
       that.$el.children('.sidebarFloatClear').children('.sidebarTopicImage')[0].onclick = function(e) {
         e.stopPropagation();
-        if (!on) {
+        if (!that.app.get('imageFullscreen')) {
           on = true;
+          that.app.set('imageFullscreen', true);
           var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
           $overlayImage.on('click', function() {
             $(this).fadeOut(333, function() {
               $(this).remove();
               on = false;
+              that.app.set('imageFullscreen', false);
             });
           });
           $('#mainWrapper').append($overlayImage);

@@ -21,6 +21,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //in 'mobile' mode, whether it is displaying map or topics
     this.set('mobilemap', true);
 
+    //used to keep track of fullscreen for escape functionality
+    this.set('imageFullscreen', false);
+
     //keep track of channel here, i wish location was here too.. but it is so tightly coupled right now
     this.set('channel', 'General');
 
@@ -485,7 +488,26 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $(document).keyup(function(e) {
 
       if (e.keyCode == 27) {
-        that.get('content2').hide();
+
+        console.log(that.get('imageFullscreen'));
+        if (that.get('imageFullscreen')) {
+          $('#fullscreen').remove();
+          //$('#fullscreenImage').hide();
+          that.set('imageFullscreen', false);
+        } else if ($('#locationSubtreeView').length || $('#channelSubtreeView').length) {
+          $('#locationSubtreeView').remove();
+          $('#channelSubtreeView').remove();
+        } else {
+          that.get('content2').hide();
+        }
+
+
+
+
+
+
+
+
       } 
 
     });

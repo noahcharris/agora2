@@ -77,13 +77,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           var on = false;
           that.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#detailTopicImage')[0].onclick = function(e) {
             e.stopPropagation();
-            if (!on) {
+            if (!that.app.get('imageFullscreen')) {
               on = true;
+              that.app.set('imageFullscreen', true);
               var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
               $overlayImage.on('click', function() {
                 $(this).fadeOut(333, function() {
                   $(this).remove();
                   on = false;
+                  that.app.set('imageFullscreen', false);
                 });
               });
               $('#mainWrapper').append($overlayImage);
@@ -200,13 +202,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               var on = false;
               $comment.children('.detailCommentClear').children('.detailCommentImage')[0].onclick = function(e) {
                 e.stopPropagation();
-                if (!on) {
+                if (!that.app.get('imageFullscreen')) {
                   on = true;
+                  that.app.set('imageFullscreen', true);
                   var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
                   $overlayImage.on('click', function() {
                     $(this).fadeOut(333, function() {
                       $(this).remove();
                       on = false;
+                      that.app.set('imageFullscreen', false);
                     });
                   });
                   $('#mainWrapper').append($overlayImage);
@@ -371,13 +375,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               var on = false;
               $response.children('.detailResponseClear').children('.detailResponseImage')[0].onclick = function(e) {
                 e.stopPropagation();
-                if (!on) {
+                if (!that.app.get('imageFullscreen')) {
                   on = true;
+                  that.app.set('imageFullscreen', true);
                   var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
                   $overlayImage.on('click', function() {
                     $(this).fadeOut(333, function() {
                       $(this).remove();
                       on = false;
+                      that.app.set('imageFullscreen', false);
                     });
                   });
                   $('#mainWrapper').append($overlayImage);
@@ -541,13 +547,17 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               var on = false;
               $reply.children('.detailReplyClear').children('.detailReplyImage')[0].onclick = function(e) {
                 e.stopPropagation();
-                if (!on) {
+                if (!that.app.get('imageFullscreen')) {
                   on = true;
+                  that.app.set('imageFullscreen', true);
                   var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ image +'"></img></div>')
                   $overlayImage.on('click', function() {
                     $(this).fadeOut(333, function() {
                       $(this).remove();
+                      //MAYBE NEED TO CHANGE THIS BECAUSE USERS CAN CLICK WHILE IT'S FADING
+                      //BUT MAYBE NOT BECAUSE IT BLOCKS THE SCREEN UNTIL IT'S GONE
                       on = false;
+                      that.app.set('imageFullscreen', false);
                     });
                   });
                   $('#mainWrapper').append($overlayImage);
