@@ -13,6 +13,9 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
     this.app = appController;
     this.template = _.template( $('#channelCreationTemplate').html() );
     this.$el.addClass('detailView');
+
+    this.channelVerified = false;
+    this.checker = null;
   },
 
   render: function() {
@@ -30,37 +33,43 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
     this.$el.children('#nextButton').on('click', function() {
 
-
-      $.ajax({
-        url: 'https://liveworld.io:443/createChannel',
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        method: 'POST',
-        data: {
-          username: that.app.get('username'),
-          token: that.app.get('token'),
-          name: that.$el.children('#channelNameInput').val(),
-          description: that.$el.children('#descriptionInput').val(),
-          parent: that.$el.children('#parentInput').val() 
-        },
-        success: function(data) {
-          if (data) {
-            alert(data);
-            that.app.get('content2').hide();
-            that.app.changeChannel(that.$el.children('#parentInput').val()+'/'+that.$el.children('#channelNameInput').val());
-            that.app.get('mapController').showWorld();
-          } else {
-            // console.log('memcached returned false');
-            // sidebarView.collection = defaultCollection;
-            // content1.show(sidebarView);
+      if (!this.channelVerified) {
+        alert('Your parent channel must begin with "General"');
+      } else {
+        $.ajax({
+          url: 'https://liveworld.io:443/createChannel',
+          crossDomain: true,
+          xhrFields: {
+            withCredentials: true
+          },
+          method: 'POST',
+          data: {
+            username: that.app.get('username'),
+            token: that.app.get('token'),
+            name: that.$el.children('#channelNameInput').val(),
+            description: that.$el.children('#descriptionInput').val(),
+            parent: that.$el.children('#parentInput').val() 
+          },
+          success: function(data) {
+            if (data) {
+              alert(data);
+              that.app.get('content2').hide();
+              that.app.changeChannel(that.$el.children('#parentInput').val()+'/'+that.$el.children('#channelNameInput').val());
+              that.app.get('mapController').showWorld();
+            } else {
+              // console.log('memcached returned false');
+              // sidebarView.collection = defaultCollection;
+              // content1.show(sidebarView);
+            }
+          }, error: function(err) {
+            console.log('ajax error ocurred: ', err);
           }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
 
-      });
+        });
+      }
+
+
+
 
 
     });
@@ -115,6 +124,23 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
   });//end parent input keyup event
 
 
+  this.checker = setInterval(function() {
+    if ($('#parentInput').val()) {
+
+      //analyse parent input and make sure it is correct
+
+        var temp = $('#parentInput').val();
+        if (temp.split('/')[0] === 'General') {
+          this.channelVerified = true;
+        } else {
+          this.channelVerified = false;
+        }
+
+      }
+
+  }, 500);
+
+
 
 
 
@@ -127,6 +153,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
   },
 
   close: function() {
+    clearInterval(this.checker);
     console.log('channel creation view closing');
     this.remove();
   }

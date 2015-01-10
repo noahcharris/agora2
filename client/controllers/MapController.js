@@ -499,9 +499,20 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     for (var key in cities._layers) {
       if (cities._layers[key].city === cityName) {
 
+        var cityIcon = L.icon({
+            iconUrl: '/resources/images/dot.png',
+            shadowUrl: '/resources/images/leaf-shadow.png',
+
+            iconSize:     [30, 15], // size of the icon
+            shadowSize:   [0, 0], // size of the shadow
+            iconAnchor:   [15, 7.5], // point of the icon which will correspond to marker's location
+            shadowAnchor: [0, 0],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
 
         this.cityMarker = L.layerGroup();
-        var marker = L.marker(cities._layers[key]._latlng);
+        var marker = L.marker(cities._layers[key]._latlng, {icon: cityIcon});
         this.cityMarker.addLayer(marker);
         this.cityMarker.addTo(this.get('map'));
 
@@ -516,11 +527,21 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
   //need to pass in lat and long because we don't store it like the others
   highlightPlace: function(placeName, latitude, longitude) {
+    var placeIcon = L.icon({
+        iconUrl: '/resources/images/dot.png',
+        shadowUrl: '/resources/images/leaf-shadow.png',
+
+        iconSize:     [30, 15], // size of the icon
+        shadowSize:   [0, 0], // size of the shadow
+        iconAnchor:   [15, 7.5], // point of the icon which will correspond to marker's location
+        shadowAnchor: [0, 0],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
     console.log('highlishting place: ', latitude, longitude);
     if (this.placeMarker)
       this.get('map').removeLayer(this.placeMarker);
     this.placeMarker = L.layerGroup();
-    var marker = L.marker([latitude, longitude]);
+    var marker = L.marker([latitude, longitude], {icon: placeIcon});
     this.placeMarker.addLayer(marker);
     this.placeMarker.addTo(this.get('map'));
   },
@@ -638,6 +659,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     } else {
       //USE-GENERATED PLACE
 
+      console.log('eklwrjlkejrklwaj');
       //MAKE AN AJAX CALL TO GET LAT AND LNG OF THE PLACE
       $.ajax({
         url: 'http://liveworld.io:80/placeLatLng',

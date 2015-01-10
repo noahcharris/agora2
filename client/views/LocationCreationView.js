@@ -13,6 +13,9 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     this.app = appController;
     this.template = _.template( $('#locationCreationTemplate').html() );
     this.$el.addClass('detailView');
+
+    this.checker = null;
+    this.cityVerified = false;
   },
 
   render: function() {
@@ -32,33 +35,39 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
   setHandlers: function() {
     var that = this;
+
+
+
     this.$el.children('#nextButton').on('click', function() {
 
-
-
-      console.log('RADIO INPUT : ', that.$el.children('input:radio[name=publicPrivate]').val());
-
-      var pub = true;
-      if (that.$el.children('input:radio[name=publicPrivate]').val() === 'public') {
-        pub = true;
+      if (!that.cityVerified) {
+        alert('You must choose a valid parent city.');
       } else {
-        pub = false;
+        console.log('RADIO INPUT : ', that.$el.children('input:radio[name=publicPrivate]').val());
+
+        var pub = true;
+        if (that.$el.children('input:radio[name=publicPrivate]').val() === 'public') {
+          pub = true;
+        } else {
+          pub = false;
+        }
+
+        var placementView = new Agora.Views.PlacementView(that.app);
+        console.log(placementView);
+
+        placementView.data = {
+          name: that.$el.children('#locationNameInput').val(),
+          pub: pub,
+          description: that.$el.children('#descriptionInput').val(),
+          parent: that.$el.children('#parentInput').val()
+        };
+
+        that.app.get('content1').show(placementView);
+        that.app.get('content2').hide();
+        that.app.get('mapController').placePoints();
+        that.app.get('mapController').placing = true;
       }
 
-      var placementView = new Agora.Views.PlacementView(that.app);
-      console.log(placementView);
-
-      placementView.data = {
-        name: that.$el.children('#locationNameInput').val(),
-        pub: pub,
-        description: that.$el.children('#descriptionInput').val(),
-        parent: that.$el.children('#parentInput').val()
-      };
-
-      that.app.get('content1').show(placementView);
-      that.app.get('content2').hide();
-      that.app.get('mapController').placePoints();
-      that.app.get('mapController').placing = true;
 
 
     });
@@ -115,9 +124,24 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
 
 
+  this.checker = setInterval(function() {
+    if ($('#parentInput').val()) {
+      for (var key in that.app.get('mapController').get('cities')._layers) {
+        if (that.app.get('mapController').get('cities')._layers[key].city === $('#parentInput').val()) {
+          that.cityVerified = true;
+          break;
+        }
+      }
+      this.cityVerified = false;
+    }
+  }, 500);
+
+
+
   },
 
   close: function() {
+    clearInterval(this.checker);
     console.log('location creation view closing');
     this.remove();
   }

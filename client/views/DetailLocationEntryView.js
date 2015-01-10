@@ -23,11 +23,11 @@ Agora.Views.DetailLocationEntryView = Backbone.View.extend({
 
     $goTo[0].onclick = function() {
 
-      that.app.trigger('reloadSidebarTopics', that.model.name);
-      that.app.get('mapController').goToPath(that.model.name);
       that.app.get('sidebarView').displayed = 'Topics-Top';
+      that.app.trigger('reloadSidebarTopics', that.model.name);
       that.app.get('content1').show(that.app.get('sidebarView'));
       that.app.get('content2').hide();
+      that.app.get('mapController').goToPath(that.model.name);
 
     };
 
