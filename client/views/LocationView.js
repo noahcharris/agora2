@@ -165,33 +165,10 @@ Agora.Views.LocationView = Backbone.View.extend({
         },
         success: function(data) {
           if (data) {
-            console.log('DATA: ', data);
-            $subtreeView = $('<div id="locationSubtreeView">Subpaths</div>');
-            $subtreeView.on('click', function() {
-              $(this).remove();
-            });
-
-
-            for (var i=0; i < data.length ;i++) {
-              var $subtree = $('<p>'+data[i].name+'</p>');
-
-
-              var f = function() {
-                var x = data[i].name;
-                $subtree[0].onclick = function() {
-                  // that.app.get('mapController').set('location', data[i]);
-                  // that.app.trigger('reloadSidebarTopics', data[i]);
-                  // that.router.navigate('World/'+data[i], { trigger:false });
-                  that.app.get('mapController').goToPath(x);
-                };
-              };
-              f();
-
-
-              $subtreeView.append($subtree);
-            }
-
-            that.$el.append($subtreeView);
+            console.log('data: ', data);
+            that.app.get('sidebarView').searchCollection = data;
+            that.app.get('sidebarView').displayed = 'Search';
+            that.app.get('content1').show(that.app.get('sidebarView'));
 
           } else {
             alert('error');

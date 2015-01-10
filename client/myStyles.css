@@ -214,14 +214,6 @@ img#fullscreenImage {
   z-index: 9999;
 }
 
-#locationSubtreeView {
-  position: absolute;
-  overflow-y: scroll;
-  z-index: 502;
-  bottom: -100px;
-  width: auto;
-  background-color: green;
-}
 .channelView {
   display: inline-block;
   width: 350px;
@@ -267,16 +259,6 @@ img#fullscreenImage {
   background-color: green;
   color: orange;
   z-index: 9999;
-}
-
-#channelSubtreeView {
-  position: absolute;
-  z-index: 502;
-  bottom: -100px;
-  width: auto;
-  height: auto;
-  background-color: green;
-
 }
 
 
@@ -470,6 +452,16 @@ img#fullscreenImage {
 /* CHAINS lul */
 /* TODO */
 
+
+.sidebarTopicInnerList {
+  position: relative;
+  list-style:none;
+  padding-left:0;
+  margin: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 84%;
+}
 
 .sidebarInnerList {
   position: relative;
