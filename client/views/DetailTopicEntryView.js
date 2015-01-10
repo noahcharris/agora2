@@ -170,9 +170,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
 
+    //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
-
-    for (var i=0;i<comments.length;i++) {
+    for (var i=comments.length-1; i > -1 ;i--) {
       
       //CREATE AND APPEND COMMENT TO OUTERBOX
       var $comment = $(this.commentTemplate(comments[i]));
@@ -322,8 +322,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       this.$el.children('#conversationWrapper').append($commentExpansionBox);
 
+      //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
-      for (var j=0;j < comments[i].responses.length;j++) {
+      for (var j=comments[i].responses.length-1;j > -1 ;j--) {
 
         var $response = $(this.responseTemplate(comments[i].responses[j]));
 
@@ -489,9 +490,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $commentExpansionBox.append($responseExpansionBox);
 
 
+        //NEED TO GO BACKWARDS TO GET ORDERING CORRECT LOLOLOL
 
-
-        for (var k=0;k<comments[i].responses[j].replies.length;k++) {
+        for (var k=comments[i].responses[j].replies.length-1;k > -1;k--) {
 
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
 
