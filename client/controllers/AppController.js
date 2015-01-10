@@ -494,9 +494,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#fullscreen').remove();
           //$('#fullscreenImage').hide();
           that.set('imageFullscreen', false);
-        } else if ($('#locationSubtreeView').length || $('#channelSubtreeView').length) {
-          $('#locationSubtreeView').remove();
-          $('#channelSubtreeView').remove();
+
+        //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
+        // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
+
+        } else if ($('#pathInput').length || $('#channelInput').length) {
+          $('#pathInput').remove();
+          $('#channelInput').remove();
+          that.changeChannel('General');
+          that.get('mapController').showWorld();
         } else {
           that.get('content2').hide();
         }

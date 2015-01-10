@@ -194,15 +194,6 @@ img#fullscreenImage {
   z-index: 9999;
 }
 
-.locationSearchResult {
-  position: absolute;
-  bottom: -30px;
-  height: 30px;
-  left: 20px;
-  background-color: green;
-  color: orange;
-  z-index: 9999;
-}
 
 .signupLocationSearchResult {
   position: absolute;
@@ -242,16 +233,6 @@ img#fullscreenImage {
 
 #channelSearchButton {
   cursor: pointer;
-}
-
-.channelSearchResult {
-  position: absolute;
-  bottom: -30px;
-  height: 30px;
-  left: 20px;
-  background-color: green;
-  color: orange;
-  z-index: 9999;
 }
 
 .creationChannelSearchResult {

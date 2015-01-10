@@ -75,6 +75,8 @@ Agora.Views.LocationView = Backbone.View.extend({
 
       $('#pathInput').focus();
       $('#pathInput').focusout(function() {
+        that.app.changeChannel('General');
+        that.app.get('mapController').showWorld();
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
         $('#pathInput').remove();
         //that.$el.empty();
@@ -91,7 +93,7 @@ Agora.Views.LocationView = Backbone.View.extend({
 
         //SHOULD MAYBE THROTTLE THIS ???????
 
-        if (searchParameter.length > 2) {
+        if (searchParameter.length > 0) {
 
           $.ajax({
             url: 'http://liveworld.io:80/locationSearch',
@@ -101,40 +103,11 @@ Agora.Views.LocationView = Backbone.View.extend({
             },
             crossDomain: true,
             success: function(data) {
-              console.log(data);
-              $('.locationSearchResult').remove();
 
-              var cssAdjust = -30;
-
-              for (var i=0; i < data.length ;i++) {
-
-                var $element = $('<div class="locationSearchResult">'+data[i].name+'</div>');
-
-
-                (function() {
-                  var x = data[i].name;
-                  $element.on('click', function(e)  {
-
-
-                    console.log('hi');
-
-                    that.app.get('mapController').goToPath(x);
-                    //that.app.trigger('reloadSidebarTopics', x);
-
-
-                  });
-                  
-                })();
-
-
-                $element.css('bottom', cssAdjust + 'px');
-
-                cssAdjust -= 30;
-
-                that.$el.append($element);
-
-
-                
+              if (data) {
+                that.app.get('sidebarView').searchCollection = data;
+                that.app.get('sidebarView').displayed = 'Search';
+                that.app.get('content1').show(that.app.get('sidebarView'));
               }
 
             }
@@ -165,7 +138,6 @@ Agora.Views.LocationView = Backbone.View.extend({
         },
         success: function(data) {
           if (data) {
-            console.log('data: ', data);
             that.app.get('sidebarView').searchCollection = data;
             that.app.get('sidebarView').displayed = 'Search';
             that.app.get('content1').show(that.app.get('sidebarView'));

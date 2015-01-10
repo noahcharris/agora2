@@ -62,18 +62,14 @@ Agora.Views.ChannelView = Backbone.View.extend({
     var searchButton = $('<img id="channelSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
-      // that.$el.empty();
-      // that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));
-
-      // var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
-
-      // that.$el.append(searchButton);
 
       that.$el.append($('<input id="channelInput"></input>'));
 
       $('#channelInput').focus();
       $('#channelInput').focusout(function() {
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
+        that.app.changeChannel('General');
+        that.app.get('mapController').showWorld();
         $('#channelInput').remove();
         // $('.channelView').empty();
         // setTimeout(function() { that.render(); }, 100);
@@ -86,7 +82,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
         //SHOULD MAYBE THROTTLE THIS ???????
 
-        if ($('#channelInput').val().length > 2) {
+        if ($('#channelInput').val().length > 0) {
 
           $.ajax({
             url: 'http://liveworld.io:80/channelSearch',
@@ -96,41 +92,13 @@ Agora.Views.ChannelView = Backbone.View.extend({
             },
             crossDomain: true,
             success: function(data) {
-              console.log(data);
-              $('.channelSearchResult').remove();
 
-              var cssAdjust = -30;
-              for (var i=0; i < data.length ;i++) {
-
-                var $element = $('<div class="channelSearchResult">'+data[i].name+'</div>');
-                that.$el.append($element);
-
-
-
-                (function() {
-                  var x = data[i].name;
-                  $element.on('click', function(e)  {
-
-
-                    console.log('hi');
-
-                    that.app.set('channel', x);
-                    that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'));
-                    that.render();
-
-
-                  });
-                  
-                })();
-
-
-
-                $element.css('bottom', cssAdjust + 'px');
-
-                cssAdjust -= 30;
-
-                
+              if (data) {
+                that.app.get('sidebarView').searchCollection = data;
+                that.app.get('sidebarView').displayed = 'Search';
+                that.app.get('content1').show(that.app.get('sidebarView'));
               }
+              
 
             }
           });
