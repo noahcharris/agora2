@@ -1876,7 +1876,7 @@ function addVisitHeat(username, topicId) {
 
 };
 
-function addPostHeat(username, topicId) {
+function addPostHeat(username, topicId, heat) {
 
   client.query("SELECT * FROM heatPostJoin WHERE username = $1 AND topic = $2 "
     +"AND (postedAt > now() - interval '1 hour');", [username, topicId],
@@ -1887,7 +1887,7 @@ function addPostHeat(username, topicId) {
 
         if (!result.rows.length) {
 
-          client.query("UPDATE topics SET heat = heat + 10 WHERE id = $1;",
+          client.query("UPDATE topics SET heat = heat + "+heat+" WHERE id = $1;",
             [topicId], function(err, result) {
             if (err) {
               console.log('error adding heat to topic');
@@ -1912,7 +1912,7 @@ function addPostHeat(username, topicId) {
 
 };
 
-function addVoteHeat(username, topicId) {
+function addVoteHeat(username, topicId, heat) {
 
   client.query("SELECT * FROM heatVoteJoin WHERE username = $1 AND topic = $2 "
     +"AND (votedAt > now() - interval '1 hour');", [username, topicId],
@@ -1923,7 +1923,7 @@ function addVoteHeat(username, topicId) {
 
         if (!result.rows.length) {
 
-          client.query("UPDATE topics SET heat = heat + 5 WHERE id = $1;",
+          client.query("UPDATE topics SET heat = heat + "+heat+" WHERE id = $1;",
             [topicId], function(err, result) {
             if (err) {
               console.log('error adding heat to topic');
@@ -2373,9 +2373,6 @@ module.exports.createComment = function(request, response) {
 
 
 
-
-
-
     client.query("SELECT * FROM securityJoin WHERE username = $1;",
       [fields.username[0]],
       function(err, result) {
@@ -2385,7 +2382,8 @@ module.exports.createComment = function(request, response) {
 
           if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-                      
+              addPostHeat(fields.username[0], fields.topicId[0], 4);
+
               //if an image is sent
               if (files.file) {
 
@@ -2525,6 +2523,7 @@ module.exports.createResponse = function(request, response) {
 
           if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+                        addPostHeat(fields.username[0], fields.topicId[0], 3);
                       
                         //if an image is sent
                         if (files.file) {
@@ -2666,6 +2665,8 @@ module.exports.createReply = function(request, response) {
           if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
+                    addPostHeat(fields.username[0], fields.topicId[0], 3);
+
                     //if an image is sent
                     if (files.file) {
 
@@ -2917,6 +2918,9 @@ module.exports.upvoteTopic = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+              addVoteHeat(request.body.username, request.body.topicId, 3);
+
+
               client.query("SELECT * FROM topicVoteJoin where (username=$1 AND topic=$2);",
                 [request.body.username, request.body.topicId],
                 function(err, result) {
@@ -2982,6 +2986,7 @@ module.exports.upvoteComment = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+                    addVoteHeat(request.body.username, request.body.topicId, 2);
 
                     client.query("SELECT * FROM commentVoteJoin where (username=$1 AND comment=$2);",
                       [request.body.username, request.body.commentId],
@@ -3045,7 +3050,7 @@ module.exports.upvoteResponse = function(request, response) {
       } else {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-
+              addVoteHeat(request.body.username, request.body.topicId, 2);
 
               client.query("SELECT * FROM responseVoteJoin where (username=$1 AND response=$2);",
                 [request.body.username, request.body.responseId],
@@ -3108,7 +3113,8 @@ module.exports.upvoteReply = function(request, response) {
       } else {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-                    
+                addVoteHeat(request.body.username, request.body.topicId, 2);
+                
 
                 client.query("SELECT * FROM replyVoteJoin where (username=$1 AND reply=$2);",
                   [request.body.username, request.body.replyId],

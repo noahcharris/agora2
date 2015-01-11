@@ -238,6 +238,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             data: {
               username: that.app.get('username'),
               token: that.app.get('token'),
+              topicId: that.model.id,
               commentId: x
             },
             success: function(msg) {
@@ -303,7 +304,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             //TODO
 
             //well, there it is. will have to also change parent values in the response expansion
-            var height = 0;
+            var height = 26;
             $(e.target).parent().parent().next().children().each(function(index) {
               console.log($(this).height());
               height += $(this).height();
@@ -351,6 +352,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               data: {
                 username: that.app.get('username'),
                 token: that.app.get('token'),
+                topicId: that.model.id,
                 responseId: x
               },
               success: function(msg) {
@@ -461,7 +463,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               // $(e.target).parent().next().css('height', 'auto');
               // $(e.target).attr('src', 'resources/images/contract.png');
               // responseCollapsed = false;
-              var height = 0;
+              var height = 14;
               $(e.target).parent().parent().next().children().each(function(index) {
                 console.log($(this).height());
                 height += $(this).height();
@@ -521,6 +523,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 data: {
                   username: that.app.get('username'),
                   token: that.app.get('token'),
+                  topicId: that.model.id,
                   replyId: x
                 },
                 success: function(msg) {
