@@ -463,7 +463,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               // $(e.target).parent().next().css('height', 'auto');
               // $(e.target).attr('src', 'resources/images/contract.png');
               // responseCollapsed = false;
-              var height = 14;
+              var height = 8;
               $(e.target).parent().parent().next().children().each(function(index) {
                 console.log($(this).height());
                 height += $(this).height();

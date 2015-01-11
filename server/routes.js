@@ -1840,8 +1840,6 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 
 function addVisitHeat(username, topicId) {
 
-  console.log('whwohwoh');
-
   client.query("SELECT * FROM heatVisitJoin WHERE username = $1 AND topic = $2 "
     +"AND (visitedAt > now() - interval '1 hour');", [username, topicId],
     function(err, result) {
