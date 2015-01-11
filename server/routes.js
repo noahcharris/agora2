@@ -1732,6 +1732,9 @@ module.exports.visitedTopic = function(request, response) {
 
 
 
+                    //add some heat yo
+                    addVisitHeat(request.body.username, request.body.topicId);
+
 
                     client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
                       +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
@@ -1832,6 +1835,121 @@ module.exports.recentlyVisitedTopics = function(request, response) {
   });//end securityJoin select
 
 };
+
+
+
+function addVisitHeat(username, topicId) {
+
+  console.log('whwohwoh');
+
+  client.query("SELECT * FROM heatVisitJoin WHERE username = $1 AND topic = $2 "
+    +"AND (visitedAt > now() - interval '1 hour');", [username, topicId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from heatVisitJoin');
+      } else {
+
+        if (!result.rows.length) {
+
+          client.query("UPDATE topics SET heat = heat + 1 WHERE id = $1;",
+            [topicId], function(err, result) {
+            if (err) {
+              console.log('error adding heat to topic: ', err);
+            } else {
+                //successfully added heat
+                client.query("INSERT INTO heatVisitJoin (username, topic, visitedAt) "
+                 +"VALUES ($1, $2, now());", [username, topicId],
+                 function(err, result) {
+                  if (err) {
+                    console.log('error inserting into heatVisitJoin');
+                  } else {
+                  }
+                });
+            }
+          });//end heat adding
+
+
+        }//end check for rows
+
+      }
+  });//end heat visit select
+
+};
+
+function addPostHeat(username, topicId) {
+
+  client.query("SELECT * FROM heatPostJoin WHERE username = $1 AND topic = $2 "
+    +"AND (postedAt > now() - interval '1 hour');", [username, topicId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from heatPostJoin');
+      } else {
+
+        if (!result.rows.length) {
+
+          client.query("UPDATE topics SET heat = heat + 10 WHERE id = $1;",
+            [topicId], function(err, result) {
+            if (err) {
+              console.log('error adding heat to topic');
+            } else {
+                //successfully added heat
+                client.query("INSERT INTO heatPostJoin (username, topic, postedAt) "
+                 +"VALUES ($1, $2, now());", [username, topicId],
+                 function(err, result) {
+                  if (err) {
+                    console.log('error inserting into heatPostJoin');
+                  } else {
+                  }
+                });
+            }
+          });//end heat adding
+
+
+        }//end check for rows
+
+      }
+  });//end heat post select
+
+};
+
+function addVoteHeat(username, topicId) {
+
+  client.query("SELECT * FROM heatVoteJoin WHERE username = $1 AND topic = $2 "
+    +"AND (votedAt > now() - interval '1 hour');", [username, topicId],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from heatVoteJoin');
+      } else {
+
+        if (!result.rows.length) {
+
+          client.query("UPDATE topics SET heat = heat + 5 WHERE id = $1;",
+            [topicId], function(err, result) {
+            if (err) {
+              console.log('error adding heat to topic');
+            } else {
+                //successfully added heat
+                client.query("INSERT INTO heatVoteJoin (username, topic, votedAt) "
+                 +"VALUES ($1, $2, now());", [username, topicId],
+                 function(err, result) {
+                  if (err) {
+                    console.log('error inserting into heatVoteJoin');
+                  } else {
+                  }
+                });
+            }
+          });//end heat adding
+
+
+        }//end check for rows
+
+      }
+  });//end heat vote select
+
+};
+
+
+
 
 
 

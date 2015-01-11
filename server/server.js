@@ -212,6 +212,10 @@ app.post('/registerUser', routes.registerUser);
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
 
+//addVisitHeat
+//addPostHeat
+//addVoteHeat
+
 app.get('/recentLocations', routes.getRecentLocations);
 app.get('/recentChannels', routes.getRecentChannels);
 
