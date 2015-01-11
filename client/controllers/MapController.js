@@ -292,8 +292,16 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-    //TODO - determine whether it is a country, province, or city,
-    //take appropriate action to paint a DOPE icon on the map
+    var mouseoverHandler = function(e) {
+      console.log(e);
+      var data = {
+        name: e.target.city
+      }
+      that.showMapPopup(data);
+    };
+    var mouseoutHandler = function(e) {
+      that.closeMapPopup();
+    };
 
     //change the intensity of the icon as occurrences increases
     if (location.split('/').length === 2) {
@@ -361,14 +369,15 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           circle.on('click', function(e) {
             that.goToPath(location);
           });
+          circle.city = cityName;
+          circle.on('mouseover', mouseoverHandler);
+          circle.on('mouseout', mouseoutHandler);
         }
       }
 
 
     } else {
       //USER-CREATED PLACE
-
-      console.log("USER AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv")
 
       $.ajax({
         url: 'http://liveworld.io:80/placeLatLng',
@@ -387,6 +396,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             circle.on('click', function(e) {
               that.goToPath(location);
             });
+            circle.city = location;
+            circle.on('mouseover', mouseoverHandler);
+            circle.on('mouseout', mouseoutHandler);
           } else {
           }
         }, error: function(err) {
@@ -785,6 +797,17 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
           });
 
+          var mouseoverHandler = function(e) {
+            console.log(e);
+            var data = {
+              name: e.target.city
+            }
+            that.showMapPopup(data);
+          };
+          var mouseoutHandler = function(e) {
+            that.closeMapPopup();
+          };
+
           for (var i=0;i<data.length;i++) {
 
             var latlng = L.latLng(data[i].latitude, data[i].longitude);
@@ -796,9 +819,15 @@ Agora.Controllers.MapController = Backbone.Model.extend({
                 fillOpacity: 0.7,
                 opacity: 0.5
               });
+              marker.city = data[i].name;
+              marker.on('mouseover', mouseoverHandler);
+              marker.on('mouseout', mouseoutHandler);
 
             } else {
               var marker = L.marker(latlng, {icon: placeIcon});
+              marker.city = data[i].name;
+              marker.on('mouseover', mouseoverHandler);
+              marker.on('mouseout', mouseoutHandler);
             }
 
             (function() { 
@@ -908,7 +937,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         icon.on('mouseover', mouseoverHandler);
 
         circle.on('mouseout', mouseoutHandler);
-        circle.on('mouseout', mouseoutHandler);
+        icon.on('mouseout', mouseoutHandler);
         citiesLayer.addLayer(circle);
         citiesIconLayer.addLayer(icon);
       }

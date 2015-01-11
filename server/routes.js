@@ -164,7 +164,6 @@ function xssValidator(input) {
   var translator = {'&':'&amp', '<':'&lt', '>':'&gt', '"':'&quot', "'":'&#x27',/*'/':'&#x2F'*/}
 
   for (var key in translator) {
-    console.log(key);
     result = result.split(key).join(translator[key]);
   }
 
@@ -3176,7 +3175,7 @@ module.exports.upvoteReply = function(request, response) {
 
 
                         addVoteHeat(request.body.username, request.body.topicId, 2);
-                        
+
                         client.query("INSERT INTO replyVoteJoin (reply, username) "+
                           "VALUES ($1, $2);", [request.body.replyId, request.body.username],
                           function(err, result) {
