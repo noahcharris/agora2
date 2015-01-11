@@ -309,13 +309,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       for (var key in countries._layers) {
         if (countries._layers[key].feature.properties.name === countryName) {
 
-          countries._layers[key].setStyle({
-                  fillColor: '#ff0000',
-                  weight: 2,
-                  dashArray: '',
-                  opacity: 0.0,
-                  fillOpacity: 0.5
-              });
+          // countries._layers[key].setStyle({
+          //         fillColor: '#ff0000',
+          //         weight: 2,
+          //         dashArray: '',
+          //         opacity: 0.0,
+          //         fillOpacity: 0.5
+          //     });
 
         }
       }
@@ -334,13 +334,13 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       var stateName = location;
       for (var key in states._layers) {
         if (states._layers[key].feature.properties.name === stateName) {
-          states._layers[key].setStyle({
-                  fillColor: '#ff0000',
-                  weight: 2,
-                  dashArray: '',
-                  opacity: 0.0,
-                  fillOpacity: 0.5
-              });
+          // states._layers[key].setStyle({
+          //         fillColor: '#ff0000',
+          //         weight: 2,
+          //         dashArray: '',
+          //         opacity: 0.0,
+          //         fillOpacity: 0.5
+          //     });
         }
       }
 

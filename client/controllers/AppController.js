@@ -487,6 +487,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     $(document).keyup(function(e) {
 
+      if ($('#inputBox').css('height')) {
+        var height = $('#inputBox').css('height');
+        height = height.slice(0, height.length-2);
+      }
+
       if (e.keyCode == 27) {
 
         console.log(that.get('imageFullscreen'));
@@ -495,9 +500,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //$('#fullscreenImage').hide();
           that.set('imageFullscreen', false);
 
-        //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
-        // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
+        } else if (height > 0) {
+          //didn't change the responding
+          $('#inputBox').css('height', '0px');
 
+          //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
+          // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
         } else if ($('#pathInput').length || $('#channelInput').length) {
           $('#pathInput').remove();
           $('#channelInput').remove();

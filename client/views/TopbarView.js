@@ -228,7 +228,29 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     $('#title').on('click', function() {
       that.app.changeChannel('General');
-      that.app.get('mapController').showWorld();
+      //that.app.get('mapController').showWorld();
+
+      //had to do a custom version of show world which doesn't close content2
+      var southWest = L.latLng(-67.474922384787, -153.984375);
+      var northEast = L.latLng(79.36770077764092, 162.421875);
+      var worldBounds = L.latLngBounds(southWest, northEast);
+
+      // !! to break out of anything that's not topics or groups mode
+      if (that.app.get('sidebarView').displayed !== 'Topics-Top'
+        && that.app.get('sidebarView').displayed !== 'Topics-New'
+        && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
+        that.app.get('sidebarView').displayed = 'Topics-Top';
+      }
+
+      that.app.get('mapController').get('map').fitBounds(worldBounds);
+      that.app.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
+
+      that.app.get('mapController').router.navigate('World#'+that.app.get('channel'), { trigger:false });
+
+      //this.app.get('content2').hide();
+      that.app.trigger('reloadSidebarTopics', 'World');
+
+
     });
 
     

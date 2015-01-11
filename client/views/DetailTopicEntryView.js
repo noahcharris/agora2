@@ -795,7 +795,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
 
+
     $(window).keypress(this.enterHandler);
+
 
     console.log(this.$el);
     this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
