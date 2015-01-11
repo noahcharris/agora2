@@ -40,6 +40,16 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
     this.$el.children('#nextButton').on('click', function() {
 
+      if ($('#parentInput').val()) {
+        for (var key in that.app.get('mapController').get('cities')._layers) {
+          if (that.app.get('mapController').get('cities')._layers[key].city === $('#parentInput').val()) {
+            that.cityVerified = true;
+            break;
+          }
+        }
+        this.cityVerified = false;
+      }
+
       if (!that.cityVerified) {
         alert('You must choose a valid parent city.');
       } else {

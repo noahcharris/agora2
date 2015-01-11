@@ -33,6 +33,13 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
     this.$el.children('#nextButton').on('click', function() {
 
+      var temp = $('#parentInput').val();
+      if (temp.split('/')[0] === 'General') {
+        this.channelVerified = true;
+      } else {
+        this.channelVerified = false;
+      }
+
       if (!this.channelVerified) {
         alert('Your parent channel must begin with "General"');
       } else {
