@@ -744,6 +744,10 @@ img#fullscreenImage {
   width: 100%;
 }
 
+#commentMask {
+  overflow: hidden;
+}
+
 
 /* TOPICS */
 .topicBox {

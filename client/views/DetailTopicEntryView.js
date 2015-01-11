@@ -43,7 +43,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.$el.append(this.inputBoxTemplate());
     this.$el.children('div#inputBox').css('height', '0px');
 
-    this.$el.append($('<div id="conversationWrapper"></div>'));
+    this.$el.append($('<div id="conversationWrapper"><div id="commentMask"></div></div>'));
 
     //image input
     var $imageInput = $('<input type="file" id="imageInput"></input>');
@@ -63,7 +63,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
     //append topic box
-    this.$el.children('#conversationWrapper').append( this.topicTemplate(this.model) );
+    this.$el.children('#conversationWrapper').prepend( this.topicTemplate(this.model) );
 
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
 
@@ -187,7 +187,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-      this.$el.children('#conversationWrapper').append( $comment );
+      this.$el.children('#conversationWrapper').children('#commentMask').append( $comment );
 
       var commentContentBox = $comment.children('.detailCommentClear').children('.commentContentBox');
 
@@ -320,7 +320,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       }
       c();
 
-      this.$el.children('#conversationWrapper').append($commentExpansionBox);
+      this.$el.children('#conversationWrapper').children('#commentMask').append($commentExpansionBox);
 
       //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
@@ -588,7 +588,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     }
 
     var $spacer = $('<div class="spacer"></div>');
-    this.$el.children('#conversationWrapper').append($spacer);
+    this.$el.children('#conversationWrapper').children('#commentMask').append($spacer);
 
 
 
