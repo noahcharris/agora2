@@ -1,16 +1,16 @@
 window.Agora = window.Agora || {};
 window.Agora.Views = window.Agora.Views || {};
 
-Agora.Views.SignupViewOne = Backbone.View.extend({
+Agora.Views.SignupView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'signupViewOne',
+  className: 'signupView',
 
   initialize: function(appController) {
     this.app = appController;
     console.log('appController', appController);
-    this.template = _.template( $('#signupOneTemplate').html() );
+    this.template = _.template( $('#signupTemplate').html() );
     this.$el.addClass('detailView');
   },
 
@@ -29,7 +29,7 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
 
   setHandlers: function() {
     var that = this;
-    this.$el.children('button').on('click', function() {
+    this.$el.children('button#registrationButton').on('click', function() {
 
           $.ajax({
 
@@ -81,6 +81,67 @@ Agora.Views.SignupViewOne = Backbone.View.extend({
 
     });
 
+
+
+
+  
+
+  var $availabilityButton = that.$el.children('button#checkAvailabilityButton');
+  $availabilityButton.on('click', function() {
+
+
+    $.ajax({
+      url: 'http://liveworld.io:80/validateUsername',
+      // url: 'http://localhost:80/locationSearch',
+      data: {
+        username: that.$el.children('input#signupUsernameInput').val()
+      },
+      crossDomain: true,
+      success: function(data) {
+
+        if (data === 'Taken') {
+          alert('username unavailable');
+        } else {
+          alert('username available');
+        }
+
+      },
+      error: function(data) {
+        alert('ajax error');
+      }
+    });
+
+
+
+  });
+
+  // var $usernameInput = that.$el.children('input#signupUsernameInput');
+  // $usernameInput.on('keyup', function(e) {
+
+  //   var input = $usernameInput.val();
+
+  //   $.ajax({
+  //     url: 'http://liveworld.io:80/checkUsername',
+  //     // url: 'http://localhost:80/locationSearch',
+  //     data: {
+  //       username: input
+  //     },
+  //     crossDomain: true,
+  //     success: function(data) {
+
+  //       if (data === 'Taken') {
+  //         console.log('username unavailable');
+  //       } else {
+  //         console.log('username available');
+  //       }
+
+  //     },
+  //     error: function(data) {
+  //       alert('ajax error');
+  //     }
+  //   });
+
+  // });
 
 
 

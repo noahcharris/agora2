@@ -155,9 +155,9 @@ app.get('/topicLocations', routes.getTopicLocations);
 
 app.get('/topicSearch', routes.topicSearch);
 app.get('/userSearch', routes.userSearch);
-//could I do some of this on the client (static location?)
-//or maybe the cache manager keeps track of all the 
-//locations and channels?? (there will be too many ..)
+
+app.get('/validateUsername', routes.validateUsername);
+
 app.get('/locationSearch', routes.locationSearch);
 app.get('/channelSearch', routes.channelSearch);
 

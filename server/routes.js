@@ -573,6 +573,33 @@ module.exports.userSearch = function(request, response) {
 };
 
 
+
+module.exports.validateUsername = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM users WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from users: ', err);
+      } else {
+          if (result.rows.length) {
+            //username already taken
+            response.end('Taken');
+          } else {
+            //username available
+            response.end('Available');
+          }
+      }
+  });
+
+
+};
+
+
+
+
 //maybe send back subtrees here
 module.exports.locationSearch = function(request, response) {
 
@@ -1667,49 +1694,65 @@ module.exports.registerUser = function(request, response) {
 
 
 
+  client.query("SELECT * FROM users WHERE username = $1;",
+    [request.body.username], function(err, result) {
+      if (err) {
+        console.log('error selecting from users: ', err);
+      } else {
+        if (result.rows.length) {
+          //username unavailable
+          response.end('That username is taken!');
+        } else {
+          //USERNAME AVAILABLE!!!!
 
-  bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash(request.body.password, salt, function(err, hash) {
+          bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-      postgres.createUser(xssValidator(request.body.username), hash, salt, 
-        xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
-          if (success) {
-            //send back login token here????
+              postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
+                  if (success) {
+                    //send back login token here????
 
-            var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-            var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+                    var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                    var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
 
-            // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                    // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
 
-            client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-              +"VALUES ($1, $2, $3, now());",
-              [request.body.username, cookie, token],
-              function(err, result) {
-                if (err) {
-                  console.log('error inserting into securityJoin: ', err);
-                } else {
+                    client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                      +"VALUES ($1, $2, $3, now());",
+                      [request.body.username, cookie, token],
+                      function(err, result) {
+                        if (err) {
+                          console.log('error inserting into securityJoin: ', err);
+                        } else {
+                          //LOGIN SUCCESSFUL
 
-                  console.log('whaaaa');
-                  //LOGIN SUCCESSFUL
+                          //set cookie which will be checkd in checkLogin (10 minutes here)
+                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                          response.cookie('login', request.body.username+'/'+cookie, { maxAge: 3000000000, httpOnly: true, secure: true });
 
-                  //set cookie which will be checkd in checkLogin (10 minutes here)
-                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                  response.cookie('login', request.body.username+'/'+cookie, { maxAge: 3000000000, httpOnly: true, secure: true });
+                          console.log('Login successful for user: ', request.body.username);
 
-                  console.log('Login successful for user: ', request.body.username);
-
-                  response.json({ login: true, token: token });
+                          response.json({ login: true, token: token });
 
 
-                }
+                        }
+                    });
+
+                  } else {
+                    response.end('error creating user');
+                  }
+              });//end create user
+
             });
+          });//end bcrypt async thing
 
-          } else {
-            response.end('error creating user');
-          }
-      });
-    });
-  });
+        }
+      }
+  });//end select from users
+
+
+
 
 };
 

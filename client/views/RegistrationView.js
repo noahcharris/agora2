@@ -25,9 +25,12 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     this.$el.append( this.template() );
 
     setTimeout(function() {
-
       that.$el.children('div.login').children('input#loginUsernameInput').focus();
     }, 1000);
+
+
+
+
 
 
     //append logout button if user is logged in:
@@ -165,8 +168,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     $('#signupButton').on('click', function() {
       $('#signupInput').val('');
 
-      var signupOne = new Agora.Views.SignupViewOne(that.app);
-      that.app.get('content2').show(signupOne);
+      var signupView = new Agora.Views.SignupView(that.app);
+      that.app.get('content2').show(signupView);
 
 
       // setTimeout(function() {
