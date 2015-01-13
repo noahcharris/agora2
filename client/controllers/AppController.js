@@ -922,6 +922,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   //#########  CACHE MANAGER     ##########
   //#######################################
 
+  //this.app is used to reference the AppController
+
   //keep
 
   //Agora caching, let's say caching occurs over 15 second (to start, for topics) seconds
@@ -975,8 +977,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     manager.getNotifications = function() {
 
-      var that = this;
-
 
       //reset credentials every 3 minutes
       this.tick++;
@@ -1004,7 +1004,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           //contactRequests is an arbitrary choice here
           if (data.contactRequests) {
 
-            console.log('CACHE MANAGER');
+            console.log('CACHE MANAGER: ', data);
 
             $('#notificationsButton').css('background-color', 'transparent');
 
@@ -1015,14 +1015,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                 data.newMessages.length > 0 ||
                 data.topicActivity.length > 0) {
 
-              $('#notificationsButton').css('background-color', '');
+              $('#notificationsButton').css('background-color', 'red');
 
               $('#notificationsButton')[0].onclick = function() {
 
 
-                if (!that.get('notificationsDisplayed')) {
+                if (!that.app.get('notificationsDisplayed')) {
 
-                    that.set('notificationsDisplayed', true);
+                    that.app.set('notificationsDisplayed', true);
 
                     contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
                     newMessageTemplate = _.template( $('#newMessageTemplate').html() );

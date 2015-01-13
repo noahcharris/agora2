@@ -292,7 +292,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     });
 
     var mouseoverHandler = function(e) {
-      console.log(e);
       var data = {
         name: e.target.city
       }

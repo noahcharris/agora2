@@ -190,7 +190,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
           },
           success: function(data) {
             if (data) {
-              console.log('search return data: ', data);
               that.app.get('sidebarView').searchCollection = data;
               that.app.get('sidebarView').displayed = 'Search';
               content1.show(that.app.get('sidebarView'));

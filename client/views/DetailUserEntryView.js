@@ -16,7 +16,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
   render: function() {
     var that = this;
-    console.log(this.model);
     this.$el.html( this.template(this.model) );
 
 

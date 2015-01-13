@@ -182,8 +182,6 @@ Agora.Views.RegistrationView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('registrationView closing');
-    console.log(this);
     $(window).unbind('keypress', this.enterHandler);
     this.remove();
   }

@@ -385,6 +385,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
         //this call results in a sidebar render
         that.app.trigger('reloadSidebarTopics');
       }
+      
       $('#topButton').css('background-color', '#f8f8f8');
       $('#newButton').css('background-color', '#E8E8E8');
       $('#hotButton').css('background-color', '#E8E8E8');
