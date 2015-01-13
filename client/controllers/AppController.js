@@ -258,7 +258,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
               data[i].isContact = true;
             }
 
-            sidebarView.displayed = 'Contacts';
             sidebarView.contactsCollection = data;
             content1.show(sidebarView); 
           } else {
@@ -298,7 +297,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         },
         success: function(data) {
           if (data) {
-            sidebarView.displayed = 'Messages';
             sidebarView.messagesCollection = data;
             if (!suppress) {
               content1.show(sidebarView); 
@@ -499,15 +497,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       } 
 
     });
-
-
-    
-
-
-
-
-
-
     
   },//END CONTROLLER INITIALIZE
 
@@ -630,11 +619,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-
-
-
-
   //sorta like mapController's goToPath()
   //but way easier
 
@@ -670,9 +654,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-  //#######################################
-  //#########  REGION MANAGERS  ###########
-  //#######################################
+ //  ____            _               __  __                                       
+ // |  _ \ ___  __ _(_) ___  _ __   |  \/  | __ _ _ __   __ _  __ _  ___ _ __ ___ 
+ // | |_) / _ \/ _` | |/ _ \| '_ \  | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__/ __|
+ // |  _ <  __/ (_| | | (_) | | | | | |  | | (_| | | | | (_| | (_| |  __/ |  \__ \
+ // |_| \_\___|\__, |_|\___/|_| |_| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|  |___/
+ //            |___/                                          |___/               
+
+ //POPULATE CONTENT1 AND CONTENT2 WITHOUT CREATING ZOMBIES OR DUPLICATING CODE!!!
+
 
   RegionManager1: function(id) {
     var currentView;
@@ -911,22 +901,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
+  //   ____           _            __  __                                   
+  //  / ___|__ _  ___| |__   ___  |  \/  | __ _ _ __   __ _  __ _  ___ _ __ 
+  // | |   / _` |/ __| '_ \ / _ \ | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
+  // | |__| (_| | (__| | | |  __/ | |  | | (_| | | | | (_| | (_| |  __/ |   
+  //  \____\__,_|\___|_| |_|\___| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
+  //                                                        |___/           
 
-
-
-
-
-
-
-  //#######################################
-  //#########  CACHE MANAGER     ##########
-  //#######################################
+  //Keep Agora up to date!
 
   //this.app is used to reference the AppController
 
-  //keep
-
-  //Agora caching, let's say caching occurs over 15 second (to start, for topics) seconds
+  //let's say caching occurs over 15 second (to start, for topics) seconds
 
   //longer cache for users, places, 
 
@@ -976,7 +962,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     };
 
     manager.getNotifications = function() {
-
+      var that = this;
 
       //reset credentials every 3 minutes
       this.tick++;
@@ -986,7 +972,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }
 
 
-
+      console.log(that);
       $.ajax({
         url: 'https://liveworld.io:443/notifications',
         // url: 'http://localhost:80/notifications',
@@ -1007,7 +993,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             console.log('CACHE MANAGER: ', data);
 
             $('#notificationsButton').css('background-color', 'transparent');
+            $('#notificationsAlertOverlay').remove();
 
+            //sentRequests are requests that the user has sent that are pending
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
 
@@ -1015,163 +1003,168 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                 data.newMessages.length > 0 ||
                 data.topicActivity.length > 0) {
 
-              $('#notificationsButton').css('background-color', 'red');
+              $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon1.png"></img>'));
+
+              (function() {
+
+                var data = data;
 
               $('#notificationsButton')[0].onclick = function() {
 
-
-                if (!that.app.get('notificationsDisplayed')) {
-
-                    that.app.set('notificationsDisplayed', true);
-
-                    contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
-                    newMessageTemplate = _.template( $('#newMessageTemplate').html() );
-                    topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
+                console.log(that.app.get('notificationsDisplayed'));
 
 
-                    //CONTACT REQUESTS
+                  if (!that.app.get('notificationsDisplayed')) {
 
-                    var cssAdjust = -75;
-                    for (var i=0; i < data.contactRequests.length ;i++) {
-
-                      var $notificationBox = $( contactRequestTemplate(data.contactRequests[i]) );
-
-                      (function(){
-                        var x = data.contactRequests[i].sender;
-                        $notificationBox.on('click', function() {
-                          var thet = this;
-
-                          $.ajax({
-                            url: 'http://liveworld.io:80/user',
-                            //url: 'http://localhost:80/user',
-                            method: 'GET',
-                            crossDomain: true,
-                            data: {
-                              username: x,
-                              extra: Math.floor((Math.random() * 10000) + 1)
-                            },
-                            success: function(data) {
-                              if (data) {
-                                that.app.get('detailView').displayed = 'Users';
-                                console.log('server returned: ', data);
-
-                                //is this creating a memory leak????
-                                $(thet).parent().empty();
-
-                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
-                              } else {
-                                console.log('no data returned from server');
-                              }
-                            }, error: function(err) {
-                              console.log('ajax error ocurred: ', err);
-                            }
-
-                          });
-                          
-      
-
-                        });//end notification click handler
-
-                      })();
-
-                      $('#notificationsDisplay').append($notificationBox);
-
-                      $notificationBox.css('bottom', cssAdjust+'px');
-                      cssAdjust -= 50;
-
-                    }
+                      that.app.set('notificationsDisplayed', true);
+                      contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
+                      newMessageTemplate = _.template( $('#newMessageTemplate').html() );
+                      topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
 
 
-                    //NEW MESSAGES
+                      //CONTACT REQUESTS
 
-                    for (var i=0; i < data.newMessages.length ;i++) {
+                      var cssAdjust = -75;
+                      for (var i=0; i < that.contactRequests.length ;i++) {
 
+                        var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
 
-                      $('#notificationsButton').css('background-color', 'red');
+                        (function(){
+                          var x = that.contactRequests[i].sender;
+                          $notificationBox.on('click', function() {
+                            var thet = this;
 
-                      var $notificationBox = $( newMessageTemplate(data.newMessages[i]) );
+                            $.ajax({
+                              url: 'http://liveworld.io:80/user',
+                              //url: 'http://localhost:80/user',
+                              method: 'GET',
+                              crossDomain: true,
+                              data: {
+                                username: x,
+                                extra: Math.floor((Math.random() * 10000) + 1)
+                              },
+                              success: function(data) {
+                                if (data) {
+                                  that.app.get('detailView').displayed = 'Users';
+                                  console.log('server returned: ', data);
 
-                      (function() {
-                        var x = data.newMessages[i].sender;
-                        $notificationBox.on('click', function() {
-
-
-                          //OPEN CONVERSATION SUBROUTINE
-                          var thet = this;
-                          console.log('.sender ', x);
-
-                          var chains = that.app.get('sidebarView').messagesCollection;
-                          console.log('chainz: ', chains);
-                          var offsetCount = -1;
-                          for (var i=0; i < chains.length ;i++) {
-
-                            offsetCount++;
-
-                            if (chains[i].username1 === that.app.get('username')) {
-                              chains[i].contact = chains[i].username2;
-                            } else {
-                              chains[i].contact = chains[i].username1;
-                            }
-
-                            //will need to account for pagination here eventually
-
-                            if (chains[i].contact === x) {
-                              //open up this shit
-                              that.app.get('sidebarView').displayed = 'Messages';
-                              that.app.get('detailView').displayed = 'Messages';
-
-                              that.app.get('content1').show(that.app.get('sidebarView'));
-
-                              $.ajax({
-                                url: 'https://liveworld.io:443/messageChain',
-                                // url: 'http://localhost/messageChain',
-                                method: 'GET',
-                                crossDomain: true,
-                                xhrFields: {
-                                  withCredentials: true
-                                },
-                                data: {
-                                  username: that.app.get('username'),
-                                  contact: chains[i].contact,
-                                  token: that.app.get('token')
-                                },
-                                success: function(model) {
-                                  //horrible
-
-                                  that.app.get('content2').show(that.app.get('detailView'), model, chains[i].contact);
-                                  that.app.get('sidebarView').highlightCell(offsetCount);
-                                  //Is this creating a memory leak?
+                                  //is this creating a memory leak????
                                   $(thet).parent().empty();
-                                },
-                                error: function() {
-                                  alert('server error');
+
+                                  that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                                } else {
+                                  console.log('no data returned from server');
                                 }
-                              });
-                              break;
-                            }
+                              }, error: function(err) {
+                                console.log('ajax error ocurred: ', err);
+                              }
 
-                          }//end for loop
-                          //END OPENING CONVO SUBROUTINE
+                            });
+                            
+        
 
+                          });//end notification click handler
+
+                        })();
+
+                        $('#notificationsDisplay').append($notificationBox);
+
+                        $notificationBox.css('bottom', cssAdjust+'px');
+                        cssAdjust -= 50;
+
+                      }
+
+
+                      //NEW MESSAGES
+
+                      for (var i=0; i < that.newMessages.length ;i++) {
+
+
+                        $('#notificationsButton').css('background-color', 'red');
+
+                        var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+
+                          var x = that.newMessages[i].sender;
+                          $notificationBox.on('click', function() {
+
+
+                            //OPEN CONVERSATION SUBROUTINE
+                            var thet = this;
+                            console.log('.sender ', x);
+
+                            var chains = that.app.get('sidebarView').messagesCollection;
+                            console.log('chainz: ', chains);
+                            var offsetCount = -1;
+                            for (var i=0; i < chains.length ;i++) {
+
+                              offsetCount++;
+
+                              if (chains[i].username1 === that.app.get('username')) {
+                                chains[i].contact = chains[i].username2;
+                              } else {
+                                chains[i].contact = chains[i].username1;
+                              }
+
+                              //will need to account for pagination here eventually
+
+                              if (chains[i].contact === x) {
+                                //open up this shit
+                                that.app.get('sidebarView').displayed = 'Messages';
+                                that.app.get('detailView').displayed = 'Messages';
+
+                                that.app.get('content1').show(that.app.get('sidebarView'));
+
+                                $.ajax({
+                                  url: 'https://liveworld.io:443/messageChain',
+                                  // url: 'http://localhost/messageChain',
+                                  method: 'GET',
+                                  crossDomain: true,
+                                  xhrFields: {
+                                    withCredentials: true
+                                  },
+                                  data: {
+                                    username: that.app.get('username'),
+                                    contact: chains[i].contact,
+                                    token: that.app.get('token')
+                                  },
+                                  success: function(model) {
+                                    //horrible
+
+                                    that.app.get('content2').show(that.app.get('detailView'), model, chains[i].contact);
+                                    that.app.get('sidebarView').highlightCell(offsetCount);
+                                    //Is this creating a memory leak?
+                                    $(thet).parent().empty();
+                                  },
+                                  error: function() {
+                                    alert('server error');
+                                  }
+                                });
+                                break;
+                              }
+
+                            }//end for loop
+                            //END OPENING CONVO SUBROUTINE
+
+
+                          $('#notificationsDisplay').append($notificationBox);
+                          $notificationBox.css('bottom', cssAdjust+'px');
+                          cssAdjust -= 50;
 
 
                         });
-                      })();
 
-                      $('#notificationsDisplay').append($notificationBox);
-                      $notificationBox.css('bottom', cssAdjust+'px');
-                      cssAdjust -= 50;
+                      }
 
-                    }
+                  } else {//notificationsDisplayed check
+                    that.app.set('notificationsDisplayed', false);
+                    $('#notificationsDisplay').remove();
+                  }     
 
-                } else {//notificationsDisplayed check
-                  that.set('notificationsDisplayed', false);
-                  $('#notificationsDisplay').remove();
-                }     
+                  
+                };//end notification click handler
 
+              })();
 
-
-              };//end notification click handler
 
             }//end if notification
           }/**/ else {
