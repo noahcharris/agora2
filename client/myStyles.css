@@ -109,6 +109,8 @@ img#fullscreenImage {
   position: absolute;
   height: 8px;
   width: 8px;
+  right: 2px;
+  bottom: 2px;
 }
 
 .notificationBox {
