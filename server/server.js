@@ -5,7 +5,7 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 
-
+var mailer = require('nodemailer');
 var cookie = require('cookie');
 
 var session = require('express-session');
@@ -26,6 +26,22 @@ var favicon = require('static-favicon');
 
 var timeEventLoop = require('time-eventloop');
 timeEventLoop.start(/* { options } */);
+
+require('crashreporter').configure({
+    outDir: '/home/ec2-user/crashes',
+    mailEnabled: true,
+    mailTransportName: 'SMTP',
+    mailTransportConfig: {
+        service: 'Gmail',
+        auth: {
+            user: 'agora.reporter@gmail.com',
+            pass: 'fieldsoffallensoldiers'
+        }
+    },
+    mailSubject: 'advanced.js crashreporter test',
+    mailFrom: 'crashreporter <agora.reporter@gmail.com>',
+    mailTo: 'noah.christopher.harris@gmail.com'
+});
 
 var routes = require('./routes.js');
 
@@ -69,6 +85,7 @@ app.use(function(request, response, next) {
   next();
 
 });
+
 
 
 

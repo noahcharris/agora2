@@ -75,8 +75,7 @@ module.exports.test = function(request, response) {
   //need a list of servers that I can iterate through to set all the servers
   //response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
 
-  response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
-
+  // response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
 
   // console.log("SESSION: ", request.session);
@@ -103,7 +102,6 @@ module.exports.test = function(request, response) {
   //   request.mySession.seenyou = true;
   //   response.setHeader('X-Seen-You', 'false');
   // }
-  response.end('woooo');
 
 };
 

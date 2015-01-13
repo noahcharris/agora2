@@ -1116,7 +1116,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                     for (var i=0; i < data.newMessages.length ;i++) {
 
-                      console.log('what');
 
                       $('#notificationsButton').css('background-color', 'red');
 

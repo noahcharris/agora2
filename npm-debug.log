@@ -1,20 +1,82 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'express-session' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'crashreport' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
-4 error Failed to parse json
-4 error Unexpected token }
-5 error File: /Users/noahharris/Desktop/agora2/package.json
-6 error Failed to parse package.json data.
-6 error package.json must be actual JSON, not just JavaScript.
-6 error
-6 error This is not a bug in npm.
-6 error Tell the package author to fix their package.json file. JSON.parse
-7 error System Darwin 13.4.0
-8 error command "node" "/usr/local/bin/npm" "install" "express-session"
-9 error cwd /Users/noahharris/Desktop/agora2
-10 error node -v v0.10.33
-11 error npm -v 1.4.28
-12 error file /Users/noahharris/Desktop/agora2/package.json
-13 error code EJSONPARSE
-14 verbose exit [ 1, true ]
+4 verbose cache add [ 'crashreport', null ]
+5 verbose cache add name=undefined spec="crashreport" args=["crashreport",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'crashreport',
+6 verbose parsed url   path: 'crashreport',
+6 verbose parsed url   href: 'crashreport' }
+7 silly lockFile 4de57263-crashreport crashreport
+8 verbose lock crashreport /Users/noahharris/.npm/4de57263-crashreport.lock
+9 silly lockFile 4de57263-crashreport crashreport
+10 silly lockFile 4de57263-crashreport crashreport
+11 verbose addNamed [ 'crashreport', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 8d2e4ec4-crashreport crashreport@
+14 verbose lock crashreport@ /Users/noahharris/.npm/8d2e4ec4-crashreport.lock
+15 silly addNameRange { name: 'crashreport', range: '*', hasData: false }
+16 verbose request where is /crashreport
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id c17a31c2d77243d0
+19 verbose url raw /crashreport
+20 verbose url resolving [ 'https://registry.npmjs.org/', './crashreport' ]
+21 verbose url resolved https://registry.npmjs.org/crashreport
+22 verbose request where is https://registry.npmjs.org/crashreport
+23 info trying registry request attempt 1 at 17:40:24
+24 http GET https://registry.npmjs.org/crashreport
+25 http 404 https://registry.npmjs.org/crashreport
+26 verbose headers { date: 'Tue, 13 Jan 2015 01:40:24 GMT',
+26 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 verbose headers   'content-type': 'application/json',
+26 verbose headers   'cache-control': 'max-age=0',
+26 verbose headers   'content-length': '52',
+26 verbose headers   'accept-ranges': 'bytes',
+26 verbose headers   via: '1.1 varnish',
+26 verbose headers   age: '0',
+26 verbose headers   'x-served-by': 'cache-lax1428-LAX',
+26 verbose headers   'x-cache': 'MISS',
+26 verbose headers   'x-cache-hits': '0',
+26 verbose headers   'x-timer': 'S1421113224.617962,VS0,VE173',
+26 verbose headers   'keep-alive': 'timeout=10, max=50',
+26 verbose headers   connection: 'Keep-Alive' }
+27 silly registry.get cb [ 404,
+27 silly registry.get   { date: 'Tue, 13 Jan 2015 01:40:24 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=0',
+27 silly registry.get     'content-length': '52',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     'x-served-by': 'cache-lax1428-LAX',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1421113224.617962,VS0,VE173',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly lockFile 8d2e4ec4-crashreport crashreport@
+29 silly lockFile 8d2e4ec4-crashreport crashreport@
+30 error 404 404 Not Found: crashreport
+30 error 404
+30 error 404 'crashreport' is not in the npm registry.
+30 error 404 You should bug the author to publish it
+30 error 404
+30 error 404 Note that you can also install from a
+30 error 404 tarball, folder, or http url, or git url.
+31 error System Darwin 14.0.0
+32 error command "node" "/usr/local/bin/npm" "install" "crashreport"
+33 error cwd /Users/noahharris/Desktop/agora2
+34 error node -v v0.10.33
+35 error npm -v 1.4.28
+36 error code E404
+37 verbose exit [ 1, true ]
