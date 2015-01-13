@@ -173,7 +173,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           break;
       }
 
-      console.log('ajax request to: ', urlPath);
 
       var url;
       var token;
@@ -205,8 +204,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         },
         success: function(data) {
           if (data) {
-
-            console.log('omg: ', data);
 
             topicsCollection = data;
             sidebarView.collection = data;
@@ -253,13 +250,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
             that.contacts = data;
             that.get('cacheManager').contacts = data;
-            console.log('server returned: ', data);
-            //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+            //console.log('server returned: ', data);
 
             for (var i=0; i < data.length ;i++) {
               data[i].isContact = true;
             }
 
+            sidebarView.displayed = 'Contacts';
             sidebarView.contactsCollection = data;
             content1.show(sidebarView); 
           } else {
@@ -299,9 +296,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         },
         success: function(data) {
           if (data) {
-            //topicsCollection = data;
-            console.log('server returned: ', data);
-            //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
+            sidebarView.displayed = 'Messages';
             sidebarView.messagesCollection = data;
             if (!suppress) {
               content1.show(sidebarView); 
@@ -398,33 +393,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
     this.trigger('reloadSidebarTopics', 'World');
 
-
-
-
-
-    $.ajax({
-      url: 'https://liveworld.io:443/test',
-      crossDomain: true,
-      method: 'GET',
-      data: {
-      },
-      success: function(data) {
-        if (data) {
-          topicsCollection = data;
-          console.log('server returned: ', data);
-          //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-          // sidebarView.collection = data;
-          // content1.show(sidebarView); 
-        } else {
-          // console.log('memcached returned false');
-          // sidebarView.collection = defaultCollection;
-          // content1.show(sidebarView);
-        }
-      }, error: function(err) {
-        console.log('ajax error ocurred: ', err);
-      }
-
-    });
 
 
 
@@ -675,7 +643,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('channel', channel);
     this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
     this.get('channelView').render();
-    console.log('changing channel');
+    // console.log('changing channel');
 
     var location = this.get('mapController').get('location')
     //this.get('mapController').router.navigate('World'+location.slice(6, location.length)+'#'+this.get('channel'), { trigger:false });

@@ -1118,166 +1118,169 @@ module.exports.login = function(request, response) {
 
 
 
-  var rejection = function () {
-    response.end('False');
-  };
+  // var rejection = function () {
+  //   response.end('False');
+  // };
 
-  var deferred = Q.defer();
-  postgres.retrieveUser(request.body.username, function(data) {
-    if (data[0]) {
-      deferred.resolve(data);
-    } else {
-      console.log(1);
-      deferred.reject(new Error());
-    }
-  });
-
-  return deferred.promise
-  .then(function(data) {
-
-    var deferred = Q.defer();
-
-    bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
-      if (res) {
-        deferred.resolve(res);
-      } else {
-        //LOGIN FAILED
-        console.log(2);
-        deferred.reject(new Error());
-      }
-    });
-    return deferred.promise;
-
-  }, function() {
-    //authentication failed
-    response.end('False');
-  })
-  .then(function(res) {
-
-    var deferred = Q.defer();
-
-    //insert into security join
-    client.query("DELETE FROM securityJoin WHERE username = $1;",
-      [request.body.username], function(err, result) {
-        if (err) {
-          console.log('error deleting from securityJoin: ', err);
-          reject(new Error());
-        } else {
-          //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
-          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-          deferred.resolve({token: token, cookie: cookie});
-        }
-    });
-
-    return deferred.promise;
-  }, function() {
-    //authentication failed
-    response.end('False');
-  })
-  .then(function(data) {
-
-    client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-      +"VALUES ($1, $2, $3, now());",
-      [request.body.username, data.cookie, data.token],
-      function(err, result) {
-        if (err) {
-          console.log('error inserting into securityJoin: ', err);
-        } else {
-
-          console.log('whaaaa');
-          //LOGIN SUCCESSFUL
-
-          //set cookie which will be checkd in checkLogin (10 minutes here)
-          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-          response.cookie('login', request.body.username+'/'+data.cookie, { maxAge: 3000000000, httpOnly: true, secure: true });
-
-          console.log('Login successful for user: ', request.body.username);
-
-          response.json({ login: true, token: data.token });
-
-
-        }
-    });
-
-  });
-
-
-
-
-
+  // var deferred = Q.defer();
   // postgres.retrieveUser(request.body.username, function(data) {
   //   if (data[0]) {
-
-  //     bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
-  //       if (res) {
-
-
-
-  //         //insert into security join
-  //         client.query("DELETE FROM securityJoin WHERE username = $1;",
-  //           [request.body.username], function(err, result) {
-  //             if (err) {
-  //               console.log('error deleting from securityJoin: ', err);
-  //             } else {
-
-  //               //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
-
-  //               var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-  //               var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-
-
-  //               client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-  //                 +"VALUES ($1, $2, $3, now());",
-  //                 [request.body.username, cookie, token],
-  //                 function(err, result) {
-  //                   if (err) {
-  //                     console.log('error insertin into securityJoin: ', err);
-  //                   } else {
-
-
-
-
-
-
-  //                       //LOGIN SUCCESSFUL
-
-  //                       //set cookie which will be checkd in checkLogin (10 minutes here)
-  //                       // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-  //                       response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
-
-  //                       console.log('Login successful for user: ', request.body.username);
-
-  //                       response.json({ login: true, token: token });
-
-
-
-
-
-
-  //                   }
-  //               });//end security join insert
-
-
-
-  //             }
-  //         });//end security join delete
-
-
-
-  //       } else {
-
-  //         //LOGIN FAILED
-  //         console.log('login failed');
-  //         response.end('False');
-  //       }
-  //     });
-
+  //     deferred.resolve(data);
   //   } else {
-  //     response.end('False');
+  //     console.log(1);
+  //     deferred.reject(new Error());
   //   }
   // });
+
+  // return deferred.promise
+  // .then(function(data) {
+
+  //   var deferred = Q.defer();
+
+  //   bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+  //     if (res) {
+  //       deferred.resolve(res);
+  //     } else {
+  //       //LOGIN FAILED
+  //       console.log(2);
+  //       deferred.reject(new Error());
+  //     }
+  //   });
+  //   return deferred.promise;
+
+  // }, function() {
+  //   //authentication failed
+  //   response.end('False');
+  // })
+  // .then(function(res) {
+
+  //   var deferred = Q.defer();
+
+  //   //insert into security join
+  //   client.query("DELETE FROM securityJoin WHERE username = $1;",
+  //     [request.body.username], function(err, result) {
+  //       if (err) {
+  //         console.log('error deleting from securityJoin: ', err);
+  //         reject(new Error());
+  //       } else {
+  //         deferred.resolve();
+  //       }
+  //   });
+
+  //   return deferred.promise;
+  // }, function() {
+  //   //authentication failed
+  //   response.end('False');
+  // })
+  // .then(function() {
+
+  //   console.log('fuck');
+
+  //   client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+  //     +"VALUES ($1, $2, $3, now());",
+  //     [request.body.username, cookie, token],
+  //     function(err, result) {
+  //       if (err) {
+  //         console.log('error inserting into securityJoin: ', err);
+  //       } else {
+
+  //         console.log('whaaaa');
+  //         //LOGIN SUCCESSFUL
+
+
+  //         var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+  //         var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+  //         //set cookie which will be checkd in checkLogin (10 minutes here)
+  //         // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+  //         response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+  //         console.log('Login successful for user: ', request.body.username);
+
+  //         response.json({ login: true, token: token });
+
+
+  //       }
+  //   });
+
+  // });
+
+
+
+
+
+  postgres.retrieveUser(request.body.username, function(data) {
+    if (data[0]) {
+
+      bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+        if (res) {
+
+
+
+          //insert into security join
+          client.query("DELETE FROM securityJoin WHERE username = $1;",
+            [request.body.username], function(err, result) {
+              if (err) {
+                console.log('error deleting from securityJoin: ', err);
+              } else {
+
+                //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+
+                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+
+
+                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                  +"VALUES ($1, $2, $3, now());",
+                  [request.body.username, cookie, token],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error insertin into securityJoin: ', err);
+                    } else {
+
+
+
+
+
+
+                        //LOGIN SUCCESSFUL
+
+                        //set cookie which will be checkd in checkLogin (10 minutes here)
+                        // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+
+                        console.log('Login successful for user: ', request.body.username);
+
+                        response.json({ login: true, token: token });
+
+
+
+
+
+
+                    }
+                });//end security join insert
+
+
+
+              }
+          });//end security join delete
+
+
+
+        } else {
+
+          //LOGIN FAILED
+          console.log('login failed');
+          response.end('False');
+        }
+      });
+
+    } else {
+      response.end('False');
+    }
+  });
 
 
 };
@@ -1726,7 +1729,7 @@ module.exports.registerUser = function(request, response) {
 
                           //set cookie which will be checkd in checkLogin (10 minutes here)
                           // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                          response.cookie('login', request.body.username+'/'+cookie, { maxAge: 3000000000, httpOnly: true, secure: true });
+                          response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
 
                           console.log('Login successful for user: ', request.body.username);
 

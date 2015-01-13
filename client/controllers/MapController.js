@@ -103,7 +103,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             }
           }
 
-          console.log("RESULT: ", result);
+          //console.log("RESULT: ", result);
 
           for (var key in result) {
 
@@ -114,8 +114,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             that.showHeatPoint(key, result[key]);
 
           }
-          
-          console.log('server returned fadsJKFLD:SJL:JF: ', data);
+
         } else {
         }
       }, error: function(err) {
@@ -279,7 +278,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-    console.log('SETTING HEAT POINT WITH LOCATION: ', location);
+    //console.log('SETTING HEAT POINT WITH LOCATION: ', location);
 
     var greenIcon = L.icon({
         iconUrl: '/resources/images/logo.png',
@@ -360,7 +359,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       }
       var cities = this.get('cities') || {};
       var cityName = location;
-      console.log(cities);
       //put it at the coordinates of the city
       for (var key in cities._layers) {
         if (cities._layers[key].city === cityName) {
