@@ -5,6 +5,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   defaults: {
     mobile: false,
+    expanded: false
   },
 
 
@@ -830,7 +831,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     region.hide = function() {
       //debugger;
-      var that = this;
       if (that.get('expanded')) {
         $('#sidebarContainer').css('-webkit-transition-duration', that.params.transition+'s');
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
