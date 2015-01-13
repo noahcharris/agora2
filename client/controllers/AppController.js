@@ -11,6 +11,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   initialize: function(params) {
     var that = this;
+    this.params = params;
 
     this.set('mobile', params.mobile);
     this.set('language', params.language);
@@ -817,7 +818,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var sideWidth = $(window).width() - mapWidth;
       $('#content2').css('width', ($(window).width() * 0.75) - sideWidth - 5);
 
-      $('#sidebarContainer').css('-webkit-transition-duration', '1s');
+      $('#sidebarContainer').css('-webkit-transition-duration', that.params.transition+'s');
 
       //this is where content2 changes the size of the sidebarcontainer
       $('#sidebarContainer').css('width', $(window).width() * 0.75);
@@ -829,8 +830,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     region.hide = function() {
       //debugger;
+      var that = this;
       if (that.get('expanded')) {
-        $('#sidebarContainer').css('-webkit-transition-duration', '1s');
+        $('#sidebarContainer').css('-webkit-transition-duration', that.params.transition+'s');
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
           //debugger;
           if (currentView && currentView.close) {
