@@ -321,8 +321,12 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   renderUser: function() {
     var that = this;
 
+    var tempModel = JSON.parse(JSON.stringify(this.model));
+    var temp = tempModel.location.split('/');
+    var temp2 = temp.slice(1, temp.length);
+    tempModel.location = temp2.join('/');
 
-    this.$el.html( this.userTemplate(this.model) );
+    this.$el.html( this.userTemplate(tempModel) );
 
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');

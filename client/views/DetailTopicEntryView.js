@@ -57,13 +57,19 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
     if (this.responding) {
-      //why do I need to use this selector?
       this.$el.children('#conversationWrapper').children('div#inputBox').css('height', '100px');
     }
 
+    //format the date yo
+    var tempModel = JSON.parse(JSON.stringify(this.model));
+    var temp = new Date(tempModel.createdat);
+    var temp2 = String(temp).split(' ');
+    var temp3 = temp2.slice(1);
+    tempModel.createdat = temp3.join(' ');
+
 
     //append topic box
-    this.$el.children('#conversationWrapper').prepend( this.topicTemplate(this.model) );
+    this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
 
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
 
@@ -127,10 +133,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         },
         success: function(msg) {
           alert(msg);
-          //some weird shit going on here with detailView
-          // that.app.get('sidebarView').displayed = 'Topics-New'
-          // that.app.get('content2').hide();
-          // that.app.trigger('reloadSidebarTopics');
         },
         error: function() {
           alert('upvote failed');
@@ -141,17 +143,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-
-
-
-
     var comments = this.model.comments;
-
-
-    //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
-    //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
-    //this.$el.children('div.topicBox').children('div.topicContentBox').append($starIcon);
-    //this.$el.children('div.topicBox').children('div.topicContentBox').append($shareIcon);
 
 
     var $topicReplyButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('.replyButton');

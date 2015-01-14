@@ -1001,8 +1001,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             that.newMessages = data.newMessages;
 
             if (data.contactRequests.length > 0 ||
-                data.newMessages.length > 0 ||
-                /*data.topicActivity.length > 0*/) {
+                data.newMessages.length > 0 /*||
+                data.topicActivity.length > 0*/) {
 
               var count = 0;
 
