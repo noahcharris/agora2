@@ -80,6 +80,7 @@ img#fullscreenImage {
 
 
 .recentlyPostedItem {
+  list-style-type: none;
   height: auto;
   width: auto;
 }
@@ -965,6 +966,9 @@ right:22.4%;
 }
 
 #editProfileImageInput {
+  position: relative;
+  bottom: 27%;
+  left:0%;
   
 }
 
@@ -1679,6 +1683,23 @@ textarea {
   width: 100%;
 
 }
+
+#viewProfileButton {
+
+}
+
+#editProfileButton {
+
+}
+
+#createChannelButton {
+
+}
+
+#createLocationButton {
+
+}
+
 
 #settingsViewList {
   list-style-type: none;
