@@ -155,10 +155,6 @@
         <div id="topicContentBox">
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
-          <div>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://liveworld.io/index.html#topic/<%= id %>" data-text="Agora" data-count="none">Tweet</a>
-        </div>
-
 
         </div>
         <div class="replyButton">Reply</div>
@@ -563,7 +559,9 @@
         var params = {
           mobile: false,
           language: 'en',
-          transition: 0.1
+          transition: 0.1,
+          adjustedResponseHeight: 26,
+          adjustedReplyHeight: 8
         }
 
         var appController = new Agora.Controllers.AppController(params);
