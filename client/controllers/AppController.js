@@ -998,23 +998,39 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             //sentRequests are requests that the user has sent that are pending
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
+            that.newMessages = data.newMessages;
 
             if (data.contactRequests.length > 0 ||
                 data.newMessages.length > 0 ||
-                data.topicActivity.length > 0) {
+                /*data.topicActivity.length > 0*/) {
 
-              $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon1.png"></img>'));
+              var count = 0;
 
-              (function() {
+              for (var i=0; i < data.newMessages.length ;i++) {
+                count++;
+              }
+              for (var i=0; i < data.contactRequests.length ;i++) {
+                count++;
+              }
 
-                var data = data;
+              if (count < 11) {
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon'+count+'.png"></img>'));
+              } else {
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon11.png"></img>'));
+              }
+
+
+              var data = data;
 
               $('#notificationsButton')[0].onclick = function() {
 
                 console.log(that.app.get('notificationsDisplayed'));
+                console.log($('#notificationsDisplay'));
 
 
                   if (!that.app.get('notificationsDisplayed')) {
+
+                      console.log('whaaaa');
 
                       that.app.set('notificationsDisplayed', true);
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
@@ -1022,51 +1038,60 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
 
 
+
+
+
+
+
+
+
+
+
                       //CONTACT REQUESTS
+
 
                       var cssAdjust = -75;
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
 
-                        (function(){
-                          var x = that.contactRequests[i].sender;
-                          $notificationBox.on('click', function() {
-                            var thet = this;
+                        var x = that.contactRequests[i].sender;
+                        $notificationBox.on('click', function() {
+                          var thet = this;
 
-                            $.ajax({
-                              url: 'http://liveworld.io:80/user',
-                              //url: 'http://localhost:80/user',
-                              method: 'GET',
-                              crossDomain: true,
-                              data: {
-                                username: x,
-                                extra: Math.floor((Math.random() * 10000) + 1)
-                              },
-                              success: function(data) {
-                                if (data) {
-                                  that.app.get('detailView').displayed = 'Users';
-                                  console.log('server returned: ', data);
+                          $.ajax({
+                            url: 'http://liveworld.io:80/user',
+                            //url: 'http://localhost:80/user',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              username: x,
+                              extra: Math.floor((Math.random() * 10000) + 1)
+                            },
+                            success: function(data) {
+                              if (data) {
+                                that.app.get('detailView').displayed = 'Users';
+                                console.log('server returned: ', data);
 
-                                  //is this creating a memory leak????
-                                  $(thet).parent().empty();
+                                //is this creating a memory leak????
+                                $(thet).parent().empty();
 
-                                  that.app.get('content2').show(that.app.get('detailView'), data[0]);
-                                } else {
-                                  console.log('no data returned from server');
-                                }
-                              }, error: function(err) {
-                                console.log('ajax error ocurred: ', err);
+                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                              } else {
+                                console.log('no data returned from server');
                               }
+                            }, error: function(err) {
+                              console.log('ajax error ocurred: ', err);
+                            }
 
-                            });
-                            
-        
+                          });
+                          
+      
 
-                          });//end notification click handler
+                        });//end notification click handler
 
-                        })();
 
+                        console.log($notificationBox);
                         $('#notificationsDisplay').append($notificationBox);
 
                         $notificationBox.css('bottom', cssAdjust+'px');
@@ -1075,14 +1100,25 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       }
 
 
+
+
+
+
+
+
+
+
                       //NEW MESSAGES
+
+                      console.log('NEW MESSAGES: ', that.newMessages);
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
 
-                        $('#notificationsButton').css('background-color', 'red');
 
                         var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+
+                        console.log($notificationBox);
 
                           var x = that.newMessages[i].sender;
                           $notificationBox.on('click', function() {
@@ -1142,28 +1178,24 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                 break;
                               }
 
-                            }//end for loop
+                            }//end chain searching for loop
                             //END OPENING CONVO SUBROUTINE
-
-
-                          $('#notificationsDisplay').append($notificationBox);
-                          $notificationBox.css('bottom', cssAdjust+'px');
-                          cssAdjust -= 50;
-
 
                         });
 
-                      }
+                        $('#notificationsDisplay').append($notificationBox);
+                        $notificationBox.css('bottom', cssAdjust+'px');
+                        cssAdjust -= 50;
+
+                      }//end new messages for loop
+
 
                   } else {//notificationsDisplayed check
                     that.app.set('notificationsDisplayed', false);
-                    $('#notificationsDisplay').remove();
+                    $('#notificationsDisplay').empty();
                   }     
 
-                  
                 };//end notification click handler
-
-              })();
 
 
             }//end if notification
