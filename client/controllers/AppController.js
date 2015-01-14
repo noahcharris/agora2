@@ -1002,9 +1002,22 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
             if (data.contactRequests.length > 0 ||
                 data.newMessages.length > 0 ||
-                data.topicActivity.length > 0) {
+                /*data.topicActivity.length > 0*/) {
 
-              $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon1.png"></img>'));
+              var count = 0;
+
+              for (var i=0; i < data.newMessages.length ;i++) {
+                count++;
+              }
+              for (var i=0; i < data.contactRequests.length ;i++) {
+                count++;
+              }
+
+              if (count < 11) {
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon'+count+'.png"></img>'));
+              } else {
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon11.png"></img>'));
+              }
 
 
               var data = data;
@@ -1177,25 +1190,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       }//end new messages for loop
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                   } else {//notificationsDisplayed check
                     that.app.set('notificationsDisplayed', false);
                     $('#notificationsDisplay').empty();
                   }     
 
-                  
                 };//end notification click handler
 
 
