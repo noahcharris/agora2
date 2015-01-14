@@ -1,0 +1,1734 @@
+body::-webkit-scrollbar{
+  width:10px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+body::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+@font-face {
+  font-family: 'clearSans';
+  src: url('resources/TTF/ClearSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'clearBold';
+  src: url('resources/TTF/ClearSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'clearThin';
+  src: url('resources/TTF/ClearSans-Thin.ttf');
+}
+
+body {
+  position: relative;
+  font-family: 'clearSans';
+  margin: 0px;
+  background-color: #f8f8f8;
+}
+
+
+
+div#mapPopup {
+  position: absolute;
+  height: 20px;
+  width: 45%;
+  background-color: rgba(175, 236, 238, 0.6);
+  top: 0px;
+  left: 29%;
+  z-index: 700;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
+}
+
+
+
+/* image overlay */
+div#fullscreen {
+  position: absolute;
+  display: block;
+  z-index: 600;
+  width: 100%;
+  height: 100%;
+  top: 90px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+img#fullscreenImage {
+  position: absolute;
+  display: inline;
+  z-index: 600;
+  width: auto;
+  height: auto;
+  top:0px;
+}
+
+
+
+.recentlyPostedItem {
+  height: auto;
+  width: auto;
+}
+
+
+/****************/
+/***  TOPBAR  ***/
+/****************/
+
+
+#topbarWrapper {
+  width: 100%;
+  /*height: 100px;*/
+  height: auto;
+}
+
+#topbar1 {
+  padding: 14px;
+  height: 42px;
+  background-color: #f8f8f8;
+
+  background: linear-gradient(to bottom, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+}
+
+
+
+#title {
+  cursor: pointer;
+  position: relative;
+  bottom: 7px;
+  font-family: 'clearSans';
+  color: rgba(135,165,185,.8);
+  display: inline;
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: 4.5px;
+  border-color: rgba(187,243,246,.4);
+  border-width: 2.5px;
+  border-style: solid;
+  -webkit-transition: color .7s;
+}
+
+#title:hover {
+  color: rgba(114,124,164,1);
+}
+
+.topbarIcon {
+  cursor: pointer;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+#notificationsImage {
+  height: 20px;
+  width: 20px;
+}
+
+#notificationsAlertOverlay {
+  position: absolute;
+  top:20px;
+  height: 8px;
+  width: 8px;
+}
+
+
+#notificationsDisplay{
+position:absolute;
+top:0.8%;
+right:22.4%;
+}
+
+
+.notificationBox {
+  position: absolute;
+  left: -200px;
+  bottom: -100px;
+  width: 300px;
+  height: 49px;
+  padding-left: 3px;
+  z-index: 600;
+  background-color: rgba(250,111,111,.7);
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: medium;
+}
+
+.topbarSearchIcon {
+  cursor: pointer;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 70px;
+}
+
+#searchSelect {
+  float: right;
+  position: relative;
+  margin-top: 10px;
+  margin-right: 8px;
+}
+#username {
+  color: rgba(150,150,150,1);
+  position: relative;
+  left: 35%;
+  bottom: 22px;
+  cursor: pointer;
+  -webkit-transition: color .7s;
+  }
+
+#username:hover {
+  color: rgba(40,40,70,1);
+}
+
+
+#searchInput {
+  display: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 12px;
+}
+
+#topbar2 {
+  position: relative;
+  width: 100%;
+  height: auto;
+  /*background-color: #57646D;*/
+  background-color: rgba(140, 153, 183, .7);
+}
+
+/***********************************/
+/***  PATH AND CHANNEL VIEWS     ***/
+/***********************************/
+
+
+.treeButton {
+  cursor: pointer;
+}
+
+/* I think there's a better way to organize these 6 */
+#pathPrefix {
+  position: relative;
+  color: #f8f8f8;
+}
+
+/*what we set as width here will dictate the maximum characters allowed for paths and channels*/
+.locationView {
+  display: inline-block;
+  width: 420px;
+  background-color: rgba(130, 143, 173,1);
+   opacity: .8 ;
+    -webkit-transition: opacity 0.5s, background-color 0.5s;
+    -moz-transition: opacity 0.5s, background-color 0.5s;
+    -o-transition: opacity 0.5s, background-color 0.5s;
+    transition: opacity 0.5s, background-color 0.5s;
+  background: linear-gradient(to bottom, rgba(109,109,159,.7), rgba(255,255,255,0)); /*Standard*/
+}
+
+.locationView:hover {
+ opacity: 1;
+ background-color: rgba(110, 163, 203,1);
+}
+
+.pathWrapper {
+  position: relative;
+  cursor:pointer;
+  color: #f8f8f8;
+  /*top: 4px;*/
+}
+
+.pathName {
+  cursor: pointer;
+  color: #f8f8f8;
+  text-decoration: none;
+}
+
+#pathInput {
+  position:absolute;
+  width: 300px;
+}
+
+#pathSearchButton {
+  cursor: pointer;
+}
+
+#pathSearchResultList {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  z-index: 9999;
+}
+
+.signupLocationSearchResult {
+  position: absolute;
+  bottom: -30px;
+  height: 30px;
+  left: 20px;
+  background-color: green;
+  color: orange;
+  z-index: 9999;
+}
+
+
+.channelView {
+  display: inline-block;
+  width: 845px;
+  position: relative;
+  /*display: inline-block;*/
+  background-color: rgba(130, 163, 173,1);
+   opacity: .8 ;
+    -webkit-transition: opacity 0.5s, background-color 0.5s;
+    -moz-transition: opacity 0.5s, background-color 0.5s;
+    -o-transition: opacity 0.5s, background-color 0.5s;
+    transition: opacity 0.5s, background-color 0.5s;
+  background: linear-gradient(to bottom, rgba(109,109,159,.7), rgba(255,255,255,0)); /*Standard*/
+}
+
+.channelView:hover {
+ opacity: 1;
+ background-color: rgba(110, 183, 203,1);
+}
+
+.channelName {
+  color: #f8f8f8;
+}
+
+.channelWrapper {
+  position: relative;
+  cursor:pointer;
+  color: #f8f8f8;
+}
+
+#channelInput {
+  position: absolute;
+  width: 250px;
+}
+
+#channelSearchButton {
+  cursor: pointer;
+}
+
+
+.creationChannelSearchResult {
+  position: relative;
+  background-color: green;
+  color: orange;
+  z-index: 9999;
+}
+
+
+
+
+#mobileSelectionBarWrapper {
+  height: 0px;
+  width:100%;
+}
+
+
+/****************/
+/***  MAP     ***/
+/****************/
+
+#map {
+  height: 600px;
+  width: 70%;
+  right:0px;
+  margin: 0px;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:1s;
+}
+
+
+
+
+#content1 {
+  position: relative;
+  height: 100%;
+  width: auto;
+  z-index: 501;
+}
+
+#content2 {
+  z-index: 500;
+  position: absolute;
+  right: 0px;
+  width: 500px;
+  height: 100%;
+  position: absolute;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 6px;
+  border-color: #E8E8E8;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  background-color: #f8f8f8;
+}
+
+
+/****************/
+/*** SIDEBAR  ***/
+/****************/
+
+#sidebarContainer {
+
+/* width definted in appController*/
+/* height of this and map used to be 625 */
+  height: 600px;
+  left: 0px;
+  background-color: rgba(255,255,255,0);
+  border-style: solid;
+  border-width: 1px;
+  border-color: #E8E8E8;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition-duration:.2s;
+  -moz-transition-duration:.2s;
+
+}
+
+.sidebarView {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  left: 0px;
+  position: relative;
+  display: inline-block;
+  /*-webkit-transition-duration:0.7s;
+  -moz-transition-duration:0.7s;*/
+}
+
+.sidebarEntryView {
+  background-color: #f8f8f8;
+  position: relative;
+  left: 0px;
+  width: 380px;
+  border-color: #E8E8E8;
+  border-bottom-style: solid;
+  border-width: 2px;
+  margin: 0px;
+  padding: 0px;
+  z-index: 50;
+  /*-webkit-transition-duration:0.7s;
+  -moz-transition-duration:0.7s;*/
+
+  background: linear-gradient(to top, rgba(220,220,240,1), rgba(255,255,255,1)); /*Standard*/
+  -webkit-transition: background .7s;
+}
+
+.sidebarEntryView:hover {
+  background: linear-gradient(to top, rgba(240,240,255,1), rgba(255,255,255,1));
+}
+
+.paginationView {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  margin-bottom: 0px;
+  background-color: rgba(166,166,166,1);
+  bottom: 5.8%;
+  z-index: 600;
+}
+
+.paginationIcon {
+  cursor: pointer;
+  font-size: 16px;
+  float: left;
+  margin: 0px;
+  padding-bottom: 0px;
+  padding-left: 2.65%;
+  padding-right: 2.65%;
+  background-color: rgba(255,255,255,.4);
+    opacity: .8 ;
+    -webkit-transition: opacity 0.5s, background-color 0.5s;
+    -moz-transition: opacity 0.5s, background-color 0.5s;
+    -o-transition: opacity 0.5s, background-color 0.5s;
+    transition: opacity 0.5s, background-color 0.5s;
+}
+
+.paginationIcon:hover {
+ opacity: 1;
+ background-color: rgba(255,255,255,1);
+}
+
+#paginationNextButton {
+  width:55px;
+  cursor: pointer;
+  font-size: 16px;
+  float: left;
+  margin: 0px;
+  padding-left: 5%;
+ background-color: rgba(255,255,255,.4);
+    opacity: .8 ;
+    -webkit-transition: opacity 0.5s, background-color 0.5s;
+    -moz-transition: opacity 0.5s, background-color 0.5s;
+    -o-transition: opacity 0.5s, background-color 0.5s;
+    transition: opacity 0.5s, background-color 0.5s;
+}
+
+#paginationNextButton:hover {
+ opacity: 1;
+ background-color: rgba(255,255,255,1);
+}
+
+/* TOPICS */
+
+.sidebarFloatClear {
+  height: 84px;
+  width: 100%;
+  background-color: rgba(233,248,255,.3);
+
+}
+.topString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 70%;
+  margin: 0px;
+  padding: 0px;
+  background-color: rgba(233,248,255,.3);
+
+}
+
+.sidebarUsername {
+  cursor: pointer;
+}
+
+.locationString {
+  cursor: pointer;
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 60%;
+  margin: 0px;
+  padding: 0px;
+
+}
+
+.sidebarChannelString {
+  cursor:pointer;
+}
+
+.sidebarTopicImage {
+  float: left;
+  height: 84px;
+  width: 84px;
+}
+
+.contentAndToFromWrapper {
+  position: relative;
+  float: left;
+  height: 84px;
+  width: 100%;
+}
+
+.sidebarContentWrapper {
+  font-family: 'clearBold';
+  color: rgba(70,70,70,.7);
+  font-size: 85%;
+  position: relative;
+  overflow-y: hidden;
+  height: 69%;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0);
+
+}
+
+.sidebarToFromWrapper {
+  position: relative;
+  height: 30%;
+  width: 100%;
+  background-color: rgba(225,245,255,.6);
+}
+
+
+/* CHAINS lul */
+/* TODO */
+
+
+.sidebarInnerList {
+  position: relative;
+  list-style:none;
+  padding-left:0;
+  margin: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  background-color: rgba(233,248,255,1);
+
+}
+
+.sidebarInnerList::-webkit-scrollbar{
+  width:10px;
+}
+
+.sidebarInnerList::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.sidebarInnerList::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.sidebarInnerList::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.sidebarInnerList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+
+
+
+
+
+
+.sidebarTopicInnerList {
+  position: relative;
+  list-style:none;
+  padding-left:0;
+  margin: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 84%;
+  background-color: rgba(233,248,255,.3);
+
+}
+
+.sidebarTopicInnerList::-webkit-scrollbar{
+  width:10px;
+}
+
+.sidebarTopicInnerList::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.sidebarTopicInnerList::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.sidebarTopicInnerList::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.sidebarTopicInnerList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+#contactsButton {
+  position: relative;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  left:0px;
+  display: inline-block;
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  background-color: #E8E8E8;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#contactsButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+.contactUsernameString {
+  font-size: 14px;
+  color: rgba(17,55,59,.8);
+    -webkit-transition:  color 0.5s;
+    -moz-transition:  color 0.5s;
+    -o-transition:  color 0.5s;
+    transition:  color 0.5s;
+}
+
+.contactLocationString {
+  font-size: 12px;
+  color: rgba(17,55,59,.8);
+    -webkit-transition:  color 0.5s;
+    -moz-transition:  color 0.5s;
+    -o-transition:  color 0.5s;
+    transition:  color 0.5s;
+}
+
+.contactUsernameString:hover {
+  color: rgba(17,25,29,1);
+}
+
+.contactLocationString:hover {
+  color: rgba(17,25,29,1);
+}
+
+
+
+
+/* temporarily herrrreeeee */
+.contactTitle {
+  position: relative;
+  padding: 10px;
+  margin: 0px;
+}
+
+
+
+#messagesButton {
+  position: absolute;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:50%;
+  height:8%;
+  right:0px;
+  display: inline-block;
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  background-color: #E8E8E8;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#messagesButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+
+#topButton {
+  position: relative;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:25%;
+  height:8%;
+  left:0px;
+  background-color: #E8E8E8;
+  display: inline-block;
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  background-color: #E8E8E8;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#topButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+#timeframeSelect {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  height: 5px;
+  font-size: 8px;
+}
+
+#newButton {
+  position: relative;
+  cursor: pointer;
+ /* border-style: solid;
+  border-width: 1px;*/
+  width:25%;
+  height:8%;
+  background-color: #E8E8E8;
+  display: inline-block;
+
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#newButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+#hotButton {
+  position: relative;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:25%;
+  height:8%;
+  right:0px;
+  background-color: #E8E8E8;
+  display: inline-block;
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#hotButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+#friendsButton {
+  position: absolute;
+  cursor: pointer;
+/*  border-style: solid;
+  border-width: 1px;*/
+  width:25%;
+  height:8%;
+  right:0px;
+  background-color: #E8E8E8;
+  display: inline-block;
+
+    -webkit-transition: opacity 0.5s, color 0.5s;
+    -moz-transition: opacity 0.5s, color 0.5s;
+    -o-transition: opacity 0.5s, color 0.5s;
+    transition: opacity 0.5s, color 0.5s;
+  opacity: .7;
+  color: rgba(17,55,59,.8);
+}
+
+#friendsButton:hover {
+  opacity: 1;
+  color: rgba(17,55,59,1);
+}
+
+
+.tabLabel {
+  position: relative;
+  left: 26px;
+  top: 10px;
+}
+
+#creationButton {
+  cursor: pointer;
+  color: white;
+  font-family: "clearBold";
+  position: absolute;
+  overflow: hidden;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  top: 94.2%;
+  left: 0px;
+  width: 100%;
+  height: 6.1%;
+  z-index: 200;
+  border-radius: 2px;
+  background-color: #E75F3D;
+    -webkit-transition: background-color 0.5s;
+    -moz-transition: background-color 0.5s;
+    -o-transition: background-color 0.5s;
+    transition: background-color 0.5s;
+}
+
+#creationButton:hover {
+  background-color: #E43D13
+}
+
+
+
+#createLabel {
+  position: relative;
+  left: 12%;
+  top: 10px;
+}
+
+
+
+
+/* !!!!! THIS FILE IS PRETTY UNORGANIZED AFTER THIS POINT !!!!*/
+
+/****************/
+/*** DETAIL   ***/
+/****************/
+
+.detailView {
+  /*width is set dynamically*/
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  background-color: #f8f8f8;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+
+.detailEntryItem {
+
+  overflow: hidden; 
+  position: relative;
+  background-color: rgba(233,233,233,.6);
+  width: 100%;
+  height: 100%;
+  border-width: 3px;
+  border-color: rgba(230,245,255,.6);
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+  z-index: 0;
+/*  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;*/
+}
+
+
+
+.detailHeaderEntry {
+}
+
+
+.x {
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  right: 1.9%;
+  top: 0%;
+  z-index: 100;
+  opacity: .3;
+}
+
+
+/***************************/
+/***************************/
+/*** DETAIL-TOPIC VIEW *****/
+/***************************/
+/***************************/
+
+
+
+/* INPUT BOX */
+#inputBox {
+  position: absolute;
+  background-color: rgba(170,180,180,1);
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgba(234,234,234,.7);
+  overflow: hidden;
+  bottom: 0px;
+  height: 150px;
+  width: 100%;
+  z-index: 1000;
+  -webkit-transition-duration:0.3s;
+  -moz-transition-duration:0.3s;
+}
+
+#imageInput {
+  position: absolute;
+  width: 180px;
+  left: 30%;
+  bottom: 1%;
+  font-size: 12px;
+  font-family: sans-serif;
+  color: rgba(57,57,57,.7);
+}
+
+#inputBoxButton {
+  cursor: pointer;
+  position: absolute;
+  right: 10%;
+  top: 9px;
+  height: 75px;
+  width: 40px;
+  background-color: #E9573F;
+}
+
+#inputBoxButton span {
+  position: relative;
+  top: 15px;
+  left: 3px;
+  color: white;
+}
+
+#inputHeadlineTextArea {
+  position: relative;
+  left: 9%;
+  top: 8px;
+  height: 15px;
+  width: 70%;
+}
+
+#inputTextArea {
+  position: relative;
+  left: 9%;
+  top: 8px;
+  height: 44px;
+  width: 70%;
+}
+
+
+/* *  * * * * 8 * * 8*/
+/* DISCUSSION LAYOUT */
+/*∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆*/
+
+.upvoteButton {
+  cursor: pointer;
+}
+
+#detailUserString {
+  cursor: pointer;
+}
+
+.detailCommentUserString {
+  cursor: pointer;
+}
+
+.detailResponseUserString {
+  cursor: pointer;
+}
+
+.detailReplyUserString {
+  cursor: pointer;
+}
+
+#detailChannelString {
+  cursor: pointer;
+
+}
+
+#detailLocationString {
+  cursor: pointer;
+
+}
+
+
+.replyButton {
+  cursor: pointer;
+  position: absolute;
+  height: 20px;
+  width: 50px;
+  top:0px;
+  left: 84%;
+  font-size: 14px;
+  padding-left: 11px;
+
+
+  margin: 3px;
+  border-radius: 2px;
+  color: white;
+  font-family: "clearBold";
+  background-color: #E75F3D;
+    -webkit-transition: background-color 0.5s;
+    -moz-transition: background-color 0.5s;
+    -o-transition: background-color 0.5s;
+    transition: background-color 0.5s;
+}
+
+.replyButton:hover {
+  background-color: #E43D13
+}
+
+
+
+#spacer {
+  width: 100%;
+  height: 200px;
+}
+
+#conversationWrapper {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100% ;
+  width: 100%;
+  background-color: rgba(230,230,255,.7);
+}
+
+#commentMask {
+  overflow: hidden;
+}
+
+#conversationWrapper::-webkit-scrollbar{
+  width:10px;
+}
+
+#conversationWrapper::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#conversationWrapper::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#conversationWrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#conversationWrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+
+/* TOPICS */
+.topicBox {
+  font-size: 12px;
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-bottom-style: solid;
+  border-width: 3px;
+  border-color: rgba(238,243,255,.6);
+  padding-left: 3px;
+  background: linear-gradient(to bottom, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+  background: linear-gradient(to top, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+}
+.topicTopString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 12px;
+  font-size: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+#topicTimeStamp {
+  font-family: 'clearThin';
+  font-size: 12px;
+}
+
+#detailTopicClear {
+  height: 150px;
+  width: 100%;
+}
+#detailTopicImage {
+  float: left;
+  height: 150px;
+  width: 150px;
+}
+#topicContentBox {
+  float: left;
+  height: 190px;
+  width: 97%;
+  background-color: white;
+  overflow: scroll;
+  word-wrap: break-word;
+  overflow-x: hidden;
+}
+
+
+#topicContentBox::-webkit-scrollbar{
+  width:10px;
+}
+
+#topicContentBox::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#topicContentBox::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#topicContentBox::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#topicContentBox::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+
+.topicHeader {
+  font-size: 20px;
+  font-family: 'clearBold';
+  color: rgba(75,75,75,1);
+}
+.topic {
+  font-family: 'clearThin';
+  margin-bottom: 0px;
+}
+
+
+/* COMMENTS */
+.commentBox {
+  background-color:rgba(244,244,244,1); 
+  position: relative;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  border-color: rgba(160,160,233,0);
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-width: 3px;
+  padding-left: 2px;
+  background: linear-gradient(to bottom, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+  background: linear-gradient(to top, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+}
+.commentTopString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 80%;
+  margin: 0px;
+  padding: 0px;
+}
+.expandCommentButton {
+  cursor: pointer;
+  position: relative;
+  float: left;
+  top: 50px;
+  height: 20px;
+  width: 20px;
+}
+.detailCommentClear {
+  height: 100px;
+  width: 100%;
+}
+.commentContentBox {
+
+  position: relative;
+  height: 80px;
+  width: 96%;
+  background-color: #f8f8f8;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  left: 10px;
+  border-color: black;
+  border-width: 3px;
+}
+
+.commentContentBox::-webkit-scrollbar{
+  width:10px;
+}
+
+.commentContentBox::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.commentContentBox::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.commentContentBox::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.commentContentBox::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+
+.detailCommentImage {
+  position: relative;
+  float: left;
+  height: 100px;
+  width: 100px;
+}
+.commentHeader {
+  font-family: 'clearBold';
+  color: rgba(90,90,90,1);
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.comment {
+  font-family: 'clearThin';
+  padding: 0px;
+  margin:0px;
+  font-size: 13px;
+  /*overflow: scroll;*/
+  overflow: hidden;
+  word-wrap: break-word;
+}
+.commentExpansionBox {
+  position: relative;
+  width: 90%;
+  left: 10%;
+  height: 0px;
+  bottom:0px;
+  -webkit-transition-duration:0.6s;
+  -moz-transition-duration:0.6s;
+}
+
+/* RESPONSES */
+.responseBox {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-top-style: solid;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  border-width: 2px;
+  border-color: rgba(160,160,233,.4);
+  background: linear-gradient(to bottom, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+}
+.responseTopString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 80%;
+  margin: 0px;
+  padding: 0px;
+}
+.expandResponseButton {
+  cursor: pointer;
+  position: relative;
+  float: left;
+  top: 80%;
+  height: 20px;
+  width: 20px;
+}
+.detailResponseClear {
+  height: 100px;
+  width: 100%;
+}
+.detailResponseImage {
+  position: relative;
+  float: left;
+  height: 100px;
+  width: 100px;
+}
+.responseContentBox {
+  position: relative;
+  height: 100px;
+  width: 94%;
+  background-color: #f8f8f8;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  left: 8px;
+  border-color: black;
+  border-width: 3px;
+}
+
+.responseContentBox::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.responseContentBox::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.responseContentBox::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.responseContentBox::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+
+.responseHeader {
+  font-size: 20px;
+}
+.response {
+  font-family: 'clearThin';
+  padding: 0px;
+  margin:0px;
+}
+
+
+.responseExpansionBox {
+  position: relative;
+  width: 90%;
+  left: 10%;
+  height: 0px;
+  overflow: hidden;
+  -webkit-transition-duration:0.6s;
+  -moz-transition-duration:0.6s;
+}
+
+
+/* REPLIES */
+.replyBox {
+  border-color: #E8E8E8;
+  position: relative;
+  width: 100%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(160,160,233,.4);
+  background: linear-gradient(to bottom, rgba(209,209,209,1), rgba(255,255,255,1)); /*Standard*/
+}
+.replyTopString {
+  font-family: 'clearThin';
+  position: relative;
+  font-size: 80%;
+  margin: 0px;
+  padding: 0px;
+}
+.detailReplyClear {
+  position: relative;
+  height: 100px;
+  width: 100%;
+}
+.detailReplyImage {
+  position: relative;
+  float: left;
+  height: 100px;
+  width: 100px;
+}
+.replyContentBox {
+  position: relative;
+  height: 100px;
+  width: 97%;
+  background-color: #f8f8f8;
+  overflow: scroll;
+  word-wrap: break-word;
+
+  left: 6px;
+  border-color: black;
+  border-width: 3px;
+}
+.replyHeader {
+  font-size: 20px;
+}
+.reply {
+  font-family: 'clearThin';
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+
+
+
+/**************/
+/*PROFILE PAGE*/
+/**************/
+
+#profilePicture {
+  float: left;
+  height: 200px;
+  width: 200px;
+}
+
+#profileRightColumn {
+  float: left;
+  padding: 30px;
+}
+
+#profileColumnWrapper {
+  height: 200px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+/***************************/
+/***************************/
+/*** DETAIL-MESSAGE VIEW ***/
+/***************************/
+/***************************/
+
+ul#messageChain {
+
+  list-style: none; 
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
+
+}
+
+
+#messageInputBox {
+  position: absolute;
+  bottom: 0px;
+  background-color: #57646D;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #E8E8E8;
+  overflow: hidden;
+  height: 100px;
+  width: 100%;
+  z-index: 1000;
+  -webkit-transition-duration:0.3s;
+  -moz-transition-duration:0.3s;
+}
+
+#messageInputBoxButton {
+  cursor: pointer;
+  position: absolute;
+  right: 10%;
+  top: 9px;
+  height: 75px;
+  width: 40px;
+  background-color: #E9573F;
+}
+
+#messageInputBoxButton span {
+  position: relative;
+  top: 15px;
+  left: 3px;
+  color: white;
+}
+
+#messageInputTextArea {
+  position: relative;
+  left: 9%;
+  top: 8px;
+  height: 44px;
+  width: 70%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#editAboutMe {
+  height: 129px;
+  width: 300px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#placeBox {
+  width: 100%;
+  height: 530px;
+}
+
+
+
+
+
+
+
+textarea {
+  resize:none;
+}
+
+
+.loading {
+  padding: 220px;
+}
+
+
+
+.highlight {
+  background-color: white;
+}
+
+
+
+.signup {
+  padding: 20px;
+}
+
+.login {
+  padding: 20px;
+}
+
+
+
+
+
+.alertView {
+  position: absolute;
+  z-index:300;
+  float: right;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background-color: white;
+  border-style: solid;
+}
+
+.creationView {
+  position: relative;
+  float: right;
+  width: 500px;
+  height: 570px;
+  right: 10px;
+  top: 17px;
+  background-color: white;
+  border-style: solid;
+}
+
+.placementView {
+/*  width: 250px;
+  height: 570px;
+  overflow: hidden;
+  background-color: white;
+  border-style: solid;
+  left: 15px;
+  position: relative;
+  display: inline-block;*/
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  left: 0px;
+  position: relative;
+  display: inline-block;
+}
+
+.topicView {
+  
+}
+
+.registrationView {
+}
+
+.placeView {
+
+}
+
+.userView {
+}
+
+
+
+
+/* ## SETTINGS ## */
+
+.settingsView {
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+
+}
+
+#settingsViewList {
+  list-style-type: none;
+}
+
+
+/* ## TOPIC CREATION ##*/
+
+.topicCreationView {
+
+}
+
+#topicCreationHeadline {
+  width: 83%;
+  position: relative;
+  left: 3%;
+}
+
+#topicCreationLink {
+  width: 83%;
+  position: relative;
+  left: 3%;
+}
+
+#topicCreationContent {
+  width: 83%;
+  height: 30%;
+  position: relative;
+  left: 3%;
+}
+
+
+#imageUploadButton {
+  background-color: aqua;
+}
+
+
+.signupViewOne {
+
+}
+
+.signupViewTwo {
+  
+}
+
+
+
+
+
+
+
+#loader {
+    position:   absolute;
+    z-index:    1000;
+    top:        20px;
+    left:       165px;
+    height:     40px;
+    width:      40px;
+    background: url('/resources/images/loading.gif') no-repeat;
+    background-position: center;
+    background-color: transparent;
+    opacity: 0.6;
+}
+
+/*#loaderMask {
+  background-color: rgba(255,255,255,0);
+  position:   absolute;
+  z-index:    1001;
+  opacity: 0.2;
+  top:        25px;
+  left:       150px;
+  height:     40px;
+  width:      40px;
+}
+
+
+
+
+
+
+
+
+*/
