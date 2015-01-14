@@ -998,6 +998,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             //sentRequests are requests that the user has sent that are pending
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
+            that.newMessages = data.newMessages;
 
             if (data.contactRequests.length > 0 ||
                 data.newMessages.length > 0 ||
@@ -1022,6 +1023,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
                       newMessageTemplate = _.template( $('#newMessageTemplate').html() );
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
+
+
+
+
+
+
+
+
+
 
 
                       //CONTACT REQUESTS
@@ -1077,14 +1087,25 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       }
 
 
+
+
+
+
+
+
+
+
                       //NEW MESSAGES
+
+                      console.log('NEW MESSAGES: ', that.newMessages);
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
 
-                        $('#notificationsButton').css('background-color', 'red');
 
                         var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+
+                        console.log($notificationBox);
 
                           var x = that.newMessages[i].sender;
                           $notificationBox.on('click', function() {
@@ -1144,18 +1165,30 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                 break;
                               }
 
-                            }//end for loop
+                            }//end chain searching for loop
                             //END OPENING CONVO SUBROUTINE
-
-
-                          $('#notificationsDisplay').append($notificationBox);
-                          $notificationBox.css('bottom', cssAdjust+'px');
-                          cssAdjust -= 50;
-
 
                         });
 
-                      }
+                        $('#notificationsDisplay').append($notificationBox);
+                        $notificationBox.css('bottom', cssAdjust+'px');
+                        cssAdjust -= 50;
+
+                      }//end new messages for loop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                   } else {//notificationsDisplayed check
                     that.app.set('notificationsDisplayed', false);
