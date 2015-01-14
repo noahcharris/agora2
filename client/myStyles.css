@@ -964,6 +964,10 @@ right:22.4%;
   color: rgba(57,57,57,.7);
 }
 
+#editProfileImageInput {
+  
+}
+
 #inputBoxButton {
   cursor: pointer;
   position: absolute;
@@ -1336,6 +1340,10 @@ right:22.4%;
   border-width: 3px;
 }
 
+.responseContentBox::-webkit-scrollbar {
+  width: 10px;
+}
+
 .responseContentBox::-webkit-scrollbar-track {
   background-color: rgba(222,222,255,.3);
 }
@@ -1415,6 +1423,28 @@ right:22.4%;
   border-color: black;
   border-width: 3px;
 }
+
+.replyContentBox::-webkit-scrollbar {
+  width: 10px;
+}
+
+.replyContentBox::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.replyContentBox::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.replyContentBox::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.replyContentBox::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
 .replyHeader {
   font-size: 20px;
 }
