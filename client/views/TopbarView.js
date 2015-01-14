@@ -242,7 +242,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
       }
 
       that.app.get('mapController').get('map').fitBounds(worldBounds);
-      that.app.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
+      that.app.get('mapController').set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
+      that.app.get('locationView').render();
 
       that.app.get('mapController').router.navigate('World#'+that.app.get('channel'), { trigger:false });
 
