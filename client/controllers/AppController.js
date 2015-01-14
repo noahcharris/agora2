@@ -1005,16 +1005,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon1.png"></img>'));
 
-              (function() {
 
-                var data = data;
+              var data = data;
 
               $('#notificationsButton')[0].onclick = function() {
 
                 console.log(that.app.get('notificationsDisplayed'));
+                console.log($('#notificationsDisplay'));
 
 
                   if (!that.app.get('notificationsDisplayed')) {
+
+                      console.log('whaaaa');
 
                       that.app.set('notificationsDisplayed', true);
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
@@ -1024,49 +1026,49 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       //CONTACT REQUESTS
 
+
                       var cssAdjust = -75;
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
 
-                        (function(){
-                          var x = that.contactRequests[i].sender;
-                          $notificationBox.on('click', function() {
-                            var thet = this;
+                        var x = that.contactRequests[i].sender;
+                        $notificationBox.on('click', function() {
+                          var thet = this;
 
-                            $.ajax({
-                              url: 'http://liveworld.io:80/user',
-                              //url: 'http://localhost:80/user',
-                              method: 'GET',
-                              crossDomain: true,
-                              data: {
-                                username: x,
-                                extra: Math.floor((Math.random() * 10000) + 1)
-                              },
-                              success: function(data) {
-                                if (data) {
-                                  that.app.get('detailView').displayed = 'Users';
-                                  console.log('server returned: ', data);
+                          $.ajax({
+                            url: 'http://liveworld.io:80/user',
+                            //url: 'http://localhost:80/user',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              username: x,
+                              extra: Math.floor((Math.random() * 10000) + 1)
+                            },
+                            success: function(data) {
+                              if (data) {
+                                that.app.get('detailView').displayed = 'Users';
+                                console.log('server returned: ', data);
 
-                                  //is this creating a memory leak????
-                                  $(thet).parent().empty();
+                                //is this creating a memory leak????
+                                $(thet).parent().empty();
 
-                                  that.app.get('content2').show(that.app.get('detailView'), data[0]);
-                                } else {
-                                  console.log('no data returned from server');
-                                }
-                              }, error: function(err) {
-                                console.log('ajax error ocurred: ', err);
+                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                              } else {
+                                console.log('no data returned from server');
                               }
+                            }, error: function(err) {
+                              console.log('ajax error ocurred: ', err);
+                            }
 
-                            });
-                            
-        
+                          });
+                          
+      
 
-                          });//end notification click handler
+                        });//end notification click handler
 
-                        })();
 
+                        console.log($notificationBox);
                         $('#notificationsDisplay').append($notificationBox);
 
                         $notificationBox.css('bottom', cssAdjust+'px');
@@ -1157,13 +1159,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                   } else {//notificationsDisplayed check
                     that.app.set('notificationsDisplayed', false);
-                    $('#notificationsDisplay').remove();
+                    $('#notificationsDisplay').empty();
                   }     
 
                   
                 };//end notification click handler
-
-              })();
 
 
             }//end if notification
