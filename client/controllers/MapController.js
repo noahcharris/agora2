@@ -706,7 +706,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
         this.app.get('sidebarView').displayed = 'Topics-Top';
       }
-      this.app.get('content2').hide();
+      //this.app.get('content2').hide();
       this.app.trigger('reloadSidebarTopics', path, extra);
     }
 

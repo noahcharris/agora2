@@ -832,6 +832,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   close: function() {
+    debugger;
     this.closeInputBox;
     $(window).unbind('keypress', this.enterHandler);
     this.$el.empty();
