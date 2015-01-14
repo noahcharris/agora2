@@ -31,7 +31,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
 
     var $profilePicture = $('<img height="150px" width="150px"></img>');
-    var $imageInput = $('<input type="file" id="imageInput"></input>');
+    var $imageInput = $('<input type="file" id="editProfileImageInput"></input>');
     var $textArea = $('<textArea id="editAboutMe" height="200px" width="300px"></textarea>');
 
     this.$el.append($profilePicture);

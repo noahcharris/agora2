@@ -94,6 +94,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     locationView.app = this;
     locationView.router = router;
     locationView.render();
+    this.set('locationView', locationView);
     $('#topbar2').append(locationView.$el);
 
     var channelView = new Agora.Views.ChannelView({ model: mapController });
@@ -102,6 +103,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     channelView.app = this;
     channelView.router = router;
     channelView.render();
+    this.set('channelView', channelView);
     $('#topbar2').append(channelView.$el);
     channelView.setHandlers();
 

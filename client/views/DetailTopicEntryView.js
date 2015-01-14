@@ -296,7 +296,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             //TODO
 
             //well, there it is. will have to also change parent values in the response expansion
-            var height = 26;
+            var height = that.app.params.adjustedResponseHeight;
             $(e.target).parent().parent().next().children().each(function(index) {
               console.log($(this).height());
               height += $(this).height();
@@ -455,7 +455,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               // $(e.target).parent().next().css('height', 'auto');
               // $(e.target).attr('src', 'resources/images/contract.png');
               // responseCollapsed = false;
-              var height = 8;
+              var height = that.app.params.adjustedReplyHeight;
               $(e.target).parent().parent().next().children().each(function(index) {
                 console.log($(this).height());
                 height += $(this).height();
@@ -637,6 +637,20 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     throttledResize();
     setTimeout(throttledResize, 20);
+
+
+
+
+
+    //TWITTER CODE
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+
+
+
+
+
 
 
   },//end render()

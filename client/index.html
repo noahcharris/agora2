@@ -155,6 +155,7 @@
         <div id="topicContentBox">
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
+
         </div>
         <div class="replyButton">Reply</div>
 
@@ -558,7 +559,9 @@
         var params = {
           mobile: false,
           language: 'en',
-          transition: 0.6
+          transition: 0.1,
+          adjustedResponseHeight: 26,
+          adjustedReplyHeight: 8
         }
 
         var appController = new Agora.Controllers.AppController(params);
