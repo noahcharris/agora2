@@ -55,7 +55,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
 
     //this.$el.append( $('<button>Upload Image</button><br/><br/>') );
-    this.$el.append( $('<br/><br/><button>Post</button>') );
+    this.$el.append( $('<br/><br/><button id="topicCreationPostButton">Post</button>') );
 
     var location = that.app.get('mapController').get('location') || 'World';
     this.$el.append( $('<p>Location:&nbsp' + location + '</p>'))
