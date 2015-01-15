@@ -144,10 +144,6 @@ function passwordValidator(input) {
 
 };
 
-function linkValidator(input) {
-
-};
-
 
 
 function xssValidator(input) {
@@ -1214,71 +1210,100 @@ module.exports.login = function(request, response) {
 
       bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
         if (res) {
-
-
-
-          //insert into security join
-          client.query("DELETE FROM securityJoin WHERE username = $1;",
-            [request.body.username], function(err, result) {
-              if (err) {
-                console.log('error deleting from securityJoin: ', err);
-              } else {
-
-                //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
-
-                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-
-
-                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                  +"VALUES ($1, $2, $3, now());",
-                  [request.body.username, cookie, token],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error insertin into securityJoin: ', err);
-                    } else {
-
-
-
-
-
-
-                        //LOGIN SUCCESSFUL
-
-                        //set cookie which will be checkd in checkLogin (10 minutes here)
-                        // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
-
-                        console.log('Login successful for user: ', request.body.username);
-
-                        response.json({ login: true, token: token });
-
-
-
-
-
-
-                    }
-                });//end security join insert
-
-
-
-              }
-          });//end security join delete
-
-
-
+            //insert into security join
+            client.query("DELETE FROM securityJoin WHERE username = $1;",
+              [request.body.username], function(err, result) {
+                if (err) {
+                  console.log('error deleting from securityJoin: ', err);
+                  response.end('server error');
+                } else {
+                  //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+                  var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                  var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+                  client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                    +"VALUES ($1, $2, $3, now());",
+                    [request.body.username, cookie, token],
+                    function(err, result) {
+                      if (err) {
+                        console.log('error insertin into securityJoin: ', err);
+                        response.end('server error');
+                      } else {
+                          //LOGIN SUCCESSFUL
+                          //set cookie which will be checkd in checkLogin (10 minutes here)
+                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                          response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                          console.log('Login successful for user: ', request.body.username);
+                          response.json({ login: true, token: token });
+                      }
+                  });//end security join insert
+                }
+            });//end security join delete
         } else {
-
           //LOGIN FAILED
           console.log('login failed');
-          response.end('False');
+          response.end('incorrect password');
         }
       });
 
     } else {
-      response.end('False');
+
+      client.query("SELECT * FROM users WHERE email = $1",
+        [request.body.username], function(err, result) {
+          if (err) {
+            console.log('error selecting from users by email');
+            response.end('server error');
+          } else {
+
+            if (result.rows.length) {
+
+              //Successfully looked up user by email
+              bcrypt.compare(request.body.password, result.rows[0].passhash, function(err, res) {
+                if (res) {
+                    //insert into security join
+                    client.query("DELETE FROM securityJoin WHERE username = $1;",
+                      [request.body.username], function(err, result) {
+                        if (err) {
+                          console.log('error deleting from securityJoin: ', err);
+                        } else {
+                          //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+                          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+                          client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                            +"VALUES ($1, $2, $3, now());",
+                            [request.body.username, cookie, token],
+                            function(err, result) {
+                              if (err) {
+                                console.log('error insertin into securityJoin: ', err);
+                              } else {
+                                  //LOGIN SUCCESSFUL
+                                  //set cookie which will be checkd in checkLogin (10 minutes here)
+                                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                  response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                                  console.log('Login successful for user: ', request.body.username);
+                                  response.json({ login: true, token: token });
+                              }
+                          });//end security join insert
+                        }
+                    });//end security join delete
+                } else {
+                  //LOGIN FAILED
+                  console.log('login failed');
+                  response.end('incorrect password');
+                }
+              });
+
+
+            } else {
+              //COULDN'T LOOK UP USER BY USERNAME OR EMAIL
+              response.end("couldn't find user in database");
+            }
+
+
+
+          }
+        })
+
+
     }
   });
 
@@ -1691,65 +1716,94 @@ module.exports.checkUsername = function(request, response) {
 
 module.exports.registerUser = function(request, response) {
 
+  var temp = request.body.email;
+  var flag = false;
+  for (var i=0; i < temp.length ;i++) {
+    if (temp[i] === '@') {
+      flag = true;
+    }
+  }
+  if (flag) {
+    response.end("username may not contain '@'");
+  } else {
 
-
-
-  client.query("SELECT * FROM users WHERE username = $1;",
-    [request.body.username], function(err, result) {
-      if (err) {
-        console.log('error selecting from users: ', err);
-      } else {
-        if (result.rows.length) {
-          //username unavailable
-          response.end('That username is taken!');
+    client.query("SELECT * FROM users WHERE username = $1;",
+      [request.body.username], function(err, result) {
+        if (err) {
+          console.log('error selecting from users: ', err);
         } else {
-          //USERNAME AVAILABLE!!!!
+          if (result.rows.length) {
+            //username unavailable
+            response.end('That username is taken!');
+          } else {
+            //USERNAME AVAILABLE!!!!
 
-          bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(request.body.password, salt, function(err, hash) {
-
-              postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
-                  if (success) {
-                    //send back login token here????
-
-                    var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                    var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-                    // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-
-                    client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                      +"VALUES ($1, $2, $3, now());",
-                      [request.body.username, cookie, token],
-                      function(err, result) {
-                        if (err) {
-                          console.log('error inserting into securityJoin: ', err);
-                        } else {
-                          //LOGIN SUCCESSFUL
-
-                          //set cookie which will be checkd in checkLogin (10 minutes here)
-                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                          response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
-
-                          console.log('Login successful for user: ', request.body.username);
-
-                          response.json({ login: true, token: token });
-
-
-                        }
-                    });
-
+            //CHECK EMAIL NOW
+            client.query("SELECT * FROM users WHERE email = $1;",
+              [request.body.email], function(err, result) {
+                if (err) {
+                  console.log('error selecting from users: ', err);
+                } else {
+                  if (result.rows.length) {
+                    //email unavailable
+                    response.end('That email is taken!');
                   } else {
-                    response.end('error creating user');
+
+                      //REGISTER THE USER
+                      bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(request.body.password, salt, function(err, hash) {
+
+                          postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                            xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
+                              if (success) {
+                                //send back login token here????
+
+                                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+                                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                                  +"VALUES ($1, $2, $3, now());",
+                                  [request.body.username, cookie, token],
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into securityJoin: ', err);
+                                    } else {
+                                      //LOGIN SUCCESSFUL
+
+                                      //set cookie which will be checkd in checkLogin (10 minutes here)
+                                      // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                      response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+                                      console.log('Login successful for user: ', request.body.username);
+
+                                      response.json({ login: true, token: token });
+
+
+                                    }
+                                });
+
+                              } else {
+                                response.end('error creating user');
+                              }
+                          });//end create user
+
+                        });
+                      });//end bcrypt async thing
+
+
                   }
-              });//end create user
+                }
+            });//end email check
 
-            });
-          });//end bcrypt async thing
-
+          }
         }
-      }
-  });//end select from users
+    });//end username check from users
+
+  }//end username @ check
+
+
 
 
 

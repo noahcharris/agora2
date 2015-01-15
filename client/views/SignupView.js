@@ -51,6 +51,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           if ($('#signupUsernameInput').val() === '') {
             alert('please enter a username');
+          } else if ($('#signupUsernameInput').val().indexOf('@') !== -1) {
+            alert("username may not contain '@'");
           } else if ($('#signupPasswordInput').val() === '') {
             alert('please enter a password');
           } else if ($('#signupEmailInput').val() === '') {
