@@ -2,6 +2,7 @@
 var postgres = require('./postgres.js');
 
 var pg = require('pg');
+var nodemailer = require('nodemailer');
 var url = require('url');
 //var Memcached = require('memcached');
 //var amqp = require('amqplib');
@@ -64,6 +65,15 @@ var s3Client = s3.createClient({
     // any other options are passed to new AWS.S3()
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },
+});
+
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'agora.reporter@gmail.com',
+        pass: 'fieldsoffallensoldiers'
+    }
 });
 
 
@@ -1757,6 +1767,39 @@ module.exports.registerUser = function(request, response) {
                             xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
                               if (success) {
                                 //send back login token here????
+
+
+                                //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                                var secret = Math.floor(Math.random()*100000000001);
+                                client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                                  +"VALUES ($1, $2, now());",
+                                  [request.body.username, secret],
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into emailVerificationJoin: ', err);
+                                    } else {
+
+                                      var mailOptions = {
+                                          from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                          to: request.body.email, // list of receivers
+                                          subject: 'Hello ✔', // Subject line
+                                          text: 'KEY IS: '+secret;, // plaintext body
+                                          html: '<b>Hello world ✔</b>' // html body
+                                      };
+
+                                      transporter.sendMail(mailOptions, function(error, info){
+                                          if(error){
+                                              console.log(error);
+                                          }else{
+                                              console.log('Message sent: ' + info.response);
+                                          }
+                                      });
+
+
+
+                                    }
+                                });
+
 
                                 var token = Math.floor(Math.random()*100000000000000000001); //generate token here
                                 var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here

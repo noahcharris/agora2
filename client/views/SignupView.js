@@ -99,7 +99,7 @@ Agora.Views.SignupView = Backbone.View.extend({
                   //the last argument suppresses reloading of content1
                   that.app.trigger('reloadSidebarMessageChains');
                 } else {
-                  alert('registration failed');
+                  alert(data);
                 }
 
                 //log user in
