@@ -161,6 +161,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     };
 
+    $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
+    if (!that.model.link) {
+      $linkButton.hide();
+    }
+    $linkButton.on('click', function() {
+      window.open('www.yourdomain.com', that.model.link);
+    });
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
@@ -692,131 +699,126 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   openInputBox: function(data) {
-    var that = this;
-    this.responding = true;
-    this.responseData = data;
-    $('textarea#inputTextArea').val('');
-    if (data.type === 'Reply') {
-      $('textarea#inputTextArea').val('@'+data.username);
+
+    if (this.app.get('login')) {
+
+        var that = this;
+        this.responding = true;
+        this.responseData = data;
+        $('textarea#inputTextArea').val('');
+        if (data.type === 'Reply') {
+          $('textarea#inputTextArea').val('@'+data.username);
+        }
+        $('#inputBox').css('height', '100px');
+
+        var ajaxing = false;
+        var sendHandler = function() {
+
+          if (!ajaxing) {
+
+              ajaxing = true;
+
+              var fd = new FormData();    
+              fd.append( 'file', $('#imageInput')[0].files[0] );
+              fd.append( 'username', that.app.get('username') );
+              fd.append( 'token', that.app.get('token') );
+
+              fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
+
+              fd.append( 'link', $('textarea#inputTextArea').val() );
+
+              fd.append( 'contents', $('textarea#inputTextArea').val() );
+
+              fd.append( 'location', data.location );
+              //fd.append( 'origin', that.app.get('origin') );
+              fd.append( 'channel', data.channel );
+
+              fd.append( 'topicId', data.topicId );
+              fd.append( 'commentId', data.commentId );
+              fd.append( 'responseId', data.responseId );
+
+              //whaaaa
+              var thet = this;
+
+              $.ajax({
+                url: 'https://liveworld.io:443/' + data.urlSuffix,
+                // url: 'http://localhost/' + data.urlSuffix,
+                method: 'POST',
+                crossDomain: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                contentType: false,
+                processData: false,
+                data: fd,
+                success: function(msg) {
+
+                  $('#inputBox').css('height', '0px');
+                  alert(msg);
+                  //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+
+                  //that.app.trigger('reloadSidebarTopics');
+                  //just reload fuck it
+                  setTimeout(function() {
+
+                    ajaxing = false;
+
+                    $.ajax({
+                      url: 'http://liveworld.io/topicTree',
+                      // url: 'http://localhost/topicTree',
+                      method: 'GET',
+                      crossDomain: true,
+                      data: {
+                        //these two models are different scope!
+                        topicId: that.model.id
+                      },
+                      success: function(model) {
+
+                        that.app.get('content2').show(that.app.get('detailView'), model);
+                      },
+                      error: function() {
+                        alert('server error');
+                      }
+                    });
+
+                  }, 1000);
+
+                },
+                error: function() {
+                  alert('server error');
+                  ajaxing = false;
+                }
+              });
+
+          }
+
+        };//end post button handler
+
+        this.enterHandler = function(e) {
+
+          if (e.keyCode === 13 && $('#inputTextArea').is(':focus') && $('#inputTextArea').val() !== '') {
+
+            sendHandler();
+
+          }
+
+        };
+
+        $(window).keypress(this.enterHandler);
+
+        console.log(this.$el);
+        this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
+          sendHandler();
+        };
+      
+    } else {
+      alert('must be logged in to post a reply');
     }
-    $('#inputBox').css('height', '100px');
 
 
-
-
-
-    var ajaxing = false;
-    var sendHandler = function() {
-
-      if (!ajaxing) {
-
-          ajaxing = true;
-
-          var fd = new FormData();    
-          fd.append( 'file', $('#imageInput')[0].files[0] );
-          fd.append( 'username', that.app.get('username') );
-          fd.append( 'token', that.app.get('token') );
-
-          fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
-
-          fd.append( 'link', $('textarea#inputTextArea').val() );
-
-          fd.append( 'contents', $('textarea#inputTextArea').val() );
-
-          fd.append( 'location', data.location );
-          //fd.append( 'origin', that.app.get('origin') );
-          fd.append( 'channel', data.channel );
-
-          fd.append( 'topicId', data.topicId );
-          fd.append( 'commentId', data.commentId );
-          fd.append( 'responseId', data.responseId );
-
-          //whaaaa
-          var thet = this;
-
-          $.ajax({
-            url: 'https://liveworld.io:443/' + data.urlSuffix,
-            // url: 'http://localhost/' + data.urlSuffix,
-            method: 'POST',
-            crossDomain: true,
-            xhrFields: {
-              withCredentials: true
-            },
-            contentType: false,
-            processData: false,
-            data: fd,
-            success: function(msg) {
-
-              $('#inputBox').css('height', '0px');
-              alert(msg);
-              //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
-
-              //that.app.trigger('reloadSidebarTopics');
-              //just reload fuck it
-              setTimeout(function() {
-
-                ajaxing = false;
-
-                $.ajax({
-                  url: 'http://liveworld.io/topicTree',
-                  // url: 'http://localhost/topicTree',
-                  method: 'GET',
-                  crossDomain: true,
-                  data: {
-                    //these two models are different scope!
-                    topicId: that.model.id
-                  },
-                  success: function(model) {
-
-                    that.app.get('content2').show(that.app.get('detailView'), model);
-                  },
-                  error: function() {
-                    alert('server error');
-                  }
-                });
-
-              }, 1000);
-
-            },
-            error: function() {
-              alert('server error');
-              ajaxing = false;
-            }
-          });
-
-
-      }
-
-
-
-    };//end post button handler
-
-
-
-    this.enterHandler = function(e) {
-
-      if (e.keyCode === 13 && $('#inputTextArea').is(':focus') && $('#inputTextArea').val() !== '') {
-
-        sendHandler();
-
-      }
-
-    };
-
-
-
-    $(window).keypress(this.enterHandler);
-
-
-    console.log(this.$el);
-    this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
-
-      sendHandler();
-
-    };
 
     
-  },
+  },//end open input box
 
 
   closeInputBox: function() {

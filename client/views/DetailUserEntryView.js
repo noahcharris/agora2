@@ -339,6 +339,8 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
               entryView.on('click', function() {
 
+                // debugger;
+
                 that.app.get('detailView').displayed = 'Topics';
 
                 //get specific topic tree from server
@@ -358,13 +360,14 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                     topicId: model.id
                   },
                   success: function(model) {
-                    that.app.get('detailView').displayed = 'Topics';
+                    debugger;
+                    that.app.get('sidebarView').displayed = 'Topics-Top';
                     that.app.get('content2').show(that.app.get('detailView'), model);
 
                     // thet.$el.addClass('highlight');
                     //need to insert topic into the front of the topics collection
-                    that.app.get('sidebarView').displayed = 'Topics-Top';
                     //use this crazy callback shit to highlight
+
                     var cb = function() {
                       var subViews = that.app.get('sidebarView').subViews;
                       for (var i=0; i < subViews.length ;i++) {
