@@ -29,54 +29,89 @@ Agora.Views.SignupView = Backbone.View.extend({
 
   setHandlers: function() {
     var that = this;
+
+
+
     this.$el.children('button#registrationButton').on('click', function() {
 
-          $.ajax({
+          var temp1 = that.app.get('mapController').get('cities');
+          var temp2 = that.app.get('mapController').get('countries');
+          console.log('STUFF: ', temp1, temp2);
+          var flag = false;
+          for (var i=0; i < temp1.length ;i++) {
+            if (temp1._layers[i].city === $('#signupOriginInput').val()) {
+              flag = true;
+            }
+          }
+          for (var i=0; i < temp2.length ;i++) {
+            if (temp2._layers[i].feature.properties.name === $('#signupOriginInput').val()) {
+              flag = true;
+            }
+          }
 
-            url: 'https://liveworld.io:443/registerUser',
-            // url: 'https://localhost:443/registerUser',
-            method: 'POST',
-            crossDomain: true,
-            xhrFields: {
-              withCredentials: true
-            },
-            data: {
-              username: $('#signupUsernameInput').val(),
-              password: $('#signupPasswordInput').val(),
-              origin: $('#signupOriginInput').val(),
-              email: $('#signupEmailInput').val(),
-              about: $('#signupAboutInput').val()
-            },
-            success: function(data) {
-              if (data.login) {
-                alert('registration successful');
-                that.app.set('token', data.token);
+          if ($('#signupUsernameInput').val() === '') {
+            alert('please enter a username');
+          } else if ($('#signupPasswordInput').val() === '') {
+            alert('please enter a password');
+          } else if ($('#signupEmailInput').val() === '') {
+            alert('please enter an email');
+          } else if ($('#signupPasswordInput').val() !== $('#signupConfirmPasswordInput').val()) {
+            alert('password confirmation does not match');
+          } else if (!flag) {
+            alert('please enter a valid origin');
+          } else {
 
-                that.app.set('login', true);
-                that.app.set('username', $('#signupUsernameInput').val());
 
-                that.app.get('cacheManager').stop();
-                that.app.get('cacheManager').emptyCache();
-                that.app.get('cacheManager').start();
-                
-                that.app.get('topbarView').render();
-                that.app.get('content2').hide();
+            $.ajax({
 
-                that.app.trigger('reloadSidebarContacts');
-                //the last argument suppresses reloading of content1
-                that.app.trigger('reloadSidebarMessageChains');
-              } else {
-                alert('registration failed');
+              url: 'https://liveworld.io:443/registerUser',
+              // url: 'https://localhost:443/registerUser',
+              method: 'POST',
+              crossDomain: true,
+              xhrFields: {
+                withCredentials: true
+              },
+              data: {
+                username: $('#signupUsernameInput').val(),
+                password: $('#signupPasswordInput').val(),
+                origin: $('#signupOriginInput').val(),
+                email: $('#signupEmailInput').val(),
+                about: $('#signupAboutInput').val()
+              },
+              success: function(data) {
+                if (data.login) {
+                  alert('registration successful');
+                  that.app.set('token', data.token);
+
+                  that.app.set('login', true);
+                  that.app.set('username', $('#signupUsernameInput').val());
+
+                  that.app.get('cacheManager').stop();
+                  that.app.get('cacheManager').emptyCache();
+                  that.app.get('cacheManager').start();
+                  
+                  that.app.get('topbarView').render();
+                  that.app.get('content2').hide();
+
+                  that.app.trigger('reloadSidebarContacts');
+                  //the last argument suppresses reloading of content1
+                  that.app.trigger('reloadSidebarMessageChains');
+                } else {
+                  alert('registration failed');
+                }
+
+                //log user in
+                //show them success screen (introduction/tutorial?)
+              },
+              error: function(data) {
+                alert(data);
               }
 
-              //log user in
-              //show them success screen (introduction/tutorial?)
-            },
-            error: function(data) {
-              alert(data);
-            }
+            });
+            
+          }//end validation if else chain
 
-          });
+
 
 
     });
@@ -212,16 +247,6 @@ Agora.Views.SignupView = Backbone.View.extend({
       }
 
     });
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -36,13 +36,26 @@
      <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
      <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
-       <select id="searchSelect">
-         <!--leave topics off for now, it will be way more complicated-->
-         <!--<option value="Topics">Topics</option>-->
-         <option value="Users">Users</option>
-         <option value="Locations">Locations</option>
-         <option value="Channels">Channels</option>
-       </select>
+     <select id="searchSelect">
+       <!--leave topics off for now, it will be way more complicated-->
+       <!--<option value="Topics">Topics</option>-->
+       <option value="Users">Users</option>
+       <option value="Locations">Locations</option>
+       <option value="Channels">Channels</option>
+     </select>
+     <select id="languageSelect">
+      <option value="Arabic">Arabic</option>
+      <option value="Chinese">Chinese</option>
+      <option value="English">English</option>
+      <option value="French">French</option>
+      <option value="German">German</option>
+      <option value="Japanese">Japanese</option>
+      <option value="Portuguese">Portuguese</option>
+      <option value="Russian">Russia</option>
+      <option value="Spanish">Spanish</option>
+
+     </select>
+
 
     </script>
 
@@ -87,10 +100,14 @@
 
     <script id="sidebarLocationEntryTemplate" type="text/template">
      <strong> <%= name %> </strong>
+
     </script>
 
     <script id="sidebarChannelEntryTemplate" type="text/template">
      <strong> <%= name %> </strong>
+
+
+
     </script>
 
 
@@ -269,16 +286,34 @@
     </script>
 
     <script id="detailLocationEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://images.wisegeek.com/map-with-compass.jpg"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>About:</h3>
+      <p><%= description %></p>
+
       <div id="locationBox">
-        <h1> <%= name %> </h1>
         <button id="goToButton">Go To Location</button>
         <br/><br/><br/><br/>
       </div>
     </script>
 
     <script id="detailChannelEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://upload.wikimedia.org/wikipedia/en/9/98/Laughing_man_logo.png"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>About:</h3>
+      <p><%= description %></p>
+
       <div id="channelBox">
-        <h1> <%= name %> </h1>
         <button id="goToButton">Go To Channel</button>
         <br/><br/><br/><br/>
       </div>
@@ -287,7 +322,7 @@
     <script id="detailUserEntryTemplate" type="text/template">
 
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
+        <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= username %> </h1>
@@ -411,6 +446,9 @@
       <input placeholder="about" id="signupAboutInput"></input>
       <br/>
       <br/>
+      <form id="captchaForm">
+      <div class="g-recaptcha" data-sitekey="6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_"></div>
+      </form>
       <button id="registrationButton">Register</button>
     </script>
 
@@ -482,6 +520,7 @@
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
+
 
     <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
     <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script>

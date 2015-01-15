@@ -162,11 +162,14 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
     $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
+    console.log($linkButton);
     if (!that.model.link) {
       $linkButton.hide();
     }
     $linkButton.on('click', function() {
-      window.open('www.yourdomain.com', that.model.link);
+      console.log('liNKK');
+      //maybe shouldn't use this, maybe just use navigate, because of compatibility concerns
+      window.open(that.model.link, '_blank');
     });
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS

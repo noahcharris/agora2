@@ -275,6 +275,7 @@ right:22.4%;
 }
 
 .signupLocationSearchResult {
+  cursor: pointer;
   position: absolute;
   bottom: -30px;
   height: 30px;
@@ -1115,7 +1116,7 @@ right:22.4%;
 /* TOPICS */
 
 #linkBox{
-  
+  cursor:pointer;
 }
 
 .topicBox {
