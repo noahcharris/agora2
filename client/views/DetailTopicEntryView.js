@@ -161,6 +161,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     };
 
+    $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
+
+    $linkButton.on('click', function() {
+      alert('put em in a coffin!');
+    });
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
