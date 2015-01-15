@@ -162,9 +162,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
     $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
-
+    if (!that.model.link) {
+      $linkButton.hide();
+    }
     $linkButton.on('click', function() {
-      alert('put em in a coffin!');
+      window.open('www.yourdomain.com', that.model.link);
     });
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
@@ -832,7 +834,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   close: function() {
-    debugger;
     this.closeInputBox;
     $(window).unbind('keypress', this.enterHandler);
     this.$el.empty();
