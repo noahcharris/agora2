@@ -209,7 +209,7 @@ right:22.4%;
   width: 100%;
   height: auto;
   /*background-color: #57646D;*/
-  background-color: rgba(140, 153, 183, .7);
+  background: linear-gradient:to bottom, rgba(140, 153, 183, .1), rgba(140,153,183,.5);
 }
 
 /***********************************/
@@ -237,7 +237,7 @@ right:22.4%;
     -moz-transition: opacity 0.5s, background-color 0.5s;
     -o-transition: opacity 0.5s, background-color 0.5s;
     transition: opacity 0.5s, background-color 0.5s;
-  background: linear-gradient(to bottom, rgba(109,109,159,.7), rgba(255,255,255,0)); /*Standard*/
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
 }
 
 .locationView:hover {
@@ -296,7 +296,7 @@ right:22.4%;
     -moz-transition: opacity 0.5s, background-color 0.5s;
     -o-transition: opacity 0.5s, background-color 0.5s;
     transition: opacity 0.5s, background-color 0.5s;
-  background: linear-gradient(to bottom, rgba(109,109,159,.7), rgba(255,255,255,0)); /*Standard*/
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
 }
 
 .channelView:hover {
@@ -1113,6 +1113,11 @@ right:22.4%;
 
 
 /* TOPICS */
+
+#linkBox{
+  
+}
+
 .topicBox {
   font-size: 12px;
   position: relative;
@@ -1685,18 +1690,40 @@ textarea {
 }
 
 #viewProfileButton {
-
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:0%;
+  top:20%;
 }
 
 #editProfileButton {
-
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:100px;
+  top: 20%
 }
 
 #createChannelButton {
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:0%;
+  top:15%;
 
 }
 
 #createLocationButton {
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:100px;
+  top:15%;
 
 }
 
