@@ -232,6 +232,37 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
+    //STATIC TEXT LANGUAGE SELECTION
+    $('#languageSelect').on('change', function() {
+      console.log($('#languageSelect').val());
+      var temp = 'en';
+      switch ($('#languageSelect').val()) {
+        case 'English':
+          temp = 'en';
+          break;
+        case 'Français':
+          temp = 'fr';
+          break;
+        default:
+          break;
+      }
+      that.app.set('language', temp);
+
+      that.app.get('topbarView').render();
+      that.app.get('locationView').render();
+      that.app.get('channelView').render();
+      that.app.get('sidebarView').render();
+
+      //later on include content2 as well
+      that.app.get('content2').hide();
+
+    });
+
+
+
+
+
+
     $('#title').on('click', function() {
       that.app.changeChannel('General');
       //that.app.get('mapController').showWorld();

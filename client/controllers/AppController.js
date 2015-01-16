@@ -490,12 +490,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }
 
 
-
-
-
-
-
-
       } 
 
     });
@@ -651,6 +645,32 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   passwordValidator: function() {
 
   },
+
+
+
+
+  //accepts one of the english labels and returns
+  //its translation in whatever language is
+  //currently set
+  translate: function(input) {
+    var translationArray = [{
+      en: 'Location',
+      fr: 'Localisation'
+    }];
+
+    var lang = this.get('language');
+
+    for (var i=0; i < translationArray ;i++) {
+      if (translationArray[i].en === input) {
+        return translationArray[i][lang];
+      }
+    }
+
+    return input;
+  },
+
+
+
 
 
 
