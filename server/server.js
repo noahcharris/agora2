@@ -225,6 +225,7 @@ app.post('/sendMessage', routes.sendMessage);
 
 app.get('/checkUsername', routes.checkUsername);
 app.post('/registerUser', routes.registerUser);
+app.get('/verifyUser', routes.verifyUser);
 
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);

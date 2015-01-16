@@ -36,15 +36,14 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           var temp1 = that.app.get('mapController').get('cities');
           var temp2 = that.app.get('mapController').get('countries');
-          console.log('STUFF: ', temp1, temp2);
           var flag = false;
-          for (var i=0; i < temp1.length ;i++) {
-            if (temp1._layers[i].city === $('#signupOriginInput').val()) {
+          for (var key in temp1._layers) {
+            if (temp1._layers[key].city === $('#signupOriginInput').val()) {
               flag = true;
             }
           }
-          for (var i=0; i < temp2.length ;i++) {
-            if (temp2._layers[i].feature.properties.name === $('#signupOriginInput').val()) {
+          for (var key in temp2._layers) {
+            if (temp2._layers[key].feature.properties.name === $('#signupOriginInput').val()) {
               flag = true;
             }
           }
@@ -55,10 +54,10 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert("username may not contain '@'");
           } else if ($('#signupPasswordInput').val() === '') {
             alert('please enter a password');
-          } else if ($('#signupEmailInput').val() === '') {
-            alert('please enter an email');
           } else if ($('#signupPasswordInput').val() !== $('#signupConfirmPasswordInput').val()) {
             alert('password confirmation does not match');
+          } else if ($('#signupEmailInput').val() === '') {
+            alert('please enter an email');
           } else if (!flag) {
             alert('please enter a valid origin');
           } else {

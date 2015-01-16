@@ -1726,7 +1726,7 @@ module.exports.checkUsername = function(request, response) {
 
 module.exports.registerUser = function(request, response) {
 
-  var temp = request.body.email;
+  var temp = request.body.username;
   var flag = false;
   for (var i=0; i < temp.length ;i++) {
     if (temp[i] === '@') {
@@ -1764,7 +1764,8 @@ module.exports.registerUser = function(request, response) {
                         bcrypt.hash(request.body.password, salt, function(err, hash) {
 
                           postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                            xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
+                            xssValidator(request.body.origin), xssValidator(request.body.about),
+                            xssValidator(request.body.email), function(success) {
                               if (success) {
                                 //send back login token here????
 
@@ -1783,8 +1784,8 @@ module.exports.registerUser = function(request, response) {
                                           from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
                                           to: request.body.email, // list of receivers
                                           subject: 'Hello ✔', // Subject line
-                                          text: 'KEY IS: '+secret;, // plaintext body
-                                          html: '<b>Hello world ✔</b>' // html body
+                                          text: 'KEY', // plaintext body
+                                          html: '<b>SECRET: '+secret+' ✔</b>' // html body
                                       };
 
                                       transporter.sendMail(mailOptions, function(error, info){
@@ -1846,12 +1847,27 @@ module.exports.registerUser = function(request, response) {
 
   }//end username @ check
 
+};
 
 
+
+
+
+
+module.exports.verifyUser = function(request, response) {
+
+
+  //CHECK THE SECRET AGAINST THE TABLE, IF IT MATCHES DELETE THE ENTRY AND UPDATE USERS TABLE
+  //need to reschematize users table for this to work fully
 
 
 
 };
+
+
+
+
+
 
 
 
