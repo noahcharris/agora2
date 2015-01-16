@@ -1785,7 +1785,7 @@ module.exports.registerUser = function(request, response) {
                                           to: request.body.email, // list of receivers
                                           subject: 'Hello ✔', // Subject line
                                           text: 'KEY', // plaintext body
-                                          html: '<b>SECRET: '+secret+' ✔</b>' // html body
+                                          html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
                                       };
 
                                       transporter.sendMail(mailOptions, function(error, info){
@@ -1859,6 +1859,32 @@ module.exports.verifyUser = function(request, response) {
 
   //CHECK THE SECRET AGAINST THE TABLE, IF IT MATCHES DELETE THE ENTRY AND UPDATE USERS TABLE
   //need to reschematize users table for this to work fully
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM emailVerificationJoin WHERE username = $1 "
+    +"AND secret = $2;", [queryArgs.username, queryArgs.secret],
+    function(err, result) {
+
+      if (result.rows.length) {
+
+        client.query("DELETE FROM emailVerificationJoin WHERE username = $1;",
+          [queryArgs.username], function(err, result) {
+            if (err)
+              console.log('error deleting from emailVerificationJoin: ', err);
+        });
+
+        //USER VERIFIED!!!
+        //update users table once it's recreated
+        //TODO
+
+
+        response.end('VERIFICATION SUCCESSFUL :D');
+
+      } else {
+        response.end('VERIFICATION FAILED :(');
+      }
+
+  });
 
 
 
