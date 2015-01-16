@@ -166,11 +166,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     if (!that.model.link) {
       $linkButton.hide();
     }
-    $linkButton.on('click', function() {
+    $linkButton[0].onclick = function() {
       console.log('liNKK');
       //maybe shouldn't use this, maybe just use navigate, because of compatibility concerns
       window.open(that.model.link, '_blank');
-    });
+    };
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
