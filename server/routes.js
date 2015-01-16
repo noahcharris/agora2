@@ -561,7 +561,7 @@ module.exports.userSearch = function(request, response) {
 
   console.log('user search input: ', queryArgs.input);
 
-  client.query("SELECT * FROM users WHERE username LIKE $1 LIMIT 500;",
+  client.query("SELECT type, username, location, image, about FROM users WHERE username LIKE $1 LIMIT 500;",
       [queryArgs.input + '%'],
       function(err, result) {
         if (err) {
@@ -577,28 +577,7 @@ module.exports.userSearch = function(request, response) {
 
 
 
-module.exports.validateUsername = function(request, response) {
 
-  var queryArgs = url.parse(request.url, true).query;
-
-  client.query("SELECT * FROM users WHERE username = $1;",
-    [queryArgs.username],
-    function(err, result) {
-      if (err) {
-        console.log('error selecting from users: ', err);
-      } else {
-          if (result.rows.length) {
-            //username already taken
-            response.end('Taken');
-          } else {
-            //username available
-            response.end('Available');
-          }
-      }
-  });
-
-
-};
 
 
 
@@ -742,7 +721,7 @@ module.exports.getContacts = function(request, response) {
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-            client.query("SELECT * FROM users JOIN contactsjoin " 
+            client.query("SELECT type, username, location, image, about FROM users JOIN contactsjoin " 
               +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
               +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
               [queryArgs.username],
@@ -944,7 +923,7 @@ module.exports.getHeatPoints = function(request, response) {
 
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-  client.query("SELECT * FROM users WHERE username = $1;", [queryArgs.username], function(err, result) {
+  client.query("SELECT type, username, location, image, about FROM users WHERE username = $1;", [queryArgs.username], function(err, result) {
       if (err) {
         console.log('error selecting from users: ', err);
       } else {
@@ -1675,7 +1654,15 @@ module.exports.sendMessage = function(request, response) {
                           } else {
                             response.end('successfully created message');
 
+                            //update last message in the proper message chain
+                            client.query("UPDATE messageChains SET lastMessage = now() WHERE "
+                              +"(username1 = $1 AND username2 = $2) OR (username1 = $2 AND username2 = $1);",
+                              [request.body.sender, request.body.recipient], function(err, result) {
+                                if (err) 
+                                  console.log('error updating messageChains table: ', err);
+                            });
 
+                            //check and record message in newMessageJoin to be used for notifications
                             client.query("SELECT * FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
                             [request.body.sender, request.body.recipient], function(err, result) {
                               if (err) {
@@ -1716,10 +1703,33 @@ module.exports.sendMessage = function(request, response) {
 
 
 
-module.exports.checkUsername = function(request, response) {
+
+
+
+module.exports.validateUsername = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM users WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from users: ', err);
+      } else {
+          if (result.rows.length) {
+            //username already taken
+            response.end('Taken');
+          } else {
+            //username available
+            response.end('Available');
+          }
+      }
+  });
 
 
 };
+
+
 
 
 
@@ -3356,23 +3366,6 @@ module.exports.upvoteReply = function(request, response) {
 
   
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

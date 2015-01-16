@@ -173,8 +173,6 @@ app.get('/topicLocations', routes.getTopicLocations);
 app.get('/topicSearch', routes.topicSearch);
 app.get('/userSearch', routes.userSearch);
 
-app.get('/validateUsername', routes.validateUsername);
-
 app.get('/locationSearch', routes.locationSearch);
 app.get('/channelSearch', routes.channelSearch);
 
@@ -223,7 +221,7 @@ app.post('/addContact', routes.addContact);
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
-app.get('/checkUsername', routes.checkUsername);
+app.get('/validateUsername', routes.validateUsername);
 app.post('/registerUser', routes.registerUser);
 app.get('/verifyUser', routes.verifyUser);
 
