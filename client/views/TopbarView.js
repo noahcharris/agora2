@@ -21,7 +21,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
       //that.app.showUserDetailView(that.app.get('username'));
 
-      if (username = 'Not Logged In') {
+      if (!that.app.get('username')) {
         alert('you must log in to view your profile.')
       } else {
         
