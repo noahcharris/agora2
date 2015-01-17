@@ -28,17 +28,46 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
 
         function cacheTree(obj, topicId) {
 
-          client.query("INSERT INTO topicTreeCache (topicId, tree, createdAt) "
-            +"VALUES ($1, $2, now());", [topicId, JSON.stringify(obj)],
-            function(err, result) {
-              if (err) { 
-                console.log('error caching tree: ', err);
-                process.exit();
+          client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
+            [topicId], function(err, result) {
+              if (err)
+                console.log('err checking tree cache: ', err);
+
+              if (result.rows.length) {
+                //update cache
+
+
+                client.query("UPDATE topicTreeCache SET (tree, createdAt) = "
+                  +"($1, now()) WHERE topicId = $2;",
+                  [JSON.stringify(obj), topicId],
+                  function(err, result) {
+                    if (err)
+                      console.log('error updating topic tree cache: ', err);
+                    console.log('successfully cached topic');
+                    process.exit();
+                  });
+
               } else {
-                console.log('successfully cached topic ');
-                process.exit();
+                //create new entry
+
+
+                client.query("INSERT INTO topicTreeCache (topicId, tree, createdAt) "
+                  +"VALUES ($1, $2, now());", [topicId, JSON.stringify(obj)],
+                  function(err, result) {
+                    if (err) { 
+                      console.log('error caching tree: ', err);
+                      process.exit();
+                    } else {
+                      console.log('successfully cached topic ');
+                      process.exit();
+                    }
+                });
+
+
+
               }
-          });
+          });// end tree cache check
+
 
         };
 
