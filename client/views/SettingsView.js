@@ -110,6 +110,27 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 
+    var $changePasswordButton = $('<button id="changePasswordButton" style="height:100px">Change Password</button>');
+    $changePasswordButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangePassword';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));
+    });
+    this.$el.children('#buttonBox').append($changePasswordButton);
+
+    var $changeLocationButton = $('<button id="changeLocationButton">Change Location</button>');
+    $changeLocationButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangeLocation';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Location'));
+    });
+    this.$el.children('#buttonBox').append($changeLocationButton);
+
+    var $changeEmailButton = $('<button id="changeEmailButton">Change Email</button>');
+    $changeEmailButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangeEmail';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
+    });
+    this.$el.children('#buttonBox').append($changeEmailButton);
+
 
     //get recently visited topics
     $.ajax({

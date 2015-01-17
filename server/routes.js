@@ -1196,6 +1196,8 @@ module.exports.login = function(request, response) {
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {
+      //to send back because of email login
+      var theUsername = data[0].username;
 
       bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
         if (res) {
@@ -1222,7 +1224,7 @@ module.exports.login = function(request, response) {
                           // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
                           response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
                           console.log('Login successful for user: ', request.body.username);
-                          response.json({ login: true, token: token });
+                          response.json({ login: true, token: token, username: theUsername });
                       }
                   });//end security join insert
                 }
@@ -1244,6 +1246,7 @@ module.exports.login = function(request, response) {
           } else {
 
             if (result.rows.length) {
+              var theUsername = result.rows[0].username
 
               //Successfully looked up user by email
               bcrypt.compare(request.body.password, result.rows[0].passhash, function(err, res) {
@@ -1269,7 +1272,7 @@ module.exports.login = function(request, response) {
                                   // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
                                   response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
                                   console.log('Login successful for user: ', request.body.username);
-                                  response.json({ login: true, token: token });
+                                  response.json({ login: true, token: token, username: theUsername });
                               }
                           });//end security join insert
                         }
@@ -1298,15 +1301,6 @@ module.exports.login = function(request, response) {
 
 
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1406,14 +1400,200 @@ module.exports.checkLogin = function(request, response) {
   }
 
 
-
-
 };
 
 
 
 
+module.exports.getEmail = function(request, response) {
 
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+          client.query("SELECT email FROM users WHERE username = $1", [queryArgs.username],
+            function(err, result) {
+              if (err) {
+                console.log('error selecting from users: ', err);
+                response.end('server error');
+              } else {
+                response.json(result.rows);
+              }
+          });
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+};
+
+module.exports.changeEmail = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          postgres.retrieveUser(request.body.username, function(data) {
+            if (data[0]) {
+
+              bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+                if (res) {
+
+
+                  client.query("SELECT * FROM users WHERE email = $1;", [request.body.email],
+                    function(err, result) {
+                      if (!result.rows.length) {
+
+                        client.query("UPDATE users SET email = $1 WHERE username = $2;",
+                          [request.body.email, request.body.username], function(err, result) {
+                            if (err) {
+                              console.log('error updating user email: ', err);
+                              response.end('server error');
+                            } else {
+                              response.end('successfully updated email');
+                            }
+                        });
+                        
+                      } else {
+                        response.end('that email is taken!');
+                      }
+
+                  });
+
+
+
+
+                } else {
+                  //NOT AUTHORIZED
+                  response.end('not authorized');
+                }
+              });//end bcrypt
+
+
+
+            } else {
+
+            }
+          });//end retrieve user
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
+
+module.exports.changePassword = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+            postgres.retrieveUser(request.body.username, function(data) {
+              if (data[0]) {
+
+                bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+                  if (res) {
+
+
+                    bcrypt.genSalt(10, function(err, salt) {
+                      bcrypt.hash(request.body.newPassword, salt, function(err, hash) {
+
+                        client.query("UPDATE users SET passhash = $1, salt = $2 WHERE username = $3",
+                          [hash, salt, request.body.username], function(err, result) {
+                            if (err) {
+                              console.log('error updating passhash: ', err);
+                              response.end('server error');
+                            } else {
+                              response.end('successfully updated password');
+                            }
+
+                        });
+                        
+                        
+                      });
+                    });
+
+
+
+                  } else {
+                    //NOT AUTHORIZED
+                    response.end('not authorized');
+                  }
+                });//end bcrypt
+
+
+              } else {
+
+              }
+            });//end retrieve user
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
+
+module.exports.changeLocation = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+          client.query("UPDATE users SET location = $1 WHERE username = $2",
+            [request.body.location, request.body.username], function(err, result) {
+              if (err) {
+                console.log('error updating user location: ', err);
+                response.end('server error');
+              } else {
+                response.end('successfully updated location');
+              }
+          });
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
 
 
 

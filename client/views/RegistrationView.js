@@ -50,11 +50,6 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       $('#loginUsernameInput').val('');
       $('#loginPasswordInput').val('');
 
-      //LOGIN (This needs to be done over HTTPS, I just don't know how yet)
-      //  -need to interact over both ports
-
-      //CHANGING THIS BACK TO HTTP BECAUSE IT SEEMS TO BREAK COOKIES, HAVE TO TRY WITH A REAL SERVER
-
       $.ajax({
         url: 'https://liveworld.io:443/login',
         // url: 'http://localhost/login',
@@ -75,7 +70,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.set('token', data.token);
 
             that.app.set('login', true);
-            that.app.set('username', username);
+            that.app.set('username', data.username);
 
             that.app.get('cacheManager').stop();
             that.app.get('cacheManager').emptyCache();

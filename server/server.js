@@ -213,6 +213,11 @@ app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 app.get('/checkLogin', routes.checkLogin);
 
+app.get('/userEmail', routes.getEmail);
+app.post('/changeEmail', routes.changeEmail);
+app.post('/changePassword', routes.changePassword);
+app.post('/changeLocation', routes.changeLocation);
+
 //SECURE
 
 //split this up into sendContactRequest and confirmContactRequest?
