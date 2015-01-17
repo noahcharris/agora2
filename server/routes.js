@@ -887,7 +887,9 @@ module.exports.getPoints = function(request, response) {
   // });
 
   client.query("SELECT * FROM locations "
-    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);", function(err, result) {
+    // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
+    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000);",
+    ['POINT('+queryArgs.longitude+' '+queryArgs.latitude+')'], function(err, result) {
     if (err) {
       console.log('error retrieving points: ', err);
       response.end('server error');
@@ -2883,9 +2885,9 @@ module.exports.createComment = function(request, response) {
 
                       //insert and fetch id here, then upload the image to amazon
 
-                      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+                      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                       +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                       function(err, result) {
 
                           if (err) {
@@ -2948,9 +2950,9 @@ module.exports.createComment = function(request, response) {
                 //NO IMAGE
                 //##############
 
-                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
+                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
                 +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                 function(err, result) {
                   if (err) {
                     console.log('error inserting into comments: ', err);
@@ -3023,9 +3025,9 @@ module.exports.createResponse = function(request, response) {
                         if (files.file) {
 
                                 //insert and fetch id here, then upload the image to amazon
-                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
                                 +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                                 function(err, result) {
 
                                     if (err) {
@@ -3088,9 +3090,9 @@ module.exports.createResponse = function(request, response) {
                           //NO IMAGE
                           //##############
 
-                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
+                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
                           +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                           function(err, result) {
                             if (err) {
                               console.log('error inserting into responses: ', err);
@@ -3165,9 +3167,9 @@ module.exports.createReply = function(request, response) {
                     if (files.file) {
 
                             //insert and fetch id here, then upload the image to amazon
-                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
                             +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                             function(err, result) {
 
                                 if (err) {
@@ -3230,9 +3232,9 @@ module.exports.createReply = function(request, response) {
                       //NO IMAGE
                       //##############
 
-                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
+                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                       +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                       function(err, result) {
                         if (err) {
                           console.log('error inserting into replies: ', err);
