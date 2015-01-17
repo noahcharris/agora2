@@ -6,23 +6,9 @@ var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-
 var client = new pg.Client(conString);
 client.connect();
 
-var defer = Q.defer();
 
+var test = 82;
 
-var test = 0;
-
-
-
-// client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-//   function(err, result) {
-//     if (err) {
-//       console.log('error subtracting heat from topic: ', err);
-//       defer.reject(new Error('error'));
-//     } else {
-//       console.log('successfully subtracted heat');
-//       defer.resolve();
-//     }
-// });
 
 
 //how should 
@@ -47,8 +33,10 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
             function(err, result) {
               if (err) { 
                 console.log('error caching tree: ', err);
+                process.exit();
               } else {
-                console.log('successfully cached topic '+topicId);
+                console.log('successfully cached topic ');
+                process.exit();
               }
           });
 
@@ -61,6 +49,8 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
 
 
             //woooo treebuilder 2.0
+
+            var id = temp[i].id;
 
             var count = 0;
             var topic = null;
@@ -90,7 +80,7 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
                 count++;
                 comments = result.rows;
                 if (count === 4) {
-                  response.json(buildSequence(topic, comments, responses, replies));
+                  cacheTree(buildSequence(topic, comments, responses, replies), id);
                 }
               }
             });
@@ -103,7 +93,7 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
                 count++;
                 responses = result.rows;
                 if (count === 4) {
-                  response.json(buildSequence(topic, comments, responses, replies));
+                  cacheTree(buildSequence(topic, comments, responses, replies), id);
                 }
               }
             });
@@ -116,7 +106,7 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
                 count++;
                 replies = result.rows;
                 if (count === 4) {
-                  response.json(buildSequence(topic, comments, responses, replies));
+                  cacheTree(buildSequence(topic, comments, responses, replies), id);
                 }
               } 
             });
@@ -203,12 +193,4 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
 });//end topics select
 
 
-
-
-return defer.promise
-.then(function() {
-  process.exit();
-}, function() {
-  process.exit();
-});
 

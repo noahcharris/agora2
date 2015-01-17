@@ -388,111 +388,137 @@ module.exports.getTopicTree = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
 
-    //woooo treebuilder 2.0
 
-    var count = 0;
-    var topic = null;
-    var comments = [];
-    var responses = [];
-    var replies = [];
+  client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
+    [queryArgs.topicId], function(err, result) {
+      if (err)
+        console.log('error selecting from topicTreeCache: ', err);
 
-    client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
+
+      if (result.rows.length) {
+        //CACHED VERSION FOUND
+        console.log('FOUND TOPIC TREE IN CACHE :D');
+
+        //could maybe speed this up if I took off parse and sent it stringified and
+        //did the parsing on the client??
+        response.json(JSON.parse(result.rows[0].tree));
+
       } else {
-        count++;
-        topic = result.rows[0];
-        if (count === 4) {
+        //NO CACHE, GOTTA BUILD
 
-        }
+
+                  //woooo treebuilder 2.0
+
+                  var count = 0;
+                  var topic = null;
+                  var comments = [];
+                  var responses = [];
+                  var replies = [];
+
+                  client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      topic = result.rows[0];
+                      if (count === 4) {
+
+                      }
+                    }
+
+                  });
+
+                  client.query("SELECT * FROM comments WHERE comments.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      comments = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    }
+                  });
+
+                  client.query("SELECT * FROM responses WHERE responses.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      responses = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    }
+                  });
+
+                  client.query("SELECT * FROM replies WHERE replies.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      replies = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    } 
+                  });
+
+
+                  function buildSequence(topic, comments, responses, replies) {
+
+
+                    var responses = responses.slice(0);
+                    var resultTree = topic;
+                    resultTree.comments = [];
+                    for (var i=0; i < comments.length ;i++) {
+                      comments[i].responses = [];
+                      resultTree.comments.push(comments[i]);
+                    }
+                    for (var i=0; i < responses.length ;i++) {
+                      responses[i].replies = [];
+                    }
+
+
+
+                    for (var i=0; i < replies.length ;i++) {
+
+
+                      for (var j=0; j < responses.length ;j++) {
+                        if (responses[j].id === replies[i].response) {
+                          responses[j].replies.push(replies[i]);
+                          break;
+                        }
+                      }
+                    }
+
+
+                    for (var i=0; i < responses.length ;i++) {
+
+                      for (var j=0; j < resultTree.comments.length ;j++) {
+                        if (responses[i].comment === comments[j].id) {
+                          resultTree.comments[j].responses.push(responses[i]);
+                          break;
+                        }
+
+                      }
+
+                    }
+
+                    return resultTree;
+
+                  };
+
+
+
+
+
       }
-
-    });
-
-    client.query("SELECT * FROM comments WHERE comments.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        comments = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      }
-    });
-
-    client.query("SELECT * FROM responses WHERE responses.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        responses = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      }
-    });
-
-    client.query("SELECT * FROM replies WHERE replies.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        replies = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      } 
-    });
-
-
-    function buildSequence(topic, comments, responses, replies) {
-
-
-      var responses = responses.slice(0);
-      var resultTree = topic;
-      resultTree.comments = [];
-      for (var i=0; i < comments.length ;i++) {
-        comments[i].responses = [];
-        resultTree.comments.push(comments[i]);
-      }
-      for (var i=0; i < responses.length ;i++) {
-        responses[i].replies = [];
-      }
-
-
-
-      for (var i=0; i < replies.length ;i++) {
-
-
-        for (var j=0; j < responses.length ;j++) {
-          if (responses[j].id === replies[i].response) {
-            responses[j].replies.push(replies[i]);
-            break;
-          }
-        }
-      }
-
-
-      for (var i=0; i < responses.length ;i++) {
-
-        for (var j=0; j < resultTree.comments.length ;j++) {
-          if (responses[i].comment === comments[j].id) {
-            resultTree.comments[j].responses.push(responses[i]);
-            break;
-          }
-
-        }
-
-      }
-
-      return resultTree;
-
-    };
+  });//end cache select
 
 
 };
