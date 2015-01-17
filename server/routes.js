@@ -937,7 +937,7 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
   client.query("SELECT * FROM topics WHERE username = $1 "
-    +"ORDER BY createdAt DESC LIMIT 30;", [queryArgs.username],
+    +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics');
@@ -1954,7 +1954,7 @@ module.exports.registerUser = function(request, response) {
                         bcrypt.hash(request.body.password, salt, function(err, hash) {
 
                           postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                            xssValidator(request.body.origin), xssValidator(request.body.about),
+                            xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
                             xssValidator(request.body.email), function(success) {
                               if (success) {
                                 //send back login token here????
@@ -2059,16 +2059,25 @@ module.exports.verifyUser = function(request, response) {
 
         client.query("DELETE FROM emailVerificationJoin WHERE username = $1;",
           [queryArgs.username], function(err, result) {
-            if (err)
+            if (err) {
               console.log('error deleting from emailVerificationJoin: ', err);
-        });
+              response.end('server error');
+            } else {
 
-        //USER VERIFIED!!!
-        //update users table once it's recreated
-        //TODO
+              client.query("UPDATE users SET verified = 'TRUE' WHERE username = $1",
+                [queryArgs.username], function(err, result) {
+                  if (err) {
+                    //USER VERIFIED!!!!!!
+                    console.log('error setting verified to true: ', err);
+                  } else {
+                    response.end('VERIFICATION SUCCESSFUL :D');
+                  }
 
+              });
 
-        response.end('VERIFICATION SUCCESSFUL :D');
+            }
+        });//end verifcationJoin delete
+
 
       } else {
         response.end('VERIFICATION FAILED :(');
@@ -2188,7 +2197,7 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 
                     
             client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
-              +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+              +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC LIMIT 50;",
               [queryArgs.username],
               function(err, result) {
                 if (err) {

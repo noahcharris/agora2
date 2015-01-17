@@ -36,15 +36,22 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           var temp1 = that.app.get('mapController').get('cities');
           var temp2 = that.app.get('mapController').get('countries');
-          var flag = false;
+          var flag1 = false;
+          var flag2 = false;
           for (var key in temp1._layers) {
             if (temp1._layers[key].city === $('#signupOriginInput').val()) {
-              flag = true;
+              flag1 = true;
+            }
+            if (temp1._layers[key].city === $('#signupLocationInput').val()) {
+              flag2 = true;
             }
           }
           for (var key in temp2._layers) {
             if (temp2._layers[key].feature.properties.name === $('#signupOriginInput').val()) {
-              flag = true;
+              flag1 = true;
+            }
+            if (temp2._layers[key].feature.properties.name === $('#signupLocationInput').val()) {
+              flag2 = true;
             }
           }
 
@@ -58,8 +65,10 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert('password confirmation does not match');
           } else if ($('#signupEmailInput').val() === '') {
             alert('please enter an email');
-          } else if (!flag) {
+          } else if (!flag1) {
             alert('please enter a valid origin');
+          } else if (!flag2) {
+            alert('please enter a valid current location'); 
           } else {
 
 
@@ -76,6 +85,7 @@ Agora.Views.SignupView = Backbone.View.extend({
                 username: $('#signupUsernameInput').val(),
                 password: $('#signupPasswordInput').val(),
                 origin: $('#signupOriginInput').val(),
+                location: $('#signupLocationInput').val(),
                 email: $('#signupEmailInput').val(),
                 about: $('#signupAboutInput').val()
               },
@@ -248,6 +258,74 @@ Agora.Views.SignupView = Backbone.View.extend({
       }
 
     });
+
+
+
+  $('#signupLocationInput').on('keyup', function(e) {
+
+    var searchParameter = $('#signupLocationInput').val();
+
+    console.log('searchParameter: ', searchParameter);
+
+    //SHOULD MAYBE THROTTLE THIS ???????
+
+    if (searchParameter.length > 2) {
+
+      $.ajax({
+        url: 'http://liveworld.io:80/locationSearch',
+        // url: 'http://localhost:80/locationSearch',
+        data: {
+          input: searchParameter
+        },
+        crossDomain: true,
+        success: function(data) {
+          console.log(data);
+          $('.signupLocationSearchResult').remove();
+
+          var cssAdjust = -30;
+
+          for (var i=0; i < data.length ;i++) {
+
+            var $element = $('<div style="position:relative" class="signupLocationSearchResult">'+data[i].name+'</div>');
+
+
+            (function() {
+              var x = data[i].name;
+              $element.on('click', function(e)  {
+
+
+                console.log('hi');
+
+                // that.app.get('mapController').goToPath(x);
+                //that.app.trigger('reloadSidebarTopics', x);
+
+                $('#signupLocationInput').val(x);
+                $('.signupLocationSearchResult').remove();
+
+
+              });
+              
+            })();
+
+
+            $element.css('bottom', cssAdjust + 'px');
+
+            cssAdjust -= 15;
+
+            $('#signupLocation').append($element);
+
+
+            
+          }
+
+        }
+      });
+
+    } else if (searchParameter === '') {
+      $('.signupLocationSearchResult').remove();
+    }
+
+  });
 
 
 
