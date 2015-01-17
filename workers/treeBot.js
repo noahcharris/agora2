@@ -12,7 +12,7 @@ var test = 82;
 
 
 //how should 
-client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1;",
+client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER BY RANK DESC;",
   [test],
   function(err, result) {
     if (err) {
