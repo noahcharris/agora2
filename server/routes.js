@@ -2094,6 +2094,49 @@ module.exports.verifyUser = function(request, response) {
 
 
 
+module.exports.checkVerification = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          client.query("SELECT verified FROM users WHERE username = $1;",
+            [queryArgs.username], function(err, result) {
+              if (err) {
+                console.log('error checking verification: ', err);
+                response.end('server error');
+              } else {
+                response.json(result.rows);
+              }
+          });
+
+
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+
+};
+
+
+
+
 
 
 module.exports.visitedTopic = function(request, response) {
@@ -3175,29 +3218,51 @@ module.exports.createLocation = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-              //capitalize the name
-              var temp = request.body.name.split(' ');
-              for (var i=0; i < temp.length ;i++) {
-                temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
-              }
-              var name = temp.join(' ');
 
-              //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
-              //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
 
-                    
-              client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                +" creator, population, rank, public, pointGeometry, latitude, longitude) "
-                +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-                request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
-                function(err, result) {
-                  if (err) {
-                    console.log('error inserting into locations: ', err);
+            //check if user is verified
+            client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from users: ', err);
+                  response.end('server error');
+                } else {
+                  if (result.rows[0] && result.rows[0].verified) {
+                    //VERIFIED!!!!!!!!
+
+
+                        //capitalize the name
+                        var temp = request.body.name.split(' ');
+                        for (var i=0; i < temp.length ;i++) {
+                          temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+                        }
+                        var name = temp.join(' ');
+
+                        //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
+                        //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
+
+                              
+                        client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+                          +" creator, population, rank, public, pointGeometry, latitude, longitude) "
+                          +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
+                          [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                          request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
+                          function(err, result) {
+                            if (err) {
+                              console.log('error inserting into locations: ', err);
+                            } else {
+                              response.end('successfully created location');
+                            }
+                        });
+
+
                   } else {
-                    response.end('successfully created location');
+                    //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                    reponse.end('nice try o_O');
                   }
+                }
               });
+
 
 
         } else {
@@ -3232,6 +3297,32 @@ module.exports.createChannel = function(request, response) {
       } else {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          //check if user is verified
+          client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error selecting from users: ', err);
+                response.end('server error');
+              } else {
+                if (result.rows[0] && result.rows[0].verified) {
+                  //VERIFIED!!!!!!!!
+
+
+
+
+
+
+
+
+                } else {
+                  //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                  reponse.end('nice try o_O');
+                }
+              }
+            });
+
 
             //capitalize the name
             var temp = request.body.name.split(' ');

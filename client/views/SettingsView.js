@@ -96,17 +96,67 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $locationCreationButton = $('<button id="createLocationButton">Create Location</button>');
     $locationCreationButton.on('click', function() {
-      //alert('Location creation coming soon. For now, please send channel creation requests to ...');
-      that.app.get('detailView').displayed = 'CreateLocation';
-      that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
+
+
+      $.ajax({
+        url: 'https://liveworld.io:443/checkVerification',
+        // url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data) {
+          if (data.length && data[0].verified) {
+            that.app.get('detailView').displayed = 'CreateLocation';
+            that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
+          } else {
+            alert('You must verify your email to create a location');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
     this.$el.children('#buttonBox').append($locationCreationButton);
 
     var $channelCreationButton = $('<button id="createChannelButton">Create Channel</button>');
     $channelCreationButton.on('click', function() {
-      //alert('Channel creation coming soon. For now, please send channel creation requests to ...');
-      that.app.get('detailView').displayed = 'CreateChannel';
-      that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+
+      $.ajax({
+        url: 'https://liveworld.io:443/checkVerification',
+        // url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data) {
+          //s for successsfulllyyyyyy
+          if (data[0] === 't') {
+            that.app.get('detailView').displayed = 'CreateChannel';
+            that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+          } else {
+            alert('You must verify your email to create a channel');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 
