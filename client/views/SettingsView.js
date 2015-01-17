@@ -110,7 +110,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 
-    var $changePasswordButton = $('<button id="changePasswordButton" style="height:100px">Change Password</button>');
+    var $changePasswordButton = $('<button id="changePasswordButton">Change Password</button>');
     $changePasswordButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangePassword';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));

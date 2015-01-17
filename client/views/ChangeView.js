@@ -92,6 +92,12 @@ Agora.Views.ChangeView = Backbone.View.extend({
       });
       this.$el.append($changePasswordDoneButton);
 
+      var $backButton = $('<button id="backButton">Back</button>')
+      $backButton.on('click', function() {
+        that.app.get('detailView').displayed = 'Settings';
+        that.app.get('content2').show(that.app.get('settingsView'));
+      });
+      this.$el.append($backButton);
 
 
 
@@ -227,6 +233,13 @@ Agora.Views.ChangeView = Backbone.View.extend({
 
       });
 
+      var $backButton = $('<button id="backButton">Back</button>')
+      $backButton.on('click', function() {
+        that.app.get('detailView').displayed = 'Settings';
+        that.app.get('content2').show(that.app.get('settingsView'));
+      });
+      this.$el.append($backButton);
+
 
 
 
@@ -318,9 +331,31 @@ Agora.Views.ChangeView = Backbone.View.extend({
 
       });
       this.$el.append($changeEmailDoneButton);
+
+      var $backButton = $('<button id="backButton">Back</button>')
+      $backButton.on('click', function() {
+        that.app.get('detailView').displayed = 'Settings';
+        that.app.get('content2').show(that.app.get('settingsView'));
+      });
+      this.$el.append($backButton);
+
+
+
     }
 
   },
+
+
+
+
+
+
+
+
+
+
+
+  
 
   setHandlers: function() {
 
