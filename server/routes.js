@@ -1101,7 +1101,6 @@ module.exports.refreshToken = function(request, response) {
 
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-
           //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
           var token = Math.floor(Math.random()*100000000000000000001); //generate token here
           var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
@@ -1121,8 +1120,6 @@ module.exports.refreshToken = function(request, response) {
                   response.json({token: token});
               }
           });//end security join insert
-
-
 
 
         } else {
