@@ -1079,12 +1079,61 @@ module.exports.getNotifications = function(request, response) {
   });//end securityJoin select
 
 
-
 };
 
 
 
 
+
+
+
+
+module.exports.refreshToken = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+          client.query ("UPDATE securityJoin SET (username, cookie, token, registeredAt) "
+            +"= ($1, $2, $3, now());",
+            [queryArgs.username, cookie, token],
+            function(err, result) {
+              if (err) {
+                console.log('error insertin into securityJoin: ', err);
+                response.end('server error');
+              } else {
+                  //LOGIN SUCCESSFUL
+                  //set cookie which will be checkd in checkLogin (10 minutes here)
+                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                  response.cookie('login',queryArgs.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                  console.log('Login successful for user: ', request.body.username);
+                  response.json({token: token});
+              }
+          });//end security join insert
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+};
 
 
 
@@ -3308,11 +3357,6 @@ module.exports.createChannel = function(request, response) {
               } else {
                 if (result.rows[0] && result.rows[0].verified) {
                   //VERIFIED!!!!!!!!
-
-
-
-
-
 
 
 

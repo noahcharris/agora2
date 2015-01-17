@@ -200,8 +200,9 @@ app.get('/recentlyPosted', routes.getRecentlyPostedTopics);
 app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);
 
-//SECURE
+//CACHE MANAGER
 app.get('/notifications', routes.getNotifications);
+app.get('/refreshToken', routes.refreshToken);
 
 
 //POST METHODS (EXCEPT LOGOUT)
