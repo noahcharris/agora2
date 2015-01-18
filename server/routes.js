@@ -3451,17 +3451,27 @@ module.exports.createChannel = function(request, response) {
               temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
             }
             var name = temp.join(' ');
+
+            var fullPath = request.body.parent+'/'+name;
+            var temp = fullPath.split('/');
+
+            if (temp.length > 5) {
+              response.end('Your channel is too deeply nested.');
+            } else {
+
+                client.query("INSERT INTO channels (type, name, description, parent) "
+                  +"VALUES ('Channel', $1, $2, $3);",
+                  [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error inserting into channels: ', err);
+                    } else {
+                      response.end('successfully created channel');
+                    }
+                });
+
+            }
                     
-            client.query("INSERT INTO channels (type, name, description, parent) "
-              +"VALUES ('Channel', $1, $2, $3);",
-              [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
-              function(err, result) {
-                if (err) {
-                  console.log('error inserting into channels: ', err);
-                } else {
-                  response.end('successfully created channel');
-                }
-            });
 
 
         } else {
