@@ -18,6 +18,8 @@ var _ = require('underscore');
 
 var Q = require('q');
 
+var cities = require('./cities.js');
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
 
@@ -3315,19 +3317,69 @@ module.exports.createLocation = function(request, response) {
                         //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
                         //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
 
-                              
-                        client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                          +" creator, population, rank, public, pointGeometry, latitude, longitude) "
-                          +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                          [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-                          request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
-                          function(err, result) {
+
+
+                        //check that parent is a city
+
+                        var flag = false;
+                        coords = null;
+                        for (var i=0; i < cities.features.length ;i++) {
+                          if (request.body.parent === cities.features[i].properties.city) {
+                            flag = true;
+                            coords = cities.features[i].geometry.coordinates;
+                          }
+                        }
+
+                        if (flag) {
+
+                          //check that it is within acceptable radius
+                          client.query("SELECT * FROM locations "
+                            // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
+                            +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000) AND name = $2;",
+                            ['POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.parent], function(err, result) {
                             if (err) {
-                              console.log('error inserting into locations: ', err);
+                              console.log('error retrieving points: ', err);
+                              response.end('server error');
                             } else {
-                              response.end('successfully created location');
+                              if (result.rows.length) {
+                                //within acceptable radius
+
+
+
+                                    //create teh city
+                                    client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+                                      +" creator, population, rank, public, pointGeometry, latitude, longitude) "
+                                      +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
+                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                                      request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
+                                      function(err, result) {
+                                        if (err) {
+                                          console.log('error inserting into locations: ', err);
+                                        } else {
+                                          response.end('successfully created location');
+                                        }
+                                    });
+
+                                
+
+
+
+                              } else {
+                                //not within acceptable radius
+                                response.end('Your location is too far from its parent city.');
+
+                              }
                             }
-                        });
+                          });
+                        } else {
+                          //HACKERS
+                          response.end('o_O');
+                        }
+
+
+
+
+                              
 
 
                   } else {
