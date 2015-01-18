@@ -4,7 +4,7 @@ window.Agora.Controllers = window.Agora.Controllers || {};
 Agora.Controllers.MapController = Backbone.Model.extend({
 
 
-  //MAP CONTROLLER NEEDS TO HAVE GROUPS REMOVED
+  //MAYBE TOO MANY CALLS TO updateHeatPoints IDK :$
 
 
   defaults: {
@@ -36,6 +36,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //for topic hover highlighting
     this.cityMarker = null;
     this.placeMarker = null;
+
+    this.heatMarkerLayer = L.layerGroup();
 
     var southWest = L.latLng(-90, -300);
     var northEast = L.latLng(90, 300);
@@ -71,57 +73,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-
-    //HEATPOINTSSSSSS 
-    //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-
-    $.ajax({
-      url: 'http://liveworld.io:80/heatPoints',
-      crossDomain: true,
-      data: {
-        location: this.get('location'),
-        channel: this.app.get('channel')
-      },
-      success: function(data) {
-        if (data) {
-
-          //RECEIVE TOP 100 TOPICS FOR HEAT,
-          //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
-          //EXCLUDING WORLD, COMBINED W/ # OF OCCURRENCES
-          var result = {};
-          var count = 0;
-          for (var i=0; i < data.length ;i++) {
-            if (data[i].location === 'World')
-              continue;
-            if (count > 9)
-              break;
-            if (Object.keys(result).indexOf(data[i].location) === -1) {
-              result[data[i].location] = 1;
-              count++;
-            } else {
-              result[data[i].location] = result[data[i].location] + 1;
-            }
-          }
-
-          //console.log("RESULT: ", result);
-
-          for (var key in result) {
-
-            //TODO - GIVE THE CORRESPONDING LOCATION A 
-            //DOPE LITTLE ICON, WHICH INCREASES IN INTENSITY
-            //AS THERE ARE MORE OCCURRENCES WITHIN THE 
-            //TOP 10 OBJECT
-            that.showHeatPoint(key, result[key]);
-
-          }
-
-        } else {
-        }
-      }, error: function(err) {
-        console.log('ajax error ocurred: ', err);
-      }
-
-    });
 
 
 
@@ -179,6 +130,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     //LAZY POINT LOADING
     map.on('moveend', function() {
+      //update user-locations points
       if (map.getZoom() > 7) {
         center = map.getCenter();
         console.log(center);
@@ -186,9 +138,25 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       } else {
         that.removePlaces();
       }
+
+      //update heat points
+      that.updateHeatPoints();
+
     });
 
+
+
+
+
+
+
   },//end initialization
+
+
+
+
+
+
 
 
   logBounds: function() {
@@ -260,6 +228,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.get('map').fitBounds(worldBounds);
     this.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
+    this.updateHeatPoints();
 
     this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
@@ -271,7 +240,77 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-  //NEED TO CHANGE THIS WHEN I ADD IN THE USER-PLACES
+
+
+
+
+
+
+  updateHeatPoints: function() {
+    var that = this;
+
+    console.log(that.heatMarkerLayer);
+
+    // this.get('map').removeLayer(this.heatMarkerLayer);
+    that.heatMarkerLayer.clearLayers();
+
+
+    //HEATPOINTSSSSSS 
+    //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+    $.ajax({
+      url: 'http://liveworld.io:80/heatPoints',
+      crossDomain: true,
+      data: {
+        location: this.get('location'),
+        channel: this.app.get('channel')
+      },
+      success: function(data) {
+        if (data) {
+
+          //RECEIVE TOP 100 TOPICS FOR HEAT,
+          //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
+          //EXCLUDING WORLD, COMBINED W/ # OF OCCURRENCES
+          var result = {};
+          var count = 0;
+          for (var i=0; i < data.length ;i++) {
+            if (data[i].location === 'World')
+              continue;
+            if (count > 9)
+              break;
+            if (Object.keys(result).indexOf(data[i].location) === -1) {
+              result[data[i].location] = 1;
+              count++;
+            } else {
+              result[data[i].location] = result[data[i].location] + 1;
+            }
+          }
+
+          //console.log("RESULT: ", result);
+
+          for (var key in result) {
+
+            //TODO - GIVE THE CORRESPONDING LOCATION A 
+            //DOPE LITTLE ICON, WHICH INCREASES IN INTENSITY
+            //AS THERE ARE MORE OCCURRENCES WITHIN THE 
+            //TOP 10 OBJECT
+            that.showHeatPoint(key, result[key]);
+
+          }
+
+        } else {
+        }
+      }, error: function(err) {
+        console.log('ajax error ocurred: ', err);
+      }
+
+    });
+
+
+
+  },
+
+
 
   showHeatPoint: function(location, occurrences) {
     var that = this;
@@ -361,14 +400,15 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //put it at the coordinates of the city
       for (var key in cities._layers) {
         if (cities._layers[key].city === cityName) {
-          var circle = L.marker(cities._layers[key]._latlng,
-          {icon: greenIcon}).addTo(this.get('map'));
+          var circle = L.marker(cities._layers[key]._latlng, {icon: greenIcon});
           circle.on('click', function(e) {
             that.goToPath(location);
           });
           circle.city = cityName;
           circle.on('mouseover', mouseoverHandler);
           circle.on('mouseout', mouseoutHandler);
+          that.heatMarkerLayer.addLayer(circle);
+          this.get('map').addLayer(this.heatMarkerLayer);
         }
       }
 
@@ -387,15 +427,15 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           if (data) {
             var coords = L.latLng(data[0].latitude, data[0].longitude);
 
-            console.log("WJOEJEWJFWO COOOORDINATES::: ", coords);
-            var circle = L.marker(coords,
-            {icon: greenIcon}).addTo(that.get('map'));
+            var circle = L.marker(coords, {icon: greenIcon});
             circle.on('click', function(e) {
               that.goToPath(location);
             });
             circle.city = location;
             circle.on('mouseover', mouseoverHandler);
             circle.on('mouseout', mouseoutHandler);
+            that.heatMarkerLayer.addLayer(circle);
+            that.get('map').addLayer(that.heatMarkerLayer);
           } else {
           }
         }, error: function(err) {
@@ -409,6 +449,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
     }
+
+    
 
 
 
@@ -618,6 +660,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (name === that.customBounds[i].name) {
           that.get('map').fitBounds(that.customBounds[i].bounds);
           this.set('location', path);
+          that.updateHeatPoints();
           foo = true;
           break;
         }
@@ -629,6 +672,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           if (this.get('countries')._layers[key].feature.properties.name === path) {
             this.get('map').fitBounds(this.get('countries')._layers[key].getBounds());
             this.set('location', path);
+            that.updateHeatPoints();
           }
         }
       }
@@ -648,6 +692,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (this.get('states')._layers[key].feature.properties.name === path) {
           this.get('map').fitBounds(this.get('states')._layers[key].getBounds());
           this.set('location', path);
+          that.updateHeatPoints();
         }
       }
 
@@ -663,6 +708,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           this.get('map').setZoom(12);
           this.get('map').panTo(this.get('cities')._layers[key]._latlng);
           this.set('location', path);
+          that.updateHeatPoints();
         }
       }
     } else {
@@ -685,6 +731,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             that.get('map').panTo(coords);
             that.set('location', path);
             that.app.trigger('reloadSidebarTopics', path);
+            that.updateHeatPoints();
           } else {
           }
         }, error: function(err) {
