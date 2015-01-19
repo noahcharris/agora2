@@ -164,6 +164,21 @@ function placeMarkersInBounds() {
 
 
 
+</select>
+<!--<select id="languageSelect">
+ <!--<option value="Arabic">Arabic</option>-->
+ <!--<option value="Chinese">Chinese</option>-->
+ <!--<option value="English">English</option>-->
+ <!--<option value="Français">Français</option>-->
+ <!--<option value="German">German</option>-->
+ <!--<option value="Japanese">Japanese</option>-->
+ <!--<option value="Portuguese">Portuguese</option>-->
+ <!--<option value="Russian">Russia</option>-->
+ <!--<option value="Spanish">Spanish</option>-->
+
+</select>-->
+
+
 
 
 
