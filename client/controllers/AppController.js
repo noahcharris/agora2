@@ -1233,7 +1233,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     manager.refreshToken = function() {
-
+      var that = this;
 
 
       $.ajax({

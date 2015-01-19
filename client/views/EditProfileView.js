@@ -91,7 +91,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
       //SECURITYYYYYY???????????!!!!!!!!
       var fd = new FormData();    
       console.log($('#imageInput'));
-      fd.append( 'file', $('#imageInput')[0].files[0] );
+      fd.append( 'file', $imageInput[0].files[0] );
       fd.append( 'username', that.app.get('username') );
       fd.append( 'token', that.app.get('token') );
       fd.append( 'about', $textArea.val());

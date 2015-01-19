@@ -20,6 +20,10 @@ var Q = require('q');
 
 var cities = require('./cities.js');
 
+var imageInfo = require('netpbm').info;
+var imageConverter = require('netpbm').convert;
+
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
 
@@ -77,6 +81,23 @@ var transporter = nodemailer.createTransport({
         pass: 'fieldsoffallensoldiers'
     }
 });
+
+
+
+
+
+
+function dealWithImage(image, keystring) {
+
+
+
+
+
+
+
+
+};
+
 
 
 
@@ -2213,6 +2234,18 @@ module.exports.checkVerification = function(request, response) {
 
 
 
+module.exports.generateCaptcha = function(request, response) {
+
+  //GENERATE A CAPTCHA IMAGE, STORE THE TEXT IN CAPTCHA JOINN
+
+
+
+
+};
+
+
+
+
 
 
 module.exports.visitedTopic = function(request, response) {
@@ -2618,6 +2651,24 @@ module.exports.updateUserProfile = function(request, response) {
                         //if an image is sent
                         if (files.file) {
 
+
+
+                          //check the type jpg/gif is fine, if png convert, else reject
+                          //scale to make it fit in 1000x1000
+
+                          imageInfo(files.file[0].path, function(err, result) {
+                            if (err)
+                              console.log('errljfdsj', err);
+                            if (!err) {
+                              console.log("Type: " + result.type + 
+                                " width: " + result.width + 
+                                " height: " + result.height);
+                            }
+                          });
+
+
+
+
                           var keyString = xssValidator(fields.username[0]);
 
                           var params = {
@@ -2888,7 +2939,7 @@ module.exports.createComment = function(request, response) {
                       //insert and fetch id here, then upload the image to amazon
 
                       client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
-                      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
                       [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                       function(err, result) {
 
@@ -2953,7 +3004,7 @@ module.exports.createComment = function(request, response) {
                 //##############
 
                 client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
-                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
                 [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                 function(err, result) {
                   if (err) {
@@ -3028,7 +3079,7 @@ module.exports.createResponse = function(request, response) {
 
                                 //insert and fetch id here, then upload the image to amazon
                                 client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
-                                +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                                +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
                                 [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                                 function(err, result) {
 
@@ -3093,7 +3144,7 @@ module.exports.createResponse = function(request, response) {
                           //##############
 
                           client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
-                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
                           [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                           function(err, result) {
                             if (err) {
@@ -3170,7 +3221,7 @@ module.exports.createReply = function(request, response) {
 
                             //insert and fetch id here, then upload the image to amazon
                             client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
-                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
                             [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                             function(err, result) {
 
@@ -3235,7 +3286,7 @@ module.exports.createReply = function(request, response) {
                       //##############
 
                       client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
-                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
                       [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                       function(err, result) {
                         if (err) {
