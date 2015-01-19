@@ -224,6 +224,9 @@ app.post('/changeLocation', routes.changeLocation);
 //split this up into sendContactRequest and confirmContactRequest?
 app.post('/addContact', routes.addContact);
 
+// app.post('/sendContactRequest' routes.sendContactRequest);
+// app.post('/confirmContactRequest', routes.confirmContactRequest);
+
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 

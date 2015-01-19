@@ -1154,10 +1154,10 @@ module.exports.refreshToken = function(request, response) {
 
           //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
           var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-          client.query ("UPDATE securityJoin SET (username, cookie, token, registeredAt) "
-            +"= ($1, $2, $3, now());",
-            [queryArgs.username, cookie, token],
+          // var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+          client.query ("UPDATE securityJoin SET (username, token, registeredAt) "
+            +"= ($1, $2, now());",
+            [queryArgs.username, token],
             function(err, result) {
               if (err) {
                 console.log('error insertin into securityJoin: ', err);
@@ -1166,7 +1166,7 @@ module.exports.refreshToken = function(request, response) {
                   //LOGIN SUCCESSFUL
                   //set cookie which will be checkd in checkLogin (10 minutes here)
                   // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                  response.cookie('login',queryArgs.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                  // response.cookie('login',queryArgs.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
                   console.log('Login successful for user: ', request.body.username);
                   response.json({token: token});
               }
@@ -1725,6 +1725,8 @@ module.exports.addContact = function(request, response) {
 
   console.log(request.body.username);
   console.log(request.body.contact);
+  console.log(request.body.token);
+  console.log(request.cookies['login']);
 
 
 
@@ -1813,14 +1815,125 @@ module.exports.addContact = function(request, response) {
 
 
 
-  
-
-
-
-
-
-
 };
+
+
+
+// module.exports.sendContactRequest = function(request, response) {
+
+//   client.query("SELECT * FROM securityJoin WHERE username = $1;",
+//     [request.body.username],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error selecting from securityJoin: ', err);
+//       } else {
+
+//         if (result.rows.length) {
+
+//             if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+//               //make sure there's not one already, make sure they aren't contacts already
+
+
+
+
+
+
+//               client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
+//                   [request.body.contact, request.body.username],
+//                   function(err, result) {
+//                     if (err) {
+//                       console.log('error selecting from contactRequestJoin: ', err);
+//                       response.end('error');
+//                     } else {
+
+//                       //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
+//                       if (result.rows.length) {
+//                         response.end('request already pending')
+//                       } else {
+
+
+//                         client.query("SELECT * FROM contactsJoin WHERE (username1 = $1 AND username2 = $2) "
+//                           +" OR (username1 = $2 AND username2 = $1);,"), [request.body.contact, request.body.username],
+//                         function(err, result) {
+//                           if (err)
+//                             console.log('error checking contactsJoin: ', err);
+
+//                           if (result.rows.length) {
+//                             response.end('already contacts');
+//                           } else {
+
+//                             //INSERT INTO requestJoin
+
+
+
+//                                   client.query("INSERT INTO contactRequestJoin (sender, recipient) "
+//                                     +"VALUES ($1, $2);",
+//                                   [request.body.username, request.body.contact],
+//                                   function(err, result) {
+//                                     if (err) {
+//                                       console.log('error inserting into contactsRequestJoin: ', err);
+//                                     } else {
+//                                       response.end('sent contact request');
+//                                     }
+//                                   });
+
+
+
+//                           }
+//                         });//end contactsJoin check
+
+
+//                       }
+//                     }
+//               });//end contactRequestJoin check
+
+
+
+//             } else {
+//               response.end('not authorized');
+//             }
+//           }
+//         }
+//   });//end securityJoin select
+
+
+// };
+
+
+// module.exports.confirmContactRequest = function(request, response) {
+
+//   client.query("SELECT * FROM securityJoin WHERE username = $1;",
+//     [request.body.username],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error selecting from securityJoin: ', err);
+//       } else {
+
+//         if (result.rows.length) {
+
+//             if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+
+
+
+
+
+
+
+
+
+//             } else {
+//               response.end('not authorized');
+//             }
+//           }
+//         }
+//   });//end securityJoin select
+
+
+
+// };
 
 
 
