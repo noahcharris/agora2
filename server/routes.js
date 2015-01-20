@@ -32,6 +32,11 @@ var fs = require('fs')
 
 
 
+//MAX UPLLOAD SIZE
+
+var AgoraMaxUpload = 10000000;
+
+
 
 //password hashing
 bcrypt.genSalt(10, function(err, salt) {
@@ -2751,9 +2756,19 @@ module.exports.getContactTopics = function(request, response) {
 
 module.exports.updateUserProfile = function(request, response) {
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
+
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('please make sure that our file size is not over 25MB');
+      }
+    } else {
 
 
     client.query("SELECT * FROM securityJoin WHERE username = $1;",
@@ -2858,7 +2873,7 @@ module.exports.updateUserProfile = function(request, response) {
 
 
 
-
+  }
 
 
 
@@ -2894,9 +2909,18 @@ module.exports.createTopic = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -3011,7 +3035,7 @@ module.exports.createTopic = function(request, response) {
 
 
 
-
+  }
 
     
 
@@ -3033,9 +3057,79 @@ module.exports.createComment = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
+
+
+  //NEED TO REWRITE UPLOADING CODE HERE
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  // form.on('error', function(err) {
+  //   console.log('Error parsing form: ' + err.stack);
+  // });
+
+
+  // // Parts are emitted when parsing the form
+  // form.on('part', function(part) {
+  //   // You *must* act on the part by reading it
+  //   // NOTE: if you want to ignore it, just call "part.resume()"
+
+  //   if (part.filename === null) {
+  //     // filename is "null" when this is a field and not a file
+  //     console.log('got field named ' + part.name);
+  //     // ignore field's content
+  //     part.resume();
+  //   }
+
+  //   if (part.filename !== null) {
+  //     // filename is not "null" when this is a file
+  //     count++;
+  //     console.log('got file named ' + part.name);
+  //     // ignore file's content here
+  //     part.resume();
+  //   }
+
+  //   part.on('error', function(err) {
+  //     // decide what to do
+  //   });
+  // });
+
+
+  // form.on('file', function(name, file) {
+
+  // });
+
+  // // Close emitted after form parsed
+  // form.on('close', function() {
+  //   console.log('Upload completed!');
+  //   res.setHeader('text/plain');
+  //   res.end('Received ' + count + ' files');
+  // });
+
+  // // Parse req
+  // form.parse(req);
+
+
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
 
   form.parse(request, function(err, fields, files) {
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -3086,11 +3180,20 @@ module.exports.createComment = function(request, response) {
                                               };
 
 
-
+                                              //IMAGE MANIPULATION
 
                                               gm(files.file[0].path)
                                               .identify(function (err, data) {
-                                                if (!err) console.log(data);
+                                                if (err) console.log('error getting image metadat: ', err);
+                                                console.log(data);
+
+                                                //if (data.Filesize > )
+
+
+                                                //if (data.size.)
+
+
+
                                               });
 
 
@@ -3101,12 +3204,10 @@ module.exports.createComment = function(request, response) {
                                               uploader.on('error', function(err) {
                                                 console.error("unable to upload:", err.stack);
                                               });
-
                                               uploader.on('progress', function() {
                                                 console.log("progress", uploader.progressMd5Amount,
                                                           uploader.progressAmount, uploader.progressTotal);
                                               });
-
                                               uploader.on('end', function() {
                                                 console.log("done uploading");
 
@@ -3159,7 +3260,7 @@ module.exports.createComment = function(request, response) {
 
 
     
-
+  }
 
 
 
@@ -3184,11 +3285,20 @@ module.exports.createResponse = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
 
 
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -3298,7 +3408,7 @@ module.exports.createResponse = function(request, response) {
     });//end securityJoin select
 
 
-
+  }
     
 
   });//end multiparty parse
@@ -3321,14 +3431,21 @@ module.exports.createReply = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
 
 
 
 
-
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -3441,7 +3558,7 @@ module.exports.createReply = function(request, response) {
 
 
 
-
+  }
 
 
 
