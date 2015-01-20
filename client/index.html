@@ -450,10 +450,20 @@
 
 
     <script type="text/javascript">
+
+        function agoraHandler(response) {
+
+          alert(response);
+
+        };
+
         var agoraOnloadCallback = function() {
+          
           grecaptcha.render('html_element', {
-          'sitekey' : '6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_'
+          'sitekey' : '6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_',
+          'callback': agoraHandler
           });
+
         };
     </script>
 

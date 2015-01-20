@@ -1236,29 +1236,29 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
 
-      $.ajax({
-        // url: 'http://localhost:80/updateUserProfile',
-        url: 'https://liveworld.io:443/refreshToken',
-        method: 'POST',
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        data: {
-          username: that.app.get('username'),
-          token: that.app.get('token')
-        },
-        success: function(data) {
-          if (data.token) {
-            that.app.set('token', data.token);
-          } else {
-            console.log(data);
-          }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
+      // $.ajax({
+      //   // url: 'http://localhost:80/updateUserProfile',
+      //   url: 'https://liveworld.io:443/refreshToken',
+      //   method: 'POST',
+      //   crossDomain: true,
+      //   xhrFields: {
+      //     withCredentials: true
+      //   },
+      //   data: {
+      //     username: that.app.get('username'),
+      //     token: that.app.get('token')
+      //   },
+      //   success: function(data) {
+      //     if (data.token) {
+      //       that.app.set('token', data.token);
+      //     } else {
+      //       console.log(data);
+      //     }
+      //   }, error: function(err) {
+      //     console.log('ajax error ocurred: ', err);
+      //   }
 
-      });
+      // });
 
 
 
