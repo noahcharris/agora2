@@ -218,10 +218,10 @@ module.exports.createGroup = function(location, lat, lng, name, description, cre
   });
 };
 
-module.exports.createUser = function(username, passhash, salt, location, about, cb) {
-  client.query("INSERT INTO users (type, username, passhash, salt, location, about, image) "
-    +"VALUES ('User', $1, $2, $3, $4, $5, 'https://s3-us-west-2.amazonaws.com/agora-image-storage/Anonymous-Seal.jpg');",
-     [username, passhash, salt, location, about], function(err, result) {
+module.exports.createUser = function(username, passhash, salt, origin, location, about, email, cb) {
+  client.query("INSERT INTO users (type, username, passhash, salt, origin, location, about, email, image, verified) "
+    +"VALUES ('User', $1, $2, $3, $4, $5, $6, $7, 'https://s3-us-west-2.amazonaws.com/agora-image-storage/Anonymous-Seal.jpg', 'FALSE');",
+     [username, passhash, salt, origin, location, about, email], function(err, result) {
       if (err) {
         console.log('error inserting into users table: ', err);
         console.log(err);

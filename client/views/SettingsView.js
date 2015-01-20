@@ -96,19 +96,90 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var $locationCreationButton = $('<button id="createLocationButton">Create Location</button>');
     $locationCreationButton.on('click', function() {
-      //alert('Location creation coming soon. For now, please send channel creation requests to ...');
-      that.app.get('detailView').displayed = 'CreateLocation';
-      that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
+
+
+      $.ajax({
+        url: 'https://liveworld.io:443/checkVerification',
+        // url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data) {
+          if (data.length && data[0].verified) {
+            that.app.get('detailView').displayed = 'CreateLocation';
+            that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
+          } else {
+            alert('You must verify your email to create a location');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
     this.$el.children('#buttonBox').append($locationCreationButton);
 
     var $channelCreationButton = $('<button id="createChannelButton">Create Channel</button>');
     $channelCreationButton.on('click', function() {
-      //alert('Channel creation coming soon. For now, please send channel creation requests to ...');
-      that.app.get('detailView').displayed = 'CreateChannel';
-      that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+
+      $.ajax({
+        url: 'https://liveworld.io:443/checkVerification',
+        // url: 'http://localhost:80/user',
+        method: 'GET',
+        crossDomain: true,
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data) {
+          //s for successsfulllyyyyyy
+          if (data[0] === 't') {
+            that.app.get('detailView').displayed = 'CreateChannel';
+            that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
+          } else {
+            alert('You must verify your email to create a channel');
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
+
+    var $changePasswordButton = $('<button id="changePasswordButton">Change Password</button>');
+    $changePasswordButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangePassword';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));
+    });
+    this.$el.children('#buttonBox').append($changePasswordButton);
+
+    var $changeLocationButton = $('<button id="changeLocationButton">Change Location</button>');
+    $changeLocationButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangeLocation';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Location'));
+    });
+    this.$el.children('#buttonBox').append($changeLocationButton);
+
+    var $changeEmailButton = $('<button id="changeEmailButton">Change Email</button>');
+    $changeEmailButton.on('click', function() {
+      that.app.get('detailView').displayed = 'ChangeEmail';
+      that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
+    });
+    this.$el.children('#buttonBox').append($changeEmailButton);
 
 
     //get recently visited topics

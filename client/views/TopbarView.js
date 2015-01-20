@@ -21,40 +21,47 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
       //that.app.showUserDetailView(that.app.get('username'));
 
-      $.ajax({
-        url: 'http://liveworld.io:80/user',
-        // url: 'http://localhost:80/user',
-        method: 'GET',
-        crossDomain: true,
-        data: {
-          username: that.app.get('username'),
-          //so that this is never cached
-          extra: Math.floor((Math.random() * 10000) + 1)
-        },
-        success: function(data) {
-          if (data[0]) {
-            that.app.get('detailView').displayed = 'Users';
-            console.log('server returned: ', data);
+      if (!that.app.get('username')) {
+        alert('you must log in to view your profile.')
+      } else {
+        
+        $.ajax({
+          url: 'http://liveworld.io:80/user',
+          // url: 'http://localhost:80/user',
+          method: 'GET',
+          crossDomain: true,
+          data: {
+            username: that.app.get('username'),
+            //so that this is never cached
+            extra: Math.floor((Math.random() * 10000) + 1)
+          },
+          success: function(data) {
+            if (data[0]) {
+              that.app.get('detailView').displayed = 'Users';
+              console.log('server returned: ', data);
 
 
-            //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
-            //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
-            //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
+              //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
+              //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
+              //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
 
-            //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
-            //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
+              //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
+              //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
 
-            data[0].isContact = true;
-            that.app.get('content2').show(that.app.get('detailView'), data[0]);
+              data[0].isContact = true;
+              that.app.get('content2').show(that.app.get('detailView'), data[0]);
 
-          } else {
-            console.log('no data returned from server');
+            } else {
+              console.log('no data returned from server');
+            }
+          }, error: function(err) {
+            console.log('ajax error ocurred: ', err);
           }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
 
-      });
+        });
+        
+      }
+
 
     };
 
@@ -222,6 +229,37 @@ Agora.Views.TopbarView = Backbone.View.extend({
     $('#searchButton').on('click', function() {
       searchHandler();
     });
+
+
+
+    //STATIC TEXT LANGUAGE SELECTION
+    $('#languageSelect').on('change', function() {
+      console.log($('#languageSelect').val());
+      var temp = 'en';
+      switch ($('#languageSelect').val()) {
+        case 'English':
+          temp = 'en';
+          break;
+        case 'Français':
+          temp = 'fr';
+          break;
+        default:
+          break;
+      }
+      that.app.set('language', temp);
+
+      that.app.get('topbarView').render();
+      that.app.get('locationView').render();
+      that.app.get('channelView').render();
+      that.app.get('sidebarView').render();
+
+      //later on include content2 as well
+      that.app.get('content2').hide();
+
+    });
+
+
+
 
 
 

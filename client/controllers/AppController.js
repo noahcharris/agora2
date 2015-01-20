@@ -490,12 +490,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         }
 
 
-
-
-
-
-
-
       } 
 
     });
@@ -651,6 +645,44 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   passwordValidator: function() {
 
   },
+
+
+
+
+  //accepts one of the english labels and returns
+  //its translation in whatever language is
+  //currently set
+  translate: function(input) {
+    var translationArray = [{
+      en: 'Location',
+      fr: 'Localisation'
+    }];
+
+    var lang = this.get('language');
+
+    for (var i=0; i < translationArray ;i++) {
+      if (translationArray[i].en === input) {
+        return translationArray[i][lang];
+      }
+    }
+
+    return input;
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -860,47 +892,26 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     return region;
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 
   //   ____           _            __  __                                   
@@ -927,6 +938,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.app = appController;
 
     manager.timer = null;
+    manager.tokenTimer = null;
 
     manager.tick = 0;
 
@@ -949,8 +961,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     manager.start = function() {
 
       clearInterval(this.timer);
+      clearInterval(this.tokenTimer);
       //call getNotifications every ten seconds
       this.timer = setInterval(this.getNotifications.bind(this) , 10000);
+      this.tokenTimer = setInterval(this.refreshToken.bind(this), 1000000);
+
 
       this.getNotifications();
 
@@ -1213,6 +1228,41 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
     };//end getNotifications
+
+
+
+
+    manager.refreshToken = function() {
+      var that = this;
+
+
+      $.ajax({
+        // url: 'http://localhost:80/updateUserProfile',
+        url: 'https://liveworld.io:443/refreshToken',
+        method: 'POST',
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        success: function(data) {
+          if (data.token) {
+            that.app.set('token', data.token);
+          } else {
+            console.log(data);
+          }
+        }, error: function(err) {
+          console.log('ajax error ocurred: ', err);
+        }
+
+      });
+
+
+
+    };
 
 
 

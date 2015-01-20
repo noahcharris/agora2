@@ -31,6 +31,13 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
     // this.$el.append( $('<button>Next</button>') );
 
+    var $backButton = $('<button id="backButton">Back</button>')
+    $backButton.on('click', function() {
+      that.app.get('detailView').displayed = 'Settings';
+      that.app.get('content2').show(that.app.get('settingsView'));
+    });
+    this.$el.append($backButton);
+
   },
 
   setHandlers: function() {

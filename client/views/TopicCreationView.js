@@ -55,7 +55,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
 
     //this.$el.append( $('<button>Upload Image</button><br/><br/>') );
-    this.$el.append( $('<br/><br/><button>Post</button>') );
+    this.$el.append( $('<br/><br/><button id="topicCreationPostButton">Post</button>') );
 
     var location = that.app.get('mapController').get('location') || 'World';
     this.$el.append( $('<p>Location:&nbsp' + location + '</p>'))
@@ -97,15 +97,17 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
               processData: false,
               data: fd,
               success: function(msg) {
-                alert(msg);
                 ajaxing = false;
-                //some weird shit going on here with detailView
-                that.app.get('sidebarView').displayed = 'Topics-New'
-                that.app.get('content2').hide();
-                that.app.trigger('reloadSidebarTopics');
+                if (msg[0] === 'e') {
+                  alert('make sure that your file size is not over 25MB')
+                } else {
+                  that.app.get('sidebarView').displayed = 'Topics-New'
+                  that.app.get('content2').hide();
+                  that.app.trigger('reloadSidebarTopics');  
+                }
               },
               error: function() {
-                alert('post creation failed');
+                alert('post creation failed :(');
                 ajaxing = false;
               }
             });

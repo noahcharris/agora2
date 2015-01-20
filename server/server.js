@@ -173,8 +173,6 @@ app.get('/topicLocations', routes.getTopicLocations);
 app.get('/topicSearch', routes.topicSearch);
 app.get('/userSearch', routes.userSearch);
 
-app.get('/validateUsername', routes.validateUsername);
-
 app.get('/locationSearch', routes.locationSearch);
 app.get('/channelSearch', routes.channelSearch);
 
@@ -202,8 +200,9 @@ app.get('/recentlyPosted', routes.getRecentlyPostedTopics);
 app.get('/location', routes.getLocation);
 app.get('/channel', routes.getChannel);
 
-//SECURE
+//CACHE MANAGER
 app.get('/notifications', routes.getNotifications);
+app.get('/refreshToken', routes.refreshToken);
 
 
 //POST METHODS (EXCEPT LOGOUT)
@@ -215,16 +214,28 @@ app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 app.get('/checkLogin', routes.checkLogin);
 
+app.get('/userEmail', routes.getEmail);
+app.post('/changeEmail', routes.changeEmail);
+app.post('/changePassword', routes.changePassword);
+app.post('/changeLocation', routes.changeLocation);
+
 //SECURE
 
 //split this up into sendContactRequest and confirmContactRequest?
 app.post('/addContact', routes.addContact);
 
+// app.post('/sendContactRequest' routes.sendContactRequest);
+// app.post('/confirmContactRequest', routes.confirmContactRequest);
+
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
-app.get('/checkUsername', routes.checkUsername);
+app.get('/validateUsername', routes.validateUsername);
 app.post('/registerUser', routes.registerUser);
+app.get('/verifyUser', routes.verifyUser);
+app.get('/checkVerification', routes.checkVerification);
+
+app.get('/generateCaptcha', routes.generateCaptcha);
 
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);

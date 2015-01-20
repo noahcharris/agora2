@@ -474,9 +474,14 @@ Agora.Views.SidebarView = Backbone.View.extend({
          || that.app.get('sidebarView').displayed === 'Topics-Hot'
          || that.app.get('sidebarView').displayed === 'Topics-Contacts') {
 
-          var topicCreation = new Agora.Views.TopicCreationView(that.app);
-          that.app.get('detailView').displayed = 'TopicCreation';
-          that.app.get('content2').show(topicCreation); 
+          if (that.app.get('expanded') && that.app.get('detailView').displayed === 'TopicCreation') {
+            $('#topicCreationPostButton').trigger('click');
+          } else {
+            var topicCreation = new Agora.Views.TopicCreationView(that.app);
+            that.app.get('detailView').displayed = 'TopicCreation';
+            that.app.get('content2').show(topicCreation); 
+          }
+
         }
       } else {
         alert('you must be logged in to create a topic');

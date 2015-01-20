@@ -2,6 +2,7 @@
 var postgres = require('./postgres.js');
 
 var pg = require('pg');
+var nodemailer = require('nodemailer');
 var url = require('url');
 //var Memcached = require('memcached');
 //var amqp = require('amqplib');
@@ -17,8 +18,23 @@ var _ = require('underscore');
 
 var Q = require('q');
 
+var cities = require('./cities.js');
+
+var imageInfo = require('netpbm').info;
+var imageConverter = require('netpbm').convert;
+
+
+var fs = require('fs')
+  , gm = require('gm');
+
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
+
+
+//MAX UPLLOAD SIZE
+
+var AgoraMaxUpload = 10000000;
 
 
 
@@ -65,6 +81,32 @@ var s3Client = s3.createClient({
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },
 });
+
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'agora.reporter@gmail.com',
+        pass: 'fieldsoffallensoldiers'
+    }
+});
+
+
+
+
+
+
+function dealWithImage(image, keystring) {
+
+
+
+
+
+
+
+
+};
+
 
 
 
@@ -141,10 +183,6 @@ function usernameValidator(input) {
 };
 
 function passwordValidator(input) {
-
-};
-
-function linkValidator(input) {
 
 };
 
@@ -382,111 +420,137 @@ module.exports.getTopicTree = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
 
-    //woooo treebuilder 2.0
 
-    var count = 0;
-    var topic = null;
-    var comments = [];
-    var responses = [];
-    var replies = [];
+  client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
+    [queryArgs.topicId], function(err, result) {
+      if (err)
+        console.log('error selecting from topicTreeCache: ', err);
 
-    client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
+
+      if (result.rows.length) {
+        //CACHED VERSION FOUND
+        console.log('FOUND TOPIC TREE IN CACHE :D');
+
+        //could maybe speed this up if I took off parse and sent it stringified and
+        //did the parsing on the client??
+        response.json(JSON.parse(result.rows[0].tree));
+
       } else {
-        count++;
-        topic = result.rows[0];
-        if (count === 4) {
+        //NO CACHE, GOTTA BUILD
 
-        }
+
+                  //woooo treebuilder 2.0
+
+                  var count = 0;
+                  var topic = null;
+                  var comments = [];
+                  var responses = [];
+                  var replies = [];
+
+                  client.query("SELECT * FROM topics WHERE topics.id=$1",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      topic = result.rows[0];
+                      if (count === 4) {
+
+                      }
+                    }
+
+                  });
+
+                  client.query("SELECT * FROM comments WHERE comments.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      comments = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    }
+                  });
+
+                  client.query("SELECT * FROM responses WHERE responses.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      responses = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    }
+                  });
+
+                  client.query("SELECT * FROM replies WHERE replies.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
+                    if (err) {
+                      console.log('error selecting from topics: ', err);
+                      response.end('error');
+                    } else {
+                      count++;
+                      replies = result.rows;
+                      if (count === 4) {
+                        response.json(buildSequence(topic, comments, responses, replies));
+                      }
+                    } 
+                  });
+
+
+                  function buildSequence(topic, comments, responses, replies) {
+
+
+                    var responses = responses.slice(0);
+                    var resultTree = topic;
+                    resultTree.comments = [];
+                    for (var i=0; i < comments.length ;i++) {
+                      comments[i].responses = [];
+                      resultTree.comments.push(comments[i]);
+                    }
+                    for (var i=0; i < responses.length ;i++) {
+                      responses[i].replies = [];
+                    }
+
+
+
+                    for (var i=0; i < replies.length ;i++) {
+
+
+                      for (var j=0; j < responses.length ;j++) {
+                        if (responses[j].id === replies[i].response) {
+                          responses[j].replies.push(replies[i]);
+                          break;
+                        }
+                      }
+                    }
+
+
+                    for (var i=0; i < responses.length ;i++) {
+
+                      for (var j=0; j < resultTree.comments.length ;j++) {
+                        if (responses[i].comment === comments[j].id) {
+                          resultTree.comments[j].responses.push(responses[i]);
+                          break;
+                        }
+
+                      }
+
+                    }
+
+                    return resultTree;
+
+                  };
+
+
+
+
+
       }
-
-    });
-
-    client.query("SELECT * FROM comments WHERE comments.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        comments = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      }
-    });
-
-    client.query("SELECT * FROM responses WHERE responses.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        responses = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      }
-    });
-
-    client.query("SELECT * FROM replies WHERE replies.topic=$1 ORDER BY rank ASC",[queryArgs.topicId], function(err, result) {
-      if (err) {
-        console.log('error selecting from topics: ', err);
-        response.end('error');
-      } else {
-        count++;
-        replies = result.rows;
-        if (count === 4) {
-          response.json(buildSequence(topic, comments, responses, replies));
-        }
-      } 
-    });
-
-
-    function buildSequence(topic, comments, responses, replies) {
-
-
-      var responses = responses.slice(0);
-      var resultTree = topic;
-      resultTree.comments = [];
-      for (var i=0; i < comments.length ;i++) {
-        comments[i].responses = [];
-        resultTree.comments.push(comments[i]);
-      }
-      for (var i=0; i < responses.length ;i++) {
-        responses[i].replies = [];
-      }
-
-
-
-      for (var i=0; i < replies.length ;i++) {
-
-
-        for (var j=0; j < responses.length ;j++) {
-          if (responses[j].id === replies[i].response) {
-            responses[j].replies.push(replies[i]);
-            break;
-          }
-        }
-      }
-
-
-      for (var i=0; i < responses.length ;i++) {
-
-        for (var j=0; j < resultTree.comments.length ;j++) {
-          if (responses[i].comment === comments[j].id) {
-            resultTree.comments[j].responses.push(responses[i]);
-            break;
-          }
-
-        }
-
-      }
-
-      return resultTree;
-
-    };
+  });//end cache select
 
 
 };
@@ -555,7 +619,7 @@ module.exports.userSearch = function(request, response) {
 
   console.log('user search input: ', queryArgs.input);
 
-  client.query("SELECT * FROM users WHERE username LIKE $1;",
+  client.query("SELECT type, username, location, image, about FROM users WHERE username LIKE $1 LIMIT 500;",
       [queryArgs.input + '%'],
       function(err, result) {
         if (err) {
@@ -571,28 +635,7 @@ module.exports.userSearch = function(request, response) {
 
 
 
-module.exports.validateUsername = function(request, response) {
 
-  var queryArgs = url.parse(request.url, true).query;
-
-  client.query("SELECT * FROM users WHERE username = $1;",
-    [queryArgs.username],
-    function(err, result) {
-      if (err) {
-        console.log('error selecting from users: ', err);
-      } else {
-          if (result.rows.length) {
-            //username already taken
-            response.end('Taken');
-          } else {
-            //username available
-            response.end('Available');
-          }
-      }
-  });
-
-
-};
 
 
 
@@ -736,7 +779,7 @@ module.exports.getContacts = function(request, response) {
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-            client.query("SELECT * FROM users JOIN contactsjoin " 
+            client.query("SELECT type, username, location, image, about FROM users JOIN contactsjoin " 
               +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
               +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
               [queryArgs.username],
@@ -876,7 +919,9 @@ module.exports.getPoints = function(request, response) {
   // });
 
   client.query("SELECT * FROM locations "
-    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);", function(err, result) {
+    // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
+    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000);",
+    ['POINT('+queryArgs.longitude+' '+queryArgs.latitude+')'], function(err, result) {
     if (err) {
       console.log('error retrieving points: ', err);
       response.end('server error');
@@ -938,7 +983,7 @@ module.exports.getHeatPoints = function(request, response) {
 
 module.exports.getUser = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-  client.query("SELECT * FROM users WHERE username = $1;", [queryArgs.username], function(err, result) {
+  client.query("SELECT type, username, location, image, about FROM users WHERE username = $1;", [queryArgs.username], function(err, result) {
       if (err) {
         console.log('error selecting from users: ', err);
       } else {
@@ -952,7 +997,7 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
   client.query("SELECT * FROM topics WHERE username = $1 "
-    +"ORDER BY createdAt DESC LIMIT 30;", [queryArgs.username],
+    +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
     function(err, result) {
       if (err) {
         console.log('error selecting from topics');
@@ -1094,12 +1139,58 @@ module.exports.getNotifications = function(request, response) {
   });//end securityJoin select
 
 
-
 };
 
 
 
 
+
+
+
+
+module.exports.refreshToken = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+          //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+          // var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+          client.query ("UPDATE securityJoin SET (username, token, registeredAt) "
+            +"= ($1, $2, now());",
+            [queryArgs.username, token],
+            function(err, result) {
+              if (err) {
+                console.log('error insertin into securityJoin: ', err);
+                response.end('server error');
+              } else {
+                  //LOGIN SUCCESSFUL
+                  //set cookie which will be checkd in checkLogin (10 minutes here)
+                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                  // response.cookie('login',queryArgs.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                  console.log('Login successful for user: ', request.body.username);
+                  response.json({token: token});
+              }
+          });//end security join insert
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+};
 
 
 
@@ -1211,88 +1302,111 @@ module.exports.login = function(request, response) {
 
   postgres.retrieveUser(request.body.username, function(data) {
     if (data[0]) {
+      //to send back because of email login
+      var theUsername = data[0].username;
 
       bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
         if (res) {
-
-
-
-          //insert into security join
-          client.query("DELETE FROM securityJoin WHERE username = $1;",
-            [request.body.username], function(err, result) {
-              if (err) {
-                console.log('error deleting from securityJoin: ', err);
-              } else {
-
-                //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
-
-                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-
-
-                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                  +"VALUES ($1, $2, $3, now());",
-                  [request.body.username, cookie, token],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error insertin into securityJoin: ', err);
-                    } else {
-
-
-
-
-
-
-                        //LOGIN SUCCESSFUL
-
-                        //set cookie which will be checkd in checkLogin (10 minutes here)
-                        // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                        response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
-
-                        console.log('Login successful for user: ', request.body.username);
-
-                        response.json({ login: true, token: token });
-
-
-
-
-
-
-                    }
-                });//end security join insert
-
-
-
-              }
-          });//end security join delete
-
-
-
+            //insert into security join
+            client.query("DELETE FROM securityJoin WHERE username = $1;",
+              [request.body.username], function(err, result) {
+                if (err) {
+                  console.log('error deleting from securityJoin: ', err);
+                  response.end('server error');
+                } else {
+                  //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+                  var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                  var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+                  client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                    +"VALUES ($1, $2, $3, now());",
+                    [request.body.username, cookie, token],
+                    function(err, result) {
+                      if (err) {
+                        console.log('error insertin into securityJoin: ', err);
+                        response.end('server error');
+                      } else {
+                          //LOGIN SUCCESSFUL
+                          //set cookie which will be checkd in checkLogin (10 minutes here)
+                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                          response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                          console.log('Login successful for user: ', request.body.username);
+                          response.json({ login: true, token: token, username: theUsername });
+                      }
+                  });//end security join insert
+                }
+            });//end security join delete
         } else {
-
           //LOGIN FAILED
           console.log('login failed');
-          response.end('False');
+          response.end('incorrect password');
         }
       });
 
     } else {
-      response.end('False');
+
+      client.query("SELECT * FROM users WHERE email = $1",
+        [request.body.username], function(err, result) {
+          if (err) {
+            console.log('error selecting from users by email');
+            response.end('server error');
+          } else {
+
+            if (result.rows.length) {
+              var theUsername = result.rows[0].username
+
+              //Successfully looked up user by email
+              bcrypt.compare(request.body.password, result.rows[0].passhash, function(err, res) {
+                if (res) {
+                    //insert into security join
+                    client.query("DELETE FROM securityJoin WHERE username = $1;",
+                      [request.body.username], function(err, result) {
+                        if (err) {
+                          console.log('error deleting from securityJoin: ', err);
+                        } else {
+                          //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
+                          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+                          client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                            +"VALUES ($1, $2, $3, now());",
+                            [request.body.username, cookie, token],
+                            function(err, result) {
+                              if (err) {
+                                console.log('error insertin into securityJoin: ', err);
+                              } else {
+                                  //LOGIN SUCCESSFUL
+                                  //set cookie which will be checkd in checkLogin (10 minutes here)
+                                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                  response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
+                                  console.log('Login successful for user: ', request.body.username);
+                                  response.json({ login: true, token: token, username: theUsername });
+                              }
+                          });//end security join insert
+                        }
+                    });//end security join delete
+                } else {
+                  //LOGIN FAILED
+                  console.log('login failed');
+                  response.end('incorrect password');
+                }
+              });
+
+
+            } else {
+              //COULDN'T LOOK UP USER BY USERNAME OR EMAIL
+              response.end("couldn't find user in database");
+            }
+
+
+
+          }
+        })
+
+
     }
   });
 
 
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1392,14 +1506,200 @@ module.exports.checkLogin = function(request, response) {
   }
 
 
-
-
 };
 
 
 
 
+module.exports.getEmail = function(request, response) {
 
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+          client.query("SELECT email FROM users WHERE username = $1", [queryArgs.username],
+            function(err, result) {
+              if (err) {
+                console.log('error selecting from users: ', err);
+                response.end('server error');
+              } else {
+                response.json(result.rows);
+              }
+          });
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+};
+
+module.exports.changeEmail = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          postgres.retrieveUser(request.body.username, function(data) {
+            if (data[0]) {
+
+              bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+                if (res) {
+
+
+                  client.query("SELECT * FROM users WHERE email = $1;", [request.body.email],
+                    function(err, result) {
+                      if (!result.rows.length) {
+
+                        client.query("UPDATE users SET email = $1 WHERE username = $2;",
+                          [request.body.email, request.body.username], function(err, result) {
+                            if (err) {
+                              console.log('error updating user email: ', err);
+                              response.end('server error');
+                            } else {
+                              response.end('successfully updated email');
+                            }
+                        });
+                        
+                      } else {
+                        response.end('that email is taken!');
+                      }
+
+                  });
+
+
+
+
+                } else {
+                  //NOT AUTHORIZED
+                  response.end('not authorized');
+                }
+              });//end bcrypt
+
+
+
+            } else {
+
+            }
+          });//end retrieve user
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
+
+module.exports.changePassword = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+            postgres.retrieveUser(request.body.username, function(data) {
+              if (data[0]) {
+
+                bcrypt.compare(request.body.password, data[0].passhash, function(err, res) {
+                  if (res) {
+
+
+                    bcrypt.genSalt(10, function(err, salt) {
+                      bcrypt.hash(request.body.newPassword, salt, function(err, hash) {
+
+                        client.query("UPDATE users SET passhash = $1, salt = $2 WHERE username = $3",
+                          [hash, salt, request.body.username], function(err, result) {
+                            if (err) {
+                              console.log('error updating passhash: ', err);
+                              response.end('server error');
+                            } else {
+                              response.end('successfully updated password');
+                            }
+
+                        });
+                        
+                        
+                      });
+                    });
+
+
+
+                  } else {
+                    //NOT AUTHORIZED
+                    response.end('not authorized');
+                  }
+                });//end bcrypt
+
+
+              } else {
+
+              }
+            });//end retrieve user
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
+
+module.exports.changeLocation = function(request, response) {
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [request.body.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+          client.query("UPDATE users SET location = $1 WHERE username = $2",
+            [request.body.location, request.body.username], function(err, result) {
+              if (err) {
+                console.log('error updating user location: ', err);
+                response.end('server error');
+              } else {
+                response.end('successfully updated location');
+              }
+          });
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+};
 
 
 
@@ -1434,6 +1734,8 @@ module.exports.addContact = function(request, response) {
 
   console.log(request.body.username);
   console.log(request.body.contact);
+  console.log(request.body.token);
+  console.log(request.cookies['login']);
 
 
 
@@ -1522,14 +1824,125 @@ module.exports.addContact = function(request, response) {
 
 
 
-  
-
-
-
-
-
-
 };
+
+
+
+// module.exports.sendContactRequest = function(request, response) {
+
+//   client.query("SELECT * FROM securityJoin WHERE username = $1;",
+//     [request.body.username],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error selecting from securityJoin: ', err);
+//       } else {
+
+//         if (result.rows.length) {
+
+//             if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+//               //make sure there's not one already, make sure they aren't contacts already
+
+
+
+
+
+
+//               client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
+//                   [request.body.contact, request.body.username],
+//                   function(err, result) {
+//                     if (err) {
+//                       console.log('error selecting from contactRequestJoin: ', err);
+//                       response.end('error');
+//                     } else {
+
+//                       //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
+//                       if (result.rows.length) {
+//                         response.end('request already pending')
+//                       } else {
+
+
+//                         client.query("SELECT * FROM contactsJoin WHERE (username1 = $1 AND username2 = $2) "
+//                           +" OR (username1 = $2 AND username2 = $1);,"), [request.body.contact, request.body.username],
+//                         function(err, result) {
+//                           if (err)
+//                             console.log('error checking contactsJoin: ', err);
+
+//                           if (result.rows.length) {
+//                             response.end('already contacts');
+//                           } else {
+
+//                             //INSERT INTO requestJoin
+
+
+
+//                                   client.query("INSERT INTO contactRequestJoin (sender, recipient) "
+//                                     +"VALUES ($1, $2);",
+//                                   [request.body.username, request.body.contact],
+//                                   function(err, result) {
+//                                     if (err) {
+//                                       console.log('error inserting into contactsRequestJoin: ', err);
+//                                     } else {
+//                                       response.end('sent contact request');
+//                                     }
+//                                   });
+
+
+
+//                           }
+//                         });//end contactsJoin check
+
+
+//                       }
+//                     }
+//               });//end contactRequestJoin check
+
+
+
+//             } else {
+//               response.end('not authorized');
+//             }
+//           }
+//         }
+//   });//end securityJoin select
+
+
+// };
+
+
+// module.exports.confirmContactRequest = function(request, response) {
+
+//   client.query("SELECT * FROM securityJoin WHERE username = $1;",
+//     [request.body.username],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error selecting from securityJoin: ', err);
+//       } else {
+
+//         if (result.rows.length) {
+
+//             if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+
+
+
+
+
+
+
+
+
+//             } else {
+//               response.end('not authorized');
+//             }
+//           }
+//         }
+//   });//end securityJoin select
+
+
+
+// };
 
 
 
@@ -1640,7 +2053,15 @@ module.exports.sendMessage = function(request, response) {
                           } else {
                             response.end('successfully created message');
 
+                            //update last message in the proper message chain
+                            client.query("UPDATE messageChains SET lastMessage = now() WHERE "
+                              +"(username1 = $1 AND username2 = $2) OR (username1 = $2 AND username2 = $1);",
+                              [request.body.sender, request.body.recipient], function(err, result) {
+                                if (err) 
+                                  console.log('error updating messageChains table: ', err);
+                            });
 
+                            //check and record message in newMessageJoin to be used for notifications
                             client.query("SELECT * FROM newMessageJoin WHERE sender = $1 AND recipient = $2;",
                             [request.body.sender, request.body.recipient], function(err, result) {
                               if (err) {
@@ -1681,80 +2102,271 @@ module.exports.sendMessage = function(request, response) {
 
 
 
-module.exports.checkUsername = function(request, response) {
+
+
+
+module.exports.validateUsername = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM users WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from users: ', err);
+      } else {
+          if (result.rows.length) {
+            //username already taken
+            response.end('Taken');
+          } else {
+            //username available
+            response.end('Available');
+          }
+      }
+  });
 
 
 };
+
+
 
 
 
 
 module.exports.registerUser = function(request, response) {
 
+  var temp = request.body.username;
+  var flag = false;
+  for (var i=0; i < temp.length ;i++) {
+    if (temp[i] === '@') {
+      flag = true;
+    }
+  }
+  if (flag) {
+    response.end("username may not contain '@'");
+  } else {
 
-
-
-  client.query("SELECT * FROM users WHERE username = $1;",
-    [request.body.username], function(err, result) {
-      if (err) {
-        console.log('error selecting from users: ', err);
-      } else {
-        if (result.rows.length) {
-          //username unavailable
-          response.end('That username is taken!');
+    client.query("SELECT * FROM users WHERE username = $1;",
+      [request.body.username], function(err, result) {
+        if (err) {
+          console.log('error selecting from users: ', err);
         } else {
-          //USERNAME AVAILABLE!!!!
+          if (result.rows.length) {
+            //username unavailable
+            response.end('That username is taken!');
+          } else {
+            //USERNAME AVAILABLE!!!!
 
-          bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(request.body.password, salt, function(err, hash) {
-
-              postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                xssValidator(request.body.origin), xssValidator(request.body.about), function(success) {
-                  if (success) {
-                    //send back login token here????
-
-                    var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                    var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-                    // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-
-                    client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                      +"VALUES ($1, $2, $3, now());",
-                      [request.body.username, cookie, token],
-                      function(err, result) {
-                        if (err) {
-                          console.log('error inserting into securityJoin: ', err);
-                        } else {
-                          //LOGIN SUCCESSFUL
-
-                          //set cookie which will be checkd in checkLogin (10 minutes here)
-                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                          response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
-
-                          console.log('Login successful for user: ', request.body.username);
-
-                          response.json({ login: true, token: token });
-
-
-                        }
-                    });
-
+            //CHECK EMAIL NOW
+            client.query("SELECT * FROM users WHERE email = $1;",
+              [request.body.email], function(err, result) {
+                if (err) {
+                  console.log('error selecting from users: ', err);
+                } else {
+                  if (result.rows.length) {
+                    //email unavailable
+                    response.end('That email is taken!');
                   } else {
-                    response.end('error creating user');
+
+                      //REGISTER THE USER
+                      bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(request.body.password, salt, function(err, hash) {
+
+                          postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                            xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
+                            xssValidator(request.body.email), function(success) {
+                              if (success) {
+                                //send back login token here????
+
+
+                                //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                                var secret = Math.floor(Math.random()*100000000001);
+                                client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                                  +"VALUES ($1, $2, now());",
+                                  [request.body.username, secret],
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into emailVerificationJoin: ', err);
+                                    } else {
+
+                                      var mailOptions = {
+                                          from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                          to: request.body.email, // list of receivers
+                                          subject: 'Hello ✔', // Subject line
+                                          text: 'KEY', // plaintext body
+                                          html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                      };
+
+                                      transporter.sendMail(mailOptions, function(error, info){
+                                          if(error){
+                                              console.log(error);
+                                          }else{
+                                              console.log('Message sent: ' + info.response);
+                                          }
+                                      });
+
+
+
+                                    }
+                                });
+
+
+                                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+                                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                                  +"VALUES ($1, $2, $3, now());",
+                                  [request.body.username, cookie, token],
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into securityJoin: ', err);
+                                    } else {
+                                      //LOGIN SUCCESSFUL
+
+                                      //set cookie which will be checkd in checkLogin (10 minutes here)
+                                      // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                      response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+                                      console.log('Login successful for user: ', request.body.username);
+
+                                      response.json({ login: true, token: token });
+
+
+                                    }
+                                });
+
+                              } else {
+                                response.end('error creating user');
+                              }
+                          });//end create user
+
+                        });
+                      });//end bcrypt async thing
+
+
                   }
-              });//end create user
+                }
+            });//end email check
 
-            });
-          });//end bcrypt async thing
-
+          }
         }
+    });//end username check from users
+
+  }//end username @ check
+
+};
+
+
+
+
+
+
+module.exports.verifyUser = function(request, response) {
+
+
+  //CHECK THE SECRET AGAINST THE TABLE, IF IT MATCHES DELETE THE ENTRY AND UPDATE USERS TABLE
+  //need to reschematize users table for this to work fully
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM emailVerificationJoin WHERE username = $1 "
+    +"AND secret = $2;", [queryArgs.username, queryArgs.secret],
+    function(err, result) {
+
+      if (result.rows.length) {
+
+        client.query("DELETE FROM emailVerificationJoin WHERE username = $1;",
+          [queryArgs.username], function(err, result) {
+            if (err) {
+              console.log('error deleting from emailVerificationJoin: ', err);
+              response.end('server error');
+            } else {
+
+              client.query("UPDATE users SET verified = 'TRUE' WHERE username = $1",
+                [queryArgs.username], function(err, result) {
+                  if (err) {
+                    //USER VERIFIED!!!!!!
+                    console.log('error setting verified to true: ', err);
+                  } else {
+                    response.end('VERIFICATION SUCCESSFUL :D');
+                  }
+
+              });
+
+            }
+        });//end verifcationJoin delete
+
+
+      } else {
+        response.end('VERIFICATION FAILED :(');
       }
-  });//end select from users
+
+  });
+
+
+
+};
+
+
+
+
+
+
+module.exports.checkVerification = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          client.query("SELECT verified FROM users WHERE username = $1;",
+            [queryArgs.username], function(err, result) {
+              if (err) {
+                console.log('error checking verification: ', err);
+                response.end('server error');
+              } else {
+                response.json(result.rows);
+              }
+          });
+
+
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+
+};
+
+
+
+
+module.exports.generateCaptcha = function(request, response) {
+
+  //GENERATE A CAPTCHA IMAGE, STORE THE TEXT IN CAPTCHA JOINN
 
 
 
 
 };
+
+
+
 
 
 
@@ -1859,7 +2471,7 @@ module.exports.recentlyVisitedTopics = function(request, response) {
 
                     
             client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
-              +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",
+              +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC LIMIT 50;",
               [queryArgs.username],
               function(err, result) {
                 if (err) {
@@ -2144,9 +2756,19 @@ module.exports.getContactTopics = function(request, response) {
 
 module.exports.updateUserProfile = function(request, response) {
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
+
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('please make sure that our file size is not over 25MB');
+      }
+    } else {
 
 
     client.query("SELECT * FROM securityJoin WHERE username = $1;",
@@ -2160,6 +2782,24 @@ module.exports.updateUserProfile = function(request, response) {
 
                         //if an image is sent
                         if (files.file) {
+
+
+
+                          //check the type jpg/gif is fine, if png convert, else reject
+                          //scale to make it fit in 1000x1000
+
+                          imageInfo(files.file[0].path, function(err, result) {
+                            if (err)
+                              console.log('errljfdsj', err);
+                            if (!err) {
+                              console.log("Type: " + result.type + 
+                                " width: " + result.width + 
+                                " height: " + result.height);
+                            }
+                          });
+
+
+
 
                           var keyString = xssValidator(fields.username[0]);
 
@@ -2233,7 +2873,7 @@ module.exports.updateUserProfile = function(request, response) {
 
 
 
-
+  }
 
 
 
@@ -2269,9 +2909,18 @@ module.exports.createTopic = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -2386,7 +3035,7 @@ module.exports.createTopic = function(request, response) {
 
 
 
-
+  }
 
     
 
@@ -2408,9 +3057,79 @@ module.exports.createComment = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
+
+
+  //NEED TO REWRITE UPLOADING CODE HERE
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  // form.on('error', function(err) {
+  //   console.log('Error parsing form: ' + err.stack);
+  // });
+
+
+  // // Parts are emitted when parsing the form
+  // form.on('part', function(part) {
+  //   // You *must* act on the part by reading it
+  //   // NOTE: if you want to ignore it, just call "part.resume()"
+
+  //   if (part.filename === null) {
+  //     // filename is "null" when this is a field and not a file
+  //     console.log('got field named ' + part.name);
+  //     // ignore field's content
+  //     part.resume();
+  //   }
+
+  //   if (part.filename !== null) {
+  //     // filename is not "null" when this is a file
+  //     count++;
+  //     console.log('got file named ' + part.name);
+  //     // ignore file's content here
+  //     part.resume();
+  //   }
+
+  //   part.on('error', function(err) {
+  //     // decide what to do
+  //   });
+  // });
+
+
+  // form.on('file', function(name, file) {
+
+  // });
+
+  // // Close emitted after form parsed
+  // form.on('close', function() {
+  //   console.log('Upload completed!');
+  //   res.setHeader('text/plain');
+  //   res.end('Received ' + count + ' files');
+  // });
+
+  // // Parse req
+  // form.parse(req);
+
+
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
 
   form.parse(request, function(err, fields, files) {
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -2430,9 +3149,9 @@ module.exports.createComment = function(request, response) {
 
                       //insert and fetch id here, then upload the image to amazon
 
-                      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
-                      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                      client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                      +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                       function(err, result) {
 
                           if (err) {
@@ -2460,16 +3179,35 @@ module.exports.createComment = function(request, response) {
                                                 },
                                               };
 
+
+                                              //IMAGE MANIPULATION
+
+                                              gm(files.file[0].path)
+                                              .identify(function (err, data) {
+                                                if (err) console.log('error getting image metadat: ', err);
+                                                console.log(data);
+
+                                                //if (data.Filesize > )
+
+
+                                                //if (data.size.)
+
+
+
+                                              });
+
+
+
+
+
                                               var uploader = s3Client.uploadFile(params);
                                               uploader.on('error', function(err) {
                                                 console.error("unable to upload:", err.stack);
                                               });
-
                                               uploader.on('progress', function() {
                                                 console.log("progress", uploader.progressMd5Amount,
                                                           uploader.progressAmount, uploader.progressTotal);
                                               });
-
                                               uploader.on('end', function() {
                                                 console.log("done uploading");
 
@@ -2495,9 +3233,9 @@ module.exports.createComment = function(request, response) {
                 //NO IMAGE
                 //##############
 
-                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, channel, createdAt, rank, heat)"
-                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                 function(err, result) {
                   if (err) {
                     console.log('error inserting into comments: ', err);
@@ -2522,7 +3260,7 @@ module.exports.createComment = function(request, response) {
 
 
     
-
+  }
 
 
 
@@ -2547,11 +3285,20 @@ module.exports.createResponse = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
 
 
+
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -2570,9 +3317,9 @@ module.exports.createResponse = function(request, response) {
                         if (files.file) {
 
                                 //insert and fetch id here, then upload the image to amazon
-                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
-                                +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                                +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                                 function(err, result) {
 
                                     if (err) {
@@ -2635,9 +3382,9 @@ module.exports.createResponse = function(request, response) {
                           //NO IMAGE
                           //##############
 
-                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, channel, createdAt, rank, heat)"
-                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                           function(err, result) {
                             if (err) {
                               console.log('error inserting into responses: ', err);
@@ -2661,7 +3408,7 @@ module.exports.createResponse = function(request, response) {
     });//end securityJoin select
 
 
-
+  }
     
 
   });//end multiparty parse
@@ -2684,14 +3431,21 @@ module.exports.createReply = function(request, response) {
 
 
 
-  var form = new multiparty.Form();
+  var form = new multiparty.Form({
+    maxFilesSize: AgoraMaxUpload,
+  });
 
   form.parse(request, function(err, fields, files) {
 
 
 
 
-
+    if (err) {
+      console.log('multiparty upload error: ', err);
+      if (err.code === 'ETOOBIG') {
+        response.end('error');
+      }
+    } else {
 
 
 
@@ -2712,9 +3466,9 @@ module.exports.createReply = function(request, response) {
                     if (files.file) {
 
                             //insert and fetch id here, then upload the image to amazon
-                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
-                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])],
+                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
+                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                             function(err, result) {
 
                                 if (err) {
@@ -2777,9 +3531,9 @@ module.exports.createReply = function(request, response) {
                       //NO IMAGE
                       //##############
 
-                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, channel, createdAt, rank, heat)"
-                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.channel[0])], 
+                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                       function(err, result) {
                         if (err) {
                           console.log('error inserting into replies: ', err);
@@ -2804,7 +3558,7 @@ module.exports.createReply = function(request, response) {
 
 
 
-
+  }
 
 
 
@@ -2837,29 +3591,101 @@ module.exports.createLocation = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-              //capitalize the name
-              var temp = request.body.name.split(' ');
-              for (var i=0; i < temp.length ;i++) {
-                temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
-              }
-              var name = temp.join(' ');
 
-              //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
-              //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
 
-                    
-              client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                +" creator, population, rank, public, pointGeometry, latitude, longitude) "
-                +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-                request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
-                function(err, result) {
-                  if (err) {
-                    console.log('error inserting into locations: ', err);
+            //check if user is verified
+            client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+              function(err, result) {
+                if (err) {
+                  console.log('error selecting from users: ', err);
+                  response.end('server error');
+                } else {
+                  if (result.rows[0] && result.rows[0].verified) {
+                    //VERIFIED!!!!!!!!
+
+
+                        //capitalize the name
+                        var temp = request.body.name.split(' ');
+                        for (var i=0; i < temp.length ;i++) {
+                          temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+                        }
+                        var name = temp.join(' ');
+
+                        //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
+                        //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
+
+
+
+                        //check that parent is a city
+
+                        var flag = false;
+                        coords = null;
+                        for (var i=0; i < cities.features.length ;i++) {
+                          if (request.body.parent === cities.features[i].properties.city) {
+                            flag = true;
+                            coords = cities.features[i].geometry.coordinates;
+                          }
+                        }
+
+                        if (flag) {
+
+                          //check that it is within acceptable radius
+                          client.query("SELECT * FROM locations "
+                            // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
+                            +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000) AND name = $2;",
+                            ['POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.parent], function(err, result) {
+                            if (err) {
+                              console.log('error retrieving points: ', err);
+                              response.end('server error');
+                            } else {
+                              if (result.rows.length) {
+                                //within acceptable radius
+
+
+
+                                    //create teh city
+                                    client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+                                      +" creator, population, rank, public, pointGeometry, latitude, longitude) "
+                                      +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
+                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                                      request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
+                                      function(err, result) {
+                                        if (err) {
+                                          console.log('error inserting into locations: ', err);
+                                        } else {
+                                          response.end('successfully created location');
+                                        }
+                                    });
+
+                                
+
+
+
+                              } else {
+                                //not within acceptable radius
+                                response.end('Your location is too far from its parent city.');
+
+                              }
+                            }
+                          });
+                        } else {
+                          //HACKERS
+                          response.end('o_O');
+                        }
+
+
+
+
+                              
+
+
                   } else {
-                    response.end('successfully created location');
+                    //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                    reponse.end('nice try o_O');
                   }
+                }
               });
+
 
 
         } else {
@@ -2895,23 +3721,54 @@ module.exports.createChannel = function(request, response) {
 
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
+
+          //check if user is verified
+          client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+            function(err, result) {
+              if (err) {
+                console.log('error selecting from users: ', err);
+                response.end('server error');
+              } else {
+                if (result.rows[0] && result.rows[0].verified) {
+                  //VERIFIED!!!!!!!!
+
+
+
+                } else {
+                  //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                  reponse.end('nice try o_O');
+                }
+              }
+            });
+
+
             //capitalize the name
             var temp = request.body.name.split(' ');
             for (var i=0; i < temp.length ;i++) {
               temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
             }
             var name = temp.join(' ');
+
+            var fullPath = request.body.parent+'/'+name;
+            var temp = fullPath.split('/');
+
+            if (temp.length > 5) {
+              response.end('Your channel is too deeply nested.');
+            } else {
+
+                client.query("INSERT INTO channels (type, name, description, parent) "
+                  +"VALUES ('Channel', $1, $2, $3);",
+                  [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+                  function(err, result) {
+                    if (err) {
+                      console.log('error inserting into channels: ', err);
+                    } else {
+                      response.end('successfully created channel');
+                    }
+                });
+
+            }
                     
-            client.query("INSERT INTO channels (type, name, description, parent) "
-              +"VALUES ('Channel', $1, $2, $3);",
-              [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
-              function(err, result) {
-                if (err) {
-                  console.log('error inserting into channels: ', err);
-                } else {
-                  response.end('successfully created channel');
-                }
-            });
 
 
         } else {
@@ -3217,23 +4074,6 @@ module.exports.upvoteReply = function(request, response) {
 
   
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

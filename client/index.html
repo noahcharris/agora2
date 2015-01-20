@@ -36,13 +36,13 @@
      <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
      <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
-       <select id="searchSelect">
-         <!--leave topics off for now, it will be way more complicated-->
-         <!--<option value="Topics">Topics</option>-->
-         <option value="Users">Users</option>
-         <option value="Locations">Locations</option>
-         <option value="Channels">Channels</option>
-       </select>
+     <select id="searchSelect">
+       <!--leave topics off for now, it will be way more complicated-->
+       <!--<option value="Topics">Topics</option>-->
+       <option value="Users">Users</option>
+       <option value="Locations">Locations</option>
+       <option value="Channels">Channels</option>
+
 
     </script>
 
@@ -87,10 +87,14 @@
 
     <script id="sidebarLocationEntryTemplate" type="text/template">
      <strong> <%= name %> </strong>
+
     </script>
 
     <script id="sidebarChannelEntryTemplate" type="text/template">
      <strong> <%= name %> </strong>
+
+
+
     </script>
 
 
@@ -175,7 +179,7 @@
       <span class="commentTopString">
       &nbsp(<%= rank %>)
       &nbsp<span class="detailCommentUserString">User:&nbsp<%= username %></span>
-      FROM::::::
+      FROM:&nbsp
       </span>
 
       <div class="detailCommentClear">
@@ -243,7 +247,7 @@
           <p class="replyHeader"> <%= headline %> </p>
           <p class="reply"> <%= contents %> </p>
         </div>
-        <div class="replyButton">Reply</div>
+        <!--<div class="replyButton">Reply</div>-->
 
       </div>
 
@@ -269,14 +273,33 @@
     </script>
 
     <script id="detailLocationEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://images.wisegeek.com/map-with-compass.jpg"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>About:</h3>
+      <p><%= description %></p>
+
       <div id="locationBox">
-        <h1> <%= name %> </h1>
         <button id="goToButton">Go To Location</button>
         <br/><br/><br/><br/>
       </div>
     </script>
 
     <script id="detailChannelEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://upload.wikimedia.org/wikipedia/en/9/98/Laughing_man_logo.png"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>About:</h3>
+      <p><%= description %></p>
+
       <div id="channelBox">
         <h1 > <%= name %> </h1>
         <button id="goToButton">Go To Channel</button>
@@ -287,7 +310,7 @@
     <script id="detailUserEntryTemplate" type="text/template">
 
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg" id="groupProfilePicture"></img>
+        <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= username %> </h1>
@@ -394,9 +417,8 @@
     </script>
 
     <script id="signupTemplate" type="text/template">
-      SIGNUP
+      REGISTER
       <br/>
-      <!--<input placeholder="email" id="signupEmailInput"></input>-->
       <br/><br/>
       <input placeholder="username" id="signupUsernameInput"></input>
       <button id="checkAvailabilityButton">Check Availability</button>
@@ -404,20 +426,22 @@
       <input type="password" placeholder="password" id="signupPasswordInput"></input>
       <br/>
       <input type="password" placeholder="confirm password" id="signupConfirmPasswordInput"></input>
-      <br/><br/>
+      <br/>
+      <br/>Your email is never displayed to other users.</br>
+      <input placeholder="email" id="signupEmailInput"></input>
+      <br/>
+      <br/>You cannot change origin once it is set!</br>
       <input placeholder="origin" id="signupOriginInput"></input>
+      <input placeholder="current location" id="signupLocationInput"></input>
       <div id="signupLocation"></div>
       <br/>
       <input placeholder="about" id="signupAboutInput"></input>
       <br/>
       <br/>
+      <form id="captchaForm">
+      <div class="g-recaptcha" data-sitekey="6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_"></div>
+      </form>
       <button id="registrationButton">Register</button>
-    </script>
-
-    <script id="signupTwoTemplate" type="text/template">
-      SELECT GROUPS
-      <br/><br/><br/><br/>
-      <button> FINISH </button>
     </script>
 
 
@@ -466,6 +490,10 @@
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
     </script>
 
+    <script id="changeViewTemplate" type="text/template">
+      <h1>Change View</h1>
+    </script>
+
 
 
     <!-- ### DEPENDENCIES ### -->
@@ -482,6 +510,7 @@
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
+
 
     <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
     <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
@@ -507,6 +536,7 @@
     <script src="views/DetailUserEntryView.js"></script>
     <script src="views/DetailMessageEntryView.js"></script>
     <script src="views/SettingsView.js"></script>
+    <script src="views/ChangeView.js"></script>
     <script src="views/EditProfileView.js"></script>
     <script src="views/RegistrationView.js"></script>
     <script src="views/SignupView.js"></script>

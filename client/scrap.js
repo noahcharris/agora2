@@ -1,3 +1,8 @@
+
+sudo /usr/local/bin/node /home/ec2-user/server/server.js
+
+
+
 $.ajax({
   url: 'http://localhost:80' + urlPath,
   crossDomain: true,
@@ -162,6 +167,21 @@ function placeMarkersInBounds() {
 
 
 
+
+
+</select>
+<!--<select id="languageSelect">
+ <!--<option value="Arabic">Arabic</option>-->
+ <!--<option value="Chinese">Chinese</option>-->
+ <!--<option value="English">English</option>-->
+ <!--<option value="Français">Français</option>-->
+ <!--<option value="German">German</option>-->
+ <!--<option value="Japanese">Japanese</option>-->
+ <!--<option value="Portuguese">Portuguese</option>-->
+ <!--<option value="Russian">Russia</option>-->
+ <!--<option value="Spanish">Spanish</option>-->
+
+</select>-->
 
 
 

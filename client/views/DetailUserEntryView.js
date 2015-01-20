@@ -94,7 +94,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             token: that.app.get('token')
           },
           success: function(data) {
-            alert(data);
             console.log('created message chain');
             that.app.trigger('reloadSidebarMessageChains', function() {
 

@@ -162,12 +162,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
     $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
+    console.log($linkButton);
     if (!that.model.link) {
       $linkButton.hide();
     }
-    $linkButton.on('click', function() {
-      window.open('www.yourdomain.com', that.model.link);
-    });
+    $linkButton[0].onclick = function() {
+      console.log('liNKK');
+      //maybe shouldn't use this, maybe just use navigate, because of compatibility concerns
+      window.open(that.model.link, '_blank');
+    };
 
     //NEED TO GO BACKWARDS THROUGH THE FOR LOOOPS LOL WHUPS
 
@@ -730,7 +733,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               fd.append( 'contents', $('textarea#inputTextArea').val() );
 
               fd.append( 'location', data.location );
-              //fd.append( 'origin', that.app.get('origin') );
+              fd.append( 'authorlocation', data.location );
               fd.append( 'channel', data.channel );
 
               fd.append( 'topicId', data.topicId );
@@ -753,35 +756,41 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 data: fd,
                 success: function(msg) {
 
-                  $('#inputBox').css('height', '0px');
-                  alert(msg);
-                  //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+                  if (msg[0] === 'e') {
+                    alert('make sure your file is not bigger than 25MB');
+                  } else {
 
-                  //that.app.trigger('reloadSidebarTopics');
-                  //just reload fuck it
-                  setTimeout(function() {
+                    alert('submission successful');
+                    $('#inputBox').css('height', '0px');
+                    //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
 
-                    ajaxing = false;
+                    //that.app.trigger('reloadSidebarTopics');
+                    //just reload fuck it
+                    setTimeout(function() {
 
-                    $.ajax({
-                      url: 'http://liveworld.io/topicTree',
-                      // url: 'http://localhost/topicTree',
-                      method: 'GET',
-                      crossDomain: true,
-                      data: {
-                        //these two models are different scope!
-                        topicId: that.model.id
-                      },
-                      success: function(model) {
+                      ajaxing = false;
 
-                        that.app.get('content2').show(that.app.get('detailView'), model);
-                      },
-                      error: function() {
-                        alert('server error');
-                      }
-                    });
+                      $.ajax({
+                        url: 'http://liveworld.io/topicTree',
+                        // url: 'http://localhost/topicTree',
+                        method: 'GET',
+                        crossDomain: true,
+                        data: {
+                          //these two models are different scope!
+                          topicId: that.model.id
+                        },
+                        success: function(model) {
 
-                  }, 1000);
+                          that.app.get('content2').show(that.app.get('detailView'), model);
+                        },
+                        error: function() {
+                          alert('server error');
+                        }
+                      });
+
+                    }, 1000);
+
+                  }
 
                 },
                 error: function() {

@@ -275,6 +275,7 @@ right:22.4%;
 }
 
 .signupLocationSearchResult {
+  cursor: pointer;
   position: absolute;
   bottom: -30px;
   height: 30px;
@@ -1115,6 +1116,7 @@ right:22.4%;
 /* TOPICS */
 
 #linkBox{
+<<<<<<< HEAD
   width:60px;
   font-family: sans-serif;
   font-style: underline;
@@ -1131,6 +1133,9 @@ right:22.4%;
 #linkBox:hover {
   background-color:rgba(56,56,56,.4);
   color:  rgba(256,256,256,1);
+=======
+  cursor:pointer;
+>>>>>>> 6b7a90433422869920ebdf16362f0a0785490dac
 }
 
 .topicBox {
