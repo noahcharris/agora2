@@ -3185,15 +3185,35 @@ module.exports.createComment = function(request, response) {
                                               gm(files.file[0].path)
                                               .identify(function (err, data) {
                                                 if (err) console.log('error getting image metadat: ', err);
-                                                console.log(data);
 
-                                                //if (data.Filesize > )
+                                                if (data.size.height >= 1000 && data.size.width >= 1000) {
+                                                  gm(files.file[0].path)
+                                                  .resize(1000, 1000)
+                                                  .noProfile()
+                                                  .write(files.file[0].path, function (err) {
+                                                    if (!err) console.log('done');
+                                                  });
 
+                                                } else if (data.size.width >= 1000) {
+                                                  gm(files.file[0].path)
+                                                  .resize(240, 240)
+                                                  .noProfile()
+                                                  .write(files.file[0].path, function (err) {
+                                                    if (!err) console.log('done');
+                                                  });
 
-                                                //if (data.size.)
+                                                } else if (data.size.height >= 1000) {
+                                                  gm(files.file[0].path)
+                                                  .resize(240, 240)
+                                                  .noProfile()
+                                                  .write(files.file[0].path, function (err) {
+                                                    if (!err) console.log('done');
+                                                  });
 
+                                                } else {
+                                                  //DONT NEED TO DO ANY RESIZING
 
-
+                                                }
                                               });
 
 
@@ -3220,6 +3240,11 @@ module.exports.createComment = function(request, response) {
                                                         response.end('successfully submitted comment');
                                                     });
                                               });
+
+
+
+
+                                              
                                     }
                                   });//end topic id select
                           }
