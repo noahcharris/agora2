@@ -1115,7 +1115,22 @@ right:22.4%;
 /* TOPICS */
 
 #linkBox{
-  
+  width:60px;
+  font-family: sans-serif;
+  font-style: underline;
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  left:0px;
+  top:90%;
+  background-color: rgba(256,256,256,.4);
+  color: rgba(56,56,56,1);
+  -webkit-transition: background-color .5s, color .5s;
+}
+
+#linkBox:hover {
+  background-color:rgba(56,56,56,.4);
+  color:  rgba(256,256,256,1);
 }
 
 .topicBox {
