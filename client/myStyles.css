@@ -1133,9 +1133,7 @@ right:22.4%;
 #linkBox:hover {
   background-color:rgba(56,56,56,.4);
   color:  rgba(256,256,256,1);
-=======
   cursor:pointer;
->>>>>>> 6b7a90433422869920ebdf16362f0a0785490dac
 }
 
 .topicBox {
