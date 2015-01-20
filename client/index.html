@@ -437,12 +437,25 @@
       <input placeholder="about" id="signupAboutInput"></input>
       <br/>
       <br/>
-      <form id="captchaForm">
-      <div class="g-recaptcha" data-sitekey="6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_"></div>
+      <form action="?" method="POST">
+        <div id="html_element"></div>
+        <br>
+        <input type="submit" value="Submit">
       </form>
-      <button id="registrationButton">Register</button>
+      <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
+      <div class="g-recaptcha"></div>
+      </form>
+      <!--<button id="registrationButton">Register</button>-->
     </script>
 
+
+    <script type="text/javascript">
+        var agoraOnloadCallback = function() {
+          grecaptcha.render('html_element', {
+          'sitekey' : '6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_'
+          });
+        };
+    </script>
 
 
     <script id="alertSearchTemplate" type="text/template">
@@ -507,8 +520,6 @@
     <!--<script src="leaflet.js"></script>-->
 
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
-
-    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 
     <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>

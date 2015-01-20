@@ -151,7 +151,7 @@ app.use(function(request, response, next) {
 //app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 
 app.get('/', function(request, response) {
-  response.redirect('index.html');
+  response.redirect('https://liveworld.io:443/index.html');
 });
 
 app.get('/test', routes.test);

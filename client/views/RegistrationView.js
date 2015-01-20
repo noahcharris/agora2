@@ -22,7 +22,13 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
+
+
+
     this.$el.append( this.template() );
+
+
+    
 
     setTimeout(function() {
       that.$el.children('div.login').children('input#loginUsernameInput').focus();
