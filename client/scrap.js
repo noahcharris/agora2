@@ -1,3 +1,8 @@
+
+sudo /usr/local/bin/node /home/ec2-user/server/server.js
+
+
+
 $.ajax({
   url: 'http://localhost:80' + urlPath,
   crossDomain: true,

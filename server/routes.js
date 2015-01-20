@@ -24,6 +24,10 @@ var imageInfo = require('netpbm').info;
 var imageConverter = require('netpbm').convert;
 
 
+var fs = require('fs')
+  , gm = require('gm');
+
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
 
@@ -3081,6 +3085,18 @@ module.exports.createComment = function(request, response) {
                                                 },
                                               };
 
+
+
+
+                                              gm(files.file[0].path)
+                                              .identify(function (err, data) {
+                                                if (!err) console.log(data);
+                                              });
+
+
+
+
+
                                               var uploader = s3Client.uploadFile(params);
                                               uploader.on('error', function(err) {
                                                 console.error("unable to upload:", err.stack);
@@ -3116,7 +3132,7 @@ module.exports.createComment = function(request, response) {
                 //NO IMAGE
                 //##############
 
-                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
+                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                 +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
                 [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                 function(err, result) {
@@ -3191,7 +3207,7 @@ module.exports.createResponse = function(request, response) {
                         if (files.file) {
 
                                 //insert and fetch id here, then upload the image to amazon
-                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
+                                client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                                 +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
                                 [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                                 function(err, result) {
@@ -3256,7 +3272,7 @@ module.exports.createResponse = function(request, response) {
                           //NO IMAGE
                           //##############
 
-                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
+                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                           +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
                           [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
                           function(err, result) {
@@ -3333,7 +3349,7 @@ module.exports.createReply = function(request, response) {
                     if (files.file) {
 
                             //insert and fetch id here, then upload the image to amazon
-                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation channel, createdAt, rank, heat)"
+                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                             +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
                             [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
                             function(err, result) {
