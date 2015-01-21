@@ -2943,6 +2943,12 @@ module.exports.createTopic = function(request, response) {
 
 
 
+
+
+
+
+
+
   var form = new multiparty.Form({
     maxFilesSize: AgoraMaxUpload,
   });
@@ -2956,124 +2962,165 @@ module.exports.createTopic = function(request, response) {
       }
     } else {
 
+      var temp;
+      if (request.body.fields.responseString) {
+        temp = request.body.fields.responseString[0];
+      } else {
+        temp = undefined;
+      }
+      var requestOptions = {
+        host: 'www.google.com',
+        path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
+        //IS THIS A VULNERABILITY???
+        +'&response='+temp
+        +'&remoteip='+request.ip,
+        port: 443,
+        method: 'POST',
+        //accept: '*/*'
+      };
+      var req = https.request(requestOptions, function(res) {
+        var str = '';
+        res.on('data', function(d) {
+          str += d;
+          // process.stdout.write(d);
+        });
+        res.on('end', function() {
+
+          //recaptcha verification succeeded
+          if (str.indexOf('true') != -1) {
+
+                      client.query("SELECT * FROM securityJoin WHERE username = $1;",
+                        [fields.username[0]],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error selecting from securityJoin: ', err);
+                          } else {
+
+                            if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+                                        
+                                                //if an image is sent
+                                                if (files.file) {
+
+                                                        //insert and fetch id here, then upload the image to amazon
+
+                                                        client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+                                                        +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                                                        [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
+                                                        function(err, result) {
+
+                                                            if (err) {
+                                                              console.log('error inserting into topics: ', err);
+                                                            } else {
+
+                                                                    client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
+                                                                    [fields.username[0]],
+                                                                    function(err, result) {
+                                                                      if (err) {
+                                                                            console.log('error selecting from topics: ', err);
+                                                                            response.end('error');
+                                                                      } else {
 
 
-    client.query("SELECT * FROM securityJoin WHERE username = $1;",
-      [fields.username[0]],
-      function(err, result) {
-        if (err) {
-          console.log('error selecting from securityJoin: ', err);
-        } else {
+                                                                              //I think I'm safe from XSS in here..
 
-          if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+                                                                                //this is where we use that id we just fetched
+                                                                                var keyString = 'topicImage' + result.rows[0].id;
 
-                      
-                              //if an image is sent
-                              if (files.file) {
+                                                                                var params = {
+                                                                                  localFile: files.file[0].path,
 
-                                      //insert and fetch id here, then upload the image to amazon
+                                                                                  s3Params: {
+                                                                                    Bucket: "agora-image-storage",
+                                                                                    Key: keyString,
+                                                                                    // other options supported by putObject, except Body and ContentLength.
+                                                                                    // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                                                                                  },
+                                                                                };
 
-                                      client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
-                                      +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                                      [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
-                                      function(err, result) {
+                                                                                var uploader = s3Client.uploadFile(params);
+                                                                                uploader.on('error', function(err) {
+                                                                                  console.error("unable to upload:", err.stack);
+                                                                                });
 
-                                          if (err) {
-                                            console.log('error inserting into topics: ', err);
-                                          } else {
+                                                                                uploader.on('progress', function() {
+                                                                                  console.log("progress", uploader.progressMd5Amount,
+                                                                                            uploader.progressAmount, uploader.progressTotal);
+                                                                                });
 
-                                                  client.query("SELECT * FROM topics WHERE username=$1 ORDER BY createdAt DESC LIMIT 1;",
-                                                  [fields.username[0]],
+                                                                                uploader.on('end', function() {
+                                                                                  console.log("done uploading");
+
+
+                                                                                      var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+
+
+                                                                                      client.query("UPDATE topics SET image = $1 WHERE id = $2",
+                                                                                        [imageLink, result.rows[0].id], function(err, result) {
+                                                                                          response.end('successfully submitted topic');
+                                                                                      });
+                                                                                });
+                                                                      }
+                                                                    });//end topic id select
+                                                            }
+                                                          });//end topic insert
+
+
+                                                        
+                                                } else {
+
+                                                  //##############
+                                                  //NO IMAGE
+                                                  //##############
+
+                                                  client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
+                                                  +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                                                  [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])], 
                                                   function(err, result) {
                                                     if (err) {
-                                                          console.log('error selecting from topics: ', err);
-                                                          response.end('error');
+                                                      console.log('error inserting into topics: ', err);
+                                                      response.end('error');
                                                     } else {
 
 
-                                                            //I think I'm safe from XSS in here..
-
-                                                              //this is where we use that id we just fetched
-                                                              var keyString = 'topicImage' + result.rows[0].id;
-
-                                                              var params = {
-                                                                localFile: files.file[0].path,
-
-                                                                s3Params: {
-                                                                  Bucket: "agora-image-storage",
-                                                                  Key: keyString,
-                                                                  // other options supported by putObject, except Body and ContentLength.
-                                                                  // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                                                                },
-                                                              };
-
-                                                              var uploader = s3Client.uploadFile(params);
-                                                              uploader.on('error', function(err) {
-                                                                console.error("unable to upload:", err.stack);
-                                                              });
-
-                                                              uploader.on('progress', function() {
-                                                                console.log("progress", uploader.progressMd5Amount,
-                                                                          uploader.progressAmount, uploader.progressTotal);
-                                                              });
-
-                                                              uploader.on('end', function() {
-                                                                console.log("done uploading");
-
-
-                                                                    var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
-
-
-                                                                    client.query("UPDATE topics SET image = $1 WHERE id = $2",
-                                                                      [imageLink, result.rows[0].id], function(err, result) {
-                                                                        response.end('successfully submitted topic');
-                                                                    });
-                                                              });
+                                                      response.end('successfully created topic (no image)');
                                                     }
-                                                  });//end topic id select
-                                          }
-                                        });//end topic insert
+                                                  });
 
 
-                                      
-                              } else {
-
-                                //##############
-                                //NO IMAGE
-                                //##############
-
-                                client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
-                                +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
-                                [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])], 
-                                function(err, result) {
-                                  if (err) {
-                                    console.log('error inserting into topics: ', err);
-                                    response.end('error');
-                                  } else {
+                                                }
 
 
-                                    response.end('successfully created topic (no image)');
-                                  }
-                                });
+                            } else {
+                              response.end('not authorized');
+                            }
+
+                          }
+                      });//end securityJoin select
 
 
-                              }
-
-
-          } else {
-            response.end('not authorized');
+      
+          } else { //end recaptcha verification test
+          //recaptcha verification failed
+          //MAYBE HACKERS
+            response.end('RECAPTCHA FAILED o_O');
           }
+        });
+      });
+      req.end();
+      req.on('error', function(e) {
+        console.log('error', e);
+      });
 
-        }
-    });//end securityJoin select
 
 
 
-  }
 
-    
-
+    }
   });//end multiparty parse
+
+
+
 
 
 };

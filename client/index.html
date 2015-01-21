@@ -344,7 +344,13 @@
       <input id="topicCreationLink" placeholder="Link"></input>
       <br/><br/>
       <textarea id="topicCreationContent" placeholder="Content"></textarea>
-      <p>other options</p>
+      <form action="?" method="POST">
+         <div id="html_element"></div>
+         <br>
+        <div class="g-recaptcha" id="recaptcha"></div>
+       </form>
+      <button id="registrationButton">Register</button>
+      <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
     </script>
 
 
@@ -438,12 +444,12 @@
       <br/>
       <br/>
       <form action="?" method="POST">
-        <div id="html_element"></div>
-        <br>
-      </form>
+         <div id="html_element"></div>
+         <br>
+        <div class="g-recaptcha" id="recaptcha"></div>
+       </form>
       <button id="registrationButton">Register</button>
       <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
-      <div class="g-recaptcha" id="recaptcha"></div>
     </script>
 
 

@@ -71,7 +71,7 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert('please enter a valid origin');
           } else if (!flag2) {
             alert('please enter a valid current location'); 
-          } else if (!$('.g-recaptcha-response')) {
+          } else if (!$('.g-recaptcha-response').val()) {
             alert('please fill out captcha form');
           } else {
 

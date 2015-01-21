@@ -67,53 +67,70 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
         if (that.app.get('login')) {
 
-          if (!ajaxing) {
 
-            ajaxing = true;
+          //NEED TO CHECK FOR THINGS, INCLUDING CAPTCHA
 
-            var fd = new FormData();    
-            console.log($('#imageInput'));
-            fd.append( 'file', $('#imageInput')[0].files[0] );
-            fd.append( 'username', that.app.get('username') );
-            fd.append( 'token', that.app.get('token') );
-            fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
-            fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
-            fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
-            fd.append( 'location', that.app.get('mapController').get('location') );
-            fd.append( 'origin', that.app.get('origin') );
-            fd.append( 'channel', that.app.get('channel') );
+          if (!$('.g-recaptcha-response').val()) {
+            alert('please fill out captcha');
+          } else if (that.$el.children('input#topicCreationHeadline').val() === ''
+            && that.$el.children('textarea#topicCreationContent').val() === '') {
+            alert('you must provide either a headline or contents');
+          } else {
+
+                if (!ajaxing) {
+
+                  ajaxing = true;
+
+                  var fd = new FormData();    
+                  console.log($('#imageInput'));
+                  fd.append( 'file', $('#imageInput')[0].files[0] );
+                  fd.append( 'username', that.app.get('username') );
+                  fd.append( 'token', that.app.get('token') );
+                  fd.append( 'headline', that.$el.children('input#topicCreationHeadline').val() );
+                  fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
+                  fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
+                  fd.append( 'location', that.app.get('mapController').get('location') );
+                  fd.append( 'origin', that.app.get('origin') );
+                  fd.append( 'channel', that.app.get('channel') );
+                  fd.append( 'responseString', $('.g-recaptcha-response').val() );
+
+                  
+
+                  $.ajax({
+                    url: 'https://liveworld.io:443/createTopic',
+                    // url: 'http://localhost/createTopic',
+                    method: 'POST',
+                    crossDomain: true,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(msg) {
+                      ajaxing = false;
+                      if (msg[0] === 'e') {
+                        alert('make sure that your file size is not over 25MB')
+                      } else {
+                        that.app.get('sidebarView').displayed = 'Topics-New'
+                        that.app.get('content2').hide();
+                        that.app.trigger('reloadSidebarTopics');  
+                      }
+                    },
+                    error: function() {
+                      alert('post creation failed :(');
+                      ajaxing = false;
+                    }
+                  });
+
+
+                }
+
 
             
-
-            $.ajax({
-              url: 'https://liveworld.io:443/createTopic',
-              // url: 'http://localhost/createTopic',
-              method: 'POST',
-              crossDomain: true,
-              xhrFields: {
-                withCredentials: true
-              },
-              contentType: false,
-              processData: false,
-              data: fd,
-              success: function(msg) {
-                ajaxing = false;
-                if (msg[0] === 'e') {
-                  alert('make sure that your file size is not over 25MB')
-                } else {
-                  that.app.get('sidebarView').displayed = 'Topics-New'
-                  that.app.get('content2').hide();
-                  that.app.trigger('reloadSidebarTopics');  
-                }
-              },
-              error: function() {
-                alert('post creation failed :(');
-                ajaxing = false;
-              }
-            });
-
-
           }
+
+
 
         } else {
           alert('must be logged in to create a topic');
