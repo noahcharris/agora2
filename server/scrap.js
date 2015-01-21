@@ -89,6 +89,32 @@ client.query("SELECT * FROM securityJoin WHERE username = $1;",
 
 
 
+//need to select query for the author's location
+client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+  function(err, result) {
+    if (err) console.log('error selecting from users: ', err);
+
+});//end authororigin select
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

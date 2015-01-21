@@ -3275,11 +3275,19 @@ module.exports.createComment = function(request, response) {
               //if an image is sent
               if (files.file) {
 
+
+                  //need to select query for the author's location
+                  client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                    function(err, result) {
+                      if (err) console.log('error selecting from users: ', err);
+
+
+
                       //insert and fetch id here, then upload the image to amazon
 
                       client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                       +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
+                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])],
                       function(err, result) {
 
                           if (err) {
@@ -3378,6 +3386,8 @@ module.exports.createComment = function(request, response) {
                           }
                         });//end topic insert
 
+                    });//end authorlocation select
+
 
                       
               } else {
@@ -3386,18 +3396,25 @@ module.exports.createComment = function(request, response) {
                 //NO IMAGE
                 //##############
 
-                client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
-                +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
-                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
-                function(err, result) {
-                  if (err) {
-                    console.log('error inserting into comments: ', err);
-                    response.end('error');
-                  } else {
+                //need to select query for the author's location
+                client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                  function(err, result) {
+                    if (err) console.log('error selecting from users: ', err);
 
 
-                    response.end('successfully created comment (no image)');
-                  }
+                        client.query("INSERT INTO comments (type, username, topic, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                        +"VALUES ('Comment', $1, $2, $3, $4, $5, $6, $7, $8, now(), 0, 30);",
+                        [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])], 
+                        function(err, result) {
+                          if (err) {
+                            console.log('error inserting into comments: ', err);
+                            response.end('error');
+                          } else {
+
+
+                            response.end('successfully created comment (no image)');
+                          }
+                        });
                 });
 
 
@@ -3469,10 +3486,18 @@ module.exports.createResponse = function(request, response) {
                         //if an image is sent
                         if (files.file) {
 
+
+
+                            //need to select query for the author's location
+                            client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                              function(err, result) {
+                                if (err) console.log('error selecting from users: ', err);
+
+
                                 //insert and fetch id here, then upload the image to amazon
                                 client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                                 +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
+                                [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])],
                                 function(err, result) {
 
                                     if (err) {
@@ -3527,6 +3552,8 @@ module.exports.createResponse = function(request, response) {
                                     }
                                   });//end topic insert
 
+                            });//end authororigin select
+
 
                                 
                         } else {
@@ -3535,19 +3562,26 @@ module.exports.createResponse = function(request, response) {
                           //NO IMAGE
                           //##############
 
-                          client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
-                          +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
-                          [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
-                          function(err, result) {
-                            if (err) {
-                              console.log('error inserting into responses: ', err);
-                              response.end('error');
-                            } else {
+                          //need to select query for the author's location
+                          client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                            function(err, result) {
+                              if (err) console.log('error selecting from users: ', err);
+
+                                  client.query("INSERT INTO responses (type, username, topic, comment, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                                  +"VALUES ('Response', $1, $2, $3, $4, $5, $6, $7, $8, $9, now(), 0, 30);",
+                                  [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])], 
+                                  function(err, result) {
+                                    if (err) {
+                                      console.log('error inserting into responses: ', err);
+                                      response.end('error');
+                                    } else {
 
 
-                              response.end('successfully created response (no image)');
-                            }
-                          });
+                                      response.end('successfully created response (no image)');
+                                    }
+                                  });
+
+                          });//end authororigin select
 
 
                         }
@@ -3618,10 +3652,17 @@ module.exports.createReply = function(request, response) {
                     //if an image is sent
                     if (files.file) {
 
+
+
+                      //need to select query for the author's location
+                      client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                        function(err, result) {
+                          if (err) console.log('error selecting from users: ', err);
+
                             //insert and fetch id here, then upload the image to amazon
                             client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
                             +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
-                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])],
+                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])],
                             function(err, result) {
 
                                 if (err) {
@@ -3676,6 +3717,8 @@ module.exports.createReply = function(request, response) {
                                 }
                               });//end topic insert
 
+                        });//end authororigin select
+
 
                             
                     } else {
@@ -3684,22 +3727,29 @@ module.exports.createReply = function(request, response) {
                       //NO IMAGE
                       //##############
 
-                      client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
-                      +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
-                      [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(fields.authorlocation[0]), xssValidator(fields.channel[0])], 
-                      function(err, result) {
-                        if (err) {
-                          console.log('error inserting into replies: ', err);
-                          response.end('error');
-                        } else {
+                      //need to select query for the author's location
+                      client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
+                        function(err, result) {
+                          if (err) console.log('error selecting from users: ', err);
 
 
-                          response.end('successfully created reply (no image)');
-                        }
-                      });
+                            client.query("INSERT INTO replies (type, username, topic, comment, response, headline, link, contents, location, authorlocation, channel, createdAt, rank, heat)"
+                            +"VALUES ('Reply', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now(), 0, 30);",
+                            [xssValidator(fields.username[0]), xssValidator(fields.topicId[0]), xssValidator(fields.commentId[0]), xssValidator(fields.responseId[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), xssValidator(result.rows[0].location), xssValidator(fields.channel[0])], 
+                            function(err, result) {
+                              if (err) {
+                                console.log('error inserting into replies: ', err);
+                                response.end('error');
+                              } else {
 
 
-                    }
+                                response.end('successfully created reply (no image)');
+                              }
+                            });
+
+
+                      });//end authororigin select
+                  }
 
 
           } else {

@@ -733,7 +733,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               fd.append( 'contents', $('textarea#inputTextArea').val() );
 
               fd.append( 'location', data.location );
-              fd.append( 'authorlocation', data.location );
               fd.append( 'channel', data.channel );
 
               fd.append( 'topicId', data.topicId );
