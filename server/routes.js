@@ -998,59 +998,67 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 
 
 
+
   var queryArgs = url.parse(request.url, true).query;
 
   console.log(queryArgs);
 
+  if (queryArgs.visitor) {
+    
+        client.query("SELECT * FROM securityJoin WHERE username = $1;",
+          [queryArgs.visitor],
+          function(err, result) {
+            if (err) {
+              console.log('error selecting from securityJoin: ', err);
+            } else {
 
-  client.query("SELECT * FROM securityJoin WHERE username = $1;",
-    [queryArgs.visitor],
-    function(err, result) {
-      if (err) {
-        console.log('error selecting from securityJoin: ', err);
-      } else {
+              console.log(request.cookies['login']);
+              console.log(queryArgs.token);
+              console.log(result.rows[0].token);
+              console.log(request.cookies['login'].split('/')[1]);
+              console.log(result.rows[0].cookie);
 
-        console.log(request.cookies['login']);
-        console.log(queryArgs.token);
-        console.log(result.rows[0].token);
-        console.log(request.cookies['login'].split('/')[1]);
-        console.log(result.rows[0].cookie);
-
-        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
-
-
-          client.query("SELECT * FROM contactsJoin WHERE (username1 = $1 AND username2 = $2) "
-            +"OR (username1 = $2 AND username2 = $1);", [queryArgs.username, queryArgs.visitor],
-            function(err, result) {
-              if (err) console.log('error checking contactsJoin: ', err);
-              if (result.rows.length) {
+              if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-                  client.query("SELECT * FROM topics WHERE username = $1 "
-                    +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
-                    function(err, result) {
-                      if (err) {
-                        console.log('error selecting from topics');
-                        response.json({ success: false, data: 'sql error'});
-                      } else {
-                        response.json({ success: true, data: result.rows });
-                      }
-                  });
+                client.query("SELECT * FROM contactsJoin WHERE (username1 = $1 AND username2 = $2) "
+                  +"OR (username1 = $2 AND username2 = $1);", [queryArgs.username, queryArgs.visitor],
+                  function(err, result) {
+                    if (err) console.log('error checking contactsJoin: ', err);
+                    if (result.rows.length) {
+
+
+                        client.query("SELECT * FROM topics WHERE username = $1 "
+                          +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
+                          function(err, result) {
+                            if (err) {
+                              console.log('error selecting from topics');
+                              response.json({ success: false, data: 'sql error'});
+                            } else {
+                              response.json({ success: true, data: result.rows });
+                            }
+                        });
+
+
+                    } else {
+                      response.json({ success: false, data: 'visitor and user are not contacts'});
+                    }
+                });
+
 
 
               } else {
-                response.json({ success: false, data: 'visitor and user are not contacts'});
+                response.json({ success: false, data: 'not authorized'});
               }
-          });
+
+            }
+        });//end securityJoin select
+
+  } else {
+    response.json({ success: false, data: 'no visitor specified'});
+  }
 
 
-
-        } else {
-          response.json({ success: false, data: 'not authorized'});
-        }
-
-      }
-  });//end securityJoin select
 
 
 
