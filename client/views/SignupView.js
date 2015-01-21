@@ -71,6 +71,8 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert('please enter a valid origin');
           } else if (!flag2) {
             alert('please enter a valid current location'); 
+          } else if (!$('.g-recaptcha-response')) {
+            alert('please fill out captcha form');
           } else {
 
 
@@ -89,7 +91,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                 origin: $('#signupOriginInput').val(),
                 location: $('#signupLocationInput').val(),
                 email: $('#signupEmailInput').val(),
-                about: $('#signupAboutInput').val()
+                about: $('#signupAboutInput').val(),
+                responseString: $('.g-recaptcha-response').val()
               },
               success: function(data) {
                 if (data.login) {
@@ -111,6 +114,7 @@ Agora.Views.SignupView = Backbone.View.extend({
                   that.app.trigger('reloadSidebarMessageChains');
                 } else {
                   alert(data);
+                  grecaptcha.reset();
                 }
 
                 //log user in

@@ -440,28 +440,19 @@
       <form action="?" method="POST">
         <div id="html_element"></div>
         <br>
-        <input type="submit" value="Submit">
       </form>
+      <button id="registrationButton">Register</button>
       <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
-      <div class="g-recaptcha"></div>
-      </form>
-      <!--<button id="registrationButton">Register</button>-->
+      <div class="g-recaptcha" id="recaptcha"></div>
     </script>
 
 
     <script type="text/javascript">
 
-        function agoraHandler(response) {
-
-          alert(response);
-
-        };
-
         var agoraOnloadCallback = function() {
-          
+
           grecaptcha.render('html_element', {
           'sitekey' : '6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_',
-          'callback': agoraHandler
           });
 
         };

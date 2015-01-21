@@ -1,5 +1,6 @@
 
 var postgres = require('./postgres.js');
+var https = require('https');
 
 var pg = require('pg');
 var nodemailer = require('nodemailer');
@@ -2135,126 +2136,169 @@ module.exports.validateUsername = function(request, response) {
 
 module.exports.registerUser = function(request, response) {
 
-  var temp = request.body.username;
-  var flag = false;
-  for (var i=0; i < temp.length ;i++) {
-    if (temp[i] === '@') {
-      flag = true;
-    }
-  }
-  if (flag) {
-    response.end("username may not contain '@'");
-  } else {
+  //need to verify captcha:
 
-    client.query("SELECT * FROM users WHERE username = $1;",
-      [request.body.username], function(err, result) {
-        if (err) {
-          console.log('error selecting from users: ', err);
-        } else {
-          if (result.rows.length) {
-            //username unavailable
-            response.end('That username is taken!');
-          } else {
-            //USERNAME AVAILABLE!!!!
+  var requestOptions = {
+    host: 'www.google.com',
+    path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
+    //IS THIS A VULNERABILITY???
+    +'&response='+request.body.responseString
+    +'&remoteip='+request.ip,
+    port: 443,
+    method: 'POST',
+    //accept: '*/*'
+  };
+  var req = https.request(requestOptions, function(res) {
+    var str = '';
+    res.on('data', function(d) {
+      str += d;
+      // process.stdout.write(d);
+    });
+    res.on('end', function() {
 
-            //CHECK EMAIL NOW
-            client.query("SELECT * FROM users WHERE email = $1;",
-              [request.body.email], function(err, result) {
-                if (err) {
-                  console.log('error selecting from users: ', err);
-                } else {
-                  if (result.rows.length) {
-                    //email unavailable
-                    response.end('That email is taken!');
+      //recaptcha verification succeeded
+      if (str.indexOf('true') != -1) {
+
+
+            var temp = request.body.username;
+            var flag = false;
+            for (var i=0; i < temp.length ;i++) {
+              if (temp[i] === '@') {
+                flag = true;
+              }
+            }
+            if (flag) {
+              response.end("username may not contain '@'");
+            } else {
+
+              client.query("SELECT * FROM users WHERE username = $1;",
+                [request.body.username], function(err, result) {
+                  if (err) {
+                    console.log('error selecting from users: ', err);
                   } else {
+                    if (result.rows.length) {
+                      //username unavailable
+                      response.end('That username is taken!');
+                    } else {
+                      //USERNAME AVAILABLE!!!!
 
-                      //REGISTER THE USER
-                      bcrypt.genSalt(10, function(err, salt) {
-                        bcrypt.hash(request.body.password, salt, function(err, hash) {
+                      //CHECK EMAIL NOW
+                      client.query("SELECT * FROM users WHERE email = $1;",
+                        [request.body.email], function(err, result) {
+                          if (err) {
+                            console.log('error selecting from users: ', err);
+                          } else {
+                            if (result.rows.length) {
+                              //email unavailable
+                              response.end('That email is taken!');
+                            } else {
 
-                          postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                            xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
-                            xssValidator(request.body.email), function(success) {
-                              if (success) {
-                                //send back login token here????
+                                //REGISTER THE USER
+                                bcrypt.genSalt(10, function(err, salt) {
+                                  bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-
-                                //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
-                                var secret = Math.floor(Math.random()*100000000001);
-                                client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
-                                  +"VALUES ($1, $2, now());",
-                                  [request.body.username, secret],
-                                  function(err, result) {
-                                    if (err) {
-                                      console.log('error inserting into emailVerificationJoin: ', err);
-                                    } else {
-
-                                      var mailOptions = {
-                                          from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
-                                          to: request.body.email, // list of receivers
-                                          subject: 'Hello ✔', // Subject line
-                                          text: 'KEY', // plaintext body
-                                          html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
-                                      };
-
-                                      transporter.sendMail(mailOptions, function(error, info){
-                                          if(error){
-                                              console.log(error);
-                                          }else{
-                                              console.log('Message sent: ' + info.response);
-                                          }
-                                      });
+                                    postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                                      xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
+                                      xssValidator(request.body.email), function(success) {
+                                        if (success) {
+                                          //send back login token here????
 
 
+                                          //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                                          var secret = Math.floor(Math.random()*100000000001);
+                                          client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                                            +"VALUES ($1, $2, now());",
+                                            [request.body.username, secret],
+                                            function(err, result) {
+                                              if (err) {
+                                                console.log('error inserting into emailVerificationJoin: ', err);
+                                              } else {
 
-                                    }
-                                });
+                                                var mailOptions = {
+                                                    from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                                    to: request.body.email, // list of receivers
+                                                    subject: 'Hello ✔', // Subject line
+                                                    text: 'KEY', // plaintext body
+                                                    html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                };
 
-
-                                var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                                var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-
-                                client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                                  +"VALUES ($1, $2, $3, now());",
-                                  [request.body.username, cookie, token],
-                                  function(err, result) {
-                                    if (err) {
-                                      console.log('error inserting into securityJoin: ', err);
-                                    } else {
-                                      //LOGIN SUCCESSFUL
-
-                                      //set cookie which will be checkd in checkLogin (10 minutes here)
-                                      // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                                      response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
-
-                                      console.log('Login successful for user: ', request.body.username);
-
-                                      response.json({ login: true, token: token });
-
-
-                                    }
-                                });
-
-                              } else {
-                                response.end('error creating user');
-                              }
-                          });//end create user
-
-                        });
-                      });//end bcrypt async thing
+                                                transporter.sendMail(mailOptions, function(error, info){
+                                                    if(error){
+                                                        console.log(error);
+                                                    }else{
+                                                        console.log('Message sent: ' + info.response);
+                                                    }
+                                                });
 
 
+
+                                              }
+                                          });
+
+
+                                          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                                          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+                                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+                                          client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                                            +"VALUES ($1, $2, $3, now());",
+                                            [request.body.username, cookie, token],
+                                            function(err, result) {
+                                              if (err) {
+                                                console.log('error inserting into securityJoin: ', err);
+                                              } else {
+                                                //LOGIN SUCCESSFUL
+
+                                                //set cookie which will be checkd in checkLogin (10 minutes here)
+                                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                                response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+                                                console.log('Login successful for user: ', request.body.username);
+
+                                                response.json({ login: true, token: token });
+
+
+                                              }
+                                          });
+
+                                        } else {
+                                          response.end('error creating user');
+                                        }
+                                    });//end create user
+
+                                  });
+                                });//end bcrypt async thing
+
+
+                            }
+                          }
+                      });//end email check
+
+                    }
                   }
-                }
-            });//end email check
+              });//end username check from users
 
-          }
-        }
-    });//end username check from users
+            }//end username @ check
 
-  }//end username @ check
+
+
+
+
+      } else { //end recaptcha verification test
+      //recaptcha verification failed
+      //MAYBE HACKERS
+        response.end('RECAPTCHA FAILED o_O');
+      }
+    });
+  });
+  req.end();
+  req.on('error', function(e) {
+    console.log('error', e);
+  });
+
+
+
 
 };
 
@@ -2354,16 +2398,6 @@ module.exports.checkVerification = function(request, response) {
 };
 
 
-
-
-module.exports.generateCaptcha = function(request, response) {
-
-  //GENERATE A CAPTCHA IMAGE, STORE THE TEXT IN CAPTCHA JOINN
-
-
-
-
-};
 
 
 
