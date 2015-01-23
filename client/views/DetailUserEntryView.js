@@ -414,7 +414,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
                           },
                           error: function() {
-                            alert('ajax error');
+                            console.log('ajax error');
                           }
                         });
 
@@ -437,7 +437,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                             //alert(data);
                           },
                           error: function() {
-                            alert('ajax error');
+                            console.log('ajax error');
                           }
                         });
 
@@ -489,7 +489,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
           },
           error: function() {
-            alert('ajax error');
+            console.log('ajax error');
           }
         });//end recetlyPosted ajax
 

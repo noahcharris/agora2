@@ -222,7 +222,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -245,7 +245,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   //alert(data);
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -274,7 +274,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
               

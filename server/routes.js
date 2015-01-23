@@ -2852,6 +2852,7 @@ module.exports.updateUserProfile = function(request, response) {
   form.parse(request, function(err, fields, files) {
 
 
+
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
@@ -2884,6 +2885,15 @@ module.exports.updateUserProfile = function(request, response) {
                               console.log("Type: " + result.type + 
                                 " width: " + result.width + 
                                 " height: " + result.height);
+
+                            
+
+
+
+
+
+
+
                             }
                           });
 

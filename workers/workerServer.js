@@ -8,8 +8,7 @@ var fs = require('fs');
 var mailer = require('nodemailer');
 
 var bodyParser = require('body-parser');
-
-var clientSessions = require('client-sessions');
+var cookieParser = require('cookie-parser');
 
 var timeEventLoop = require('time-eventloop');
 
@@ -38,6 +37,11 @@ app = express();
 
 
 app.use(bodyParser());
+app.use(cookieParser());
+
+
+
+app.use(bodyParser());
 
 
 app.use(function(request, response, next) {
@@ -57,10 +61,18 @@ app.use(function(request, response, next) {
 
 
 
-//Returns collections of topics to be displayed in sidebar (without trees)
 app.get('/resizeImage', routes.resizeImage);
 
-app.use(favicon(__dirname + '/../client/media/favicon.png'));
+app.post('/addToTreeCache', routes.addTree);
+app.post('/removeFromTreeCache', routes.removeTree);
+
+
+
+
+
+
+
+
 
 
 app.use(express.static(__dirname + '/../client'));

@@ -159,7 +159,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
       },
       error: function(data) {
-        alert('ajax error');
+        console.log('ajax error');
       }
     });
 
@@ -189,7 +189,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
   //     },
   //     error: function(data) {
-  //       alert('ajax error');
+  //       console.log('ajax error');
   //     }
   //   });
 

@@ -237,7 +237,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -260,7 +260,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
                   //alert(data);
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -325,7 +325,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
       },
       error: function() {
-        alert('ajax error');
+        console.log('ajax error');
       }
     });
 
