@@ -3348,29 +3348,27 @@ module.exports.createComment = function(request, response) {
                                                     if (!err) console.log('done');
                                                   });
 
+                                                } else if (data.size.width >= 1000) {
+                                                  gm(files.file[0].path)
+                                                  .resize(1000, data.size.height)
+                                                  .noProfile()
+                                                  .write(files.file[0].path, function (err) {
+                                                    if (!err) console.log('done');
+                                                  });
+
+                                                } else if (data.size.height >= 1000) {
+                                                  gm(files.file[0].path)
+                                                  .resize(data.size.width, 1000)
+                                                  .noProfile()
+                                                  .write(files.file[0].path, function (err) {
+                                                    if (!err) console.log('done');
+                                                  });
+
+                                                } else {
+                                                  //DONT NEED TO DO ANY RESIZING
+
                                                 }
 
-                                                //  else if (data.size.width >= 1000) {
-                                                //   gm(files.file[0].path)
-                                                //   .resize(1000, data.size.height)
-                                                //   .noProfile()
-                                                //   .write(files.file[0].path, function (err) {
-                                                //     if (!err) console.log('done');
-                                                //   });
-
-                                                // } else if (data.size.height >= 1000) {
-                                                //   gm(files.file[0].path)
-                                                //   .resize(data.size.width, 1000)
-                                                //   .noProfile()
-                                                //   .write(files.file[0].path, function (err) {
-                                                //     if (!err) console.log('done');
-                                                //   });
-
-                                                // } else {
-                                                //   //DONT NEED TO DO ANY RESIZING
-
-                                                // }
-                                                
                                               });
 
 

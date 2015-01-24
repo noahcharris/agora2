@@ -61,49 +61,99 @@ module.exports.resizeImage = function(request, response) {
     console.log("done downloading");
 
 
-    //RESIZE IMAGE THEN REUPLOAD
+    //IDENTIFY IMAGE
     gm('/home/ec2-user/images/' + randomPath)
     .identify(function (err, data) {
       if (err) console.log('error getting image metadat: ', err);
 
-      console.log('WHA WHA WHAAAAAAAAA: ', data);
+      //take this outtt
       response.json(data);
 
+      //used for scaling the image correctly
+      var aspectRatio = data.size.height / data.size.width;
+      xRatio = data.size.height / 1000;
+      yRatio = data.size.height / 1000;
 
-      //depending on image size, take appropriate action
-
-      //then upload it
       var uploadParams = {
         localFile: '/home/ec2-user/images/' + randomPath,
 
         s3Params: {
           Bucket: "agora-image-storage",
-          Key: keyString + '-thumb',
+          Key: keyString,
           // other options supported by putObject, except Body and ContentLength.
           // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
         },
       };
-      var uploader = s3Client.uploadFile(uploadParams);
-      uploader.on('error', function(err) {
-        console.error("unable to upload:", err.stack);
-      });
-      uploader.on('progress', function() {
-        console.log("progress", uploader.progressMd5Amount,
-                  uploader.progressAmount, uploader.progressTotal);
-      });
-      uploader.on('end', function() {
-        console.log("done uploading");
-      });
 
-      // if (data.size.height >= 1000 || data.size.width >= 1000) {
-      //   gm(files.file[0].path)
-      //   .resize(1000, 1000)
-      //   .noProfile()
-      //   .write(files.file[0].path, function (err) {
-      //     if (!err) console.log('done');
-      //   });
+      //depending on image size, take appropriate action
+      if ((data.size.height >= 1000 || data.size.width >= 1000)
+        && data.size.width >= data.size.height) {
+        //WIDTH IS GREATER THAN HEIGHT
+        gm(randomPath)
+        .resize(1000, data.size.height / xRatio)
+        .noProfile()
+        .write(randomPath, function (err) {
+          if (!err) console.log('done');
 
-      // }
+          var uploader = s3Client.uploadFile(uploadParams);
+          uploader.on('error', function(err) {
+            console.error("unable to upload:", err.stack);
+          });
+          uploader.on('progress', function() {
+            console.log("progress", uploader.progressMd5Amount,
+                      uploader.progressAmount, uploader.progressTotal);
+          });
+          uploader.on('end', function() {
+            console.log("done uploading");
+
+            fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+              if (err) throw err;
+            });
+
+
+          });//end upload done
+
+        });
+
+      } else if ((data.size.height >= 1000 || data.size.width >= 1000)
+        && data.size.height >= data.size.width) {
+        //HEIGHT IS GREATER THAN WIDTH
+        gm(randomPath)
+        .resize(data.size / yRatio, 1000)
+        .noProfile()
+        .write(randomPath, function (err) {
+          if (!err) console.log('done');
+
+          var uploader = s3Client.uploadFile(uploadParams);
+          uploader.on('error', function(err) {
+            console.error("unable to upload:", err.stack);
+          });
+          uploader.on('progress', function() {
+            console.log("progress", uploader.progressMd5Amount,
+                      uploader.progressAmount, uploader.progressTotal);
+          });
+          uploader.on('end', function() {
+            console.log("done uploading");
+
+            fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+              if (err) throw err;
+            });
+
+          });//end upload done
+
+        });//end resize
+
+      } else {
+        //DONT NEED TO DO ANY RESIZING
+        fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+          if (err) throw err;
+        });
+
+        response.end('no resizing required');
+
+      }
+
+
 
     });//end identification callback
 
