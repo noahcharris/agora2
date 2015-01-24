@@ -15,6 +15,8 @@ var multiparty = require('multiparty');
 
 var cookie = require('cookie');
 
+var request = require('request');
+
 var _ = require('underscore');
 
 var Q = require('q');
@@ -144,31 +146,41 @@ setInterval(coolOff, 3600000);
 function dealWithImage(keyString) {
 
 
-  try {
+  request('http://54.191.79.51:80/resizeImage?keyString='+keyString
+    +'&secret='+workerSecret, function(err, response, body) {
+      if (!err && response.statusCode == 200) {
+        console.log(body); // Print the google web page.
+      } else {
+        console.log(err);
+      }
+  });
 
-    var requestOptions = {
-      host: '54.191.79.51',
-      path: '/resizeImage'
-      //IS THIS A VULNERABILITY???
-      +'?keyString='+keyString
-      +'&secret='+workerSecret,
-      port: 80,
-      method: 'GET',
-      //accept: '*/*'
-    };
-    var req = https.request(requestOptions, function(res) {
-      var str = '';
-      res.on('data', function(d) {
-        str += d;
-        // process.stdout.write(d);
-      });
-      res.on('end', function() {
-      });
-    });
 
-  } catch (err) {
-    console.log('error sending message to worker server: ', err);
-  }
+  // try {
+
+  //   var requestOptions = {
+  //     host: '54.191.79.51',
+  //     path: '/resizeImage'
+  //     //IS THIS A VULNERABILITY???
+  //     +'?keyString='+keyString
+  //     +'&secret='+workerSecret,
+  //     port: 80,
+  //     method: 'GET',
+  //     //accept: '*/*'
+  //   };
+  //   var req = https.request(requestOptions, function(res) {
+  //     var str = '';
+  //     res.on('data', function(d) {
+  //       str += d;
+  //       // process.stdout.write(d);
+  //     });
+  //     res.on('end', function() {
+  //     });
+  //   });
+
+  // } catch (err) {
+  //   console.log('error sending message to worker server: ', err);
+  // }
 
 
 };
