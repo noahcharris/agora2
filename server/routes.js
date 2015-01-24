@@ -144,7 +144,7 @@ setInterval(coolOff, 3600000);
 function dealWithImage(keyString) {
 
   var requestOptions = {
-    host: 'liveworld.io',
+    host: '54.191.79.51',
     path: '/resizeImage',
     //IS THIS A VULNERABILITY???
     +'&keyString='+keyString
