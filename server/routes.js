@@ -112,24 +112,25 @@ var coolOff = function() {
     function(err, result) {
       if (err) console.log('error cooling off: ', err);
   });
-  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-    function(err, result) {
-      if (err) console.log('error cooling off: ', err);
-  });
-  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-    function(err, result) {
-      if (err) console.log('error cooling off: ', err);
-  });
-  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-    function(err, result) {
-      if (err) console.log('error cooling off: ', err);
-  });
-  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-    function(err, result) {
-      if (err) console.log('error cooling off: ', err);
-  });
-
+  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+  //   function(err, result) {
+  //     if (err) console.log('error cooling off: ', err);
+  // });
+  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+  //   function(err, result) {
+  //     if (err) console.log('error cooling off: ', err);
+  // });
+  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+  //   function(err, result) {
+  //     if (err) console.log('error cooling off: ', err);
+  // });
+  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+  //   function(err, result) {
+  //     if (err) console.log('error cooling off: ', err);
+  // });
 };
+// currently set to 1 hr interval
+setInterval(coolOff, 3600000);
                                    
 
 
