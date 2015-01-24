@@ -14,21 +14,21 @@ var timeEventLoop = require('time-eventloop');
 
 timeEventLoop.start(/* { options } */);
 
-require('crashreporter').configure({
-    outDir: '/home/ec2-user/crashes',
-    mailEnabled: true,
-    mailTransportName: 'SMTP',
-    mailTransportConfig: {
-        service: 'Gmail',
-        auth: {
-            user: 'agora.reporter@gmail.com',
-            pass: 'fieldsoffallensoldiers'
-        }
-    },
-    mailSubject: 'advanced.js crashreporter test',
-    mailFrom: 'crashreporter <agora.reporter@gmail.com>',
-    mailTo: 'noah.christopher.harris@gmail.com'
-});
+// require('crashreporter').configure({
+//     outDir: '/home/ec2-user/crashes',
+//     mailEnabled: true,
+//     mailTransportName: 'SMTP',
+//     mailTransportConfig: {
+//         service: 'Gmail',
+//         auth: {
+//             user: 'agora.reporter@gmail.com',
+//             pass: 'fieldsoffallensoldiers'
+//         }
+//     },
+//     mailSubject: 'advanced.js crashreporter test',
+//     mailFrom: 'crashreporter <agora.reporter@gmail.com>',
+//     mailTo: 'noah.christopher.harris@gmail.com'
+// });
 
 var routes = require('./workerRoutes.js');
 
@@ -60,11 +60,11 @@ app.use(function(request, response, next) {
 });
 
 
-
+//FUCK IT I WANNA USE GET FOR EVERYTHING, THESE ARE NOT IDEMPOTENT!!!!∆∆∆∆∆∆∆∆
 app.get('/resizeImage', routes.resizeImage);
 
-app.post('/addToTreeCache', routes.addTree);
-app.post('/removeFromTreeCache', routes.removeTree);
+app.get('/addToTreeCache', routes.addTree);
+app.get('/removeFromTreeCache', routes.removeTree);
 
 
 
@@ -77,12 +77,12 @@ app.post('/removeFromTreeCache', routes.removeTree);
 
 app.use(express.static(__dirname + '/../client'));
 
-var options = {
-  key: fs.readFileSync(__dirname + '/agoraSSL.key'),
-  cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
-};
+// var options = {
+//   key: fs.readFileSync(__dirname + '/agoraSSL.key'),
+//   cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
+// };
 
 //this is messing with the cookies somehow
 http.createServer(app).listen(80);
-https.createServer(options, app).listen(443);
-console.log('express server listening on ports 80 and 443');  
+// https.createServer(options, app).listen(443);
+console.log('express server listening on port 80');  

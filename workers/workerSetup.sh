@@ -3,6 +3,9 @@
 echo "preparing agora server";
 
 cd ~;
+mkdir workers;
+mkdir images;
+
 sudo yum update;
 y;
 sudo yum install git;
@@ -31,3 +34,6 @@ sudo npm install cookie-parser;
 sudo npm install gm;
 sudo npm install pg;
 sudo npm install s3;
+sudo npm install nodemailer;
+sudo npm install time-eventloop;
+sudo npm install crashreporter;
