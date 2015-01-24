@@ -97,11 +97,49 @@ var transporter = nodemailer.createTransport({
 
 
 
+
+//CAUTION: THIS SHOULD ONLY RUN ON ONE SERVER AT ANY GIVEN TIME
+//     )                              
+//  ( /(             )  (          )  
+//  )\())  (    ) ( /(( )\      ( /(  
+// ((_)\  ))\( /( )\())((_)  (  )\()) 
+//  _((_)/((_)(_)|_))((_)_   )\(_))/  
+// | || (_))((_)_| |_ | _ ) ((_) |_   
+// | __ / -_) _` |  _|| _ \/ _ \  _|  
+// |_||_\___\__,_|\__||___/\___/\__|  
+var coolOff = function() {
+  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+  });
+  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+  });
+  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+  });
+  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+  });
+  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+  });
+
+};
+                                   
+
+
+
+
+
+
+
+
 function dealWithImage(image, keystring) {
-
-
-
-
 
 
 

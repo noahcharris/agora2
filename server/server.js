@@ -68,7 +68,6 @@ app.use(function(request, response, next) {
 
 
 
-
 //app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 
 app.get('/', function(request, response) {
@@ -200,6 +199,9 @@ var options = {
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
 console.log('express server listening on ports 80 and 443');  
+
+
+
 
 
 

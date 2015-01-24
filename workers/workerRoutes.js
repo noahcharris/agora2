@@ -26,8 +26,7 @@ var s3Client = s3.createClient({
 });
 
 
-
-
+var serverSecret = 'courtesytointervene'
 
 
 
@@ -37,142 +36,145 @@ module.exports.resizeImage = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
   var keyString = queryArgs.keyString;
+  var secret = queryArgs.secret;
 
-  var randomPath = Math.floor(Math.random()*1000000000001);
+  if (secret = serverSecret) {
 
-  var downloadParams = {
-    localFile: '/home/ec2-user/images/' + randomPath,
+    var randomPath = Math.floor(Math.random()*1000000000001);
 
-    s3Params: {
-      Bucket: 'agora-image-storage',
-      Key: keyString,
-      // other options supported by getObject
-      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
-    },
-  };
-  var downloader = s3Client.downloadFile(downloadParams);
-  downloader.on('error', function(err) {
-    console.error("unable to download:", err.stack);
-  });
-  downloader.on('progress', function() {
-    console.log("progress", downloader.progressAmount, downloader.progressTotal);
-  });
-  downloader.on('end', function() {
-    console.log("done downloading");
+    var downloadParams = {
+      localFile: '/home/ec2-user/images/' + randomPath,
+
+      s3Params: {
+        Bucket: 'agora-image-storage',
+        Key: keyString,
+        // other options supported by getObject
+        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
+      },
+    };
+    var downloader = s3Client.downloadFile(downloadParams);
+    downloader.on('error', function(err) {
+      console.error("unable to download:", err.stack);
+    });
+    downloader.on('progress', function() {
+      console.log("progress", downloader.progressAmount, downloader.progressTotal);
+    });
+    downloader.on('end', function() {
+      console.log("done downloading");
 
 
-    //IDENTIFY IMAGE
-    gm('/home/ec2-user/images/' + randomPath)
-    .identify(function (err, data) {
-      if (err) console.log('error getting image metadat: ', err);
+      //IDENTIFY IMAGE
+      gm('/home/ec2-user/images/' + randomPath)
+      .identify(function (err, data) {
+        if (err) console.log('error getting image metadat: ', err);
 
-      //take this outtt
-      response.json(data);
+        //take this outtt
+        response.json(data);
 
-      //used for scaling the image correctly
-      var aspectRatio = data.size.height / data.size.width;
-      xRatio = data.size.height / 1000;
-      yRatio = data.size.height / 1000;
+        //used for scaling the image correctly
+        var aspectRatio = data.size.height / data.size.width;
+        xRatio = data.size.height / 1000;
+        yRatio = data.size.height / 1000;
 
-      var uploadParams = {
-        localFile: '/home/ec2-user/images/' + randomPath,
+        var uploadParams = {
+          localFile: '/home/ec2-user/images/' + randomPath,
 
-        s3Params: {
-          Bucket: "agora-image-storage",
-          Key: keyString,
-          // other options supported by putObject, except Body and ContentLength.
-          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-        },
-      };
+          s3Params: {
+            Bucket: "agora-image-storage",
+            Key: keyString,
+            // other options supported by putObject, except Body and ContentLength.
+            // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+          },
+        };
 
-      //depending on image size, take appropriate action
-      if ((data.size.height >= 1000 || data.size.width >= 1000)
-        && data.size.width >= data.size.height) {
-        //WIDTH IS GREATER THAN HEIGHT
-        gm(randomPath)
-        .resize(1000, data.size.height / xRatio)
-        .noProfile()
-        .write(randomPath, function (err) {
-          if (!err) console.log('done');
+        //depending on image size, take appropriate action
+        if ((data.size.height >= 1000 || data.size.width >= 1000)
+          && data.size.width >= data.size.height) {
+          //WIDTH IS GREATER THAN HEIGHT
+          gm(randomPath)
+          .resize(1000, data.size.height / xRatio)
+          .noProfile()
+          .write(randomPath, function (err) {
+            if (!err) console.log('done');
 
-          var uploader = s3Client.uploadFile(uploadParams);
-          uploader.on('error', function(err) {
-            console.error("unable to upload:", err.stack);
-          });
-          uploader.on('progress', function() {
-            console.log("progress", uploader.progressMd5Amount,
-                      uploader.progressAmount, uploader.progressTotal);
-          });
-          uploader.on('end', function() {
-            console.log("done uploading");
-
-            fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
-              if (err) throw err;
+            var uploader = s3Client.uploadFile(uploadParams);
+            uploader.on('error', function(err) {
+              console.error("unable to upload:", err.stack);
             });
-
-
-          });//end upload done
-
-        });
-
-      } else if ((data.size.height >= 1000 || data.size.width >= 1000)
-        && data.size.height >= data.size.width) {
-        //HEIGHT IS GREATER THAN WIDTH
-        gm(randomPath)
-        .resize(data.size / yRatio, 1000)
-        .noProfile()
-        .write(randomPath, function (err) {
-          if (!err) console.log('done');
-
-          var uploader = s3Client.uploadFile(uploadParams);
-          uploader.on('error', function(err) {
-            console.error("unable to upload:", err.stack);
-          });
-          uploader.on('progress', function() {
-            console.log("progress", uploader.progressMd5Amount,
-                      uploader.progressAmount, uploader.progressTotal);
-          });
-          uploader.on('end', function() {
-            console.log("done uploading");
-
-            fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
-              if (err) throw err;
+            uploader.on('progress', function() {
+              console.log("progress", uploader.progressMd5Amount,
+                        uploader.progressAmount, uploader.progressTotal);
             });
+            uploader.on('end', function() {
+              console.log("done uploading");
 
-          });//end upload done
-
-        });//end resize
-
-      } else {
-        //DONT NEED TO DO ANY RESIZING
-        fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
-          if (err) throw err;
-        });
-
-        response.end('no resizing required');
-
-      }
+              fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+                if (err) throw err;
+              });
 
 
+            });//end upload done
 
-    });//end identification callback
+          });
+
+        } else if ((data.size.height >= 1000 || data.size.width >= 1000)
+          && data.size.height >= data.size.width) {
+          //HEIGHT IS GREATER THAN WIDTH
+          gm(randomPath)
+          .resize(data.size / yRatio, 1000)
+          .noProfile()
+          .write(randomPath, function (err) {
+            if (!err) console.log('done');
+
+            var uploader = s3Client.uploadFile(uploadParams);
+            uploader.on('error', function(err) {
+              console.error("unable to upload:", err.stack);
+            });
+            uploader.on('progress', function() {
+              console.log("progress", uploader.progressMd5Amount,
+                        uploader.progressAmount, uploader.progressTotal);
+            });
+            uploader.on('end', function() {
+              console.log("done uploading");
+
+              fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+                if (err) throw err;
+              });
+
+            });//end upload done
+
+          });//end resize
+
+        } else {
+          //DONT NEED TO DO ANY RESIZING
+          fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+            if (err) throw err;
+          });
+
+          response.end('no resizing required');
+
+        }
 
 
-  });//end download finished callback
+
+      });//end identification callback
 
 
+    });//end download finished callback
 
 
+  }//end security check
 
 
 
 };
 
 
-module.exports.treeBuilder = function(request, response) {
+
+// module.exports.treeBuilder = function(request, response) {
 
 
-};
+// };
 
 
 
@@ -186,3 +188,12 @@ module.exports.removeTree = function(request, response) {
 
 
 };
+
+
+
+
+
+
+
+
+
