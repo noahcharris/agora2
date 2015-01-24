@@ -478,8 +478,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
           //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
           // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
-        } else if ($('#notificationsDisplay').length) {
-          $('#notificationsDisplay').remove();
+        } else if ($('#notificationsDisplay').children().length) {
+          $('#notificationsDisplay').empty();
+          that.set('notificationsDisplayed', false);
         } else if ($('#pathInput').length || $('#channelInput').length) {
           $('#pathInput').remove();
           $('#channelInput').remove();
@@ -1038,6 +1039,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
               var data = data;
+
+              $('#notificationsButton').unbind();
 
               $('#notificationsButton')[0].onclick = function() {
 
