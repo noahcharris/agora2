@@ -36,6 +36,7 @@ var fs = require('fs')
 //MAX UPLLOAD SIZE
 
 var AgoraMaxUpload = 10000000;
+var wokerSecret = 'courtesytointervene';
 
 
 
@@ -140,10 +141,27 @@ setInterval(coolOff, 3600000);
 
 
 
-function dealWithImage(image, keystring) {
+function dealWithImage(keyString) {
 
-
-
+  var requestOptions = {
+    host: 'liveworld.io',
+    path: '/resizeImage',
+    //IS THIS A VULNERABILITY???
+    +'&keyString='+keyString
+    +'&secret='+workerSecret,
+    port: 80,
+    method: 'GET',
+    //accept: '*/*'
+  };
+  var req = https.request(requestOptions, function(res) {
+    var str = '';
+    res.on('data', function(d) {
+      str += d;
+      // process.stdout.write(d);
+    });
+    res.on('end', function() {
+    });
+  });
 
 };
 
@@ -2231,7 +2249,6 @@ module.exports.validateUsername = function(request, response) {
 module.exports.registerUser = function(request, response) {
 
   //need to verify captcha:
-
   var requestOptions = {
     host: 'www.google.com',
     path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
@@ -3158,6 +3175,9 @@ module.exports.createTopic = function(request, response) {
 
                                                                                       var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
 
+                                                                                      //send request to worker server to resize image if necessary
+                                                                                      dealWithImage(keyString);
+
 
                                                                                       client.query("UPDATE topics SET image = $1 WHERE id = $2",
                                                                                         [imageLink, result.rows[0].id], function(err, result) {
@@ -3373,47 +3393,6 @@ module.exports.createComment = function(request, response) {
                                               };
 
 
-                                              //IMAGE MANIPULATION
-
-                                              gm(files.file[0].path)
-                                              .identify(function (err, data) {
-                                                if (err) console.log('error getting image metadat: ', err);
-
-                                                if (data.size.height >= 1000 || data.size.width >= 1000) {
-                                                  gm(files.file[0].path)
-                                                  .resize(1000, 1000)
-                                                  .noProfile()
-                                                  .write(files.file[0].path, function (err) {
-                                                    if (!err) console.log('done');
-                                                  });
-
-                                                } else if (data.size.width >= 1000) {
-                                                  gm(files.file[0].path)
-                                                  .resize(1000, data.size.height)
-                                                  .noProfile()
-                                                  .write(files.file[0].path, function (err) {
-                                                    if (!err) console.log('done');
-                                                  });
-
-                                                } else if (data.size.height >= 1000) {
-                                                  gm(files.file[0].path)
-                                                  .resize(data.size.width, 1000)
-                                                  .noProfile()
-                                                  .write(files.file[0].path, function (err) {
-                                                    if (!err) console.log('done');
-                                                  });
-
-                                                } else {
-                                                  //DONT NEED TO DO ANY RESIZING
-
-                                                }
-
-                                              });
-
-
-
-
-
                                               var uploader = s3Client.uploadFile(params);
                                               uploader.on('error', function(err) {
                                                 console.error("unable to upload:", err.stack);
@@ -3427,6 +3406,8 @@ module.exports.createComment = function(request, response) {
 
 
                                                     var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+                                                    //send request to worker server to resize image if necessary
+                                                    dealWithImage(keyString);
 
 
                                                     client.query("UPDATE comments SET image = $1 WHERE id = $2",
@@ -3598,6 +3579,8 @@ module.exports.createResponse = function(request, response) {
 
 
                                                               var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+                                                              //send request to worker server to resize image if necessary
+                                                              dealWithImage(keyString);
 
 
                                                               client.query("UPDATE responses SET image = $1 WHERE id = $2",
@@ -3763,6 +3746,8 @@ module.exports.createReply = function(request, response) {
 
 
                                                           var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+                                                          //send request to worker server to resize image if necessary
+                                                          dealWithImage(keyString);
 
 
                                                           client.query("UPDATE replies SET image = $1 WHERE id = $2",
