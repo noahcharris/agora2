@@ -90,3 +90,11 @@ post-start script
 end script' > agora.conf;
 exit;
 
+
+
+
+nohup sudo /usr/local/bin/node /home/ec2-user/server/server.js > /dev/null 2>&1 &
+
+
+
+

@@ -20,6 +20,7 @@ timeEventLoop.start(/* { options } */);
 
 require('crashreporter').configure({
     outDir: '/home/ec2-user/crashes',
+    maxCrashFile: 1000,
     mailEnabled: true,
     mailTransportName: 'SMTP',
     mailTransportConfig: {

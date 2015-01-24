@@ -32,6 +32,8 @@ var serverSecret = 'courtesytointervene'
 
 module.exports.resizeImage = function(request, response) {
 
+  console.log('received request');
+
 
   var queryArgs = url.parse(request.url, true).query;
 
@@ -40,10 +42,10 @@ module.exports.resizeImage = function(request, response) {
 
   if (secret = serverSecret) {
 
-    var randomPath = Math.floor(Math.random()*1000000000001);
+    var randomPath = '/home/ec2-user/images/' + Math.floor(Math.random()*1000000000001);
 
     var downloadParams = {
-      localFile: '/home/ec2-user/images/' + randomPath,
+      localFile: randomPath,
 
       s3Params: {
         Bucket: 'agora-image-storage',
@@ -64,7 +66,7 @@ module.exports.resizeImage = function(request, response) {
 
 
       //IDENTIFY IMAGE
-      gm('/home/ec2-user/images/' + randomPath)
+      gm(randomPath)
       .identify(function (err, data) {
         if (err) console.log('error getting image metadat: ', err);
 
@@ -73,11 +75,15 @@ module.exports.resizeImage = function(request, response) {
 
         //used for scaling the image correctly
         var aspectRatio = data.size.height / data.size.width;
-        xRatio = data.size.height / 1000;
+
+
+
+
+        xRatio = data.size.width / 1000;
         yRatio = data.size.height / 1000;
 
         var uploadParams = {
-          localFile: '/home/ec2-user/images/' + randomPath,
+          localFile: randomPath,
 
           s3Params: {
             Bucket: "agora-image-storage",
@@ -90,6 +96,7 @@ module.exports.resizeImage = function(request, response) {
         //depending on image size, take appropriate action
         if ((data.size.height >= 1000 || data.size.width >= 1000)
           && data.size.width >= data.size.height) {
+          console.log('RESIZE TO: '+ 1000+ data.size.height / xRatio);
           //WIDTH IS GREATER THAN HEIGHT
           gm(randomPath)
           .resize(1000, data.size.height / xRatio)
@@ -108,8 +115,9 @@ module.exports.resizeImage = function(request, response) {
             uploader.on('end', function() {
               console.log("done uploading");
 
-              fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+              fs.unlink(randomPath, function (err) {
                 if (err) throw err;
+                response.end('successfully resized image');
               });
 
 
@@ -119,9 +127,10 @@ module.exports.resizeImage = function(request, response) {
 
         } else if ((data.size.height >= 1000 || data.size.width >= 1000)
           && data.size.height >= data.size.width) {
+          console.log('RESIZE TO: '+ data.size.width / yRatio+ 1000);
           //HEIGHT IS GREATER THAN WIDTH
           gm(randomPath)
-          .resize(data.size / yRatio, 1000)
+          .resize(data.size.width / yRatio, 1000)
           .noProfile()
           .write(randomPath, function (err) {
             if (!err) console.log('done');
@@ -137,8 +146,9 @@ module.exports.resizeImage = function(request, response) {
             uploader.on('end', function() {
               console.log("done uploading");
 
-              fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+              fs.unlink(randomPath, function (err) {
                 if (err) throw err;
+                response.end('successfully resized image');
               });
 
             });//end upload done
@@ -146,8 +156,9 @@ module.exports.resizeImage = function(request, response) {
           });//end resize
 
         } else {
+          console.log('NO RESIZE');
           //DONT NEED TO DO ANY RESIZING
-          fs.unlink('/home/ec2-user/images/' + randomPath, function (err) {
+          fs.unlink(randomPath, function (err) {
             if (err) throw err;
           });
 
@@ -163,6 +174,8 @@ module.exports.resizeImage = function(request, response) {
     });//end download finished callback
 
 
+  } else {
+    response.end('not authorized');
   }//end security check
 
 

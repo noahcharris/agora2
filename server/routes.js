@@ -36,7 +36,7 @@ var fs = require('fs')
 //MAX UPLLOAD SIZE
 
 var AgoraMaxUpload = 10000000;
-var wokerSecret = 'courtesytointervene';
+var workerSecret = 'courtesytointervene';
 
 
 
@@ -140,28 +140,36 @@ setInterval(coolOff, 3600000);
 
 
 
-
+//THIS IS NOT FAULT TOLERANT
 function dealWithImage(keyString) {
 
-  var requestOptions = {
-    host: '54.191.79.51',
-    path: '/resizeImage'
-    //IS THIS A VULNERABILITY???
-    +'&keyString='+keyString
-    +'&secret='+workerSecret,
-    port: 80,
-    method: 'GET',
-    //accept: '*/*'
-  };
-  var req = https.request(requestOptions, function(res) {
-    var str = '';
-    res.on('data', function(d) {
-      str += d;
-      // process.stdout.write(d);
+
+  try {
+
+    var requestOptions = {
+      host: '54.191.79.51',
+      path: '/resizeImage'
+      //IS THIS A VULNERABILITY???
+      +'?keyString='+keyString
+      +'&secret='+workerSecret,
+      port: 80,
+      method: 'GET',
+      //accept: '*/*'
+    };
+    var req = https.request(requestOptions, function(res) {
+      var str = '';
+      res.on('data', function(d) {
+        str += d;
+        // process.stdout.write(d);
+      });
+      res.on('end', function() {
+      });
     });
-    res.on('end', function() {
-    });
-  });
+
+  } catch (err) {
+    console.log('error sending message to worker server: ', err);
+  }
+
 
 };
 
@@ -1250,7 +1258,7 @@ module.exports.getNotifications = function(request, response) {
         } else {
           response.end('not authorized');
         }
-        
+
         } else {
           response.end('not authorized');
         }
@@ -3090,8 +3098,8 @@ module.exports.createTopic = function(request, response) {
     } else {
 
       var temp;
-      if (request.body.fields.responseString) {
-        temp = request.body.fields.responseString[0];
+      if (fields.responseString[0]) {
+        temp = fields.responseString[0];
       } else {
         temp = undefined;
       }

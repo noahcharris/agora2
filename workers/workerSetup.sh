@@ -37,3 +37,7 @@ sudo npm install s3;
 sudo npm install nodemailer;
 sudo npm install time-eventloop;
 sudo npm install crashreporter;
+
+
+
+nohup sudo /usr/local/bin/node /home/ec2-user/workers/workerServer.js > /dev/null 2>&1 &

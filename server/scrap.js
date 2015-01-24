@@ -101,7 +101,7 @@ client.query("SELECT * FROM users WHERE username = $1;", [fields.username[0]],
 
 
 
-
+nohup sudo /usr/local/bin/node /home/ec2-user/server/server.js > /dev/null 2>&1 &
 
 
 
