@@ -145,7 +145,7 @@ function dealWithImage(keyString) {
 
   var requestOptions = {
     host: '54.191.79.51',
-    path: '/resizeImage',
+    path: '/resizeImage'
     //IS THIS A VULNERABILITY???
     +'&keyString='+keyString
     +'&secret='+workerSecret,
@@ -1172,6 +1172,9 @@ module.exports.getNotifications = function(request, response) {
         console.log('error selecting from securityJoin: ', err);
       } else {
 
+        //bleeehehehhhhhhhhhh
+        //fuck do I need to do this everywhere?????
+        if (result.rows.length) {
         //need to add this to all of the security checks
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
@@ -1247,7 +1250,10 @@ module.exports.getNotifications = function(request, response) {
         } else {
           response.end('not authorized');
         }
-
+        
+        } else {
+          response.end('not authorized');
+        }
       }
   });//end securityJoin select
 
