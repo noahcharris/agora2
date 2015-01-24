@@ -151,7 +151,7 @@ function dealWithImage(keyString) {
       if (!err && response.statusCode == 200) {
         console.log(body); // Print the google web page.
       } else {
-        console.log(err);
+        console.log('request error: ', err);
       }
   });
 
@@ -3009,6 +3009,8 @@ module.exports.updateUserProfile = function(request, response) {
                             console.log("done uploading");
 
                             var imageLink = 'https://s3-us-west-2.amazonaws.com/agora-image-storage/' + keyString;
+                            //make the http request to application (worker) server to resize if needed
+                            dealWithImage(keyString);
 
 
                             console.log('whaaaaaaa: ', fields.about[0]);
