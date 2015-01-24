@@ -40,7 +40,7 @@ module.exports.resizeImage = function(request, response) {
 
   var randomPath = Math.floor(Math.random()*1000000000001);
 
-  var params = {
+  var downloadParams = {
     localFile: '/home/ec2-user/images/' + randomPath,
 
     s3Params: {
@@ -50,7 +50,7 @@ module.exports.resizeImage = function(request, response) {
       // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
     },
   };
-  var downloader = s3Client.downloadFile(params);
+  var downloader = s3Client.downloadFile(downloadParams);
   downloader.on('error', function(err) {
     console.error("unable to download:", err.stack);
   });
@@ -69,6 +69,32 @@ module.exports.resizeImage = function(request, response) {
       console.log('WHA WHA WHAAAAAAAAA: ', data);
       response.json(data);
 
+
+      //depending on image size, take appropriate action
+
+      //then upload it
+      var uploadParams = {
+        localFile: '/home/ec2-user/images/' + randomPath,
+
+        s3Params: {
+          Bucket: "agora-image-storage",
+          Key: keyString + '-thumb',
+          // other options supported by putObject, except Body and ContentLength.
+          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+        },
+      };
+      var uploader = s3Client.uploadFile(uploadParams);
+      uploader.on('error', function(err) {
+        console.error("unable to upload:", err.stack);
+      });
+      uploader.on('progress', function() {
+        console.log("progress", uploader.progressMd5Amount,
+                  uploader.progressAmount, uploader.progressTotal);
+      });
+      uploader.on('end', function() {
+        console.log("done uploading");
+      });
+
       // if (data.size.height >= 1000 || data.size.width >= 1000) {
       //   gm(files.file[0].path)
       //   .resize(1000, 1000)
@@ -78,13 +104,11 @@ module.exports.resizeImage = function(request, response) {
       //   });
 
       // }
-    });
+
+    });//end identification callback
 
 
-
-
-
-  });
+  });//end download finished callback
 
 
 
