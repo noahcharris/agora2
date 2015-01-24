@@ -697,11 +697,11 @@ module.exports.userSearch = function(request, response) {
 
   console.log('user search input: ', queryArgs.input);
 
-  client.query("SELECT type, username, location, image, about FROM users WHERE username LIKE $1 LIMIT 500;",
+  client.query("SELECT type, username, location, image, about FROM users WHERE username ILIKE $1 LIMIT 500;",
       [queryArgs.input + '%'],
       function(err, result) {
         if (err) {
-          console.log('error searching users with LIKE: ', err);
+          console.log('error searching users with ILIKE: ', err);
           response.end('error');
         } else {
           response.json(result.rows);
@@ -739,11 +739,11 @@ module.exports.locationSearch = function(request, response) {
 
     console.log('location search input: ', queryArgs.input);
 
-    client.query("SELECT * FROM locations WHERE name LIKE $1;",
+    client.query("SELECT * FROM locations WHERE name ILIKE $1;",
         ['%' + input + '%'],
         function(err, result) {
           if (err) {
-            console.log('error searching locations with LIKE: ', err);
+            console.log('error searching locations with ILIKE: ', err);
             response.end('error');
           } else {
             response.json(result.rows);
@@ -768,11 +768,11 @@ module.exports.channelSearch = function(request, response) {
     input = '';
   }
 
-  client.query("SELECT * FROM channels WHERE name LIKE $1;",
+  client.query("SELECT * FROM channels WHERE name ILIKE $1;",
       ['%' + input + '%'],
       function(err, result) {
         if (err) {
-          console.log('error searching users with LIKE: ', err);
+          console.log('error searching users with ILIKE: ', err);
           response.end('error');
         } else {
           response.json(result.rows);
