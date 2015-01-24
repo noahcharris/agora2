@@ -67,6 +67,7 @@ module.exports.resizeImage = function(request, response) {
       if (err) console.log('error getting image metadat: ', err);
 
       console.log('WHA WHA WHAAAAAAAAA: ', data);
+      response.json(data);
 
       // if (data.size.height >= 1000 || data.size.width >= 1000) {
       //   gm(files.file[0].path)
