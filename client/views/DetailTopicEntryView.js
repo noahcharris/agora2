@@ -69,6 +69,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
     //append topic box
+    tempModel.userLabel = this.app.translate('User');
+    tempModel.channelLabel = this.app.translate('Channel');
+    tempModel.postedAtLabel = this.app.translate('Posted At');
+    tempModel.linkLabel = this.app.translate('LINK');
     this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
 
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
@@ -177,6 +181,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     for (var i=comments.length-1; i > -1 ;i--) {
       
       //CREATE AND APPEND COMMENT TO OUTERBOX
+      //translate
+      comments[i].userLabel = this.app.translate('User');
+      comments[i].fromLabel = this.app.translate('From');
+      comments[i].replyLabel = this.app.translate('Reply');
       var $comment = $(this.commentTemplate(comments[i]));
 
       (function() {
@@ -329,6 +337,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       for (var j=comments[i].responses.length-1;j > -1 ;j--) {
 
+        comments[i].responses[j].userLabel = this.app.translate('User');
+        comments[i].responses[j].fromLabel = this.app.translate('From');
+        comments[i].responses[j].replyLabel = this.app.translate('Reply');
         var $response = $(this.responseTemplate(comments[i].responses[j]));
 
         (function() {
@@ -498,6 +509,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
         for (var k=comments[i].responses[j].replies.length-1;k > -1;k--) {
 
+          comments[i].responses[j].replies[k].userLabel = this.app.translate('User');
+          comments[i].responses[j].replies[k].fromLabel = this.app.translate('From');
+          comments[i].responses[j].replies[k].replyLabel = this.app.translate('Reply');
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
 
           (function() {

@@ -162,9 +162,9 @@
        <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
        <span class="topicTopString">
        &nbsp(<%= rank %>)
-       &nbsp<span id="detailUserString">User:&nbsp<%= username %></span>
-       &nbsp<span id="detailChannelString">Channel:&nbsp<%= channel %></span>
-       &nbsp<span id="topicTimestamp">Posted At:&nbsp<%= createdat %></span>
+       &nbsp<span id="detailUserString"><%= userLabel %>:&nbsp<%= username %></span>
+       &nbsp<span id="detailChannelString"><%= channelLabel %>:&nbsp<%= channel %></span>
+       &nbsp<span id="topicTimestamp"><%= postedAtLabel %>:&nbsp<%= createdat %></span>
        </span>
 
        <div id="detailTopicClear">
@@ -175,7 +175,7 @@
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
         </div>
-        <div id="linkBox">LINK</div>
+        <div id="linkBox"><%= linkLabel %></div>
         <div class="replyButton">Reply</div>
 
        </div>
@@ -193,8 +193,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="commentTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailCommentUserString">User:&nbsp<%= username %></span>
-      <span class="fromString" >FROM:&nbsp<%= authorlocation %></span>
+      &nbsp<span class="detailCommentUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailCommentClear">
@@ -206,7 +206,7 @@
           <p class="commentHeader"> <%= headline %> </p>
           <p class="comment"> <%= contents %> </p>
         </div>
-        <div class="replyButton">Reply</div>
+        <div class="replyButton"><%= replyLabel %></div>
 
       </div>
 
@@ -221,8 +221,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="responseTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailResponseUserString">User:&nbsp<%= username %></span>
-      <span class="fromString" >FROM:&nbsp<%= authorlocation %></span>
+      &nbsp<span class="detailResponseUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailResponseClear">
@@ -235,7 +235,7 @@
           <p class="responseHeader"> <%= headline %> </p>
           <p class="response"> <%= contents %> </p>
         </div>
-        <div class="replyButton">Reply</div>
+        <div class="replyButton"><%= replyLabel %></div>
 
       </div>
 
@@ -250,8 +250,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="replyTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailReplyUserString">User:&nbsp<%= username %></span>
-      <span class="fromString" >FROM:&nbsp<%= authorlocation %></span>
+      &nbsp<span class="detailReplyUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailReplyClear">
@@ -262,7 +262,7 @@
           <p class="replyHeader"> <%= headline %> </p>
           <p class="reply"> <%= contents %> </p>
         </div>
-        <!--<div class="replyButton">Reply</div>-->
+        <!--<div class="replyButton"><%= replyLabel %></div>-->
 
       </div>
 
