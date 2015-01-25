@@ -24,7 +24,7 @@ var translationData = [{
 },{
   en: 'Top',
   ar: '',
-  zh: '????',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
@@ -34,7 +34,7 @@ var translationData = [{
 },{
   en: 'New',
   ar: '',
-  zh: '????',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
@@ -44,7 +44,7 @@ var translationData = [{
 },{
   en: 'Hot',
   ar: '',
-  zh: '????',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
@@ -54,7 +54,7 @@ var translationData = [{
 },{
   en: 'Friends',
   ar: '',
-  zh: '????',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
