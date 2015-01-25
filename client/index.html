@@ -64,13 +64,13 @@
 
     <script id="contactRequestTemplate" type="text/template">
       <div class="notificationBox">
-        <p>Add contact request from <%= sender %></p>
+        <p><%= contactRequestLabel %>&nbsp<%= sender %></p>
       </div>
     </script>
 
     <script id="newMessageTemplate" type="text/template">
       <div class="notificationBox">
-        <p>New message from <%= sender %></p>
+        <p><%= newMessageLabel %><%= sender %></p>
       </div>
     </script>
 
@@ -123,7 +123,7 @@
        <div class="contentAndToFromWrapper">
          <div class="sidebarContentWrapper">
             <%= username %></br>
-            Location: <%= location %>
+            <%= locationLabel %>: <%= location %>
          </div>
         </div>
       </div>
@@ -134,7 +134,7 @@
       <br/>
       <br/>
       <br/>
-      <!--<p class="sidebarEntryTopicOrigin">Recipient:<%= type %></p>-->
+      <!--<p class="sidebarEntryTopicOrigin"><%= recipientLabel %>:<%= type %></p>-->
     </script>
 
 

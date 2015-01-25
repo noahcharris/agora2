@@ -709,6 +709,7 @@ right:22.4%;
   width:50%;
   height:8%;
   right:0px;
+  top:0px;
   display: inline-block;
 
     -webkit-transition: opacity 0.5s, color 0.5s;

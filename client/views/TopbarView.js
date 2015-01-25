@@ -320,9 +320,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
       that.app.set('language', temp);
 
       that.app.get('topbarView').render();
+      that.app.get('cacheManager').getNotifications();
       that.app.get('locationView').render();
       that.app.get('channelView').render();
       that.app.get('sidebarView').render();
+      that.app.get('sidebarView').setHandlers();
 
       //later on include content2 as well
       that.app.get('content2').hide();

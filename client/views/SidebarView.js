@@ -139,15 +139,19 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //display 'results:'?
 
     } else if (this.displayed === 'Contacts') {
-      this.$el.append($('<div id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.append($('<div id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      var contactsPrefix = this.app.translate('Contacts');
+      var messagesPrefix = this.app.translate('Messages');
+      this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
+      this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#contactsButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
-      this.$el.append($('<div id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.append($('<div id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      var contactsPrefix = this.app.translate('Contacts');
+      var messagesPrefix = this.app.translate('Messages');
+      this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
+      this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#messagesButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
@@ -453,6 +457,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     //MESSAGES/CONTACTS
     $('#contactsButton').on('click', function() {
+      console.log('JFKDLSJSLFDKJ"');
       if (that.displayed !== 'Contacts') {
         that.displayed = 'Contacts';
         that.app.get('content1').show(that);
@@ -463,6 +468,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
     $('#messagesButton').on('click', function() {
+      console.log('jdfsklafjads');
       if (that.displayed !== 'Messages') {
         that.displayed = 'Messages';
         that.app.get('content1').show(that);

@@ -659,7 +659,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     if (lang !== 'en') {
 
       for (var i=0; i < translationData.length ;i++) {
-      console.log('whaaatttutupppp');
         if (translationData[i]['en'] === input) {
           return translationData[i][lang];
         }
@@ -1074,6 +1073,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       var cssAdjust = -75;
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
+                        that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from');
                         var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
 
                         var x = that.contactRequests[i].sender;
@@ -1135,7 +1135,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
-
+                        that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
 
                         var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
 

@@ -336,6 +336,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var temp2 = temp.slice(1, temp.length);
     tempModel.location = temp2.join('/');
 
+    tempModel.locationLabel = that.app.translate('Location');
     this.$el.html( this.userTemplate(tempModel) );
 
     if (!this.model.image) {
@@ -385,7 +386,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     } else {
       this.model.contact = this.model.username1;
     }
-
+    this.model.recipientLabel = this.app.translate('Recipient');
     this.$el.html( this.messageChainTemplate(this.model) );
 
     var location = this.model.location || 'World';
