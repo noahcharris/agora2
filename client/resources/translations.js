@@ -12,9 +12,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Channel',
   ar: '',
-  zh: '',
+  zh: '????',
   fr: '',
   de: '',
   ja: '',

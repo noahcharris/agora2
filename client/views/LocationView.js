@@ -53,7 +53,10 @@ Agora.Views.LocationView = Backbone.View.extend({
 
     //PREFIX
 
-    var $prefix = $('<span id="pathPrefix">&nbsp&nbspLocation:&nbsp</span>');
+    //TRANSLATE THAT SHIT!!!!
+    var prefix = this.app.translate('Location');
+
+    var $prefix = $('<span id="pathPrefix">&nbsp&nbsp'+prefix+':&nbsp</span>');
     $prefix.on('click', function() {
       
       that.app.showLocationDetailView(that.model.get('location'));

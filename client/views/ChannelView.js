@@ -51,7 +51,9 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     //PREFIX
 
-    var $prefix = $('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')
+    var prefix = this.app.translate('Channel');
+
+    var $prefix = $('<span class="channelName">&nbsp&nbsp'+prefix+':&nbsp</span>')
     $prefix.on('click', function() {
       
       that.app.showChannelDetailView(that.app.get('channel'));
