@@ -284,13 +284,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
               that.app.get('content2').show(that.app.get('detailView'), model);
 
             } else if (model.type === 'Location') {
-              console.log('render location');
               // show location detail
               that.app.get('detailView').displayed = 'Locations';
               that.app.get('content2').show(that.app.get('detailView'), model);
             } else if (model.type === 'Channel') {
-              console.log('render channel');
-
               // show channe ldetail
               that.app.get('detailView').displayed = 'Channels';
               that.app.get('content2').show(that.app.get('detailView'), model);

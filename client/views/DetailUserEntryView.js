@@ -175,6 +175,17 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     //CONTACT REQUEST FLOW STUFF
 
 
@@ -474,18 +485,10 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                 throttledResize();
 
                 //NEED TO UNBIND THIS HANDLER SOMEHOW
-
-
-
-
+                
             } else {
               that.$el.append('you must be friends to view user post history');
             }
-
-
-
-
-
 
           },
           error: function() {

@@ -223,6 +223,7 @@ right:22.4%;
 
 /* I think there's a better way to organize these 6 */
 #pathPrefix {
+  cursor: pointer;
   position: relative;
   color: #f8f8f8;
 }
@@ -306,6 +307,7 @@ right:22.4%;
 }
 
 .channelName {
+  cursor: pointer;
   color: #f8f8f8;
 }
 
