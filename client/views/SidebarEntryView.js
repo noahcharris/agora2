@@ -31,7 +31,17 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     model2.location = temp[temp.length-1];
     //model2.location = model2.location.split('/')[model2.location.split('/')];
 
+
+    //TRANSLATIONS
+    var userLabel = this.app.translate('User');
+    var locationLabel = this.app.translate('To');
+    model2.userLabel = userLabel;
+    model2.locationLabel = locationLabel;
+
     this.$el.html( this.topicTemplate(model2) );
+
+
+
 
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');

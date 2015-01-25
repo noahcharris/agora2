@@ -24,7 +24,7 @@ var translationData = [{
 },{
   en: 'Top',
   ar: '',
-  zh: '??',
+  zh: '?? ',
   fr: '',
   de: '',
   ja: '',
@@ -122,9 +122,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'User',
   ar: '',
-  zh: '',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
@@ -132,9 +132,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'To',
   ar: '',
-  zh: '',
+  zh: '??',
   fr: '',
   de: '',
   ja: '',
