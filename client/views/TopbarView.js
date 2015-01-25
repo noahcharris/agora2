@@ -11,7 +11,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
   render: function() {
     var that = this;
 
-    var username = that.app.get('username') || 'Not Logged In'
+    var noUserPrefix = this.app.translate('Not Logged In');
+
+    var username = that.app.get('username') || noUserPrefix;
 
     this.$el.html( this.template({ username: username }) );
 
@@ -51,6 +53,13 @@ Agora.Views.TopbarView = Backbone.View.extend({
     }
     $('#languageSelect').val(temp);
 
+    //TRANSLATION
+    var userOptionsLabel = this.app.translate('Users');
+    var locationOptionsLabel = this.app.translate('Locations');
+    channelOptionsLabel = this.app.translate('Channel');
+    $('#userOption')[0].label = userOptionsLabel;
+    $('#locationOption')[0].label = userOptionsLabel;
+    $('#channelOption')[0].label = userOptionsLabel;
 
 
     this.$el.children('span#username')[0].onclick = function() {

@@ -105,18 +105,24 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //HIDE THIS SHIT FO NOWWWWWWW
       $select.hide();
 
+      //TRANSLATIONS YO!!!
+      topPrefix = this.app.translate('Top');
+      newPrefix = this.app.translate('New');
+      hotPrefix = this.app.translate('Hot');
+      friendsPrefix = this.app.translate('Friends');
 
-
-      this.$el.append($('<div id="topButton"><span class="tabLabel">Top</span></div>'));
-      this.$el.append($('<div id="newButton"><span class="tabLabel">New</span></div>'));
-      this.$el.append($('<div id="hotButton"><span class="tabLabel">Hot</span></div>'));
-      this.$el.append($('<div id="friendsButton"><span class="tabLabel">Friends</span></div>'));
+      this.$el.append($('<div id="topButton"><span class="tabLabel">'+topPrefix+'</span></div>'));
+      this.$el.append($('<div id="newButton"><span class="tabLabel">'+newPrefix+'</span></div>'));
+      this.$el.append($('<div id="hotButton"><span class="tabLabel">'+hotPrefix+'</span></div>'));
+      this.$el.append($('<div id="friendsButton"><span class="tabLabel">'+friendsPrefix+'</span></div>'));
       this.$el.append($('<ul class="sidebarTopicInnerList"></ul>'));
       var location = that.app.get('mapController').get('location');
       var channel = that.app.get('channel');
-      var postLabel = location.split('/')[location.split('/').length-1] +'~'+ channel.split('/')[channel.split('/').length-1]
+      var postLabel = location.split('/')[location.split('/').length-1] +'~'+ channel.split('/')[channel.split('/').length-1];
 
-      this.$el.append($('<div id="creationButton"><span id="createLabel">Post to: '+postLabel+'</span></div>'));
+      var postToLabel = this.app.translate('Post to');
+
+      this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
       //Set the correct button lighter
       if (this.displayed === 'Topics-Top') {
         this.$el.children('div#topButton').css('background-color','#f8f8f8');
