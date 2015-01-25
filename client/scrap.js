@@ -169,7 +169,6 @@ function placeMarkersInBounds() {
 
 
 
-</select>
 <select id="languageSelect">
  <option value="Arabic">Arabic</option>
  <option value="Chinese">Chinese</option>

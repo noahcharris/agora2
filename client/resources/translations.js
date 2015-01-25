@@ -3,11 +3,24 @@
 
 var translationData = [{
   en: 'Location',
+  ar: '',
+  zh: '地点',
   fr: 'Localisation',
-  chn: '地点'
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
 },{
-  en: 'Channel',
-  fr: 'Chaîne'
+  en: '',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
 },{
 
 }];

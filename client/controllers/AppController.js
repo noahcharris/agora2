@@ -649,7 +649,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
   //accepts one of the english labels and returns
   //its translation in whatever language is
   //currently set

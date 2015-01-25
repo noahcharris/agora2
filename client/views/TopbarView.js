@@ -15,6 +15,42 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     this.$el.html( this.template({ username: username }) );
 
+    //set the select to appropriate language
+    var temp;
+    switch (this.app.get('language')) {
+      case 'ar':
+        temp = 'Arabic';
+        break;
+      case 'zh':
+        temp = 'Chinese';
+        break;
+      case 'en':
+        temp = 'English';
+        break;
+      case 'fr':
+        temp = 'French';
+        break;
+      case 'de':
+        temp = 'German';
+        break;
+      case 'ja':
+        temp = 'Japanese';
+        break;
+      case 'pt':
+        temp = 'Portuguese';
+        break;
+      case 'ru':
+        temp = 'Russian';
+        break;
+      case 'es':
+        temp = 'Spanish';
+        break;
+      default:
+        temp = 'English';
+        break;
+    }
+    $('#languageSelect').val(temp);
+
 
 
     this.$el.children('span#username')[0].onclick = function() {
@@ -232,18 +268,44 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-    //STATIC TEXT LANGUAGE SELECTION
+
+
+
+    //STATIC TRANSLATION
     $('#languageSelect').on('change', function() {
+
       console.log($('#languageSelect').val());
       var temp = 'en';
       switch ($('#languageSelect').val()) {
+        case 'Arabic':
+          temp = 'ar';
+          break;
+        case 'Chinese':
+          temp = 'zh';
+          break;
         case 'English':
           temp = 'en';
           break;
-        case 'Français':
+        case 'French':
           temp = 'fr';
           break;
+        case 'German':
+          temp = 'de';
+          break;
+        case 'Japanese':
+          temp = 'ja';
+          break;
+        case 'Portuguese':
+          temp = 'pt';
+          break;
+        case 'Russian':
+          temp = 'ru';
+          break;
+        case 'Spanish':
+          temp = 'es';
+          break;
         default:
+          temp = 'en';
           break;
       }
       that.app.set('language', temp);
@@ -257,6 +319,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
       that.app.get('content2').hide();
 
     });
+
+
 
 
 

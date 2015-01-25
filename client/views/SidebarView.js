@@ -91,8 +91,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div id="topButton"><span class="tabLabel">Top'
-        +'</span></div>'));
 
       $select.change(function() {
         that.timeframe = $('#timeframeSelect').val();
@@ -104,6 +102,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       this.$el.children('div#topButton').children('span').append($select);
 
+      //HIDE THIS SHIT FO NOWWWWWWW
+      $select.hide();
+
+
+
+      this.$el.append($('<div id="topButton"><span class="tabLabel">Top</span></div>'));
       this.$el.append($('<div id="newButton"><span class="tabLabel">New</span></div>'));
       this.$el.append($('<div id="hotButton"><span class="tabLabel">Hot</span></div>'));
       this.$el.append($('<div id="friendsButton"><span class="tabLabel">Friends</span></div>'));
