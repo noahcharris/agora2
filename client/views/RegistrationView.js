@@ -38,8 +38,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
                                     logoutLabel: logoutLabel, bigRegisterLabel: bigRegisterLabel,
                                      smallRegisterLabel: smallRegisterLabel} ) );
 
-    this.$el.children('#loginUsernameInput').attr('placeholder', usernameLabel);
-    this.$el.children('#loginPasswordInput').attr('placeholder', passwordLabel);
+    this.$el.children('div.login').children('#loginUsernameInput').attr('placeholder', usernameLabel);
+    this.$el.children('div.login').children('#loginPasswordInput').attr('placeholder', passwordLabel);
 
 
     
