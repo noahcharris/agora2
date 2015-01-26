@@ -40,7 +40,8 @@ var fs = require('fs')
 
 var AgoraMaxUpload = 10000000;
 var workerSecret = 'courtesytointervene';
-var placeRadiusThreshold = 10000000000000000;
+var placeRadiusThreshold = 1.2;
+var heatRadiusThreshold = 10;
 
 
 
@@ -990,7 +991,6 @@ module.exports.getMessageChain = function(request, response) {
 };
 
 
-//VULNERABLE
 module.exports.getPoints = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
@@ -1000,7 +1000,7 @@ module.exports.getPoints = function(request, response) {
 
   client.query("SELECT * FROM locations "
     // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
-    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000);",
+    +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), "+heatRadiusThreshold+") AND isUserCreated = 'true';",
     ['POINT('+queryArgs.longitude+' '+queryArgs.latitude+')'], function(err, result) {
     if (err) {
       console.log('error retrieving points: ', err);
@@ -3943,7 +3943,8 @@ module.exports.createLocation = function(request, response) {
 
                               }
                             }
-                          });
+                          });//end radius check
+
                         } else {
                           //HACKERS
                           response.end('o_O');

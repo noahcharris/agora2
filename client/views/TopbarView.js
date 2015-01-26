@@ -332,8 +332,12 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
 
 
-
-
+    //TODO about icon handler
+    // function() {
+    //   var aboutView = new Agora.Views.AboutView(that);
+    //   that.app.get('detailView').displayed = 'About';
+    //   that.app.get('content2').show(aboutView);
+    // }
 
 
 

@@ -1024,7 +1024,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Parent City',
   ar: '',
   zh: '',
   fr: '',
@@ -1034,7 +1034,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Your location must belong to a city',
   ar: '',
   zh: '',
   fr: '',

@@ -400,7 +400,7 @@
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
       <input id="parentInput" placeholder="Parent Channel"></input><br/>
-      <button id="nextButton"><%= nextLabel %></button>
+      <button id="nextButton"><%= doneLabel %></button>
     </script>
 
 
@@ -414,6 +414,8 @@
       <input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
+      <br/>
+      <%= explanationLabel1 %>
       <br/>
       <input id="parentInput" placeholder="Parent Location"></input><br/>
       <button id="nextButton"><%= nextLabel %></button>
@@ -503,6 +505,10 @@
 
     <script id="changeViewTemplate" type="text/template">
       <h1></h1>
+    </script>
+
+    <script id="aboutTemplate" type="text/template">
+      <h1>ABOUT</h1>
     </script>
 
 

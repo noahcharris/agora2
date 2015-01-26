@@ -13,7 +13,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
 //use serve-favicon instead!!!
-var favicon = require('static-favicon');
+// var favicon = require('static-favicon');
+var favicon = require('serve-favicon');
 
 var timeEventLoop = require('time-eventloop');
 timeEventLoop.start(/* { options } */);
@@ -186,7 +187,7 @@ app.post('/upvoteReply', routes.upvoteReply);
 app.post('/createLocation', routes.createLocation);
 app.post('/createChannel', routes.createChannel);
 
-app.use(favicon(__dirname + '/../client/media/favicon.png'));
+app.use(favicon(__dirname + '/../client/resources/images/favicon.png'));
 
 
 app.use(express.static(__dirname + '/../client'));

@@ -30,10 +30,10 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
     var privateLabel = this.app.translate('Private');
     var descriptionLabel = this.app.translate('Description');
     var parentChannelLabel = this.app.translate('Parent Channel');
-    var nextLabel = this.app.translate('Next');
+    var doneLabel = this.app.translate('Done!');
 
 
-    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
+    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, doneLabel: doneLabel,
                                   radioPrefixLabel: radioPrefixLabel } ) );
     this.$el.children('#channelNameInput').attr('placeholder', channelNameLabel);
 

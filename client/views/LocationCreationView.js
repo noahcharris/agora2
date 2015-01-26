@@ -29,11 +29,12 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var publicLabel = this.app.translate('Public');
     var privateLabel = this.app.translate('Private');
     var descriptionLabel = this.app.translate('Description');
-    var parentLocationLabel = this.app.translate('Parent Location');
+    var parentLocationLabel = this.app.translate('Parent City');
     var nextLabel = this.app.translate('Next');
+    var explanationLabel1 = this.app.translate('Your location must belong to a city')
 
     this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
-                                  radioPrefixLabel: radioPrefixLabel} ) );
+                                  radioPrefixLabel: radioPrefixLabel, explanationLabel1: explanationLabel1} ) );
     this.$el.children('#locationNameInput').attr('placeholder', locationNameLabel);
     this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
     this.$el.children('#parentInput').attr('placeholder', parentLocationLabel);
