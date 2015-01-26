@@ -39,23 +39,25 @@ Agora.Views.ChangeView = Backbone.View.extend({
 
 
 
+      var changePasswordLabel = this.app.translate('CHANGE PASSWORD');
+      var currentPasswordLabel = this.app.translate('Current Password');
+      var newPasswordLabel = this.app.translate('New Password');
+      var confirmLabel = this.app.translate('Confirm New Password');
+      var doneLabel = this.app.translate('Done!');
 
+      this.$el.append(changePasswordLabel);
+      this.$el.append($('<br/><input id="changePasswordInputOne" type="password" placeholder="'+currentPasswordLabel+'" type="text"></input><br/>'));
+      this.$el.append($('<br/><input id="changePasswordInputTwo" type="password" placeholder="'+newPasswordLabel+'" type="text"></input><br/>'));
+      this.$el.append($('<br/><input id="changePasswordInputThree" type="password" placeholder="'+confirmLabel+'" type="text"></input><br/>'));
 
-
-
-      this.$el.append('CHANGE PASSWORD');
-      this.$el.append($('<br/><input id="changePasswordInputOne" type="password" placeholder="Current Password" type="text"></input><br/>'));
-      this.$el.append($('<br/><input id="changePasswordInputTwo" type="password" placeholder="New Password" type="text"></input><br/>'));
-      this.$el.append($('<br/><input id="changePasswordInputThree" type="password" placeholder="Confirm New Password" type="text"></input><br/>'));
-
-      var $changePasswordDoneButton = $('<button id="changePasswordDoneButton">Done!</button>');
+      var $changePasswordDoneButton = $('<button id="changePasswordDoneButton">'+doneLabel+'</button>');
       $changePasswordDoneButton.on('click', function() {
         var pass2 = that.$el.children('#changePasswordInputTwo').val();
         var pass3 = that.$el.children('#changePasswordInputThree').val();
 
 
         if (pass2 !== pass3) {
-          alert('password confirmation does not match');
+          alert(that.app.translate('password confirmation does not match'));
         } else {
           
           $.ajax({
@@ -92,7 +94,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       });
       this.$el.append($changePasswordDoneButton);
 
-      var $backButton = $('<button id="backButton">Back</button>')
+      var $backButton = $('<button id="backButton">'+that.app.translate('Back')+'</button>')
       $backButton.on('click', function() {
         that.app.get('detailView').displayed = 'Settings';
         that.app.get('content2').show(that.app.get('settingsView'));
@@ -114,7 +116,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       //load current location in
       var $changeLocationInput = $('<br/><input id="changeLocationInput" type="text"></input><br/>');
       this.$el.append($changeLocationInput);
-      var $changeLocationDoneButton = $('<button id="changeLocationDoneButton">Done!</button>');
+      var $changeLocationDoneButton = $('<button id="changeLocationDoneButton">'+that.app.translate('Done!')+'</button>');
       this.$el.append($changeLocationDoneButton);
 
       $.ajax({
@@ -261,7 +263,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
 
 
 
-      this.$el.append('CHANGE EMAIL');
+      this.$el.append(this.app.translate('CHANGE EMAIL'));
       //load current email in
 
       $.ajax({
@@ -292,9 +294,9 @@ Agora.Views.ChangeView = Backbone.View.extend({
       });
 
 
-      this.$el.append($('<br/><input id="changeEmailInputOne" type="password" placeholder="Password" type="text"></input><br/>'));
+      this.$el.append($('<br/><input id="changeEmailInputOne" type="password" placeholder="'+that.app.translate('password')+'" type="text"></input><br/>'));
       this.$el.append($('<br/><input id="changeEmailInputTwo" type="text"></input><br/>'));
-      var $changeEmailDoneButton = $('<button id="changeEmailDoneButton">Done!</button>');
+      var $changeEmailDoneButton = $('<button id="changeEmailDoneButton">'+that.app.translate('Done!')+'</button>');
       $changeEmailDoneButton.on('click', function() {
 
 
@@ -332,7 +334,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       });
       this.$el.append($changeEmailDoneButton);
 
-      var $backButton = $('<button id="backButton">Back</button>')
+      var $backButton = $('<button id="backButton">'+this.app.translate('Back')+'</button>')
       $backButton.on('click', function() {
         that.app.get('detailView').displayed = 'Settings';
         that.app.get('content2').show(that.app.get('settingsView'));

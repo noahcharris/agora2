@@ -25,6 +25,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
 
     var channelNameLabel = this.app.translate('Channel Name');
+    var radioPrefixLabel = this.app.translate('This location is');
     var publicLabel = this.app.translate('Public');
     var privateLabel = this.app.translate('Private');
     var descriptionLabel = this.app.translate('Description');
@@ -32,7 +33,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
     var nextLabel = this.app.translate('Next');
 
 
-    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel } ) );
+    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
+                                  radioPrefixLabel: radioPrefixLabel } ) );
     this.$el.children('#channelNameInput').attr('placeholder', channelNameLabel);
 
     this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
