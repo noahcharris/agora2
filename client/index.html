@@ -409,7 +409,7 @@
     <br/>
     <br/>
     <br/>
-    <button id="pointPlacedButton">Done!</button>
+    <button id="pointPlacedButton"><%= doneLabel %></button>
     </script>
 
     
@@ -417,36 +417,36 @@
 
     <script id="registrationViewTemplate" type="text/template">
     <div class="login">
-     <h2>LOG IN</h2>
+     <h2><%= bigLoginLabel %></h2>
      <input id="loginUsernameInput" type="text" placeholder="username"></input>
      <br/> <input id="loginPasswordInput" type="password" placeholder="password"></input>
-     <button id="loginButton">Log In</button>
+     <button id="loginButton"><%= smallLoginLabel %></button>
      <br/>
      <br/>
-     <button id="logoutButton">Logout</button>
+     <button id="logoutButton"><%= logoutLabel</button>
     </div>
     <hr>
     <div class="signup">
-     <h2>Register</h2>
-     <button id="signupButton" type="text">Register</button>
+     <h2><%= bigRegisterLabel %></h2>
+     <button id="signupButton" type="text"><%= smallRegisterLabel %></button>
     </div>
     </script>
 
     <script id="signupTemplate" type="text/template">
-      REGISTER
+      <%= bigRegisterLabel %>
       <br/>
       <br/><br/>
       <input placeholder="username" id="signupUsernameInput"></input>
-      <button id="checkAvailabilityButton">Check Availability</button>
+      <button id="checkAvailabilityButton"><%= availabilityLabel %></button>
       <br/>
       <input type="password" placeholder="password" id="signupPasswordInput"></input>
       <br/>
       <input type="password" placeholder="confirm password" id="signupConfirmPasswordInput"></input>
       <br/>
-      <br/>Your email is never displayed to other users.</br>
+      <br/><%= explanationLabel1 %></br>
       <input placeholder="email" id="signupEmailInput"></input>
       <br/>
-      <br/>You cannot change origin once it is set!</br>
+      <br/><%= explanationLabel2 %></br>
       <input placeholder="origin" id="signupOriginInput"></input>
       <input placeholder="current location" id="signupLocationInput"></input>
       <div id="signupLocation"></div>
@@ -459,7 +459,7 @@
          <br>
         <div class="g-recaptcha" id="recaptcha"></div>
        </form>
-      <button id="registrationButton">Register</button>
+      <button id="registrationButton"><%= smallRegisterLabel %></button>
       <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
     </script>
 

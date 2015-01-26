@@ -21,7 +21,9 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var menuLabel = this.app.translate('Menu');
     var recentlyVisitedLabel = this.app.translate('Recently Visited');
+
     this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel} ) );
+
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {

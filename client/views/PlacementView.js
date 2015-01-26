@@ -19,7 +19,8 @@ Agora.Views.PlacementView = Backbone.View.extend({
 
   render: function() {
     var placementLabel = this.app.translate('Place a point! Click Done when finished.');
-    this.$el.html( this.placementTemplate( {placementLabel: placementLabel} ) );
+    var doneLabel = this.app.translate('Done!');
+    this.$el.html( this.placementTemplate( {placementLabel: placementLabel, doneLabel: doneLabel} ) );
   },
 
   setHandlers: function() {
