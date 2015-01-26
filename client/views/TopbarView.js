@@ -57,9 +57,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
     var userOptionsLabel = this.app.translate('Users');
     var locationOptionsLabel = this.app.translate('Locations');
     var channelOptionsLabel = this.app.translate('Channels');
-    $('#userOption')[0].label = userOptionsLabel;
-    $('#locationOption')[0].label = locationOptionsLabel;
-    $('#channelOption')[0].label = channelOptionsLabel;
+    this.$el.children('#searchSelect').children('#userOption')[0].label = userOptionsLabel;
+    this.$el.children('#searchSelect').children('#locationOption')[0].label = locationOptionsLabel;
+    this.$el.children('#searchSelect').children('#channelOption')[0].label = channelOptionsLabel;
 
 
     this.$el.children('span#username')[0].onclick = function() {

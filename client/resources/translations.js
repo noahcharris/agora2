@@ -83,7 +83,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Not Logged In',
-  ar: '',
+  ar: 'لم تقم بتسجيل الدخول',
   zh: '?????',
   fr: '',
   de: '',
