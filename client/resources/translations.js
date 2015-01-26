@@ -762,9 +762,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'ABOUT ME',
   ar: '',
-  zh: '',
+  zh: '?????????',
   fr: '',
   de: '',
   ja: '',
@@ -772,9 +772,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Save Changes',
   ar: '',
-  zh: '',
+  zh: '??????????',
   fr: '',
   de: '',
   ja: '',
