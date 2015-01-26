@@ -1068,6 +1068,7 @@ right:22.4%;
     transition: background-color 0.5s;
 }
 
+
 .replyButton:hover {
   background-color: #E43D13
 }
@@ -1077,6 +1078,10 @@ right:22.4%;
 #spacer {
   width: 100%;
   height: 200px;
+}
+
+.fromString {
+  cursor: pointer;
 }
 
 #conversationWrapper {

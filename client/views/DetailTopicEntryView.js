@@ -198,9 +198,15 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       (function() {
         var x = comments[i].username;
+        var y = comments[i].authorlocation;
         var $commentUserString = $comment.children('.commentTopString').children('.detailCommentUserString');
         $commentUserString[0].onclick = function() {
           that.goToUser(x);
+        };
+
+        var $commentFromString = $comment.children('.commentTopString').children('.fromString');
+        $commentFromString[0].onclick = function() {
+          that.app.get('mapController').goToPath(y);
         };
       })();
 

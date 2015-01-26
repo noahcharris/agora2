@@ -473,7 +473,7 @@ var translationData = [{
   es: '',
 },{
   en: 'password',
-  ar: '',
+  ar: 'كلمة المرور',
   zh: '???????',
   fr: '',
   de: '',
