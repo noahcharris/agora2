@@ -173,10 +173,6 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       that.app.get('content2').show(signupView);
 
 
-      // setTimeout(function() {
-      //   that.app.get('alertView').mode = 'FollowupSuccess';
-      //   that.app.get('content2').show(that.app.get('alertView'));
-      // },400);
 
     });
 

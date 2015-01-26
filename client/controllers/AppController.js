@@ -110,9 +110,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var registrationView = new Agora.Views.RegistrationView(this);
     this.set('registrationView', registrationView);
 
-    var alertView = new Agora.Views.AlertView(this);
-    this.set('alertView', alertView);
-
     var placementView = new Agora.Views.PlacementView(this);
     this.set('placementView', placementView);
 

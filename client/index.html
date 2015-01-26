@@ -269,10 +269,6 @@
      </div>
     </script>
 
-
-    <!--dfjsaklfdjsakflsj;fdksla;fjkdlsa;fjdksal;fjdskal;fjdksal;fjdsakl;fjdskal;fjdskla;fjdklsa;fjdk-->
-
-
     <script id="inputBoxTemplate" type="text/template">
       <div id="inputBox">
        <textarea id="inputHeadlineTextArea" placeholder="Headline"></textarea>
@@ -282,11 +278,10 @@
       </div>
     </script>
 
-
     <script id="messageInputBoxTemplate" type="text/template">
       <div id="messageInputBox">
        <textarea id="messageInputTextArea" placeholder="Content"></textarea>
-       <div id="messageInputBoxButton"><span>Send</span></div>
+       <div id="messageInputBoxButton"><span><%= sendLabel %></span></div>
       </div>
     </script>
 
@@ -298,11 +293,11 @@
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
         </div>
       </div>
-      <h3>About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= description %></p>
 
       <div id="locationBox">
-        <button id="goToButton">Go To Location</button>
+        <button id="goToButton"><%= goToLabel %></button>
         <br/><br/><br/><br/>
       </div>
     </script>
@@ -315,11 +310,11 @@
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
         </div>
       </div>
-      <h3>About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= description %></p>
 
       <div id="channelBox">
-        <button id="goToButton">Go To Channel</button>
+        <button id="goToButton"><%= goToLabel %></button>
         <br/><br/><br/><br/>
       </div>
     </script>
@@ -331,12 +326,12 @@
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= username %> </h1>
-          <h4>Location:&nbsp <%= location %> </h4>
+          <h4><%= locationLabel %>:&nbsp <%= location %> </h4>
         </div>
       </div>
-      <h3>About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= about %></p>
-      <p>Recently Posted</p>
+      <p><%= recentlyPostedLabel %></p>
       <br/>
       <br/>
       <br/>
@@ -353,6 +348,7 @@
     </script>
 
 
+    <!--dfjsaklfdjsakflsj;fdksla;fjkdlsa;fjdksal;fjdskal;fjdksal;fjdsakl;fjdskal;fjdskla;fjdklsa;fjdk-->
 
     <!--Topic Creation-->
     <script id="topicCreationTemplate" type="text/template">
@@ -575,7 +571,6 @@
     <script src="views/EditProfileView.js"></script>
     <script src="views/RegistrationView.js"></script>
     <script src="views/SignupView.js"></script>
-    <script src="views/AlertView.js"></script>
     <script src="views/TopicCreationView.js"></script>
     <script src="views/LocationCreationView.js"></script>
     <script src="views/ChannelCreationView.js"></script>

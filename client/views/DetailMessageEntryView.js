@@ -54,9 +54,10 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     }, 1);
 
 
-    //NEED TO SCROLL TO BOTTOM ONCE THESE ARE ALL PREPENDED
-
-    this.$el.append( $(this.messageInputTemplate()) );
+    var sendLabel = this.app.translate('Send');
+    var contentLabel = this.app.translate('Content');
+    this.$el.append( $(this.messageInputTemplate( {sendLabel: sendLabel} )) );
+    this.$el.children('#messageInputBox').children('#messageInputTextArea').attr('placeholder', contentLabel);
 
     var $sendButton = this.$el.children('#messageInputBox').children('#messageInputBoxButton');
 

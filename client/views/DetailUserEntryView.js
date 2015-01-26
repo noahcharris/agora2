@@ -16,6 +16,9 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
   render: function() {
     var that = this;
+    this.model.aboutLabel = this.app.translate('About');
+    this.model.locationLabel = this.app.translate('Location');
+    this.model.recentlyPostedLabel = this.app.translate('Recently Posted');
     this.$el.html( this.template(this.model) );
 
 
