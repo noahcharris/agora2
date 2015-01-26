@@ -252,9 +252,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Headline',
   ar: '',
-  zh: '',
+  zh: '??????',
   fr: '',
   de: '',
   ja: '',
@@ -262,9 +262,9 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Content',
   ar: '',
-  zh: '',
+  zh: '??????',
   fr: '',
   de: '',
   ja: '',

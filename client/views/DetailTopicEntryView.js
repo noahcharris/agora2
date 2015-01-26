@@ -45,7 +45,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
     //translating
     var postLabel = this.app.translate('Post');
-    this.$el.children('#inputBox').children('#inputBoxButton').children('#postLabel').text(postLabel)
+    var headlineLabel = this.app.translate('Headline');
+    var contentLabel = this.app.translate('Content');
+    this.$el.children('#inputBox').children('#inputBoxButton').children('#postLabel').text(postLabel);
+    this.$el.children('#inputBox').children('#inputHeadlineTextArea').attr('placeholder', headlineLabel);
+    this.$el.children('#inputBox').children('#inputTextArea').attr('placeholder', contentLabel);
 
     this.$el.append($('<div id="conversationWrapper"><div id="commentMask"></div></div>'));
 
