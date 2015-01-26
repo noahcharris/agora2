@@ -348,7 +348,6 @@
     </script>
 
 
-    <!--dfjsaklfdjsakflsj;fdksla;fjkdlsa;fjdksal;fjdskal;fjdksal;fjdsakl;fjdskal;fjdskla;fjdklsa;fjdk-->
 
     <!--Topic Creation-->
     <script id="topicCreationTemplate" type="text/template">
@@ -358,6 +357,7 @@
       <input id="topicCreationLink" placeholder="Link"></input>
       <br/><br/>
       <textarea id="topicCreationContent" placeholder="Content"></textarea>
+      <!-- have to figue out how to translate-->
       <form action="?" method="POST">
          <div id="html_element"></div>
          <br>
@@ -376,14 +376,14 @@
       <br/><br/>
       This group is 
       <form action="">
-      <input type="radio" name="publicPrivate" value="public" checked>Public</input>
-      <input type="radio" name="publicPrivate" value="private">Private</input>
+      <input type="radio" name="publicPrivate" value="public" checked><%= publicLabel %></input>
+      <input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>
       </form>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
       <input id="parentInput" placeholder="Parent Channel"></input><br/>
-      <button id="nextButton">Next</button>
+      <button id="nextButton"><%= nextLabel %></button>
     </script>
 
 
@@ -393,19 +393,19 @@
       <input id="locationNameInput" placeholder="Location Name"></input>
       <br/><br/>
       This group is 
-      <input type="radio" name="publicPrivate" value="public" checked>Public</input>
-      <input type="radio" name="publicPrivate" value="private">Private</input>
+      <input type="radio" name="publicPrivate" value="public" checked><%= publicLabel %></input>
+      <input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
       <input id="parentInput" placeholder="Parent Location"></input><br/>
-      <button id="nextButton">Next</button>
+      <button id="nextButton"><%= nextLabel %></button>
     </script>
 
 
 
     <script id="placementViewTemplate" type="text/template">
-    Place a point! Click Done when finished.
+    <%= placementLabel %>
     <br/>
     <br/>
     <br/>
@@ -413,9 +413,7 @@
     </script>
 
     
-
-
-
+    <!--dfjsaklfdjsakflsj;fdksla;fjkdlsa;fjdksal;fjdskal;fjdksal;fjdsakl;fjdskal;fjdskla;fjdklsa;fjdk-->
 
     <script id="registrationViewTemplate" type="text/template">
     <div class="login">
@@ -478,52 +476,16 @@
     </script>
 
 
-    <script id="alertSearchTemplate" type="text/template">
-    <h2 class="loading">LOADING...</h2>
-    </script>
-
-    <script id="alertFollowupSuccessTemplate" type="text/template">
-    followup success template
-    </script>
-
-    <script id="alertFollowupFailureTemplate" type="text/template">
-    followup failure template
-    </script>
-
-    <script id="alertGroupCreationSuccessTemplate" type="text/template">
-    Group creation success
-    </script>
-
-    <script id="alertGroupCreationFailureTemplate" type="text/template">
-    Group creation failure
-    </script>
-
-
-    <script id="placeTemplate" type="text/template">
-      <br/>
-      Name:&nbsp<%= name %>
-      <br/>
-      Description:&nbsp<%= description %>
-      <br/>
-      Population:&nbsp<%= population %>
-    </script>
-
-    <!--for use with pathing to unique users-->
-    <script id="userTemplate" type="text/template">
-      USER TEMPLATE
-    </script>
-
-
     <script id="settingsViewTemplate" type="text/template">
-      <h1 id="menu title"> MENU </h1>
+      <h1 id="menu title"> <%= menuLabel %> </h1>
       <div id="buttonBox"></div>
       <br/><br/><br/>
-      Recently Visited
+      <%= recentlyVisitedLabel %>
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
     </script>
 
     <script id="changeViewTemplate" type="text/template">
-      <h1>Change View</h1>
+      <h1></h1>
     </script>
 
 

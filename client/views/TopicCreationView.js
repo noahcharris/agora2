@@ -21,6 +21,14 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     this.$el.empty();
     this.$el.html( this.template() );
 
+    //translation
+    var headlineLabel = this.app.translate('Headline');
+    var linkLabel = this.app.translate('Link');
+    var contentLabel = this.app.translate('Content');
+    this.$el.children('#topicCreationHeadline').attr('placeholder', headlineLabel);
+    this.$el.children('#topicCreationLink').attr('placeholder', linkLabel);
+    this.$el.children('#topicCreationContent').attr('placeholder', contentLabel);
+
     this.$el.children('div#imageUploadButton').on('click', function() {
       console.log('aqua');
     });
@@ -54,8 +62,8 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
 
 
-    //this.$el.append( $('<button>Upload Image</button><br/><br/>') );
-    this.$el.append( $('<br/><br/><button id="topicCreationPostButton">Post</button>') );
+    var postLabel = this.app.translate('Post');
+    this.$el.append( $('<br/><br/><button id="topicCreationPostButton">'+postLabel+'</button>') );
 
     var location = that.app.get('mapController').get('location') || 'World';
     this.$el.append( $('<p>Location:&nbsp' + location + '</p>'))

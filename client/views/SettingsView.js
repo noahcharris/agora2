@@ -18,7 +18,10 @@ Agora.Views.SettingsView = Backbone.View.extend({
     var that = this;
     
     this.$el.empty();
-    this.$el.html( this.template() );
+
+    var menuLabel = this.app.translate('Menu');
+    var recentlyVisitedLabel = this.app.translate('Recently Visited');
+    this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel} ) );
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
@@ -144,7 +147,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
         },
         success: function(data) {
           //s for successsfulllyyyyyy
-          if (data[0] === 't') {
+          console.log('WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU: ', data);
+          if (data.length && data[0].verified) {
             that.app.get('detailView').displayed = 'CreateChannel';
             that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
           } else {

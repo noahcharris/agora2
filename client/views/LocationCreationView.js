@@ -22,16 +22,28 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var that = this;
 
     this.$el.empty();
-    this.$el.html( this.template() );
+
+
+    var locationNameLabel = this.app.translate('Channel Name');
+    var publicLabel = this.app.translate('Public');
+    var privateLabel = this.app.translate('Private');
+    var descriptionLabel = this.app.translate('Description');
+    var parentLocationLabel = this.app.translate('Parent Location');
+    var nextLabel = this.app.translate('Next');
+
+    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel} ) );
+    this.$el.children('#locationNameInput').attr('placeholder', locationNameLabel);
+    this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
+    this.$el.children('#parentInput').attr('placeholder', parentLocationLabel);
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
 
-    // this.$el.append( $('<button>Next</button>') );
 
-    var $backButton = $('<button id="backButton">Back</button>')
+    var backLabel = this.app.translate('Back');
+    var $backButton = $('<button id="backButton">'+backLabel+'</button>')
     $backButton.on('click', function() {
       that.app.get('detailView').displayed = 'Settings';
       that.app.get('content2').show(that.app.get('settingsView'));
