@@ -39,6 +39,7 @@ var fs = require('fs')
 
 var AgoraMaxUpload = 10000000;
 var workerSecret = 'courtesytointervene';
+var placeRadiusThreshold = 1000000000;
 
 
 
@@ -1002,7 +1003,7 @@ module.exports.getPoints = function(request, response) {
     ['POINT('+queryArgs.longitude+' '+queryArgs.latitude+')'], function(err, result) {
     if (err) {
       console.log('error retrieving points: ', err);
-      response.end('server error');
+      response.end('error');
     } else {
       response.json(result.rows);
     }
@@ -1309,7 +1310,7 @@ module.exports.refreshToken = function(request, response) {
             function(err, result) {
               if (err) {
                 console.log('error insertin into securityJoin: ', err);
-                response.end('server error');
+                response.end('error');
               } else {
                   //LOGIN SUCCESSFUL
                   //set cookie which will be checkd in checkLogin (10 minutes here)
@@ -1451,7 +1452,7 @@ module.exports.login = function(request, response) {
               [request.body.username], function(err, result) {
                 if (err) {
                   console.log('error deleting from securityJoin: ', err);
-                  response.end('server error');
+                  response.end('error');
                 } else {
                   //∆∆∆∆∆∆∆∆∆ GENERATE TOKEN AND COOKIE ∆∆∆∆∆∆∆∆∆∆∆∆
                   var token = Math.floor(Math.random()*100000000000000000001); //generate token here
@@ -1462,7 +1463,7 @@ module.exports.login = function(request, response) {
                     function(err, result) {
                       if (err) {
                         console.log('error insertin into securityJoin: ', err);
-                        response.end('server error');
+                        response.end('error');
                       } else {
                           //LOGIN SUCCESSFUL
                           //set cookie which will be checkd in checkLogin (10 minutes here)
@@ -1487,7 +1488,7 @@ module.exports.login = function(request, response) {
         [request.body.username], function(err, result) {
           if (err) {
             console.log('error selecting from users by email');
-            response.end('server error');
+            response.end('error');
           } else {
 
             if (result.rows.length) {
@@ -1666,7 +1667,7 @@ module.exports.getEmail = function(request, response) {
             function(err, result) {
               if (err) {
                 console.log('error selecting from users: ', err);
-                response.end('server error');
+                response.end('error');
               } else {
                 response.json(result.rows);
               }
@@ -1708,7 +1709,7 @@ module.exports.changeEmail = function(request, response) {
                           [request.body.email, request.body.username], function(err, result) {
                             if (err) {
                               console.log('error updating user email: ', err);
-                              response.end('server error');
+                              response.end('error');
                             } else {
                               response.end('successfully updated email');
                             }
@@ -1773,7 +1774,7 @@ module.exports.changePassword = function(request, response) {
                           [hash, salt, request.body.username], function(err, result) {
                             if (err) {
                               console.log('error updating passhash: ', err);
-                              response.end('server error');
+                              response.end('error');
                             } else {
                               response.end('successfully updated password');
                             }
@@ -1823,7 +1824,7 @@ module.exports.changeLocation = function(request, response) {
             [request.body.location, request.body.username], function(err, result) {
               if (err) {
                 console.log('error updating user location: ', err);
-                response.end('server error');
+                response.end('error');
               } else {
                 response.end('successfully updated location');
               }
@@ -1923,7 +1924,8 @@ module.exports.addContact = function(request, response) {
                                                       response.end('error');
                                                     } else {
                                                       //reword this fo sho
-                                                      response.end('you and '+ request.body.contact +' are now contacts');
+                                                      // response.end('you and '+ request.body.contact +' are now contacts');
+                                                      response.end('success!');
                                                     }
                                               });
                                         }
@@ -2400,7 +2402,7 @@ module.exports.registerUser = function(request, response) {
                                           });
 
                                         } else {
-                                          response.end('error creating user');
+                                          response.end('error');
                                         }
                                     });//end create user
 
@@ -2461,7 +2463,7 @@ module.exports.verifyUser = function(request, response) {
           [queryArgs.username], function(err, result) {
             if (err) {
               console.log('error deleting from emailVerificationJoin: ', err);
-              response.end('server error');
+              response.end('error');
             } else {
 
               client.query("UPDATE users SET verified = 'TRUE' WHERE username = $1",
@@ -2512,7 +2514,7 @@ module.exports.checkVerification = function(request, response) {
             [queryArgs.username], function(err, result) {
               if (err) {
                 console.log('error checking verification: ', err);
-                response.end('server error');
+                response.end('error');
               } else {
                 response.json(result.rows);
               }
@@ -2938,7 +2940,7 @@ module.exports.updateUserProfile = function(request, response) {
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
-        response.end('please make sure that our file size is not over 25MB');
+        response.end('please make sure that your file size is not over 10MB');
       }
     } else {
 
@@ -3036,7 +3038,7 @@ module.exports.updateUserProfile = function(request, response) {
                               if (err) {
                                 console.log('error updating users table: ', err);
                               } else {
-                                response.end('successfully updated profile (no image)');
+                                response.end('successfully updated profile');
                               }
                           });
 
@@ -3235,7 +3237,7 @@ module.exports.createTopic = function(request, response) {
                                                     } else {
 
 
-                                                      response.end('successfully created topic (no image)');
+                                                      response.end('successfully created topic');
                                                     }
                                                   });
 
@@ -3440,7 +3442,7 @@ module.exports.createComment = function(request, response) {
 
                                                     client.query("UPDATE comments SET image = $1 WHERE id = $2",
                                                       [imageLink, result.rows[0].id], function(err, result) {
-                                                        response.end('successfully submitted comment');
+                                                        response.end('submission successful');
                                                     });
                                               });
 
@@ -3479,7 +3481,7 @@ module.exports.createComment = function(request, response) {
                           } else {
 
 
-                            response.end('successfully created comment (no image)');
+                            response.end('submission successful');
                           }
                         });
                 });
@@ -3613,7 +3615,7 @@ module.exports.createResponse = function(request, response) {
 
                                                               client.query("UPDATE responses SET image = $1 WHERE id = $2",
                                                                 [imageLink, result.rows[0].id], function(err, result) {
-                                                                  response.end('successfully submitted response');
+                                                                  response.end('submission successful');
                                                               });
                                                         });
                                               }
@@ -3646,7 +3648,7 @@ module.exports.createResponse = function(request, response) {
                                     } else {
 
 
-                                      response.end('successfully created response (no image)');
+                                      response.end('submission successful');
                                     }
                                   });
 
@@ -3780,7 +3782,7 @@ module.exports.createReply = function(request, response) {
 
                                                           client.query("UPDATE replies SET image = $1 WHERE id = $2",
                                                             [imageLink, result.rows[0].id], function(err, result) {
-                                                              response.end('successfully submitted reply');
+                                                              response.end('submission successful');
                                                           });
                                                     });
                                           }
@@ -3814,7 +3816,7 @@ module.exports.createReply = function(request, response) {
                               } else {
 
 
-                                response.end('successfully created reply (no image)');
+                                response.end('submission successful');
                               }
                             });
 
@@ -3872,7 +3874,7 @@ module.exports.createLocation = function(request, response) {
               function(err, result) {
                 if (err) {
                   console.log('error selecting from users: ', err);
-                  response.end('server error');
+                  response.end('error');
                 } else {
                   if (result.rows[0] && result.rows[0].verified) {
                     //VERIFIED!!!!!!!!
@@ -3906,11 +3908,11 @@ module.exports.createLocation = function(request, response) {
                           //check that it is within acceptable radius
                           client.query("SELECT * FROM locations "
                             // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
-                            +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), 1000000000) AND name = $2;",
+                            +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), "+placeRadiusThreshold+") AND name = $2;",
                             ['POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.parent], function(err, result) {
                             if (err) {
                               console.log('error retrieving points: ', err);
-                              response.end('server error');
+                              response.end('error');
                             } else {
                               if (result.rows.length) {
                                 //within acceptable radius
@@ -4001,7 +4003,7 @@ module.exports.createChannel = function(request, response) {
             function(err, result) {
               if (err) {
                 console.log('error selecting from users: ', err);
-                response.end('server error');
+                response.end('error');
               } else {
                 if (result.rows[0] && result.rows[0].verified) {
                   //VERIFIED!!!!!!!!
@@ -4121,14 +4123,14 @@ module.exports.upvoteTopic = function(request, response) {
                                   response.end('error');
                                 } else {
                                   console.log('user: '+request.body.username+' has successfully voted for topic: '+request.body.topicId);
-                                  response.end('Succesfully voted');
+                                  response.end('succesfully voted');
                                 }
                             });
 
                           }
                         });
                     } else {
-                      response.end('Already voted');
+                      response.end('already voted');
                     }
                   }
 
@@ -4190,14 +4192,14 @@ module.exports.upvoteComment = function(request, response) {
                                         response.end('error');
                                       } else {
                                         console.log('user: '+request.body.username+' has successfully voted for comment: '+request.body.commentId);
-                                        response.end('Succesfully voted');
+                                        response.end('succesfully voted');
                                       }
                                   });
 
                                 }
                               });
                           } else {
-                            response.end('Already voted');
+                            response.end('already voted');
                           }
                         }
 
@@ -4256,14 +4258,14 @@ module.exports.upvoteResponse = function(request, response) {
                                   response.end('error');
                                 } else {
                                   console.log('user: '+request.body.username+' has successfully voted for response: '+request.body.responseId);
-                                  response.end('Succesfully voted');
+                                  response.end('succesfully voted');
                                 }
                             });
 
                           }
                         });
                     } else {
-                      response.end('Already voted');
+                      response.end('already voted');
                     }
                   }
 
@@ -4323,14 +4325,14 @@ module.exports.upvoteReply = function(request, response) {
                                     response.end('error');
                                   } else {
                                     console.log('user: '+request.body.username+' has successfully voted for reply: '+request.body.replyId);
-                                    response.end('Succesfully voted');
+                                    response.end('succesfully voted');
                                   }
                               });
 
                             }
                           });
                       } else {
-                        response.end('Already voted');
+                        response.end('already voted');
                       }
                     }
 
