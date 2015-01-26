@@ -43,6 +43,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.$el.append(this.inputBoxTemplate());
     this.$el.children('div#inputBox').css('height', '0px');
 
+    //translating
+    var postLabel = this.app.translate('Post');
+    this.$el.children('#inputBox').children('#inputBoxButton').children('#postLabel').text(postLabel)
+
     this.$el.append($('<div id="conversationWrapper"><div id="commentMask"></div></div>'));
 
     //image input
@@ -72,6 +76,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     tempModel.userLabel = this.app.translate('User');
     tempModel.channelLabel = this.app.translate('Channel');
     tempModel.postedAtLabel = this.app.translate('Posted At');
+    tempModel.replyLabel = this.app.translate('Reply');
     tempModel.linkLabel = this.app.translate('LINK');
     this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
 
