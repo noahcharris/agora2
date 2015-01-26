@@ -3,7 +3,7 @@
 
 var translationData = [{
   en: 'Location',
-  ar: '',
+  ar: 'موقع',
   zh: '地点',
   fr: 'Localisation',
   de: '',
@@ -13,7 +13,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Channel',
-  ar: '',
+  ar: 'موضوع',
   zh: '????',
   fr: '',
   de: '',
@@ -123,7 +123,7 @@ var translationData = [{
   es: '',
 },{
   en: 'User',
-  ar: '',
+  ar: 'المستعمل',
   zh: '??',
   fr: '',
   de: '',
@@ -133,7 +133,7 @@ var translationData = [{
   es: '',
 },{
   en: 'To',
-  ar: '',
+  ar: 'إلى',
   zh: '??',
   fr: '',
   de: '',
@@ -782,6 +782,8 @@ var translationData = [{
   ru: '',
   es: '',
 },{
+
+  //SERVER ONES
   en: 'error',
   ar: '',
   zh: '?????',

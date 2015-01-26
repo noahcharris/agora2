@@ -24,7 +24,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     this.$el.empty();
 
 
-    var locationNameLabel = this.app.translate('Channel Name');
+    var locationNameLabel = this.app.translate('Location Name');
     var radioPrefixLabel = this.app.translate('This location is');
     var publicLabel = this.app.translate('Public');
     var privateLabel = this.app.translate('Private');

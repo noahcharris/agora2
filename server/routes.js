@@ -21,7 +21,8 @@ var _ = require('underscore');
 
 var Q = require('q');
 
-var cities = require('./cities.js');
+var cityData = require('./cities.js');
+
 
 var imageInfo = require('netpbm').info;
 var imageConverter = require('netpbm').convert;
@@ -39,7 +40,7 @@ var fs = require('fs')
 
 var AgoraMaxUpload = 10000000;
 var workerSecret = 'courtesytointervene';
-var placeRadiusThreshold = 1000000000;
+var placeRadiusThreshold = 10000000000000000;
 
 
 
@@ -3890,16 +3891,15 @@ module.exports.createLocation = function(request, response) {
                         //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
                         //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
 
-
-
                         //check that parent is a city
+
 
                         var flag = false;
                         coords = null;
-                        for (var i=0; i < cities.features.length ;i++) {
-                          if (request.body.parent === cities.features[i].properties.city) {
+                        for (var i=0; i < cityData.cities.features.length ;i++) {
+                          if (request.body.parent === cityData.cities.features[i].properties.city) {
                             flag = true;
-                            coords = cities.features[i].geometry.coordinates;
+                            coords = cityData.cities.features[i].geometry.coordinates;
                           }
                         }
 

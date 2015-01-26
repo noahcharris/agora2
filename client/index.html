@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="auto">
   <head>
     <meta charset="UTF-8">
     <title>Agora</title>
@@ -47,7 +47,7 @@
      <!--NEED TO DISPLAY THESE IN NATIVE TONGUE-->
      <select id="languageSelect">
       <option value="English">English</option>
-      <option value="Arabic">???</option>
+      <option value="Arabic">العربية</option>
       <option value="Chinese">中国</option>
       <option value="French">Français</option>
       <option value="German">Deutsch</option>
@@ -95,6 +95,23 @@
       </div>
      </div>
 
+    </script>
+
+    <!-- ARE THERE FEW ENOUGH SWITCHAROUNDS FOR THIS TO BE A VIABLE SYSTEM??? -->
+
+    <script id="RTLsidebarTopicEntryTemplate" type="text/template">
+
+     <div class="sidebarFloatClear">
+      <img class="sidebarTopicImage"></img>
+      <div class="contentAndToFromWrapper">
+        <div class="sidebarContentWrapper">
+          <%= headline %>
+        </div>
+        <div class="sidebarToFromWrapper">
+          <p class="topString">(<%= rank %>)&nbsp<span class="locationString">&nbsp<%= location %></span>~<span class="sidebarChannelString"><%= channel %></span>&nbsp:<%= locationLabel %><span class="sidebarUsername">&nbsp&nbsp<%= username %>&nbsp:<%= userLabel %></span></p>
+        </div>
+      </div>
+     </div>
 
     </script>
 

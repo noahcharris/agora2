@@ -88,8 +88,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.children('#buttonBox').append($editProfileButton);
     this.$el.children('#buttonBox').append('<br/>');
 
-    var changeLocationLabel = this.app.translate('Change Location');
-    var $locationCreationButton = $('<button id="createLocationButton">'+changeLocationLabel+'</button>');
+    var locationCreationLabel = this.app.translate('Create Location');
+    var $locationCreationButton = $('<button id="createLocationButton">'+locationCreationLabel+'</button>');
     $locationCreationButton.on('click', function() {
 
 

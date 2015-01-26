@@ -14,6 +14,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   initialize: function(app) {
     this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
+    this.RTLtopicTemplate = _.template( $('#RTLsidebarTopicEntryTemplate').html() );
     this.locationTemplate = _.template( $('#sidebarLocationEntryTemplate').html() );
     this.channelTemplate = _.template( $('#sidebarChannelEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
@@ -38,7 +39,11 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     model2.userLabel = userLabel;
     model2.locationLabel = locationLabel;
 
-    this.$el.html( this.topicTemplate(model2) );
+    if (this.app.get('language') !== 'ar') {
+      this.$el.html( this.topicTemplate(model2) );
+    } else {
+      this.$el.html( this.RTLtopicTemplate(model2) );
+    }
 
 
 

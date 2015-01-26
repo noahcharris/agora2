@@ -45,24 +45,13 @@ Agora.Views.LocationView = Backbone.View.extend({
   render: function() {
     var that = this;
 
-    //TODO- Preston's suggestion, give it click interaction with searchability
-
+    this.$el.unbind();
+    this.$el.empty();
 
     var path = this.model.get('location').split('/');
 
 
-    //PREFIX
 
-    //TRANSLATE THAT SHIT!!!!
-    var prefix = this.app.translate('Location');
-
-    var $prefix = $('<span id="pathPrefix">&nbsp&nbsp'+prefix+':&nbsp</span>');
-    $prefix.on('click', function() {
-      
-      that.app.showLocationDetailView(that.model.get('location'));
-
-    });
-    this.$el.html($prefix);
 
     var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
@@ -185,6 +174,28 @@ Agora.Views.LocationView = Backbone.View.extend({
       })();
       $('span.pathWrapper').append( $channelElement );
 
+    }
+
+
+    //PREFIX(suffix in arabic)
+    var prefix = this.app.translate('Location');
+
+    if (this.app.get('language') !== 'ar') {
+      var $prefix = $('<span id="pathPrefix">&nbsp&nbsp'+prefix+':&nbsp</span>');
+      $prefix.on('click', function() {
+        
+        that.app.showLocationDetailView(that.model.get('location'));
+
+      });
+      this.$el.prepend($prefix);
+    } else {
+      var $prefix = $('<span id="pathPrefix">&nbsp:'+prefix+'&nbsp&nbsp</span>');
+      $prefix.on('click', function() {
+        
+        that.app.showLocationDetailView(that.model.get('location'));
+
+      });
+      this.$el.append($prefix);
     }
 
 
