@@ -340,9 +340,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           iconUrl: '/resources/images/logo2.png',
           shadowUrl: '/resources/images/logo2.png',
 
-          iconSize:     [20, 20], // size of the icon
+          iconSize:     [200, 200], // size of the icon
           shadowSize:   [0, 0], // size of the shadow
-          iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+          iconAnchor:   [100, 100], // point of the icon which will correspond to marker's location
           shadowAnchor: [4, 62],  // the same for the shadow
           popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       });
@@ -429,6 +429,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           circle.on('mouseout', mouseoutHandler);
           that.heatMarkerLayer.addLayer(circle);
           this.get('map').addLayer(this.heatMarkerLayer);
+          this.heatMarkerLayer.bringToBack();
         }
       }
 
@@ -456,6 +457,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             circle.on('mouseout', mouseoutHandler);
             that.heatMarkerLayer.addLayer(circle);
             that.get('map').addLayer(that.heatMarkerLayer);
+            that.heatMarkerLayer.bringToBack();
           } else {
           }
         }, error: function(err) {
