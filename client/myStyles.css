@@ -1050,11 +1050,11 @@ right:22.4%;
   cursor: pointer;
   position: absolute;
   height: 20px;
-  width: 50px;
+  width: 40px;
   top:0px;
-  left: 84%;
+  left: 87%;
   font-size: 14px;
-  padding-left: 11px;
+  text-align: center;
 
 
   margin: 3px;
@@ -1125,6 +1125,23 @@ right:22.4%;
 /* TOPICS */
 
 #linkBox{
+<<<<<<< HEAD
+  width:60px;
+  font-family: sans-serif;
+  font-style: underline;
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  left:0px;
+  top:90%;
+  background-color: rgba(256,256,256,.4);
+  color: rgba(56,56,56,1);
+  -webkit-transition: background-color .5s, color .5s;
+}
+
+#linkBox:hover {
+  background-color:rgba(56,56,56,.4);
+  color:  rgba(256,256,256,1);
   cursor:pointer;
 }
 
@@ -1608,7 +1625,7 @@ textarea {
 
 
 .loading {
-  padding: 220px;
+  padding: 0px;
 }
 
 
@@ -1726,6 +1743,38 @@ textarea {
 }
 
 
+
+
+
+
+#changePasswordButton {
+  width:100px;
+  height:32px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:300px;
+  top:12%;
+}
+
+#changeLocationButton {
+  width:100px;
+  height:32px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:300px;
+  top:18%;
+}
+
+#changeEmailButton {
+  width:100px;
+  height:32px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:300px;
+  top:24%; 
+}
+
+
 #settingsViewList {
   list-style-type: none;
 }
@@ -1735,6 +1784,26 @@ textarea {
 
 .topicCreationView {
 
+}
+
+.topicCreationView::-webkit-scrollbar{
+  width:10px;
+}
+
+.topicCreationView::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.topicCreationView::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.topicCreationView::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.topicCreationView::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
 }
 
 #topicCreationHeadline {
@@ -1781,12 +1850,14 @@ textarea {
     z-index:    1000;
     top:        20px;
     left:       165px;
-    height:     40px;
-    width:      40px;
+    height:     50px;
+    width:      50px;
     background: url('/resources/images/loading.gif') no-repeat;
     background-position: center;
     background-color: transparent;
-    opacity: 0.6;
+    background-size: 50px;
+    opacity: 1;
+    padding: 0px;
 }
 
 /*#loaderMask {
