@@ -153,6 +153,8 @@ app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
 app.get('/validateUsername', routes.validateUsername);
+app.get('/validateChannel', routes.validateChannel);
+app.get('/validateLocation', routes.validateLocation);
 app.post('/registerUser', routes.registerUser);
 app.get('/verifyUser', routes.verifyUser);
 app.get('/checkVerification', routes.checkVerification);

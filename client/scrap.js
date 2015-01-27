@@ -186,6 +186,15 @@ function placeMarkersInBounds() {
 
 
 
+<%= radioPrefixLabel %>
+<form action="">
+<input type="radio" name="publicPrivate" value="public" checked><%= publicLabel %></input>
+<input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>
+</form>
+
+
+
+
 
 
 

@@ -10,7 +10,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ubicación',
 },{
   en: 'Channel',
   ar: 'موضوع',
@@ -20,7 +20,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Tema',
 },{
   en: 'Top',
   ar: '',
@@ -30,7 +30,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Popular',
 },{
   en: 'New',
   ar: '',
@@ -40,7 +40,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nuevo',
 },{
   en: 'Hot',
   ar: '',
@@ -50,7 +50,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Activo',
 },{
   en: 'Friends',
   ar: '',
@@ -60,7 +60,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Amigos',
 },{
   en: 'Post to',
   ar: '',
@@ -70,7 +70,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Publicar en',
 },{
   en: 'Next',
   ar: '',
@@ -80,7 +80,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Proximo',
 },{
   en: 'Not Logged In',
   ar: 'لم تقم بتسجيل الدخول',
@@ -90,7 +90,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'No estás autenticado',
 },{
   en: 'Users',
   ar: '',
@@ -100,7 +100,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Usuarios',
 },{
   en: 'Locations',
   ar: '',
@@ -110,7 +110,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Lugares',
 },{
   en: 'Channels',
   ar: '',
@@ -120,7 +120,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Temas',
 },{
   en: 'User',
   ar: 'المستعمل',
@@ -130,7 +130,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Usuario',
 },{
   en: 'To',
   ar: 'إلى',
@@ -140,7 +140,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'A',
 },{
   en: 'Add contact request from ',
   ar: '',
@@ -150,7 +150,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ańadir petición de contacto de',
 },{
   en: 'New message from ',
   ar: '',
@@ -160,7 +160,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nuevo mensaje de',
 },{
   en: 'Recipient',
   ar: '',
@@ -170,7 +170,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Recipiente',
 },{
   en: 'Contacts',
   ar: '',
@@ -180,7 +180,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Contactos',
 },{
   en: 'Messages',
   ar: '',
@@ -190,7 +190,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Mensajes',
 },{
   en: 'User',
   ar: '',
@@ -200,7 +200,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Usuario',
 },{
   en: 'Posted At',
   ar: '',
@@ -210,7 +210,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Publicado en',
 },{
   en: 'LINK',
   ar: '',
@@ -220,7 +220,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'ENLACE',
 },{
   en: 'Reply',
   ar: '',
@@ -230,7 +230,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Responder',
 },{
   en: 'From',
   ar: '',
@@ -240,7 +240,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'De',
 },{
   en: 'Post',
   ar: '',
@@ -250,7 +250,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Publicar',
 },{
   en: 'Headline',
   ar: '',
@@ -260,7 +260,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Titular',
 },{
   en: 'Content',
   ar: '',
@@ -270,7 +270,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Contenido',
 },{
   en: 'Send',
   ar: '',
@@ -280,7 +280,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Enviar',
 },{
   en: 'About',
   ar: '',
@@ -290,7 +290,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Acerca De',
 },{
   en: 'Go To Location',
   ar: '',
@@ -300,7 +300,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ubicar',
 },{
   en: 'Go To Channel',
   ar: '',
@@ -310,7 +310,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ir Al Tema',
 },{
   en: 'Recently Posted',
   ar: '',
@@ -320,7 +320,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Recientemente publicado',
 },{
   en: 'Link',
   ar: '',
@@ -330,7 +330,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Enlace',
 },{
   en: 'This group is',
   ar: '',
@@ -340,7 +340,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Este grupo es',
 },{
   en: 'Public',
   ar: '',
@@ -350,7 +350,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Público',
 },{
   en: 'Private',
   ar: '',
@@ -360,7 +360,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Privado',
 },{
   en: 'Channel Name',
   ar: '',
@@ -370,7 +370,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nombre del Tema',
 },{
   en: 'Description',
   ar: '',
@@ -380,7 +380,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Descripción',
 },{
   en: 'Parent Channel',
   ar: '',
@@ -390,7 +390,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Tema Matriz',
 },{
   en: 'Location Name',
   ar: '',
@@ -400,7 +400,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nobre del Lugar',
 },{
   en: 'Parent Location',
   ar: '',
@@ -410,7 +410,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ubicación Matriz',
 },{
   en: 'Back',
   ar: '',
@@ -420,7 +420,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Regresar',
 },{
   en: 'Place a point! Click Done when finished.',
   ar: '',
@@ -430,7 +430,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Colocar un punto! Haga clic en Terminado cuando haya terminado',
 },{
   en: 'Recently Visited',
   ar: '',
@@ -440,7 +440,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Recientemente Visitado',
 },{
   en: 'Menu',
   ar: '',
@@ -450,7 +450,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Menú',
 },{
   en: 'REGISTER',
   ar: '',
@@ -460,7 +460,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Inscribirse',
 },{
   en: 'Check Availability',
   ar: '',
@@ -470,7 +470,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Consultar Disponibilidad',
 },{
   en: 'password',
   ar: 'كلمة المرور',
@@ -480,7 +480,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Contraseña',
 },{
   en: 'confirm password',
   ar: '',
@@ -490,7 +490,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'confirmar contraseña',
 },{
   en: 'Your email is never displayed to other users.',
   ar: '',
@@ -500,7 +500,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Su dirección de correo electrónico nunca se muestra a otros usuarios',
 },{
   en: 'email',
   ar: '',
@@ -510,7 +510,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Correo electrónico',
 },{
   en: 'origin',
   ar: '',
@@ -520,7 +520,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Origen',
 },{
   en: 'current location',
   ar: '',
@@ -530,7 +530,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ubicación actual',
 },{
   en: 'about',
   ar: '',
@@ -540,7 +540,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Acerca de',
 },{
   en: 'Register',
   ar: '',
@@ -550,7 +550,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Inscribirse',
 },{
   en: 'username',
   ar: '',
@@ -560,7 +560,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nobre de usuario',
 },{
   en: 'You cannot change origin once it is set!',
   ar: '',
@@ -570,7 +570,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'No se puede cambiar el origen cuando se establece',
 },{
   en: 'LOG IN',
   ar: '',
@@ -580,7 +580,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'INICIAR SESIÓN',
 },{
   en: 'Log In',
   ar: '',
@@ -590,7 +590,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Iniciar Sesión',
 },{
   en: 'Log Out',
   ar: '',
@@ -600,7 +600,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Finalizar la Sesión',
 },{
   en: 'Done!',
   ar: '',
@@ -610,7 +610,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Terminado',
 },{
   en: 'Edit My Profile',
   ar: '',
@@ -620,7 +620,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Editar Mi Perfil',
 },{
   en: 'Change Location',
   ar: '',
@@ -630,7 +630,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Cambiar de Ubicación',
 },{
   en: 'Change Password',
   ar: '',
@@ -640,7 +640,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Cambiar Contraseña',
 },{
   en: 'Create Location',
   ar: '',
@@ -650,7 +650,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Crear Ubicación',
 },{
   en: 'Create Channel',
   ar: '',
@@ -670,7 +670,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Cambiar Correo Electrónico',
 },{
   en: 'View My Profile',
   ar: '',
@@ -680,7 +680,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ver Mi Perfil',
 },{
   en: 'Current Password',
   ar: '',
@@ -690,7 +690,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Contraseña Actual',
 },{
   en: 'New Password',
   ar: '',
@@ -700,7 +700,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Nueva Contraseña',
 },{
   en: 'Confirm New Password',
   ar: '',
@@ -710,7 +710,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Confirmar Nueva Contraseña',
 },{
   en: 'CHANGE PASSWORD',
   ar: '',
@@ -720,7 +720,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'CAMBIAR CONTRASEÑA',
 },{
   en: 'password confirmation does not match',
   ar: '',
@@ -730,7 +730,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'confirmación de la contraseña no coincide',
 },{
   en: 'CHANGE EMAIL',
   ar: '',
@@ -740,7 +740,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'CAMBIAR CORREO ELECTRÓNICO',
 },{
   en: 'This location is',
   ar: '',
@@ -750,7 +750,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Esta ubicación es',
 },{
   en: 'This channel is',
   ar: '',
@@ -760,7 +760,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Este tema es',
 },{
   en: 'ABOUT ME',
   ar: '',
@@ -770,7 +770,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Acerca de mí',
 },{
   en: 'Save Changes',
   ar: '',
@@ -780,7 +780,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Guardar los cambios',
 },{
 
   //SERVER ONES
@@ -792,7 +792,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'error',
 },{
   en: 'not authorized',
   ar: '',
@@ -802,7 +802,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'no autorizado',
 },{
   en: 'incorrect password',
   ar: '',
@@ -812,7 +812,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'contraseña incorrecta',
 },{
   en: "couldn't find user in database",
   ar: '',
@@ -822,7 +822,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'no se puede encontra el usario en la base de datos',
 },{
   en: 'successfully updated email',
   ar: '',
@@ -832,7 +832,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'correo electrónico actualizado correctamente',
 },{
   en: 'that email is taken!',
   ar: '',
@@ -842,7 +842,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'ese correo ya existe!',
 },{
   en: 'successfully updated password',
   ar: '',
@@ -852,7 +852,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'contraseña actualizada correctamente',
 },{
   en: 'successfully updated location',
   ar: '',
@@ -862,7 +862,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'ubicación actualizada correctamente',
 },{
   en: 'success!',
   ar: '',
@@ -872,7 +872,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Éxito',
 },{
   en: 'sent contact request',
   ar: '',
@@ -882,7 +882,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'solicitud de contacto enviada',
 },{
   en: 'Taken',
   ar: '',
@@ -892,7 +892,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Tomado',
 },{
   en: 'Available',
   ar: '',
@@ -902,7 +902,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Disponible',
 },{
   en: "username may not contain '@'",
   ar: '',
@@ -912,7 +912,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'nombre de usuario no puede contener @',
 },{
   en: 'That username is taken!',
   ar: '',
@@ -922,7 +922,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Ese nombre de usuario ya está en uso',
 },{
   en: 'please make sure that your file size is not over 10MB',
   ar: '',
@@ -932,7 +932,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'por favor asegúrese de que el tamaño del archivo no sea superior a 10 MB',
 },{
   en: 'successfully updated profile',
   ar: '',
@@ -942,7 +942,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'perfil actualizado correctamente',
 },{
   en: 'successfully submitted topic',
   ar: '',
@@ -952,7 +952,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'tema enviado correctamente',
 },{
   en: 'submission successful',
   ar: '',
@@ -962,7 +962,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'sumisíon lograda',
 },{
   en: 'successfully created location',
   ar: '',
@@ -972,7 +972,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'ubicación creada con éxito',
 },{
   en: 'Your location is too far from its parent city.',
   ar: '',
@@ -982,7 +982,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Su ubicación está demasiado lejos de su ciudad matriz',
 },{
   en: 'Your channel is too deeply nested.',
   ar: '',
@@ -992,7 +992,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Su tema está demasiado profundamente anidado',
 },{
   en: 'successfully created channel',
   ar: '',
@@ -1002,7 +1002,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'tema creado correctamente',
 },{
   en: 'succesfully voted',
   ar: '',
@@ -1012,7 +1012,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'voto logrado',
 },{
   en: 'already voted',
   ar: '',
@@ -1022,7 +1022,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'ya votó',
 },{
   en: 'Parent City',
   ar: '',
@@ -1032,7 +1032,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Cuidad Matriz',
 },{
   en: 'Your location must belong to a city',
   ar: '',
@@ -1042,7 +1042,7 @@ var translationData = [{
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'su ubicación debe pertenecer a una ciudad',
 },{
   en: '',
   ar: '',

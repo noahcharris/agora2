@@ -32,6 +32,9 @@ var fs = require('fs')
   , gm = require('gm');
 
 
+  //BE SUSPICIOUS ABOUT https.request() BUT I AM STILL USING IT FOR NOW
+
+
 //var treeBuilder = require('../workers/treebuilder.js');
 
 
@@ -2267,9 +2270,94 @@ module.exports.validateUsername = function(request, response) {
       }
   });
 
+};
+
+
+
+module.exports.validateChannel = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+  console.log(queryArgs.parent + '/' + queryArgs.name);
+
+  if (queryArgs.name.indexOf('/') !== -1) {
+
+      //capitalize the name
+      var temp = queryArgs.name.split(' ');
+      for (var i=0; i < temp.length ;i++) {
+        temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+      }
+      var name = temp.join(' ');
+      var fullPath = queryArgs.parent+'/'+name;
+
+      var temp = fullPath.split('/');
+
+      if (temp.length > 5) {
+        response.end('your channel is too deeply nested.');
+      } else {
+
+        client.query("SELECT * FROM channels WHERE name = $1;",
+          [fullPath],
+          function(err, result) {
+            if (err) {
+              console.log('error selecting from users: ', err);
+            } else {
+                if (result.rows.length) {
+                  //username already taken
+                  response.end('channel unavailable :(');
+                } else {
+                  //username available
+                  response.end('Available');
+                }
+            }
+        });
+      }
+
+    
+  } else {
+    response.end("channel name cannot contain '/'");
+  }
+
+
 
 };
 
+module.exports.validateLocation = function(request, response) {
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  if (queryArgs.name.indexOf('/') !== -1) {
+
+      //capitalize the name
+      var temp = queryArgs.parent + '/' + queryArgs.name;
+      for (var i=0; i < temp.length ;i++) {
+        temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+      }
+      var name = temp.join(' ');
+
+      var fullPath = request.body.parent+'/'+name;
+
+      client.query("SELECT * FROM locations WHERE name = $1;",
+        [fullPath],
+        function(err, result) {
+          if (err) {
+            console.log('error selecting from users: ', err);
+          } else {
+              if (result.rows.length) {
+                //username already taken
+                response.end('location unavailable :(');
+              } else {
+                //username available
+                response.end('Available');
+              }
+          }
+      });
+
+  } else {
+    reponse.end("location name cannot contain '/'");
+  }
+
+
+};
 
 
 
