@@ -273,6 +273,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       success: function(data) {
         if (data) {
 
+          console.log('heatpoint data; ', data);
+
           //RECEIVE TOP 100 TOPICS FOR HEAT,
           //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
           //EXCLUDING WORLD, COMBINED W/ # OF OCCURRENCES
@@ -291,7 +293,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             }
           }
 
-          //console.log("RESULT: ", result);
+          console.log("RESULT: ", result);
 
           for (var key in result) {
 
@@ -429,7 +431,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           circle.on('mouseout', mouseoutHandler);
           that.heatMarkerLayer.addLayer(circle);
           this.get('map').addLayer(this.heatMarkerLayer);
-          this.heatMarkerLayer.bringToBack();
+          //this.heatMarkerLayer.bringToBack();
         }
       }
 
@@ -457,7 +459,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             circle.on('mouseout', mouseoutHandler);
             that.heatMarkerLayer.addLayer(circle);
             that.get('map').addLayer(that.heatMarkerLayer);
-            that.heatMarkerLayer.bringToBack();
+            //that.heatMarkerLayer.bringToBack();
           } else {
           }
         }, error: function(err) {
