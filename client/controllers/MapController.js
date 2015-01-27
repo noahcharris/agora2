@@ -147,6 +147,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.addCities();
     this.removeCities();
 
+    that.updateHeatPoints();
+
 
 
 
@@ -320,18 +322,33 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
 
-    //console.log('SETTING HEAT POINT WITH LOCATION: ', location);
+    //USE LOGO OR LOGO2 DEPENDING ON ZOOM LEVEL
 
-    var greenIcon = L.icon({
-        iconUrl: '/resources/images/logo.png',
-        shadowUrl: '/resources/images/logo.png',
+    if (that.get('map').getZoom() < 9) {
+      var greenIcon = L.icon({
+          iconUrl: '/resources/images/logo.png',
+          shadowUrl: '/resources/images/logo.png',
 
-        iconSize:     [20, 26], // size of the icon
-        shadowSize:   [0, 0], // size of the shadow
-        iconAnchor:   [4.5, 26], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
+          iconSize:     [20, 20], // size of the icon
+          shadowSize:   [0, 0], // size of the shadow
+          iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      });
+    } else {
+      var greenIcon = L.icon({
+          iconUrl: '/resources/images/logo2.png',
+          shadowUrl: '/resources/images/logo2.png',
+
+          iconSize:     [200, 200], // size of the icon
+          shadowSize:   [0, 0], // size of the shadow
+          iconAnchor:   [100, 100], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      });
+    }
+
+
 
     var mouseoverHandler = function(e) {
       var data = {
@@ -412,6 +429,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           circle.on('mouseout', mouseoutHandler);
           that.heatMarkerLayer.addLayer(circle);
           this.get('map').addLayer(this.heatMarkerLayer);
+          this.heatMarkerLayer.bringToBack();
         }
       }
 
@@ -439,6 +457,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             circle.on('mouseout', mouseoutHandler);
             that.heatMarkerLayer.addLayer(circle);
             that.get('map').addLayer(that.heatMarkerLayer);
+            that.heatMarkerLayer.bringToBack();
           } else {
           }
         }, error: function(err) {
@@ -557,9 +576,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             iconUrl: '/resources/images/dot.png',
             shadowUrl: '/resources/images/leaf-shadow.png',
 
-            iconSize:     [20, 26], // size of the icon
+            iconSize:     [20, 20], // size of the icon
             shadowSize:   [0, 0], // size of the shadow
-            iconAnchor:   [4.5, 26], // point of the icon which will correspond to marker's location
+            iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
@@ -717,7 +736,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     } else {
       //USE-GENERATED PLACE
 
-      console.log('eklwrjlkejrklwaj');
       //MAKE AN AJAX CALL TO GET LAT AND LNG OF THE PLACE
       $.ajax({
         url: 'http://liveworld.io:80/placeLatLng',
@@ -780,6 +798,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.removeCountries();
     this.removeStates();
     this.removeCities();
+    this.removePlaces();
     //remove all map features
 
     this.markerLayer = L.layerGroup();
@@ -797,6 +816,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   stopPlacing: function() {
     this.get('map').off('click', this.handler);
     this.markerLayer.clearLayers();
+    this.addCountries();
   },
 
   

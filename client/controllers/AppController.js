@@ -110,9 +110,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var registrationView = new Agora.Views.RegistrationView(this);
     this.set('registrationView', registrationView);
 
-    var alertView = new Agora.Views.AlertView(this);
-    this.set('alertView', alertView);
-
     var placementView = new Agora.Views.PlacementView(this);
     this.set('placementView', placementView);
 
@@ -478,8 +475,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
           //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
           // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
-        } else if ($('#notificationsDisplay').length) {
-          $('#notificationsDisplay').remove();
+        } else if ($('#notificationsDisplay').children().length) {
+          $('#notificationsDisplay').empty();
+          that.set('notificationsDisplayed', false);
         } else if ($('#pathInput').length || $('#channelInput').length) {
           $('#pathInput').remove();
           $('#channelInput').remove();
@@ -648,25 +646,25 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
   //accepts one of the english labels and returns
   //its translation in whatever language is
   //currently set
   translate: function(input) {
-    var translationArray = [{
-      en: 'Location',
-      fr: 'Localisation'
-    }];
-
+    
     var lang = this.get('language');
 
-    for (var i=0; i < translationArray ;i++) {
-      if (translationArray[i].en === input) {
-        return translationArray[i][lang];
+    if (lang !== 'en') {
+
+      for (var i=0; i < translationData.length ;i++) {
+        if (translationData[i]['en'] === input) {
+          return translationData[i][lang];
+        }
       }
+      
+    } else {
+      return input;
     }
 
-    return input;
   },
 
 
@@ -1039,6 +1037,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               var data = data;
 
+              $('#notificationsButton').unbind();
+
               $('#notificationsButton')[0].onclick = function() {
 
                 console.log(that.app.get('notificationsDisplayed'));
@@ -1070,6 +1070,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       var cssAdjust = -75;
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
+                        that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from');
                         var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
 
                         var x = that.contactRequests[i].sender;
@@ -1131,7 +1132,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
-
+                        that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
 
                         var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
 
@@ -1236,29 +1237,29 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
 
-      $.ajax({
-        // url: 'http://localhost:80/updateUserProfile',
-        url: 'https://liveworld.io:443/refreshToken',
-        method: 'POST',
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        data: {
-          username: that.app.get('username'),
-          token: that.app.get('token')
-        },
-        success: function(data) {
-          if (data.token) {
-            that.app.set('token', data.token);
-          } else {
-            console.log(data);
-          }
-        }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
-        }
+      // $.ajax({
+      //   // url: 'http://localhost:80/updateUserProfile',
+      //   url: 'https://liveworld.io:443/refreshToken',
+      //   method: 'POST',
+      //   crossDomain: true,
+      //   xhrFields: {
+      //     withCredentials: true
+      //   },
+      //   data: {
+      //     username: that.app.get('username'),
+      //     token: that.app.get('token')
+      //   },
+      //   success: function(data) {
+      //     if (data.token) {
+      //       that.app.set('token', data.token);
+      //     } else {
+      //       console.log(data);
+      //     }
+      //   }, error: function(err) {
+      //     console.log('ajax error ocurred: ', err);
+      //   }
 
-      });
+      // });
 
 
 

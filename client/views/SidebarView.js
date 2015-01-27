@@ -91,8 +91,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //hmmmm, is this necessary, how are we grouping the topics sent back from the server?
       //should we have like topics-hot, topics-new... for the this.displayed values?
-      this.$el.append($('<div id="topButton"><span class="tabLabel">Top'
-        +'</span></div>'));
 
       $select.change(function() {
         that.timeframe = $('#timeframeSelect').val();
@@ -104,15 +102,27 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       this.$el.children('div#topButton').children('span').append($select);
 
-      this.$el.append($('<div id="newButton"><span class="tabLabel">New</span></div>'));
-      this.$el.append($('<div id="hotButton"><span class="tabLabel">Hot</span></div>'));
-      this.$el.append($('<div id="friendsButton"><span class="tabLabel">Friends</span></div>'));
+      //HIDE THIS SHIT FO NOWWWWWWW
+      $select.hide();
+
+      //TRANSLATIONS YO!!!
+      topPrefix = this.app.translate('Top');
+      newPrefix = this.app.translate('New');
+      hotPrefix = this.app.translate('Hot');
+      friendsPrefix = this.app.translate('Friends');
+
+      this.$el.append($('<div id="topButton"><span class="tabLabel">'+topPrefix+'</span></div>'));
+      this.$el.append($('<div id="newButton"><span class="tabLabel">'+newPrefix+'</span></div>'));
+      this.$el.append($('<div id="hotButton"><span class="tabLabel">'+hotPrefix+'</span></div>'));
+      this.$el.append($('<div id="friendsButton"><span class="tabLabel">'+friendsPrefix+'</span></div>'));
       this.$el.append($('<ul class="sidebarTopicInnerList"></ul>'));
       var location = that.app.get('mapController').get('location');
       var channel = that.app.get('channel');
-      var postLabel = location.split('/')[location.split('/').length-1] +'~'+ channel.split('/')[channel.split('/').length-1]
+      var postLabel = location.split('/')[location.split('/').length-1] +'~'+ channel.split('/')[channel.split('/').length-1];
 
-      this.$el.append($('<div id="creationButton"><span id="createLabel">Post to: '+postLabel+'</span></div>'));
+      var postToLabel = this.app.translate('Post to');
+
+      this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
       //Set the correct button lighter
       if (this.displayed === 'Topics-Top') {
         this.$el.children('div#topButton').css('background-color','#f8f8f8');
@@ -129,15 +139,19 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //display 'results:'?
 
     } else if (this.displayed === 'Contacts') {
-      this.$el.append($('<div id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.append($('<div id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      var contactsPrefix = this.app.translate('Contacts');
+      var messagesPrefix = this.app.translate('Messages');
+      this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
+      this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#contactsButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
-      this.$el.append($('<div id="contactsButton"><span class="tabLabel">Contacts</span></div>'));
-      this.$el.append($('<div id="messagesButton"><span class="tabLabel">Messages</span></div>'));
+      var contactsPrefix = this.app.translate('Contacts');
+      var messagesPrefix = this.app.translate('Messages');
+      this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
+      this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#messagesButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
@@ -222,7 +236,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -245,7 +259,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   //alert(data);
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -274,7 +288,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   thet.$el.addClass('highlight');
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
               
@@ -284,13 +298,10 @@ Agora.Views.SidebarView = Backbone.View.extend({
               that.app.get('content2').show(that.app.get('detailView'), model);
 
             } else if (model.type === 'Location') {
-              console.log('render location');
               // show location detail
               that.app.get('detailView').displayed = 'Locations';
               that.app.get('content2').show(that.app.get('detailView'), model);
             } else if (model.type === 'Channel') {
-              console.log('render channel');
-
               // show channe ldetail
               that.app.get('detailView').displayed = 'Channels';
               that.app.get('content2').show(that.app.get('detailView'), model);
@@ -446,6 +457,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     //MESSAGES/CONTACTS
     $('#contactsButton').on('click', function() {
+      console.log('JFKDLSJSLFDKJ"');
       if (that.displayed !== 'Contacts') {
         that.displayed = 'Contacts';
         that.app.get('content1').show(that);
@@ -456,6 +468,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
     $('#messagesButton').on('click', function() {
+      console.log('jdfsklafjads');
       if (that.displayed !== 'Messages') {
         that.displayed = 'Messages';
         that.app.get('content1').show(that);

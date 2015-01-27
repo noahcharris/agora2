@@ -18,7 +18,9 @@ Agora.Views.PlacementView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.placementTemplate());
+    var placementLabel = this.app.translate('Place a point! Click Done when finished.');
+    var doneLabel = this.app.translate('Done!');
+    this.$el.html( this.placementTemplate( {placementLabel: placementLabel, doneLabel: doneLabel} ) );
   },
 
   setHandlers: function() {
@@ -26,9 +28,6 @@ Agora.Views.PlacementView = Backbone.View.extend({
 
     $('#pointPlacedButton').on('click', function() {
 
-
-        that.app.get('mapController').placing = false;
-        that.app.get('mapController').stopPlacing();
 
         console.log('LONGTIDUE: ', that.app.get('mapController').placedLongitude);
 
@@ -60,6 +59,8 @@ Agora.Views.PlacementView = Backbone.View.extend({
               // //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
               // sidebarView.collection = data;
               // content1.show(sidebarView);
+              that.app.get('mapController').placing = false;
+              that.app.get('mapController').stopPlacing();
               that.app.get('content2').hide();
               that.app.get('sidebarView').displayed = 'Topics-Top';
               that.app.set('channel', 'General');

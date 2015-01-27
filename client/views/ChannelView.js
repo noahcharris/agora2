@@ -45,19 +45,10 @@ Agora.Views.ChannelView = Backbone.View.extend({
     this.$el.unbind();
     this.$el.empty();
 
-    //TODO- Preston's suggestion, give it click interaction with searchability
 
     var channel = this.app.get('channel');
 
-    //PREFIX
 
-    var $prefix = $('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>')
-    $prefix.on('click', function() {
-      
-      that.app.showChannelDetailView(that.app.get('channel'));
-
-    });
-    this.$el.append($prefix);
 
     var searchButton = $('<img id="channelSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
 
@@ -196,6 +187,36 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     });
     this.$el.append($treeButton);
+
+
+
+
+
+    //PREFIX (suffix in arabic)
+    var prefix = this.app.translate('Channel');
+
+    if (this.app.get('language') !== 'ar') {
+      var $prefix = $('<span class="channelName">&nbsp&nbsp'+prefix+':&nbsp</span>')
+      $prefix.on('click', function() {
+        
+        that.app.showChannelDetailView(that.app.get('channel'));
+
+      });
+      this.$el.prepend($prefix);
+    } else {
+      var $prefix = $('<span class="channelName">:&nbsp'+prefix+'&nbsp&nbsp</span>')
+      $prefix.on('click', function() {
+        
+        that.app.showChannelDetailView(that.app.get('channel'));
+
+      });
+      this.$el.append($prefix);
+    }
+
+
+
+
+
 
   },
 

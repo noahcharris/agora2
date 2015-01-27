@@ -40,7 +40,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
     this.$el.append('<br/>');
     this.$el.append('<br/>');
     this.$el.append('<br/>');
-    this.$el.append('<h4>ABOUT ME:</h4>');
+    this.$el.append('<h4>'+this.app.translate('ABOUT ME')+':</h4>');
     that.$el.append($textArea);
     this.$el.append('<br/>');
     this.$el.append('<br/>');
@@ -84,7 +84,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
       reader.readAsDataURL(e.target.files[0]);
     });
 
-    var $saveChangesButton = $('<button>Save Changes</button>');
+    var $saveChangesButton = $('<button>'+this.app.translate('Save Changes')+'</button>');
     $saveChangesButton[0].onclick = function() {
 
 
@@ -178,6 +178,15 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
     };
     this.$el.append($saveChangesButton);
+
+
+
+    var $backButton = $('<button id="backButton">'+this.app.translate('Back')+'</button>')
+    $backButton.on('click', function() {
+      that.app.get('detailView').displayed = 'Settings';
+      that.app.get('content2').show(that.app.get('settingsView'));
+    });
+    this.$el.append($backButton);
 
 
 

@@ -14,6 +14,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   initialize: function(app) {
     this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
+    this.RTLtopicTemplate = _.template( $('#RTLsidebarTopicEntryTemplate').html() );
     this.locationTemplate = _.template( $('#sidebarLocationEntryTemplate').html() );
     this.channelTemplate = _.template( $('#sidebarChannelEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
@@ -31,7 +32,21 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     model2.location = temp[temp.length-1];
     //model2.location = model2.location.split('/')[model2.location.split('/')];
 
-    this.$el.html( this.topicTemplate(model2) );
+
+    //TRANSLATIONS
+    var userLabel = this.app.translate('User');
+    var locationLabel = this.app.translate('To');
+    model2.userLabel = userLabel;
+    model2.locationLabel = locationLabel;
+
+    if (this.app.get('language') !== 'ar') {
+      this.$el.html( this.topicTemplate(model2) );
+    } else {
+      this.$el.html( this.RTLtopicTemplate(model2) );
+    }
+
+
+
 
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');
@@ -326,6 +341,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var temp2 = temp.slice(1, temp.length);
     tempModel.location = temp2.join('/');
 
+    tempModel.locationLabel = that.app.translate('Location');
     this.$el.html( this.userTemplate(tempModel) );
 
     if (!this.model.image) {
@@ -375,7 +391,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     } else {
       this.model.contact = this.model.username1;
     }
-
+    this.model.recipientLabel = this.app.translate('Recipient');
     this.$el.html( this.messageChainTemplate(this.model) );
 
     var location = this.model.location || 'World';

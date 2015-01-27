@@ -43,6 +43,14 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.$el.append(this.inputBoxTemplate());
     this.$el.children('div#inputBox').css('height', '0px');
 
+    //translating
+    var postLabel = this.app.translate('Post');
+    var headlineLabel = this.app.translate('Headline');
+    var contentLabel = this.app.translate('Content');
+    this.$el.children('#inputBox').children('#inputBoxButton').children('#postLabel').text(postLabel);
+    this.$el.children('#inputBox').children('#inputHeadlineTextArea').attr('placeholder', headlineLabel);
+    this.$el.children('#inputBox').children('#inputTextArea').attr('placeholder', contentLabel);
+
     this.$el.append($('<div id="conversationWrapper"><div id="commentMask"></div></div>'));
 
     //image input
@@ -69,6 +77,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
     //append topic box
+    tempModel.userLabel = this.app.translate('User');
+    tempModel.channelLabel = this.app.translate('Channel');
+    tempModel.postedAtLabel = this.app.translate('Posted At');
+    tempModel.replyLabel = this.app.translate('Reply');
+    tempModel.linkLabel = this.app.translate('LINK');
     this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
 
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
@@ -177,13 +190,23 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     for (var i=comments.length-1; i > -1 ;i--) {
       
       //CREATE AND APPEND COMMENT TO OUTERBOX
+      //translate
+      comments[i].userLabel = this.app.translate('User');
+      comments[i].fromLabel = this.app.translate('From');
+      comments[i].replyLabel = this.app.translate('Reply');
       var $comment = $(this.commentTemplate(comments[i]));
 
       (function() {
         var x = comments[i].username;
+        var y = comments[i].authorlocation;
         var $commentUserString = $comment.children('.commentTopString').children('.detailCommentUserString');
         $commentUserString[0].onclick = function() {
           that.goToUser(x);
+        };
+
+        var $commentFromString = $comment.children('.commentTopString').children('.fromString');
+        $commentFromString[0].onclick = function() {
+          that.app.get('mapController').goToPath(y);
         };
       })();
 
@@ -329,6 +352,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
       for (var j=comments[i].responses.length-1;j > -1 ;j--) {
 
+        comments[i].responses[j].userLabel = this.app.translate('User');
+        comments[i].responses[j].fromLabel = this.app.translate('From');
+        comments[i].responses[j].replyLabel = this.app.translate('Reply');
         var $response = $(this.responseTemplate(comments[i].responses[j]));
 
         (function() {
@@ -498,6 +524,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
         for (var k=comments[i].responses[j].replies.length-1;k > -1;k--) {
 
+          comments[i].responses[j].replies[k].userLabel = this.app.translate('User');
+          comments[i].responses[j].replies[k].fromLabel = this.app.translate('From');
+          comments[i].responses[j].replies[k].replyLabel = this.app.translate('Reply');
           var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
 
           (function() {
@@ -733,7 +762,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               fd.append( 'contents', $('textarea#inputTextArea').val() );
 
               fd.append( 'location', data.location );
-              fd.append( 'authorlocation', data.location );
               fd.append( 'channel', data.channel );
 
               fd.append( 'topicId', data.topicId );

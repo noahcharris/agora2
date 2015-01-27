@@ -22,7 +22,27 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
-    this.$el.append( this.template() );
+
+
+
+
+    var bigLoginLabel = this.app.translate('LOG IN');
+    var smallLoginLabel = this.app.translate('Log In');
+    var logoutLabel = this.app.translate('Log Out');
+    var bigRegisterLabel = this.app.translate('REGISTER');
+    var smallRegisterLabel = this.app.translate('Register');
+    var usernameLabel = this.app.translate('username');
+    var passwordLabel = this.app.translate('password');
+
+    this.$el.append( this.template( {bigLoginLabel: bigLoginLabel, smallLoginLabel: smallLoginLabel,
+                                    logoutLabel: logoutLabel, bigRegisterLabel: bigRegisterLabel,
+                                     smallRegisterLabel: smallRegisterLabel} ) );
+
+    this.$el.children('div.login').children('#loginUsernameInput').attr('placeholder', usernameLabel);
+    this.$el.children('div.login').children('#loginPasswordInput').attr('placeholder', passwordLabel);
+
+
+    
 
     setTimeout(function() {
       that.$el.children('div.login').children('input#loginUsernameInput').focus();
@@ -167,10 +187,6 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       that.app.get('content2').show(signupView);
 
 
-      // setTimeout(function() {
-      //   that.app.get('alertView').mode = 'FollowupSuccess';
-      //   that.app.get('content2').show(that.app.get('alertView'));
-      // },400);
 
     });
 

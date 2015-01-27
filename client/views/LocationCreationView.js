@@ -22,16 +22,33 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var that = this;
 
     this.$el.empty();
-    this.$el.html( this.template() );
+
+
+    var locationNameLabel = this.app.translate('Location Name');
+    var radioPrefixLabel = this.app.translate('This location is');
+    var availabilityLabel = this.app.translate('Check Availability');
+    var publicLabel = this.app.translate('Public');
+    var privateLabel = this.app.translate('Private');
+    var descriptionLabel = this.app.translate('Description');
+    var parentLocationLabel = this.app.translate('Parent City');
+    var nextLabel = this.app.translate('Next');
+    var explanationLabel1 = this.app.translate('Your location must belong to a city')
+
+    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
+                                  radioPrefixLabel: radioPrefixLabel, explanationLabel1: explanationLabel1,
+                                  availabilityLabel: availabilityLabel} ) );
+    this.$el.children('#locationNameInput').attr('placeholder', locationNameLabel);
+    this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
+    this.$el.children('#parentInput').attr('placeholder', parentLocationLabel);
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
 
-    // this.$el.append( $('<button>Next</button>') );
 
-    var $backButton = $('<button id="backButton">Back</button>')
+    var backLabel = this.app.translate('Back');
+    var $backButton = $('<button id="backButton">'+backLabel+'</button>')
     $backButton.on('click', function() {
       that.app.get('detailView').displayed = 'Settings';
       that.app.get('content2').show(that.app.get('settingsView'));
@@ -152,6 +169,37 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
       this.cityVerified = false;
     }
   }, 500);
+
+
+  var $availabilityButton = that.$el.children('button#checkAvailabilityButton');
+  $availabilityButton.on('click', function() {
+
+      console.log(that.$el.children('input#parentInput').val())
+    $.ajax({
+      url: 'http://liveworld.io:80/validateLocation',
+      // url: 'http://localhost:80/locationSearch',
+      data: {
+        name: that.$el.children('input#locationNameInput').val(),
+        parent: that.$el.children('input#parentInput').val()
+      },
+      crossDomain: true,
+      success: function(data) {
+
+        if (data === 'Available') {
+          alert('location available :)');
+        } else {
+          alert(data);
+        }
+
+      },
+      error: function(data) {
+        console.log('ajax error');
+      }
+    });
+
+
+
+  });
 
 
 

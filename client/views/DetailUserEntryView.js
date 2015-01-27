@@ -16,6 +16,9 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
   render: function() {
     var that = this;
+    this.model.aboutLabel = this.app.translate('About');
+    this.model.locationLabel = this.app.translate('Location');
+    this.model.recentlyPostedLabel = this.app.translate('Recently Posted');
     this.$el.html( this.template(this.model) );
 
 
@@ -175,6 +178,17 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     //CONTACT REQUEST FLOW STUFF
 
 
@@ -307,150 +321,198 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     }
 
 
-   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-   // RECENTLY POSTED AKA FEEEEEEEEEEED
-   //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-
-
-    $.ajax({
-      url: 'http://liveworld.io:80/recentlyPosted',
-      // url: 'http://localhost/topicTree',
-      method: 'GET',
-      crossDomain: true,
-      data: {
-        username: this.model.username,
-      },
-      success: function(models) {
-        for (var i=0; i < models.length ;i++) {
-          var entryView = new Agora.Views.SidebarEntryView(that.app);
-          that.subViews.push(entryView);
-          entryView.model = models[i];
-          entryView.renderTopic();
-          var $listItem = $('<li class="recentlyPostedItem"></li>');
-          $listItem.append(entryView.$el);
-          $('#recentlyPostedList').append($listItem);
-          
-          (function() {
-            var topicId = models[i].id;
-            var model = models[i];
-            var x = models[i].channel;
-            var y = models[i].location;
-
-              entryView.on('click', function() {
-
-                // debugger;
-
-                that.app.get('detailView').displayed = 'Topics';
-
-                //get specific topic tree from server
-
-
-                that.app.set('channel', x);
-                that.app.get('mapController').goToPath(y);
-                that.app.get('channelView').render();
-
-                //get specific topic tree from server
-                $.ajax({
-                  url: 'http://liveworld.io:80/topicTree',
-                  // url: 'http://localhost/topicTree',
-                  method: 'GET',
-                  crossDomain: true,
-                  data: {
-                    topicId: model.id
-                  },
-                  success: function(model) {
-                    debugger;
-                    that.app.get('sidebarView').displayed = 'Topics-Top';
-                    that.app.get('content2').show(that.app.get('detailView'), model);
-
-                    // thet.$el.addClass('highlight');
-                    //need to insert topic into the front of the topics collection
-                    //use this crazy callback shit to highlight
-
-                    var cb = function() {
-                      var subViews = that.app.get('sidebarView').subViews;
-                      for (var i=0; i < subViews.length ;i++) {
-                        if (subViews[i].model.id === model.id) {
-                          subViews[i].$el.addClass('highlight');
-                          //maybe scroll also here
-
-                        }
-                      }
-                    };
-                    that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
-
-
-                  },
-                  error: function() {
-                    alert('ajax error');
-                  }
-                });
-
-                //register the topic visit with the server
-                $.ajax({
-                  url: 'https://liveworld.io:443/visitedTopic',
-                  // url: 'http://localhost/topicTree',
-                  method: 'POST',
-                  crossDomain: true,
-                  xhrFields: {
-                    withCredentials: true
-                  },
-                  data: {
-                    username: that.app.get('username'),
-                    token: that.app.get('token'),
-                    //WHY IS THIS A STRING????
-                    topicId: model.id
-                  },
-                  success: function(data) {
-                    //alert(data);
-                  },
-                  error: function() {
-                    alert('ajax error');
-                  }
-                });
-
-              });//end entryView onclick
-
-          })();
-
-        };//end models for loop
 
 
 
-        var throttledResize = _.throttle(function() {
 
-                //this is how region manager calculates sidebar width
-          var detailWidth = $(window).width() * 0.75 - $('#content1').width();
 
-          console.log('WIDTH: ', detailWidth);
-          
 
-          for (var i=0; i < that.subViews.length ;i++) {
-            if (that.subViews[i].model.image) {          
-              var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-              box.css('width', (detailWidth - 180) + 'px');
+
+
+
+
+
+
+
+
+
+
+    //     ____                       __  __         ____             __           __
+    //    / __ \___  ________  ____  / /_/ /_  __   / __ \____  _____/ /____  ____/ /
+    //   / /_/ / _ \/ ___/ _ \/ __ \/ __/ / / / /  / /_/ / __ \/ ___/ __/ _ \/ __  / 
+    //  / _, _/  __/ /__/  __/ / / / /_/ / /_/ /  / ____/ /_/ (__  ) /_/  __/ /_/ /  
+    // /_/ |_|\___/\___/\___/_/ /_/\__/_/\__, /  /_/    \____/____/\__/\___/\__,_/   
+    //                                  /____/                                       
+
+    //only appears if the users are contacts
+
+    if (this.app.get('login')) {
+
+        $.ajax({
+          url: 'https://liveworld.io:443/recentlyPosted',
+          // url: 'http://localhost/topicTree',
+          method: 'GET',
+          crossDomain: true,
+          xhrFields: {
+            withCredentials: true
+          },
+          data: {
+            username: this.model.username,
+            visitor: this.app.get('username'),
+            token: this.app.get('token')
+          },
+          success: function(data) {
+
+            if (data.success) {
+              var models = data.data;
+
+
+                for (var i=0; i < models.length ;i++) {
+                  var entryView = new Agora.Views.SidebarEntryView(that.app);
+                  that.subViews.push(entryView);
+                  entryView.model = models[i];
+                  entryView.renderTopic();
+                  var $listItem = $('<li class="recentlyPostedItem"></li>');
+                  $listItem.append(entryView.$el);
+                  $('#recentlyPostedList').append($listItem);
+                  
+                  (function() {
+                    var topicId = models[i].id;
+                    var model = models[i];
+                    var x = models[i].channel;
+                    var y = models[i].location;
+
+                      entryView.on('click', function() {
+
+                        // debugger;
+
+                        that.app.get('detailView').displayed = 'Topics';
+
+                        //get specific topic tree from server
+
+
+                        that.app.set('channel', x);
+                        that.app.get('mapController').goToPath(y);
+                        that.app.get('channelView').render();
+
+                        //get specific topic tree from server
+                        $.ajax({
+                          url: 'http://liveworld.io:80/topicTree',
+                          // url: 'http://localhost/topicTree',
+                          method: 'GET',
+                          crossDomain: true,
+                          data: {
+                            topicId: model.id
+                          },
+                          success: function(model) {
+                            debugger;
+                            that.app.get('sidebarView').displayed = 'Topics-Top';
+                            that.app.get('content2').show(that.app.get('detailView'), model);
+
+                            // thet.$el.addClass('highlight');
+                            //need to insert topic into the front of the topics collection
+                            //use this crazy callback shit to highlight
+
+                            var cb = function() {
+                              var subViews = that.app.get('sidebarView').subViews;
+                              for (var i=0; i < subViews.length ;i++) {
+                                if (subViews[i].model.id === model.id) {
+                                  subViews[i].$el.addClass('highlight');
+                                  //maybe scroll also here
+
+                                }
+                              }
+                            };
+                            that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+
+
+                          },
+                          error: function() {
+                            console.log('ajax error');
+                          }
+                        });
+
+                        //register the topic visit with the server
+                        $.ajax({
+                          url: 'https://liveworld.io:443/visitedTopic',
+                          // url: 'http://localhost/topicTree',
+                          method: 'POST',
+                          crossDomain: true,
+                          xhrFields: {
+                            withCredentials: true
+                          },
+                          data: {
+                            username: that.app.get('username'),
+                            token: that.app.get('token'),
+                            //WHY IS THIS A STRING????
+                            topicId: model.id
+                          },
+                          success: function(data) {
+                            //alert(data);
+                          },
+                          error: function() {
+                            console.log('ajax error');
+                          }
+                        });
+
+                      });//end entryView onclick
+
+                  })();
+
+                };//end models for loop
+
+
+
+                var throttledResize = _.throttle(function() {
+
+                        //this is how region manager calculates sidebar width
+                  var detailWidth = $(window).width() * 0.75 - $('#content1').width();
+
+                  console.log('WIDTH: ', detailWidth);
+                  
+
+                  for (var i=0; i < that.subViews.length ;i++) {
+                    if (that.subViews[i].model.image) {          
+                      var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
+                      box.css('width', (detailWidth - 180) + 'px');
+                    }
+
+                  };
+
+                  //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+                }, 100);
+
+
+                $(window).on('resize', throttledResize);
+
+                throttledResize();
+
+                //NEED TO UNBIND THIS HANDLER SOMEHOW
+                
+            } else {
+              that.$el.append('you must be friends to view user post history');
             }
 
-          };
+          },
+          error: function() {
+            console.log('ajax error');
+          }
+        });//end recetlyPosted ajax
 
-          //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
-        }, 100);
-
-
-        $(window).on('resize', throttledResize);
-
-        throttledResize();
-
-        //NEED TO UNBIND THIS HANDLER SOMEHOW
-
+      
+    } else {
+      this.$el.append('you must be friends to view user post history');
+    }
 
 
 
-      },
-      error: function() {
-        alert('ajax error');
-      }
-    });//end recetlyPosted ajax
+
+
+
+
+
+
+
 
 
 

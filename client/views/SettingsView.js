@@ -18,14 +18,20 @@ Agora.Views.SettingsView = Backbone.View.extend({
     var that = this;
     
     this.$el.empty();
-    this.$el.html( this.template() );
+
+    var menuLabel = this.app.translate('Menu');
+    var recentlyVisitedLabel = this.app.translate('Recently Visited');
+
+    this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel} ) );
+
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
 
-    var $viewProfileButton = $('<button id="viewProfileButton">View My Profile</button>');
+    var viewLabel = this.app.translate('View My Profile')
+    var $viewProfileButton = $('<button id="viewProfileButton">'+viewLabel+'</button>');
     $viewProfileButton[0].onclick = function() {
       
       //there is an example in editProfileView
@@ -73,7 +79,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
     };
     this.$el.children('#buttonBox').append($viewProfileButton);
 
-    var $editProfileButton = $('<button id="editProfileButton">Edit My Profile</button>');
+    var editProfileLabel = this.app.translate('Edit My Profile')
+    var $editProfileButton = $('<button id="editProfileButton">'+editProfileLabel+'</button>');
     $editProfileButton[0].onclick = function() {
       that.app.get('detailView').displayed = 'Edit Profile';
       that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
@@ -81,20 +88,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.children('#buttonBox').append($editProfileButton);
     this.$el.children('#buttonBox').append('<br/>');
 
-    var $changeLocationButton = $('<button id="changeLocationButton">Change Location</button>');
-    $changeLocationButton[0].onclick = function() {
-
-    };
-    //this.$el.append($changeLocationButton);
-
-    var $changePasswordButton = $('<button id="changePasswordButton">Change Password</button>');
-    $changePasswordButton[0].onclick = function() {
-
-    };
-    //this.$el.append($changePasswordButton);
-
-
-    var $locationCreationButton = $('<button id="createLocationButton">Create Location</button>');
+    var locationCreationLabel = this.app.translate('Create Location');
+    var $locationCreationButton = $('<button id="createLocationButton">'+locationCreationLabel+'</button>');
     $locationCreationButton.on('click', function() {
 
 
@@ -127,7 +122,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($locationCreationButton);
 
-    var $channelCreationButton = $('<button id="createChannelButton">Create Channel</button>');
+    var createChannelLabel = this.app.translate('Create Channel');
+    var $channelCreationButton = $('<button id="createChannelButton">'+createChannelLabel+'</button>');
     $channelCreationButton.on('click', function() {
 
       $.ajax({
@@ -144,7 +140,8 @@ Agora.Views.SettingsView = Backbone.View.extend({
         },
         success: function(data) {
           //s for successsfulllyyyyyy
-          if (data[0] === 't') {
+          console.log('WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU: ', data);
+          if (data.length && data[0].verified) {
             that.app.get('detailView').displayed = 'CreateChannel';
             that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
           } else {
@@ -160,21 +157,24 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 
-    var $changePasswordButton = $('<button id="changePasswordButton">Change Password</button>');
+    var changePasswordLabel = this.app.translate('Change Password');
+    var $changePasswordButton = $('<button id="changePasswordButton">'+changePasswordLabel+'</button>');
     $changePasswordButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangePassword';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));
     });
     this.$el.children('#buttonBox').append($changePasswordButton);
 
-    var $changeLocationButton = $('<button id="changeLocationButton">Change Location</button>');
+    var changeLocationLabel = this.app.translate('Change Location');
+    var $changeLocationButton = $('<button id="changeLocationButton">'+changeLocationLabel+'</button>');
     $changeLocationButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeLocation';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Location'));
     });
     this.$el.children('#buttonBox').append($changeLocationButton);
 
-    var $changeEmailButton = $('<button id="changeEmailButton">Change Email</button>');
+    var changeEmailLabel = this.app.translate('Change Email');
+    var $changeEmailButton = $('<button id="changeEmailButton">'+changeEmailLabel+'</button>');
     $changeEmailButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeEmail';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
@@ -237,7 +237,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -260,7 +260,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
                   //alert(data);
                 },
                 error: function() {
-                  alert('ajax error');
+                  console.log('ajax error');
                 }
               });
 
@@ -325,7 +325,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
       },
       error: function() {
-        alert('ajax error');
+        console.log('ajax error');
       }
     });
 

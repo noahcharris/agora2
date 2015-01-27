@@ -58,7 +58,7 @@ Agora.Router = Backbone.Router.extend({
         that.app.get('content2').show(that.app.get('detailView'), model);
       },
       error: function() {
-        alert('ajax error');
+        console.log('ajax error');
       }
     });
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="auto">
   <head>
     <meta charset="UTF-8">
     <title>Agora</title>
@@ -33,15 +33,30 @@
      <div id="notificationsButton" class="topbarIcon">
      <img id="notificationsImage" src="/resources/images/notifications.png"></img>
      </div>
-     <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
+      <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
      <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
      <select id="searchSelect">
        <!--leave topics off for now, it will be way more complicated-->
        <!--<option value="Topics">Topics</option>-->
-       <option value="Users">Users</option>
-       <option value="Locations">Locations</option>
-       <option value="Channels">Channels</option>
+       <option id="userOption" value="Users">Users</option>
+       <option id="locationOption" value="Locations">Locations</option>
+       <option id="channelOption" value="Channels">Channels</option>
+     </select>
+
+     <!--NEED TO DISPLAY THESE IN NATIVE TONGUE-->
+     <select id="languageSelect">
+      <option value="English">English</option>
+      <option value="Arabic">العربية</option>
+      <option value="Chinese">中国</option>
+      <option value="French">Français</option>
+      <option value="German">Deutsch</option>
+      <option value="Japanese">日本人</option>
+      <option value="Portuguese">Português</option>
+      <option value="Russian">Pусский</option>
+      <option value="Spanish">Español</option>
+     </select>
+
 
 
     </script>
@@ -49,13 +64,13 @@
 
     <script id="contactRequestTemplate" type="text/template">
       <div class="notificationBox">
-        <p>Add contact request from <%= sender %></p>
+        <p><%= contactRequestLabel %>&nbsp<%= sender %></p>
       </div>
     </script>
 
     <script id="newMessageTemplate" type="text/template">
       <div class="notificationBox">
-        <p>New message from <%= sender %></p>
+        <p><%= newMessageLabel %><%= sender %></p>
       </div>
     </script>
 
@@ -75,11 +90,28 @@
           <%= headline %>
         </div>
         <div class="sidebarToFromWrapper">
-          <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername">User:&nbsp<%= username %></span>&nbspTo:&nbsp<span class="locationString">&nbsp<%= location %></span>~<span class="sidebarChannelString"><%= channel %></span></p>
+          <p class="topString">(<%= rank %>)&nbsp<span class="sidebarUsername"><%= userLabel %>:&nbsp<%= username %></span>&nbsp<%= locationLabel %>:&nbsp<span class="locationString">&nbsp<%= location %></span>~<span class="sidebarChannelString"><%= channel %></span></p>
         </div>
       </div>
      </div>
 
+    </script>
+
+    <!-- ARE THERE FEW ENOUGH SWITCHAROUNDS FOR THIS TO BE A VIABLE SYSTEM??? -->
+
+    <script id="RTLsidebarTopicEntryTemplate" type="text/template">
+
+     <div class="sidebarFloatClear">
+      <img class="sidebarTopicImage"></img>
+      <div class="contentAndToFromWrapper">
+        <div class="sidebarContentWrapper">
+          <%= headline %>
+        </div>
+        <div class="sidebarToFromWrapper">
+          <p class="topString">(<%= rank %>)&nbsp<span class="locationString">&nbsp<%= location %></span>~<span class="sidebarChannelString"><%= channel %></span>&nbsp:<%= locationLabel %><span class="sidebarUsername">&nbsp&nbsp<%= username %>&nbsp:<%= userLabel %></span></p>
+        </div>
+      </div>
+     </div>
 
     </script>
 
@@ -108,7 +140,7 @@
        <div class="contentAndToFromWrapper">
          <div class="sidebarContentWrapper">
             <%= username %></br>
-            Location: <%= location %>
+            <%= locationLabel %>: <%= location %>
          </div>
         </div>
       </div>
@@ -119,7 +151,7 @@
       <br/>
       <br/>
       <br/>
-      <!--<p class="sidebarEntryTopicOrigin">Recipient:<%= type %></p>-->
+      <!--<p class="sidebarEntryTopicOrigin"><%= recipientLabel %>:<%= type %></p>-->
     </script>
 
 
@@ -135,7 +167,7 @@
       <span class="paginationIcon" name="8">8</span>
       <span class="paginationIcon" name="9">9</span>
       <span class="paginationIcon" name="10">10</span>
-      <span id="paginationNextButton">Next</span>
+      <span id="paginationNextButton"></span>
     </script>
 
 
@@ -147,9 +179,9 @@
        <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
        <span class="topicTopString">
        &nbsp(<%= rank %>)
-       &nbsp<span id="detailUserString">User:&nbsp<%= username %></span>
-       &nbsp<span id="detailChannelString">Channel:&nbsp<%= channel %></span>
-       &nbsp<span id="topicTimestamp">Posted At:&nbsp<%= createdat %></span>
+       &nbsp<span id="detailUserString"><%= userLabel %>:&nbsp<%= username %></span>
+       &nbsp<span id="detailChannelString"><%= channelLabel %>:&nbsp<%= channel %></span>
+       &nbsp<span id="topicTimestamp"><%= postedAtLabel %>:&nbsp<%= createdat %></span>
        </span>
 
        <div id="detailTopicClear">
@@ -160,8 +192,8 @@
           <p class="topicHeader"> <%= headline %> </p>
           <p class="topic"> <%= contents %> </p>
         </div>
-        <div id="linkBox">LINK</div>
-        <div class="replyButton">Reply</div>
+        <div id="linkBox"><%= linkLabel %></div>
+        <div class="replyButton"><%= replyLabel %></div>
 
        </div>
      
@@ -178,8 +210,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="commentTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailCommentUserString">User:&nbsp<%= username %></span>
-      FROM:&nbsp
+      &nbsp<span class="detailCommentUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailCommentClear">
@@ -191,7 +223,7 @@
           <p class="commentHeader"> <%= headline %> </p>
           <p class="comment"> <%= contents %> </p>
         </div>
-        <div class="replyButton">Reply</div>
+        <div class="replyButton"><%= replyLabel %></div>
 
       </div>
 
@@ -206,8 +238,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="responseTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailResponseUserString">User:&nbsp<%= username %></span>
-      FROM::::::
+      &nbsp<span class="detailResponseUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailResponseClear">
@@ -220,7 +252,7 @@
           <p class="responseHeader"> <%= headline %> </p>
           <p class="response"> <%= contents %> </p>
         </div>
-        <div class="replyButton">Reply</div>
+        <div class="replyButton"><%= replyLabel %></div>
 
       </div>
 
@@ -235,8 +267,8 @@
       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
       <span class="replyTopString">
       &nbsp(<%= rank %>)
-      &nbsp<span class="detailReplyUserString">User:&nbsp<%= username %></span>
-      FROM::::::
+      &nbsp<span class="detailReplyUserString"><%= userLabel %>:&nbsp<%= username %></span>
+      <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
       </span>
 
       <div class="detailReplyClear">
@@ -247,28 +279,26 @@
           <p class="replyHeader"> <%= headline %> </p>
           <p class="reply"> <%= contents %> </p>
         </div>
-        <!--<div class="replyButton">Reply</div>-->
+        <!--<div class="replyButton"><%= replyLabel %></div>-->
 
       </div>
 
      </div>
     </script>
 
-
     <script id="inputBoxTemplate" type="text/template">
       <div id="inputBox">
        <textarea id="inputHeadlineTextArea" placeholder="Headline"></textarea>
        <br/>
        <textarea id="inputTextArea" placeholder="Content"></textarea>
-       <div id="inputBoxButton"><span>Post</span></div>
+       <div id="inputBoxButton"><span id="postLabel"></span></div>
       </div>
     </script>
-
 
     <script id="messageInputBoxTemplate" type="text/template">
       <div id="messageInputBox">
        <textarea id="messageInputTextArea" placeholder="Content"></textarea>
-       <div id="messageInputBoxButton"><span>Send</span></div>
+       <div id="messageInputBoxButton"><span><%= sendLabel %></span></div>
       </div>
     </script>
 
@@ -280,11 +310,11 @@
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
         </div>
       </div>
-      <h3>About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= description %></p>
 
       <div id="locationBox">
-        <button id="goToButton">Go To Location</button>
+        <button id="goToButton"><%= goToLabel %></button>
         <br/><br/><br/><br/>
       </div>
     </script>
@@ -297,12 +327,12 @@
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
         </div>
       </div>
-      <h3>About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= description %></p>
 
       <div id="channelBox">
         <h1 > <%= name %> </h1>
-        <button id="goToButton">Go To Channel</button>
+        <button id="goToButton"><%= goToLabel %></button>
         <br/><br/><br/><br/>
       </div>
     </script>
@@ -314,12 +344,12 @@
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= username %> </h1>
-          <h4>Location:&nbsp <%= location %> </h4>
+          <h4><%= locationLabel %>:&nbsp <%= location %> </h4>
         </div>
       </div>
-      <h3 id="userContent">About:</h3>
+      <h3><%= aboutLabel %>:</h3>
       <p><%= about %></p>
-      <p>Recently Posted</p>
+      <p><%= recentlyPostedLabel %></p>
       <br/>
       <br/>
       <br/>
@@ -345,7 +375,13 @@
       <input id="topicCreationLink" placeholder="Link"></input>
       <br/><br/>
       <textarea id="topicCreationContent" placeholder="Content"></textarea>
-      <p>other options</p>
+      <!-- have to figue out how to translate-->
+      <form action="?" method="POST">
+         <div id="html_element"></div>
+         <br>
+        <div class="g-recaptcha" id="recaptcha"></div>
+       </form>
+      <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
     </script>
 
 
@@ -355,17 +391,19 @@
     <script id="channelCreationTemplate" type="text/template">
       <br/>
       <input id="channelNameInput" placeholder="Channel Name"></input>
+      <!--<%= radioPrefixLabel %>-->
+      <!--<form action="">-->
+      <!--<input type="radio" name="publicPrivate" value="public" checked><%= publicLabel %></input>-->
+      <!--<input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>-->
+      <!--</form>-->
       <br/><br/>
-      This group is 
-      <form action="">
-      <input type="radio" name="publicPrivate" value="public" checked>Public</input>
-      <input type="radio" name="publicPrivate" value="private">Private</input>
-      </form>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
       <input id="parentInput" placeholder="Parent Channel"></input><br/>
-      <button id="nextButton">Next</button>
+      <br/>
+      <button id="checkAvailabilityButton"><%= availabilityLabel %></button>
+      <button id="nextButton"><%= doneLabel %></button>
     </script>
 
 
@@ -373,64 +411,67 @@
     <script id="locationCreationTemplate" type="text/template">
       <br/>
       <input id="locationNameInput" placeholder="Location Name"></input>
+      <!--<%= radioPrefixLabel %>-->
+      <!--<form action=""> -->
+      <!--<input type="radio" name="publicPrivate" value="public" checked><%= publicLabel %></input>-->
+      <!--<input type="radio" name="publicPrivate" value="private"><%= privateLabel %></input>-->
+      <!--</form>-->
       <br/><br/>
-      This group is 
-      <input type="radio" name="publicPrivate" value="public" checked>Public</input>
-      <input type="radio" name="publicPrivate" value="private">Private</input>
       <br/><br/>
       <textarea id="descriptionInput" placeholder="Description" style="width: 200px; height: 100px;"></textarea>
       <br/>
+      <%= explanationLabel1 %>
+      <br/>
       <input id="parentInput" placeholder="Parent Location"></input><br/>
-      <button id="nextButton">Next</button>
+      <button id="checkAvailabilityButton"><%= availabilityLabel %></button>
+      <button id="nextButton"><%= nextLabel %></button>
     </script>
 
 
 
     <script id="placementViewTemplate" type="text/template">
-    Place a point! Click Done when finished.
+    <%= placementLabel %>
     <br/>
     <br/>
     <br/>
-    <button id="pointPlacedButton">Done!</button>
+    <button id="pointPlacedButton"><%= doneLabel %></button>
     </script>
 
     
-
-
-
+    <!--dfjsaklfdjsakflsj;fdksla;fjkdlsa;fjdksal;fjdskal;fjdksal;fjdsakl;fjdskal;fjdskla;fjdklsa;fjdk-->
 
     <script id="registrationViewTemplate" type="text/template">
     <div class="login">
-     <h2>LOG IN</h2>
+     <h2><%= bigLoginLabel %></h2>
      <input id="loginUsernameInput" type="text" placeholder="username"></input>
      <br/> <input id="loginPasswordInput" type="password" placeholder="password"></input>
-     <button id="loginButton">Log In</button>
+     <button id="loginButton"><%= smallLoginLabel %></button>
      <br/>
      <br/>
-     <button id="logoutButton">Logout</button>
+     <button id="logoutButton"><%= logoutLabel %></button>
     </div>
     <hr>
     <div class="signup">
-     <h2>Register</h2>
-     <button id="signupButton" type="text">Register</button>
+     <h2><%= bigRegisterLabel %></h2>
+     <button id="signupButton" type="text"><%= smallRegisterLabel %></button>
     </div>
     </script>
 
     <script id="signupTemplate" type="text/template">
-      REGISTER
+      <%= bigRegisterLabel %>
       <br/>
       <br/><br/>
       <input placeholder="username" id="signupUsernameInput"></input>
-      <button id="checkAvailabilityButton">Check Availability</button>
+      <button id="checkAvailabilityButton"><%= availabilityLabel %></button>
       <br/>
       <input type="password" placeholder="password" id="signupPasswordInput"></input>
       <br/>
       <input type="password" placeholder="confirm password" id="signupConfirmPasswordInput"></input>
       <br/>
-      <br/>Your email is never displayed to other users.</br>
+      <br/><%= explanationLabel1 %></br>
       <input placeholder="email" id="signupEmailInput"></input>
       <br/>
-      <br/>You cannot change origin once it is set!</br>
+      <br/><%= explanationLabel2 %></br>
       <input placeholder="origin" id="signupOriginInput"></input>
       <input placeholder="current location" id="signupLocationInput"></input>
       <div id="signupLocation"></div>
@@ -438,60 +479,42 @@
       <input placeholder="about" id="signupAboutInput"></input>
       <br/>
       <br/>
-      <form id="captchaForm">
-      <div class="g-recaptcha" data-sitekey="6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_"></div>
-      </form>
-      <button id="registrationButton">Register</button>
+      <form action="?" method="POST">
+         <div id="html_element"></div>
+         <br>
+        <div class="g-recaptcha" id="recaptcha"></div>
+       </form>
+      <button id="registrationButton"><%= smallRegisterLabel %></button>
+      <script src="https://www.google.com/recaptcha/api.js?onload=agoraOnloadCallback&render=explicit" async defer></script>
     </script>
 
 
+    <script type="text/javascript">
 
-    <script id="alertSearchTemplate" type="text/template">
-    <h2 class="loading">LOADING...</h2>
-    </script>
+        var agoraOnloadCallback = function() {
 
-    <script id="alertFollowupSuccessTemplate" type="text/template">
-    followup success template
-    </script>
+          grecaptcha.render('html_element', {
+          'sitekey' : '6LcMXQATAAAAAG6cW_Vdw0-qgIBTry5SJrOHinF_',
+          });
 
-    <script id="alertFollowupFailureTemplate" type="text/template">
-    followup failure template
-    </script>
-
-    <script id="alertGroupCreationSuccessTemplate" type="text/template">
-    Group creation success
-    </script>
-
-    <script id="alertGroupCreationFailureTemplate" type="text/template">
-    Group creation failure
-    </script>
-
-
-    <script id="placeTemplate" type="text/template">
-      <br/>
-      Name:&nbsp<%= name %>
-      <br/>
-      Description:&nbsp<%= description %>
-      <br/>
-      Population:&nbsp<%= population %>
-    </script>
-
-    <!--for use with pathing to unique users-->
-    <script id="userTemplate" type="text/template">
-      USER TEMPLATE
+        };
     </script>
 
 
     <script id="settingsViewTemplate" type="text/template">
-      <h1 id="menu title"> MENU </h1>
+      <h1 id="menu title"> <%= menuLabel %> </h1>
       <div id="buttonBox"></div>
       <br/><br/><br/>
-      Recently Visited
+      <%= recentlyVisitedLabel %>
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
     </script>
 
     <script id="changeViewTemplate" type="text/template">
-      <h1>Change View</h1>
+      <h1></h1>
+    </script>
+
+    <script id="aboutTemplate" type="text/template">
+      <h1>ABOUT</h1>
     </script>
 
 
@@ -509,8 +532,6 @@
 
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-
 
     <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
     <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
@@ -518,6 +539,7 @@
     <script src="/resources/us-states.js"></script>
     <script src="/resources/newCountries.js"></script>
     <script src="/resources/cities.js"></script>
+    <script src="/resources/translations.js"></script>
 
     <script src="controllers/AppController.js"></script>
     <script src="controllers/MapController.js"></script>
@@ -540,7 +562,6 @@
     <script src="views/EditProfileView.js"></script>
     <script src="views/RegistrationView.js"></script>
     <script src="views/SignupView.js"></script>
-    <script src="views/AlertView.js"></script>
     <script src="views/TopicCreationView.js"></script>
     <script src="views/LocationCreationView.js"></script>
     <script src="views/ChannelCreationView.js"></script>

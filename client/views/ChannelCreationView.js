@@ -22,16 +22,72 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
     var that = this;
 
     this.$el.empty();
-    this.$el.html( this.template() );
+
+
+    var channelNameLabel = this.app.translate('Channel Name');
+    var radioPrefixLabel = this.app.translate('This location is');
+    var availabilityLabel = this.app.translate('Check Availability');
+    var publicLabel = this.app.translate('Public');
+    var privateLabel = this.app.translate('Private');
+    var descriptionLabel = this.app.translate('Description');
+    var parentChannelLabel = this.app.translate('Parent Channel');
+    var doneLabel = this.app.translate('Done!');
+
+
+    this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, doneLabel: doneLabel,
+                                  radioPrefixLabel: radioPrefixLabel, availabilityLabel: availabilityLabel} ) );
+    this.$el.children('#channelNameInput').attr('placeholder', channelNameLabel);
+
+    this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
+    this.$el.children('#parentInput').attr('placeholder', parentChannelLabel);
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });
 
-    console.log(this.$el.children('input:radio[name=publicPrivate]').val());
+    //console.log(this.$el.children('input:radio[name=publicPrivate]').val());
+
+
+
+    var $availabilityButton = that.$el.children('button#checkAvailabilityButton');
+    $availabilityButton.on('click', function() {
+
+      console.log(that.$el.children('input#parentInput').val());
+      $.ajax({
+        url: 'http://liveworld.io:80/validateChannel',
+        // url: 'http://localhost:80/locationSearch',
+        data: {
+          name: that.$el.children('input#channelNameInput').val(),
+          parent: that.$el.children('input#parentInput').val()
+        },
+        crossDomain: true,
+        success: function(data) {
+
+          if (data === 'Available') {
+            alert('channel available :)');
+          } else {
+            alert(data);
+          }
+
+        },
+        error: function(data) {
+          console.log('ajax error');
+        }
+      });
+
+
+
+    });
+
+
+
 
     this.$el.children('#nextButton').on('click', function() {
+
+      if ($('#channelNameInput').val() === '') {
+
+      }
 
       var temp = $('#parentInput').val();
       if (temp.split('/')[0] === 'General') {
@@ -148,8 +204,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
   }, 500);
 
 
-
-  var $backButton = $('<button id="backButton">Back</button>')
+  var backLabel = this.app.translate('Back');
+  var $backButton = $('<button id="backButton">'+backLabel+'</button>')
   $backButton.on('click', function() {
     that.app.get('detailView').displayed = 'Settings';
     that.app.get('content2').show(that.app.get('settingsView'));

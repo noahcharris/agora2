@@ -11,10 +11,55 @@ Agora.Views.TopbarView = Backbone.View.extend({
   render: function() {
     var that = this;
 
-    var username = that.app.get('username') || 'Not Logged In'
+    var noUserPrefix = this.app.translate('Not Logged In');
+
+    var username = that.app.get('username') || noUserPrefix;
 
     this.$el.html( this.template({ username: username }) );
 
+    //set the select to appropriate language
+    var temp;
+    switch (this.app.get('language')) {
+      case 'ar':
+        temp = 'Arabic';
+        break;
+      case 'zh':
+        temp = 'Chinese';
+        break;
+      case 'en':
+        temp = 'English';
+        break;
+      case 'fr':
+        temp = 'French';
+        break;
+      case 'de':
+        temp = 'German';
+        break;
+      case 'ja':
+        temp = 'Japanese';
+        break;
+      case 'pt':
+        temp = 'Portuguese';
+        break;
+      case 'ru':
+        temp = 'Russian';
+        break;
+      case 'es':
+        temp = 'Spanish';
+        break;
+      default:
+        temp = 'English';
+        break;
+    }
+    $('#languageSelect').val(temp);
+
+    //TRANSLATION
+    var userOptionsLabel = this.app.translate('Users');
+    var locationOptionsLabel = this.app.translate('Locations');
+    var channelOptionsLabel = this.app.translate('Channels');
+    this.$el.children('#searchSelect').children('#userOption')[0].label = userOptionsLabel;
+    this.$el.children('#searchSelect').children('#locationOption')[0].label = locationOptionsLabel;
+    this.$el.children('#searchSelect').children('#channelOption')[0].label = channelOptionsLabel;
 
 
     this.$el.children('span#username')[0].onclick = function() {
@@ -232,26 +277,54 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-    //STATIC TEXT LANGUAGE SELECTION
+
+
+
+    //STATIC TRANSLATION
     $('#languageSelect').on('change', function() {
+
       console.log($('#languageSelect').val());
       var temp = 'en';
       switch ($('#languageSelect').val()) {
+        case 'Arabic':
+          temp = 'ar';
+          break;
+        case 'Chinese':
+          temp = 'zh';
+          break;
         case 'English':
           temp = 'en';
           break;
-        case 'Français':
+        case 'French':
           temp = 'fr';
           break;
+        case 'German':
+          temp = 'de';
+          break;
+        case 'Japanese':
+          temp = 'ja';
+          break;
+        case 'Portuguese':
+          temp = 'pt';
+          break;
+        case 'Russian':
+          temp = 'ru';
+          break;
+        case 'Spanish':
+          temp = 'es';
+          break;
         default:
+          temp = 'en';
           break;
       }
       that.app.set('language', temp);
 
       that.app.get('topbarView').render();
+      that.app.get('cacheManager').getNotifications();
       that.app.get('locationView').render();
       that.app.get('channelView').render();
       that.app.get('sidebarView').render();
+      that.app.get('sidebarView').setHandlers();
 
       //later on include content2 as well
       that.app.get('content2').hide();
@@ -259,6 +332,12 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
 
 
+    //TODO about icon handler
+    // function() {
+    //   var aboutView = new Agora.Views.AboutView(that);
+    //   that.app.get('detailView').displayed = 'About';
+    //   that.app.get('content2').show(aboutView);
+    // }
 
 
 

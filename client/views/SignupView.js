@@ -18,7 +18,39 @@ Agora.Views.SignupView = Backbone.View.extend({
     var that = this;
 
     this.$el.empty();
-    this.$el.html( this.template() );
+
+
+
+
+    var bigRegisterLabel = this.app.translate('REGISTER');
+    var smallRegisterLabel = this.app.translate('Register');
+    var usernameLabel = this.app.translate('username');
+    var explanationLabel1 = this.app.translate('Your email is never displayed to other users.');
+    var explanationLabel2 = this.app.translate('You cannot change origin once it is set!');
+    var availabilityLabel = this.app.translate('Check Availability');
+    var passwordLabel = this.app.translate('password');
+    var confirmPasswordLabel = this.app.translate('confirm password');
+    var emailLabel = this.app.translate('email')
+    var originLabel = this.app.translate('origin');
+    var locationLabel = this.app.translate('current location');
+    var aboutLabel = this.app.translate('about');
+
+
+    this.$el.html( this.template({bigRegisterLabel: bigRegisterLabel, explanationLabel1: explanationLabel1,
+                                 explanationLabel2: explanationLabel2, smallRegisterLabel: smallRegisterLabel,
+                                 availabilityLabel: availabilityLabel }) );
+
+
+    this.$el.children('#signupUsernameInput').attr('placeholder', usernameLabel);
+    this.$el.children('#signupPasswordInput').attr('placeholder', passwordLabel);
+    this.$el.children('#signupConfirmPasswordInput').attr('placeholder', confirmPasswordLabel);
+    this.$el.children('#signupEmailInput').attr('placeholder',emailLabel );
+    this.$el.children('#signupOriginInput').attr('placeholder', originLabel);
+    this.$el.children('#signupAboutInput').attr('placeholder', aboutLabel);
+
+
+
+    this.$el.append();
 
     this.$el.append($('<img src="/resources/images/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
@@ -69,6 +101,8 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert('please enter a valid origin');
           } else if (!flag2) {
             alert('please enter a valid current location'); 
+          } else if (!$('.g-recaptcha-response').val()) {
+            alert('please fill out captcha form');
           } else {
 
 
@@ -87,7 +121,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                 origin: $('#signupOriginInput').val(),
                 location: $('#signupLocationInput').val(),
                 email: $('#signupEmailInput').val(),
-                about: $('#signupAboutInput').val()
+                about: $('#signupAboutInput').val(),
+                responseString: $('.g-recaptcha-response').val()
               },
               success: function(data) {
                 if (data.login) {
@@ -109,6 +144,7 @@ Agora.Views.SignupView = Backbone.View.extend({
                   that.app.trigger('reloadSidebarMessageChains');
                 } else {
                   alert(data);
+                  grecaptcha.reset();
                 }
 
                 //log user in
@@ -153,7 +189,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
       },
       error: function(data) {
-        alert('ajax error');
+        console.log('ajax error');
       }
     });
 
@@ -183,7 +219,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
   //     },
   //     error: function(data) {
-  //       alert('ajax error');
+  //       console.log('ajax error');
   //     }
   //   });
 

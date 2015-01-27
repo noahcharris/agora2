@@ -14,6 +14,9 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
 
   render: function() {
     var that = this;
+
+    this.model.aboutLabel = this.app.translate('About');
+    this.model.goToLabel = this.app.translate('Go To Channel');
     this.$el.html( this.template(this.model) );
 
     var $goTo = this.$el.children('#channelBox').children('#goToButton');

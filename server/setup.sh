@@ -11,7 +11,8 @@ sudo yum install gcc-c++;
 y;
 git clone https://github.com/joyent/node.git;
 cd node;
-#checout latest stable version
+#checkout latest stable version
+# LOL EXCEPT THIS ONE IS UNSTABLEEEE -_-
 git checkout v0.10.33;
 sudo ./configure;
 sudo make;
@@ -21,6 +22,10 @@ sudo make install;
 #MANUAL
 #need to change /etc/sudoers (add /usr/local/bin) in order to make these work
 cd ~;
+
+
+
+
 sudo npm install express;
 sudo npm install express-session;
 sudo npm install cookie;
@@ -41,6 +46,12 @@ sudo npm install bcrypt;
 sudo npm install s3;
 sudo npm install multiparty;
 sudo npm install underscore;
+
+sudo npm install time-eventloop;
+
+
+
+
 
 
 
@@ -78,4 +89,12 @@ post-start script
   echo "Node server started"
 end script' > agora.conf;
 exit;
+
+
+
+
+nohup sudo /usr/local/bin/node /home/ec2-user/server/server.js > /dev/null 2>&1 &
+
+
+
 

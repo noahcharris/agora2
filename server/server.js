@@ -6,29 +6,22 @@ var path = require('path');
 var fs = require('fs');
 
 var mailer = require('nodemailer');
-var cookie = require('cookie');
 
 var session = require('express-session');
 
 var bodyParser = require('body-parser');
-
-var clientSessions = require('client-sessions');
-
 var cookieParser = require('cookie-parser');
-var cookieSession = require('cookie-session');
-
-var ConnectRedisSessions = require( "connect-redis-sessions" );
-
-var csrf = require('csurf');
 
 //use serve-favicon instead!!!
-var favicon = require('static-favicon');
+// var favicon = require('static-favicon');
+var favicon = require('serve-favicon');
 
 var timeEventLoop = require('time-eventloop');
 timeEventLoop.start(/* { options } */);
 
 require('crashreporter').configure({
     outDir: '/home/ec2-user/crashes',
+    maxCrashFile: 1000,
     mailEnabled: true,
     mailTransportName: 'SMTP',
     mailTransportConfig: {
@@ -57,18 +50,6 @@ app = express();
 app.use(bodyParser());
 app.use(cookieParser());
 
-app.use( ConnectRedisSessions({ 
-  app: 'agora',
-  port: 6379,
-  host: '54.149.165.147',
-  cookie: {
-    maxAge: 10000,
-    path: '/',
-    httpOnly: true
-  },
-  trustProxy: true
-}) );
-
 
 
 app.use(function(request, response, next) {
@@ -89,69 +70,10 @@ app.use(function(request, response, next) {
 
 
 
-//app.use(cookieParser());
-// app.use(cookieSession({
-//   secret: 'Keyboard Cat',
-//   secure: true,
-//   httpOnly: true,
-//   keys: ['a', 'b']
-// }));
-
-
-// console.log(cookie.serialize('foo','bar', {
-//   path: '/',
-//   secure: true,
-//   httpOnly: true,
-//   maxAge: 300000
-// }));
-
-
-//got this error: "client-sessions error: Error: you cannot have a secure cookie unless the socket is  secure or you declare req.connection.proxySecure to be true. "
-
-  // app.use(clientSessions({
-  //   cookieName: 'mySession', // cookie name dictates the key name added to the request object
-  //   secret: 'blargadeeblargblarg', // should be a large unguessable string
-  //   duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
-  //   activeDuration: 1000 * 60 * 5, // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
-  //   cookie: {
-  //       path: '/', // cookie will only be sent to requests under '/api'
-  //       maxAge: 600000, // duration of the cookie in milliseconds, defaults to duration above
-  //       ephemeral: false, // when true, cookie expires when the browser closes
-  //       httpOnly: true, // when true, cookie is not accessible from javascript
-  //       secure: true // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
-  //     }
-  // }));
-
-
-
-
-//EXPRESS-SESSION THIS SHIT DID NOT SEEM TO WORK
-// app.set('trust proxy', 1); // trust first proxy
-
-//  app.use(session({
-//   secret: 'keyboard cat',
-//   cookie: { path: '/', httpOnly: true, secure: true, maxAge: 6000 },
-//   //adding these two made some warnings go away so w2snare
-//    resave: true,
-//    saveUninitialized: true
-// }));
-
-
-
-
-//CSRF IS BLOCKING MY AJAX CALLS
-//app.use(csrf());
-
-//this is nice for viewing errors!
-// process.on('uncaughtException', function (err) {
-//     console.log(err);
-// }); 
-
-
 //app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 
 app.get('/', function(request, response) {
-  response.redirect('index.html');
+  response.redirect('/index.html');
 });
 
 app.get('/test', routes.test);
@@ -231,11 +153,12 @@ app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
 
 app.get('/validateUsername', routes.validateUsername);
+app.get('/validateChannel', routes.validateChannel);
+app.get('/validateLocation', routes.validateLocation);
 app.post('/registerUser', routes.registerUser);
 app.get('/verifyUser', routes.verifyUser);
 app.get('/checkVerification', routes.checkVerification);
 
-app.get('/generateCaptcha', routes.generateCaptcha);
 
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
@@ -266,7 +189,7 @@ app.post('/upvoteReply', routes.upvoteReply);
 app.post('/createLocation', routes.createLocation);
 app.post('/createChannel', routes.createChannel);
 
-app.use(favicon(__dirname + '/../client/media/favicon.png'));
+app.use(favicon(__dirname + '/../client/resources/images/favicon.png'));
 
 
 app.use(express.static(__dirname + '/../client'));
@@ -280,6 +203,9 @@ var options = {
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
 console.log('express server listening on ports 80 and 443');  
+
+
+
 
 
 
