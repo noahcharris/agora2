@@ -168,7 +168,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
             for (var i=0; i < data.length ;i++) {
 
               var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-              that.$el.append($element);
+              that.$el.children('#createChannelSearchResultContainer')
+              .append($element);
 
               (function() {
                 var x = data[i].name;

@@ -1514,7 +1514,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: "Don't see your city? Please email us the name at ??? and we will add it into our database.",
   ar: '',
   zh: '',
   fr: '',

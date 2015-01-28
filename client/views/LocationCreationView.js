@@ -134,7 +134,9 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
               for (var i=0; i < data.length ;i++) {
 
                 var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-                that.$el.append($element);
+                that.$el.children('#createLocationSearchResultContainer')
+                .append($element);
+                console.log(that.$el.children('#createLocationSearchResultContainer'));
 
                 (function() {
                   var x = data[i].name;
