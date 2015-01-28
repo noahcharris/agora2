@@ -24,7 +24,7 @@ sudo make install;
 cd ~;
 
 
-
+touch hits.txt;
 
 sudo npm install express;
 sudo npm install express-session;

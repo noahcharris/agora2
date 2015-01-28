@@ -913,8 +913,6 @@ module.exports.getMessageChains = function(request, response) {
 
 module.exports.getMessageChain = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
-  console.log('get chain');
-  console.log(queryArgs.contact, queryArgs.username);
 
 
   client.query("SELECT * FROM securityJoin WHERE username = $1;",
@@ -1058,7 +1056,6 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log(queryArgs);
 
   if (queryArgs.visitor) {
     
@@ -1069,11 +1066,6 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
               console.log('error selecting from securityJoin: ', err);
             } else {
 
-              console.log(request.cookies['login']);
-              console.log(queryArgs.token);
-              console.log(result.rows[0].token);
-              console.log(request.cookies['login'].split('/')[1]);
-              console.log(result.rows[0].cookie);
 
               if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
@@ -1142,7 +1134,6 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log(queryArgs);
 
   client.query("SELECT * FROM locations WHERE name = $1;",
     [queryArgs.location], function(err, result) {
@@ -1635,7 +1626,6 @@ module.exports.checkLogin = function(request, response) {
 
 
   } else {
-    console.log('no cookie found');
     response.json({});
   }
 

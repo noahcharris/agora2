@@ -731,10 +731,9 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
   openInputBox: function(data) {
-
+    var that = this;
     if (this.app.get('login')) {
 
-        var that = this;
         this.responding = true;
         this.responseData = data;
         $('textarea#inputTextArea').val('');
