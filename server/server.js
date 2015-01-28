@@ -51,7 +51,12 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 
-
+//COUNT HITS
+var hitCount = 0;
+app.use(function(request, response, next) {
+  hitCount++;
+  next();
+});
 
 
 //IP BANNING

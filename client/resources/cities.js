@@ -9,6 +9,16 @@ var cities = {
 		"properties": {
 			"city": "World/United States/Alaska/Adak"
 		}
+	},{
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-57.757113, -64.211721]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "World/Antarctica/HQ"
+		}
+
 	}, {
 		"geometry": {
 			"type": "Point",
