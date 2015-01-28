@@ -90,14 +90,14 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       }
 
       var temp = $('#parentInput').val();
-      if (temp.split('/')[0] === 'General') {
+      if (temp.split('/')[0] === 'All') {
         this.channelVerified = true;
       } else {
         this.channelVerified = false;
       }
 
       if (!this.channelVerified) {
-        alert('Your parent channel must begin with "General"');
+        alert('Your parent channel must begin with "All"');
       } else {
         $.ajax({
           url: 'https://liveworld.io:443/createChannel',
@@ -193,7 +193,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       //analyse parent input and make sure it is correct
 
         var temp = $('#parentInput').val();
-        if (temp.split('/')[0] === 'General') {
+        if (temp.split('/')[0] === 'All') {
           this.channelVerified = true;
         } else {
           this.channelVerified = false;

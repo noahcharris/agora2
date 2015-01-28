@@ -29,7 +29,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('notificationsDisplayed', false);
 
     //keep track of channel here, i wish location was here too.. but it is so tightly coupled right now
-    this.set('channel', 'General');
+    this.set('channel', 'All');
 
     // ## REGION MANAGERS ##
     content1 = this.RegionManager1('#content1');
@@ -474,14 +474,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#inputBox').css('height', '0px');
 
           //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
-          // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
+          // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD ALL
         } else if ($('#notificationsDisplay').children().length) {
           $('#notificationsDisplay').empty();
           that.set('notificationsDisplayed', false);
         } else if ($('#pathInput').length || $('#channelInput').length) {
           $('#pathInput').remove();
           $('#channelInput').remove();
-          that.changeChannel('General');
+          that.changeChannel('All');
           that.get('mapController').showWorld();
         } else {
           that.get('content2').hide();
@@ -805,8 +805,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           break;
         case 'Channels':
           renderMethod = 'renderChannel';
-          if (that.get('channel') === 'General') {
-            that.get('mapController').router.navigate('channel/General', { trigger:false });
+          if (that.get('channel') === 'All') {
+            that.get('mapController').router.navigate('channel/All', { trigger:false });
           } else {
             that.get('mapController').router.navigate('channel/'+model.name.slice(8, model.name.length), { trigger:false });
           }

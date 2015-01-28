@@ -12,7 +12,7 @@ var cityData = require('../client/resources/cities.js');
 // var channelData = require('../client/resources/channels.js');
 
 countries = []//countryData.countries.features;
-cities = cityData.cities.features;
+// cities = cityData.cities.features;
 states = []//statesData.states.features;
 channels = []//channelData.channels;
 
@@ -63,7 +63,7 @@ channels = []//channelData.channels;
 
 
 //INSERT CITIES
-for (var i=0; i < cities.length ;i++) {
+// for (var i=0; i < cities.length ;i++) {
 
   // client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
   //   +"VALUES ('Location', false, $1, 0, true);",
@@ -90,12 +90,12 @@ for (var i=0; i < cities.length ;i++) {
   //     }
   // });
 
-  client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
-    +"= ("+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) ) "
-    +"WHERE name = $1;",[cities[i].properties.city], function(err, result) {
-      if (err) console.log('error updating locations: ', err);
-      console.log('finished updating locations');
-  });
+  // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
+  //   +"= ("+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) ) "
+  //   +"WHERE name = $1;",[cities[i].properties.city], function(err, result) {
+  //     if (err) console.log('error updating locations: ', err);
+  //     console.log('finished updating locations');
+  // });
 
   // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
   // +"= (null, null, null);", function(err, result) {
@@ -105,7 +105,7 @@ for (var i=0; i < cities.length ;i++) {
 
 
 
-};
+// };
 
 
 
@@ -140,10 +140,14 @@ for (var i=0; i < cities.length ;i++) {
 
 
 
+//CHANNELS
+
+client.query("UPDATE topics SET channel='All' WHERE channel = 'General';", function() {
+
+});
 
 
 
-// //CHANNELS
 // for (var i=0; i < channels.length ;i++) {
 
 //   client.query("INSERT INTO channels (type, name) "

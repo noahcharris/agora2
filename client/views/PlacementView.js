@@ -63,7 +63,7 @@ Agora.Views.PlacementView = Backbone.View.extend({
               that.app.get('mapController').stopPlacing();
               that.app.get('content2').hide();
               that.app.get('sidebarView').displayed = 'Topics-Top';
-              that.app.set('channel', 'General');
+              that.app.set('channel', 'All');
               that.app.get('mapController').showWorld();
               //that.app.get('mapController').goToPath(that.data.parent+'/'+that.data.name);
 

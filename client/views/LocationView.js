@@ -68,7 +68,7 @@ Agora.Views.LocationView = Backbone.View.extend({
       $('#pathInput').focus();
       $('#pathInput').focusout(function() {
         setTimeout(function() {
-          // that.app.changeChannel('General');
+          // that.app.changeChannel('All');
           // that.app.get('mapController').showWorld();
         }, 2000);
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS

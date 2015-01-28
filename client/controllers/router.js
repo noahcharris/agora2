@@ -141,7 +141,7 @@ Agora.Router = Backbone.Router.extend({
     //SHOW THE USER PROFILE
     this.app.showLocationDetailView('World/'+input);
     this.app.get('mapController').goToPath('World/'+input);
-    this.app.changeChannel('General');
+    this.app.changeChannel('All');
   },
 
   channel: function(channel) {
@@ -161,8 +161,8 @@ Agora.Router = Backbone.Router.extend({
     }
     var input = temp1.join('/');
     //SHOW THE USER PROFILE
-    this.app.showChannelDetailView('General/'+input);
-    this.app.changeChannel('General/'+input);
+    this.app.showChannelDetailView('All/'+input);
+    this.app.changeChannel('All/'+input);
     this.app.get('mapController').showWorld();
   },
 

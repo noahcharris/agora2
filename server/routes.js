@@ -1109,6 +1109,20 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
                     if (err) console.log('error checking contactsJoin: ', err);
                     if (result.rows.length) {
 
+                        client.query("SELECT * FROM topics WHERE username = $1 "
+                          +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
+                          function(err, result) {
+                            if (err) {
+                              console.log('error selecting from topics');
+                              response.json({ success: false, data: 'sql error'});
+                            } else {
+                              response.json({ success: true, data: result.rows });
+                            }
+                        });
+
+                    } else {
+
+                      if (queryArgs.username === queryArgs.visitor) {
 
                         client.query("SELECT * FROM topics WHERE username = $1 "
                           +"ORDER BY createdAt DESC LIMIT 50;", [queryArgs.username],
@@ -1121,9 +1135,10 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
                             }
                         });
 
+                      } else {
+                        response.json({ success: false, data: 'visitor and user are not contacts'});
+                      }
 
-                    } else {
-                      response.json({ success: false, data: 'visitor and user are not contacts'});
                     }
                 });
 

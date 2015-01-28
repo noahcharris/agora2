@@ -60,7 +60,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
       $('#channelInput').focusout(function() {
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
         setTimeout(function() {
-          // that.app.changeChannel('General');
+          // that.app.changeChannel('All');
           // that.app.get('mapController').showWorld();
         }, 2000);
         $('#channelInput').remove();
