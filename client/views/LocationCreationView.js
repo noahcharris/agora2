@@ -74,7 +74,9 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
         this.cityVerified = false;
       }
 
-      if (!that.cityVerified) {
+      if (!that.$el.children('#locationNameInput').val()) {
+        alert('You must enter a name for your location.');
+      } else if (!that.cityVerified) {
         alert('You must choose a valid parent city.');
       } else {
         console.log('RADIO INPUT : ', that.$el.children('input:radio[name=publicPrivate]').val());

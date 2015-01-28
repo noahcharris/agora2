@@ -3972,99 +3972,158 @@ module.exports.createLocation = function(request, response) {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
+          //VERIFY CAPTCHA
 
-            //check if user is verified
-            client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
-              function(err, result) {
-                if (err) {
-                  console.log('error selecting from users: ', err);
-                  response.end('error');
-                } else {
-                  if (result.rows[0] && result.rows[0].verified) {
-                    //VERIFIED!!!!!!!!
+          var requestOptions = {
+            host: 'www.google.com',
+            path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
+            //IS THIS A VULNERABILITY???
+            +'&response='+request.body.responseString
+            +'&remoteip='+request.ip,
+            port: 443,
+            method: 'POST',
+            //accept: '*/*'
+          };
+          var req = https.request(requestOptions, function(res) {
+            var str = '';
+            res.on('data', function(d) {
+              str += d;
+              // process.stdout.write(d);
+            });
+            res.on('end', function() {
 
+              //recaptcha verification succeeded
+              if (str.indexOf('true') != -1) {
 
-                        //capitalize the name
-                        var temp = request.body.name.split(' ');
-                        for (var i=0; i < temp.length ;i++) {
-                          temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
-                        }
-                        var name = temp.join(' ');
-
-                        //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
-                        //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
-
-                        //check that parent is a city
-
-
-                        var flag = false;
-                        coords = null;
-                        for (var i=0; i < cityData.cities.features.length ;i++) {
-                          if (request.body.parent === cityData.cities.features[i].properties.city) {
-                            flag = true;
-                            coords = cityData.cities.features[i].geometry.coordinates;
-                          }
-                        }
-
-                        if (flag) {
-
-                          //check that it is within acceptable radius
-                          client.query("SELECT * FROM locations "
-                            // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
-                            +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), "+placeRadiusThreshold+") AND name = $2;",
-                            ['POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.parent], function(err, result) {
-                            if (err) {
-                              console.log('error retrieving points: ', err);
-                              response.end('error');
-                            } else {
-                              if (result.rows.length) {
-                                //within acceptable radius
+                //CAPTCHA VERIFICATION SUCCESSFUL
 
 
 
-                                    //create teh city
-                                    client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                                      +" creator, population, rank, public, pointGeometry, latitude, longitude) "
-                                      +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
-                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
-                                      request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
-                                      function(err, result) {
-                                        if (err) {
-                                          console.log('error inserting into locations: ', err);
+
+                      //check if user is verified
+                      client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+                        function(err, result) {
+                          if (err) {
+                            console.log('error selecting from users: ', err);
+                            response.end('error');
+                          } else {
+                            if (result.rows[0] && result.rows[0].verified) {
+                              //VERIFIED!!!!!!!!
+
+
+                                  //capitalize the name
+                                  var temp = request.body.name.split(' ');
+                                  for (var i=0; i < temp.length ;i++) {
+                                    temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+                                  }
+                                  var name = temp.join(' ');
+
+                                  //IF USER IS TRYING TO CREATE A PLACE WITH ANY PARENT BESIDES
+                                  //A CITY, THEN DON'T ALLOW IT, (NEED TO PROVIDE STRICTURES & FEEDBACK IN CLIENT)
+
+                                  //check that parent is a city
+
+
+                                  var flag = false;
+                                  coords = null;
+                                  for (var i=0; i < cityData.cities.features.length ;i++) {
+                                    if (request.body.parent === cityData.cities.features[i].properties.city) {
+                                      flag = true;
+                                      coords = cityData.cities.features[i].geometry.coordinates;
+                                    }
+                                  }
+
+                                  if (flag) {
+
+                                    //check that it is within acceptable radius
+                                    client.query("SELECT * FROM locations "
+                                      // +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText('POINT("+queryArgs.longitude+" "+queryArgs.latitude+")', 4269), 1000000000);",
+                                      +"WHERE ST_DWithin(pointGeometry, ST_GeomFromText($1, 4269), "+placeRadiusThreshold+") AND name = $2;",
+                                      ['POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.parent], function(err, result) {
+                                      if (err) {
+                                        console.log('error retrieving points: ', err);
+                                        response.end('error');
+                                      } else {
+                                        if (result.rows.length) {
+                                          //within acceptable radius
+
+
+                                            //make sure it doesn't already exist
+                                            client.query("SELECT * FROM locations WHERE name = $1;", [request.body.parent+'/'+name],
+                                              function(err, result) {
+                                                if (err) console.log('error selecting from locations: ', err);
+
+                                                if (result.rows.length) {
+                                                  response.end('That location already exists.');
+                                                } else {
+
+                                                    //haha so I guess people can hack the system and create locations outside
+                                                    //of the world tree, I guess that's cool for now
+
+                                                    //create teh location
+                                                    client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
+                                                      +" creator, population, rank, public, pointGeometry, latitude, longitude) "
+                                                      +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8);",
+                                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
+                                                      request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
+                                                      function(err, result) {
+                                                        if (err) {
+                                                          console.log('error inserting into locations: ', err);
+                                                        } else {
+                                                          response.end('successfully created location');
+                                                        }
+                                                    });
+                                                  
+
+                                                }
+                                            });
+
+
+
                                         } else {
-                                          response.end('successfully created location');
+                                          //not within acceptable radius
+                                          response.end('Your location is too far from its parent city.');
+
                                         }
-                                    });
+                                      }
+                                    });//end radius check
 
-                                
+                                  } else {
+                                    //HACKERS
+                                    response.end('o_O');
+                                  }
 
 
 
-                              } else {
-                                //not within acceptable radius
-                                response.end('Your location is too far from its parent city.');
 
-                              }
+                                        
+
+
+                            } else {
+                              //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                              reponse.end('nice try o_O');
                             }
-                          });//end radius check
-
-                        } else {
-                          //HACKERS
-                          response.end('o_O');
-                        }
+                          }
+                        });
 
 
 
 
-                              
 
 
-                  } else {
-                    //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
-                    reponse.end('nice try o_O');
-                  }
-                }
-              });
+              } else { //end recaptcha verification test
+              //recaptcha verification failed
+              //MAYBE HACKERS
+                response.end('RECAPTCHA FAILED o_O');
+              }
+            });
+          });
+          req.end();
+          req.on('error', function(e) {
+            console.log('error', e);
+          });
+
+
 
 
 
@@ -4102,53 +4161,105 @@ module.exports.createChannel = function(request, response) {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-          //check if user is verified
-          client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
-            function(err, result) {
-              if (err) {
-                console.log('error selecting from users: ', err);
-                response.end('error');
-              } else {
-                if (result.rows[0] && result.rows[0].verified) {
-                  //VERIFIED!!!!!!!!
+
+          var requestOptions = {
+            host: 'www.google.com',
+            path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
+            //IS THIS A VULNERABILITY???
+            +'&response='+request.body.responseString
+            +'&remoteip='+request.ip,
+            port: 443,
+            method: 'POST',
+            //accept: '*/*'
+          };
+          var req = https.request(requestOptions, function(res) {
+            var str = '';
+            res.on('data', function(d) {
+              str += d;
+              // process.stdout.write(d);
+            });
+            res.on('end', function() {
+
+              //recaptcha verification succeeded
+              if (str.indexOf('true') != -1) {
+
+                //CAPTCHA VERIFICATION SUCCESSFUL
+                    //check if user is verified
+                    client.query("SELECT * FROM users WHERE username = $1;", [request.body.username],
+                      function(err, result) {
+                        if (err) {
+                          console.log('error selecting from users: ', err);
+                          response.end('error');
+                        } else {
+                          if (result.rows[0] && result.rows[0].verified) {
+                            //VERIFIED!!!!!!!!
+
+
+                                    //capitalize the name
+                                    var temp = request.body.name.split(' ');
+                                    for (var i=0; i < temp.length ;i++) {
+                                      temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
+                                    }
+                                    var name = temp.join(' ');
+
+                                    var fullPath = request.body.parent+'/'+name;
+                                    var temp = fullPath.split('/');
+
+                                    if (temp.length > 5) {
+                                      response.end('Your channel is too deeply nested.');
+                                    } else {
+
+                                      client.query("SELECT * FROM channels WHERE name = $1", [request.body.parent+'/'+name],
+                                        function(err, result) {
+                                          if (err) console.log('error selecting from channels: ', err);
+
+                                          if (result.rows.length) {
+                                            response.end('That channel already exists.');
+                                          } else {
+
+                                              //CREATE THE CHANNEL
+                                              //haha so I guess people can hack the system and create channels outside
+                                              //of the all tree, I guess that's cool for now
+                                              client.query("INSERT INTO channels (type, name, description, parent) "
+                                                +"VALUES ('Channel', $1, $2, $3);",
+                                                [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+                                                function(err, result) {
+                                                  if (err) {
+                                                    console.log('error inserting into channels: ', err);
+                                                  } else {
+                                                    response.end('successfully created channel');
+                                                  }
+                                              });
+
+
+                                          }
+                                      });//end channel name check
+                                    }
 
 
 
-                } else {
-                  //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
-                  reponse.end('nice try o_O');
-                }
+
+
+
+                          } else {
+                            //PROBABLY SOMEONE TRYING TO HACK, SHOULD MAYBE PUT A RED HERRING HERE????
+                            reponse.end('nice try o_O');
+                          }
+                        }
+                      });
+
+              } else { //end recaptcha verification test
+              //recaptcha verification failed
+              //MAYBE HACKERS
+                response.end('RECAPTCHA FAILED o_O');
               }
             });
-
-
-            //capitalize the name
-            var temp = request.body.name.split(' ');
-            for (var i=0; i < temp.length ;i++) {
-              temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
-            }
-            var name = temp.join(' ');
-
-            var fullPath = request.body.parent+'/'+name;
-            var temp = fullPath.split('/');
-
-            if (temp.length > 5) {
-              response.end('Your channel is too deeply nested.');
-            } else {
-
-                client.query("INSERT INTO channels (type, name, description, parent) "
-                  +"VALUES ('Channel', $1, $2, $3);",
-                  [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
-                  function(err, result) {
-                    if (err) {
-                      console.log('error inserting into channels: ', err);
-                    } else {
-                      response.end('successfully created channel');
-                    }
-                });
-
-            }
-                    
+          });
+          req.end();
+          req.on('error', function(e) {
+            console.log('error', e);
+          });
+        
 
 
         } else {

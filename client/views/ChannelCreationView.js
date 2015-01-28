@@ -96,7 +96,10 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         this.channelVerified = false;
       }
 
-      if (!this.channelVerified) {
+
+      if (!that.$el.children('#channelNameInput').val()) {
+        alert('You must enter a name for your channel.');
+      } else if (!this.channelVerified) {
         alert('Your parent channel must begin with "All"');
       } else {
         $.ajax({
