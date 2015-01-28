@@ -405,7 +405,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                             topicId: model.id
                           },
                           success: function(model) {
-                            debugger;
+                            //debugger;
                             that.app.get('sidebarView').displayed = 'Topics-Top';
                             that.app.get('content2').show(that.app.get('detailView'), model);
 
@@ -466,15 +466,14 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                 var throttledResize = _.throttle(function() {
 
                         //this is how region manager calculates sidebar width
-                  var detailWidth = $(window).width() * 0.75 - $('#content1').width();
 
-                  console.log('WIDTH: ', detailWidth);
                   
 
                   for (var i=0; i < that.subViews.length ;i++) {
                     if (that.subViews[i].model.image) {          
                       var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-                      box.css('width', (detailWidth - 180) + 'px');
+                      var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
+                      box.css('width', (entryWidth - 85) + 'px');
                     }
 
                   };
