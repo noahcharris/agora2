@@ -134,13 +134,19 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       if (map.getZoom() > 7) {
         center = map.getCenter();
         console.log(center);
-        that.addPlacesWithinRadius(center.lat, center.lng);
+        
+        if (!that.placing) {
+          that.addPlacesWithinRadius(center.lat, center.lng);
+        }
+
       } else {
         that.removePlaces();
       }
 
       //update heat points
-      that.updateHeatPoints();
+      if (!that.placing) {
+        that.updateHeatPoints();
+      }
 
     });
 
@@ -801,6 +807,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.removeStates();
     this.removeCities();
     this.removePlaces();
+    that.heatMarkerLayer.clearLayers();
     //remove all map features
 
     this.markerLayer = L.layerGroup();

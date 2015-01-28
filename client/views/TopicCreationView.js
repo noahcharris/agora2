@@ -79,7 +79,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
           //NEED TO CHECK FOR THINGS, INCLUDING CAPTCHA
 
           if (!$('.g-recaptcha-response').val()) {
-            alert('please fill out captcha');
+            alert('Please complete CAPTCHA');
           } else if (that.$el.children('input#topicCreationHeadline').val() === ''
             && that.$el.children('textarea#topicCreationContent').val() === '') {
             alert('you must provide either a headline or contents');

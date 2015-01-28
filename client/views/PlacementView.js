@@ -30,7 +30,7 @@ Agora.Views.PlacementView = Backbone.View.extend({
 
 
         if (!$('.g-recaptcha-response').val()) {
-          alert('Please fill out captcha');
+          alert('Please complete CAPTCHA');
         } else if (!that.app.get('mapController').placedLatitude) {
           alert('Please place a point on the map.')
         } else {
@@ -53,33 +53,23 @@ Agora.Views.PlacementView = Backbone.View.extend({
                   creator: that.app.get('username'),
                   longitude: that.app.get('mapController').placedLongitude,
                   latitude: that.app.get('mapController').placedLatitude,
-                  responseString = $('.g-recaptcha-response').val()
+                  responseString: $('.g-recaptcha-response').val()
 
                 },
                 success: function(data) {
-                  if (data) {
+                  if (data[0] === 's') {
                     alert(data);
-                    // topicsCollection = data;
-                    // console.log('server returned: ', data);
-                    // //HAVE TO REMEMBER TO DO THIS EVERYTIME OR ELSE CHANGE SIDEBARVIEW'S
-                    // sidebarView.collection = data;
-                    // content1.show(sidebarView);
+
                     that.app.get('mapController').placing = false;
                     that.app.get('mapController').stopPlacing();
                     that.app.get('content2').hide();
                     that.app.get('sidebarView').displayed = 'Topics-Top';
                     that.app.set('channel', 'All');
                     that.app.get('mapController').showWorld();
-                    //that.app.get('mapController').goToPath(that.data.parent+'/'+that.data.name);
-
-
-
                   } else {
-                    // console.log('memcached returned false');
-                    // sidebarView.collection = defaultCollection;
-                    // content1.show(sidebarView);
+                    alert(data);
+                    
                     that.app.get('content2').hide(); 
-
                   }
                 }, 
                 error: function(err) {

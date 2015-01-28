@@ -101,6 +101,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         alert('You must enter a name for your channel.');
       } else if (!this.channelVerified) {
         alert('Your parent channel must begin with "All"');
+      } else if (!$('.g-recaptcha-response').val()) {
+        alert('Please complete CAPTCHA');
       } else {
         $.ajax({
           url: 'https://liveworld.io:443/createChannel',
@@ -114,15 +116,17 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
             token: that.app.get('token'),
             name: that.$el.children('#channelNameInput').val(),
             description: that.$el.children('#descriptionInput').val(),
-            parent: that.$el.children('#parentInput').val() 
+            parent: that.$el.children('#parentInput').val(),
+            responseString: $('.g-recaptcha-response').val() 
           },
           success: function(data) {
-            if (data) {
+            if (data[0] === 's') {
               alert(data);
               that.app.get('content2').hide();
               that.app.changeChannel(that.$el.children('#parentInput').val()+'/'+that.$el.children('#channelNameInput').val());
               that.app.get('mapController').showWorld();
             } else {
+              alert(data);
               // console.log('memcached returned false');
               // sidebarView.collection = defaultCollection;
               // content1.show(sidebarView);
