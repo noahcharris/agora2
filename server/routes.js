@@ -1910,61 +1910,79 @@ module.exports.addContact = function(request, response) {
 
             if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-                        client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
-                            [request.body.contact, request.body.username],
-                            function(err, result) {
-                              if (err) {
-                                console.log('error selecting from contactRequestJoin: ', err);
-                                response.end('error');
-                              } else {
 
-                                //ONCE WE CHECK
+                  client.query("SELECT * FROM contactsJoin WHERE (username1 = $1 AND username2 = $2) "
+                    +"OR (username1 = $2 AND username2 = $1);", [request.body.username, request.body.contact],
+                      function(err, result) {
+                        if (err) console.log('error selecting from contactsJoin: ', err);
 
-                                //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
-                                if (result.rows.length) {
-                                  //if they have, add to the contact join and delete data from memcached
+                        if (result.rows.length) {
+                          response.end('you two are already contacts');
+                        } else {
 
-                                      client.query("INSERT INTO contactsjoin (username1, username2) "
-                                        +"VALUES ($1, $2);",
-                                      [request.body.username, request.body.contact],
-                                      function(err, result) {
-                                        if (err) {
-                                          console.log('error inserting into contactsjoin: ', err);
-                                        } else {
-                                              console.log('successfully inserted into contactsjoin');
-                                              //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
-                                              //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
-                                              client.query("DELETE FROM contactRequestJoin WHERE (sender = $1 AND recipient = $2)"
-                                                +" OR (sender = $2 AND recipient = $1);",
-                                                  [request.body.username, request.body.contact],
-                                                  function(err, result) {
-                                                    if (err) {
-                                                      console.log('error selecting from topics: ', err);
-                                                      response.end('error');
-                                                    } else {
-                                                      //reword this fo sho
-                                                      // response.end('you and '+ request.body.contact +' are now contacts');
-                                                      response.end('success!');
-                                                    }
-                                              });
-                                        }
 
-                                      });
-
-                                } else {
-                                    client.query("INSERT INTO contactRequestJoin (sender, recipient) "
-                                      +"VALUES ($1, $2);",
-                                    [request.body.username, request.body.contact],
+                                client.query("SELECT * FROM contactRequestJoin WHERE (sender=$1 AND recipient = $2)",
+                                    [request.body.contact, request.body.username],
                                     function(err, result) {
                                       if (err) {
-                                        console.log('error inserting into contactsRequestJoin: ', err);
+                                        console.log('error selecting from contactRequestJoin: ', err);
+                                        response.end('error');
                                       } else {
-                                        response.end('sent contact request');
-                                      }
-                                    });
-                                }
-                            }
-                        });
+
+                                        //ONCE WE CHECK
+
+                                        //IF THERE IS AN ENTRY THEN INSERT INTO CONTACTSJOIN
+                                        if (result.rows.length) {
+                                          //if they have, add to the contact join and delete data from memcached
+
+                                              client.query("INSERT INTO contactsjoin (username1, username2) "
+                                                +"VALUES ($1, $2);",
+                                              [request.body.username, request.body.contact],
+                                              function(err, result) {
+                                                if (err) {
+                                                  console.log('error inserting into contactsjoin: ', err);
+                                                } else {
+                                                      console.log('successfully inserted into contactsjoin');
+                                                      //HAVE TO DELETE BOTH, BECAUSE IT'S POSSIBLE FOR USERS TO WRITE THEIR 
+                                                      //REQUESTS AT THE SAME TIME AS EACH OTHER , HIGHLY UNLIKELY THO
+                                                      client.query("DELETE FROM contactRequestJoin WHERE (sender = $1 AND recipient = $2)"
+                                                        +" OR (sender = $2 AND recipient = $1);",
+                                                          [request.body.username, request.body.contact],
+                                                          function(err, result) {
+                                                            if (err) {
+                                                              console.log('error selecting from topics: ', err);
+                                                              response.end('error');
+                                                            } else {
+                                                              //reword this fo sho
+                                                              // response.end('you and '+ request.body.contact +' are now contacts');
+                                                              response.end('contact confirmed!');
+                                                            }
+                                                      });
+                                                }
+
+                                              });
+
+                                        } else {
+                                            client.query("INSERT INTO contactRequestJoin (sender, recipient) "
+                                              +"VALUES ($1, $2);",
+                                            [request.body.username, request.body.contact],
+                                            function(err, result) {
+                                              if (err) {
+                                                console.log('error inserting into contactsRequestJoin: ', err);
+                                              } else {
+                                                response.end('sent contact request');
+                                              }
+                                            });
+                                        }
+                                    }
+                                });
+
+
+
+
+                        }
+                      });//end contactsJoin check
+
                         
 
 

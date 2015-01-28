@@ -1524,7 +1524,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'you two are already contacts',
   ar: '',
   zh: '',
   fr: '',
@@ -1534,7 +1534,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'contact confirmed!',
   ar: '',
   zh: '',
   fr: '',

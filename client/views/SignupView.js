@@ -69,22 +69,22 @@ Agora.Views.SignupView = Backbone.View.extend({
           var temp1 = that.app.get('mapController').get('cities');
           var temp2 = that.app.get('mapController').get('countries');
           var flag1 = false;
-          var flag2 = false;
+           var flag2 = true;
           for (var key in temp1._layers) {
             if (temp1._layers[key].city === $('#signupOriginInput').val()) {
               flag1 = true;
             }
-            if (temp1._layers[key].city === $('#signupLocationInput').val()) {
-              flag2 = true;
-            }
+            // if (temp1._layers[key].city === $('#signupLocationInput').val()) {
+            //   flag2 = true;
+            // }
           }
           for (var key in temp2._layers) {
             if (temp2._layers[key].feature.properties.name === $('#signupOriginInput').val()) {
               flag1 = true;
             }
-            if (temp2._layers[key].feature.properties.name === $('#signupLocationInput').val()) {
-              flag2 = true;
-            }
+            // if (temp2._layers[key].feature.properties.name === $('#signupLocationInput').val()) {
+            //   flag2 = true;
+            // }
           }
 
           if ($('#signupUsernameInput').val() === '') {

@@ -160,7 +160,6 @@ Agora.Views.ChannelView = Backbone.View.extend({
         },
         success: function(data) {
           if (data) {
-            console.log('DATA: ', data);
             
 
             that.app.get('sidebarView').searchCollection = data;
