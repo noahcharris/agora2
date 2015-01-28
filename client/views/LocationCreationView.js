@@ -94,7 +94,8 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
         placementView.data = {
           name: that.$el.children('#locationNameInput').val(),
-          pub: pub,
+          //CHANGE THIS WHEN WE ADD PUB/PRIV BACK IN~!!!
+          pub: true,
           description: that.$el.children('#descriptionInput').val(),
           parent: that.$el.children('#parentInput').val()
         };

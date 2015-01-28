@@ -52,9 +52,20 @@ app.use(cookieParser());
 
 
 
+
+
+//IP BANNING
+banArray = [];
+
 app.use(function(request, response, next) {
 
-  console.log('serving user client at ip '+request.ip);
+  for (var i=0; i < banArray.length ;i++) {
+    if (banArray[i] === request.ip) {
+      //BANNED!∆!∆!∆!
+      response.end('o_O');
+    }
+  }
+  //console.log('serving user client at ip '+request.ip);
   next();
 });
 
