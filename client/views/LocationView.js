@@ -137,7 +137,7 @@ Agora.Views.LocationView = Backbone.View.extend({
             that.app.get('content1').show(that.app.get('sidebarView'));
 
           } else {
-            alert('error');
+            alert(that.app.translate('error'));
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);

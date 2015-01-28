@@ -65,14 +65,14 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         success: function(data) {
 
           if (data === 'Available') {
-            alert('channel available :)');
+            alert(that.app.translate('channel available :)'));
           } else {
-            alert(data);
+            alert(that.app.translate(data));
           }
 
         },
         error: function(data) {
-          console.log('ajax error');
+          console.log('server error');
         }
       });
 
@@ -98,11 +98,11 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
 
       if (!that.$el.children('#channelNameInput').val()) {
-        alert('You must enter a name for your channel.');
+        alert(that.app.translate('you must enter a name for your channel'));
       } else if (!this.channelVerified) {
-        alert('Your parent channel must begin with "All"');
+        alert(that.app.translate('your parent channel must begin with "All"'));
       } else if (!$('.g-recaptcha-response').val()) {
-        alert('Please complete CAPTCHA');
+        alert(that.app.translate('please complete CAPTCHA'));
       } else {
         $.ajax({
           url: 'https://liveworld.io:443/createChannel',
@@ -121,12 +121,12 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
           },
           success: function(data) {
             if (data[0] === 's') {
-              alert(data);
+              alert(that.app.translate(data));
               that.app.get('content2').hide();
               that.app.changeChannel(that.$el.children('#parentInput').val()+'/'+that.$el.children('#channelNameInput').val());
               that.app.get('mapController').showWorld();
             } else {
-              alert(data);
+              alert(that.app.translate(data));
               // console.log('memcached returned false');
               // sidebarView.collection = defaultCollection;
               // content1.show(sidebarView);

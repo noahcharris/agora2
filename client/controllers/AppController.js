@@ -1190,7 +1190,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                     $(thet).parent().empty();
                                   },
                                   error: function() {
-                                    alert('server error');
+                                    alert(that.app.translate('server error'));
                                   }
                                 });
                                 break;
@@ -1349,7 +1349,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
         },
         error: function() {
-          alert('server error');
+          alert(that.app.translate('server error'));
         }
       });
 

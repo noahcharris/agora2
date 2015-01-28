@@ -110,7 +110,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
             that.app.get('detailView').displayed = 'CreateLocation';
             that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
           } else {
-            alert('You must verify your email to create a location');
+            alert(that.app.translate('you must verify your email to create a location'));
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -140,12 +140,11 @@ Agora.Views.SettingsView = Backbone.View.extend({
         },
         success: function(data) {
           //s for successsfulllyyyyyy
-          console.log('WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU: ', data);
           if (data.length && data[0].verified) {
             that.app.get('detailView').displayed = 'CreateChannel';
             that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
           } else {
-            alert('You must verify your email to create a channel');
+            alert(that.app.translate('you must verify your email to create a channel'));
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);

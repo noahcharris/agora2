@@ -88,21 +88,21 @@ Agora.Views.SignupView = Backbone.View.extend({
           }
 
           if ($('#signupUsernameInput').val() === '') {
-            alert('please enter a username');
+            alert(that.app.translate('please enter a username'));
           } else if ($('#signupUsernameInput').val().indexOf('@') !== -1) {
-            alert("username may not contain '@'");
+            alert(that.app.translate("username may not contain '@'"));
           } else if ($('#signupPasswordInput').val() === '') {
-            alert('please enter a password');
+            alert(that.app.translate('please enter a password'));
           } else if ($('#signupPasswordInput').val() !== $('#signupConfirmPasswordInput').val()) {
-            alert('password confirmation does not match');
+            alert(that.app.translate('password confirmation does not match'));
           } else if ($('#signupEmailInput').val() === '') {
-            alert('please enter an email');
+            alert(that.app.translate('please enter an email'));
           } else if (!flag1) {
-            alert('please enter a valid origin');
+            alert(that.app.translate('please enter a valid origin'));
           } else if (!flag2) {
-            alert('please enter a valid current location'); 
+            alert(that.app.translate('please enter a valid current location')); 
           } else if (!$('.g-recaptcha-response').val()) {
-            alert('please fill out captcha form');
+            alert(that.app.translate('please complete CAPTCHA'));
           } else {
 
 
@@ -126,7 +126,7 @@ Agora.Views.SignupView = Backbone.View.extend({
               },
               success: function(data) {
                 if (data.login) {
-                  alert('registration successful');
+                  alert(that.app.translate('registration successful'));
                   that.app.set('token', data.token);
 
                   that.app.set('login', true);
@@ -182,9 +182,9 @@ Agora.Views.SignupView = Backbone.View.extend({
       success: function(data) {
 
         if (data === 'Taken') {
-          alert('username unavailable');
+          alert(that.app.translate('username unavailable'));
         } else {
-          alert('username available');
+          alert(that.app.translate('username available'));
         }
 
       },

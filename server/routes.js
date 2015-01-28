@@ -2421,7 +2421,7 @@ module.exports.registerUser = function(request, response) {
                   } else {
                     if (result.rows.length) {
                       //username unavailable
-                      response.end('That username is taken!');
+                      response.end('that username is taken!');
                     } else {
                       //USERNAME AVAILABLE!!!!
 
@@ -2433,7 +2433,7 @@ module.exports.registerUser = function(request, response) {
                           } else {
                             if (result.rows.length) {
                               //email unavailable
-                              response.end('That email is taken!');
+                              response.end('that email is taken!');
                             } else {
 
                                 //REGISTER THE USER
@@ -3341,7 +3341,7 @@ module.exports.createTopic = function(request, response) {
                                                     } else {
 
 
-                                                      response.end('successfully created topic');
+                                                      response.end('successfully submitted topic');
                                                     }
                                                   });
 
@@ -4054,7 +4054,7 @@ module.exports.createLocation = function(request, response) {
                                                 if (err) console.log('error selecting from locations: ', err);
 
                                                 if (result.rows.length) {
-                                                  response.end('That location already exists.');
+                                                  response.end('that location already exists');
                                                 } else {
 
                                                     //haha so I guess people can hack the system and create locations outside
@@ -4082,7 +4082,7 @@ module.exports.createLocation = function(request, response) {
 
                                         } else {
                                           //not within acceptable radius
-                                          response.end('Your location is too far from its parent city.');
+                                          response.end('your location is too far from its parent city.');
 
                                         }
                                       }
@@ -4206,7 +4206,7 @@ module.exports.createChannel = function(request, response) {
                                     var temp = fullPath.split('/');
 
                                     if (temp.length > 5) {
-                                      response.end('Your channel is too deeply nested.');
+                                      response.end('your channel is too deeply nested');
                                     } else {
 
                                       client.query("SELECT * FROM channels WHERE name = $1", [request.body.parent+'/'+name],
@@ -4214,7 +4214,7 @@ module.exports.createChannel = function(request, response) {
                                           if (err) console.log('error selecting from channels: ', err);
 
                                           if (result.rows.length) {
-                                            response.end('That channel already exists.');
+                                            response.end('that channel already exists');
                                           } else {
 
                                               //CREATE THE CHANNEL

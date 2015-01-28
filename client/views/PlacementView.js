@@ -30,9 +30,9 @@ Agora.Views.PlacementView = Backbone.View.extend({
 
 
         if (!$('.g-recaptcha-response').val()) {
-          alert('Please complete CAPTCHA');
+          alert(that.app.translate('please complete CAPTCHA'));
         } else if (!that.app.get('mapController').placedLatitude) {
-          alert('Please place a point on the map.')
+          alert(that.app.translate('please place a point on the map'));
         } else {
 
               $.ajax({
@@ -58,7 +58,7 @@ Agora.Views.PlacementView = Backbone.View.extend({
                 },
                 success: function(data) {
                   if (data[0] === 's') {
-                    alert(data);
+                    alert(that.app.translate(data));
 
                     that.app.get('mapController').placing = false;
                     that.app.get('mapController').stopPlacing();
@@ -67,7 +67,7 @@ Agora.Views.PlacementView = Backbone.View.extend({
                     that.app.set('channel', 'All');
                     that.app.get('mapController').showWorld();
                   } else {
-                    alert(data);
+                    alert(that.app.translate(data));
                     
                     that.app.get('content2').hide(); 
                   }

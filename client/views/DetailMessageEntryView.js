@@ -98,7 +98,6 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
             }
           }, error: function(err) {
             ajaxing = false;
-            console.log('ajax error ocurred: ', err);
           }
 
         });

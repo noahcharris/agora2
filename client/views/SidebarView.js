@@ -445,7 +445,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
           $('#hotButton').css('background-color', '#E8E8E8');
           $('#friendsButton').css('background-color', '#f8f8f8');
         } else {
-          alert('must be logged in to sort topics by friends');
+          alert(that.app.translate('you must be logged in to sort topics by friends'));
         }
 
       });
@@ -497,7 +497,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
         }
       } else {
-        alert('you must be logged in to create a topic');
+        alert(that.app.translate('you must be logged in to create a topic'));
       }
     });
 

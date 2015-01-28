@@ -24,7 +24,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
 
 
-    var $messageButton = $('<button>SEND MESSAGE</button>');
+    var $messageButton = $('<button>'+that.app.translate('Send Message')+'</button>');
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE MAKE ONE
@@ -71,7 +71,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
               that.app.get('sidebarView').highlightCell(offsetCount);
             },
             error: function() {
-              alert('server error');
+              alert(that.app.translate('server error'));
             }
           });
           break;
@@ -148,7 +148,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                         that.app.get('sidebarView').highlightCell(offsetCount);
                       },
                       error: function() {
-                        alert('server error');
+                        alert(that.app.translate('server error'));
                       }
                     });
 
@@ -165,7 +165,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
           },
           error: function() {
-            alert('server error');
+            alert(that.app.translate('server error'));
           }
         });//end create chain ajax
 
@@ -192,7 +192,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     //CONTACT REQUEST FLOW STUFF
 
 
-    var $contactRequestButton = $('<button>Contact Request</button>');
+    var $contactRequestButton = $('<button>'+that.app.translate('Contact Request')+'</button>');
     var ajaxing = false;
     $contactRequestButton[0].onclick = function() {
 
@@ -214,7 +214,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             },
             success: function(data) {
               if (data) {
-                alert(data);
+                alert(that.app.translate(data));
                 ajaxing = false;
                 //seeing whether we confirmed or sent (because if confirmed, server sends back a 
                 //string that starts with 'y') (HACKY)
@@ -307,9 +307,9 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
     if (that.app.get('login') && this.model.username !== that.app.get('username')) {
         if (isSent) {
-          $toolColumn.append('Pending Request');
+          $toolColumn.append(that.app.translate('Pending Request'));
         } else if (isPending) { 
-          $contactRequestButton.html('Confirm Contact Request');
+          $contactRequestButton.html(that.app.translate('Confirm Contact Request'));
           $toolColumn.append($contactRequestButton);
         } else {
           if (isContact) {

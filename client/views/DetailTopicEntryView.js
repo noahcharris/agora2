@@ -145,10 +145,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           topicId: that.model.id
         },
         success: function(msg) {
-          alert(msg);
+          alert(that.app.translate(msg));
         },
         error: function() {
-          alert('upvote failed');
+          alert(that.app.translate('upvote failed'));
         }
       });
 
@@ -267,10 +267,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               commentId: x
             },
             success: function(msg) {
-              alert(msg);
+              alert(that.app.translate(msg));
             },
             error: function() {
-              alert('upvote failed');
+              alert(that.app.translate('upvote failed'));
             }
           });
 
@@ -384,10 +384,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 responseId: x
               },
               success: function(msg) {
-                alert(msg);
+                alert(that.app.translate(msg));
               },
               error: function() {
-                alert('upvote failed');
+                alert(that.app.translate('upvote failed'));
               }
             });
           };
@@ -558,10 +558,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                   replyId: x
                 },
                 success: function(msg) {
-                  alert(msg);
+                  alert(that.app.translate(msg));
                 },
                 error: function() {
-                  alert('upvote failed');
+                  alert(that.app.translate('upvote failed'));
                 }
               });
             };
@@ -785,10 +785,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 success: function(msg) {
 
                   if (msg[0] === 'e') {
-                    alert('make sure your file is not bigger than 25MB');
+                    alert(that.app.translate('please make sure your file is not bigger than 10MB'));
                   } else {
 
-                    alert('submission successful');
+                    alert(that.app.translate('submission successful'));
                     $('#inputBox').css('height', '0px');
                     //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
 
@@ -812,7 +812,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                           that.app.get('content2').show(that.app.get('detailView'), model);
                         },
                         error: function() {
-                          alert('server error');
+                          alert(that.app.translate('server error'));
                         }
                       });
 
@@ -822,7 +822,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
                 },
                 error: function() {
-                  alert('server error');
+                  alert(that.app.translate('server error'));
                   ajaxing = false;
                 }
               });
@@ -849,7 +849,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         };
       
     } else {
-      alert('must be logged in to post a reply');
+      alert(that.app.translate('you must be logged in to post a reply'));
     }
 
 
