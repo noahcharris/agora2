@@ -108,7 +108,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
 
           } else {
-            alert(data);
+            alert(that.app.translate(data));
           }
 
 
@@ -168,12 +168,12 @@ Agora.Views.RegistrationView = Backbone.View.extend({
             that.app.get('content1').show(that.app.get('sidebarView'));
 
           } else {
-            alert('logout failed');
+            alert(that.app.translate('logout failed'));
             that.app.set('login', true);
           }
         },
         error: function(err) {
-          alert('ajax error: ', err);
+          alert(that.app.translate('server error'));
         }
       });
 

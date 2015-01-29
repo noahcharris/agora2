@@ -12,6 +12,8 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   initialize: function(appController) {
     this.template = _.template( $('#detailMessageEntryTemplate').html() );
+    //only use this once the username is styled to the right
+    this.RTLtemplate = _.template( $('#detailMessageEntryTemplate').html() );
     this.messageInputTemplate = _.template( $('#messageInputBoxTemplate').html() );
     this.app = appController;
     this.timer = null;
@@ -41,7 +43,11 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     var count = 1;
     for (var i = 0; i<this.model.length ;i++) {
       //append the template inside a list element
-      var $message = $('<li></li>').append(this.template(this.model[i]));
+      if (this.app.get('language') !== 'ar') {
+        var $message = $('<li></li>').append(this.template(this.model[i]));
+      } else {
+        var $message = $('<li></li>').append(this.RTLtemplate(this.model[i]));
+      }
       $messageChainList.prepend($message);
 
     }
@@ -98,7 +104,6 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
             }
           }, error: function(err) {
             ajaxing = false;
-            console.log('ajax error ocurred: ', err);
           }
 
         });

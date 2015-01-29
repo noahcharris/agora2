@@ -65,14 +65,14 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         success: function(data) {
 
           if (data === 'Available') {
-            alert('channel available :)');
+            alert(that.app.translate('channel available :)'));
           } else {
-            alert(data);
+            alert(that.app.translate(data));
           }
 
         },
         error: function(data) {
-          console.log('ajax error');
+          console.log('server error');
         }
       });
 
@@ -90,14 +90,19 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       }
 
       var temp = $('#parentInput').val();
-      if (temp.split('/')[0] === 'General') {
+      if (temp.split('/')[0] === 'All') {
         this.channelVerified = true;
       } else {
         this.channelVerified = false;
       }
 
-      if (!this.channelVerified) {
-        alert('Your parent channel must begin with "General"');
+
+      if (!that.$el.children('#channelNameInput').val()) {
+        alert(that.app.translate('you must enter a name for your channel'));
+      } else if (!this.channelVerified) {
+        alert(that.app.translate('your parent channel must begin with "All"'));
+      } else if (!$('.g-recaptcha-response').val()) {
+        alert(that.app.translate('please complete CAPTCHA'));
       } else {
         $.ajax({
           url: 'https://liveworld.io:443/createChannel',
@@ -111,15 +116,17 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
             token: that.app.get('token'),
             name: that.$el.children('#channelNameInput').val(),
             description: that.$el.children('#descriptionInput').val(),
-            parent: that.$el.children('#parentInput').val() 
+            parent: that.$el.children('#parentInput').val(),
+            responseString: $('.g-recaptcha-response').val() 
           },
           success: function(data) {
-            if (data) {
-              alert(data);
+            if (data[0] === 's') {
+              alert(that.app.translate(data));
               that.app.get('content2').hide();
               that.app.changeChannel(that.$el.children('#parentInput').val()+'/'+that.$el.children('#channelNameInput').val());
               that.app.get('mapController').showWorld();
             } else {
+              alert(that.app.translate(data));
               // console.log('memcached returned false');
               // sidebarView.collection = defaultCollection;
               // content1.show(sidebarView);
@@ -161,7 +168,8 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
             for (var i=0; i < data.length ;i++) {
 
               var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-              that.$el.append($element);
+              that.$el.children('#createChannelSearchResultContainer')
+              .append($element);
 
               (function() {
                 var x = data[i].name;
@@ -193,7 +201,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       //analyse parent input and make sure it is correct
 
         var temp = $('#parentInput').val();
-        if (temp.split('/')[0] === 'General') {
+        if (temp.split('/')[0] === 'All') {
           this.channelVerified = true;
         } else {
           this.channelVerified = false;

@@ -1,4 +1,5 @@
 var pg = require('pg');
+var fs = require('fs');
 
 var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
@@ -12,9 +13,33 @@ var cityData = require('../client/resources/cities.js');
 // var channelData = require('../client/resources/channels.js');
 
 countries = []//countryData.countries.features;
-cities = cityData.cities.features;
+// cities = cityData.cities.features;
 states = []//statesData.states.features;
 channels = []//channelData.channels;
+
+
+
+
+
+
+function addCity(name, parent, lat, long) {
+
+  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity) "
+    +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true');", [name, parent, lat, long],
+    function(err, result) {
+      if (err) throw err;
+    })
+
+    //TODO alter cities files
+
+
+};
+
+
+
+
+
+
 
 
 // //INSERT WORLD
@@ -63,7 +88,7 @@ channels = []//channelData.channels;
 
 
 //INSERT CITIES
-for (var i=0; i < cities.length ;i++) {
+// for (var i=0; i < cities.length ;i++) {
 
   // client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
   //   +"VALUES ('Location', false, $1, 0, true);",
@@ -90,12 +115,12 @@ for (var i=0; i < cities.length ;i++) {
   //     }
   // });
 
-  client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
-    +"= ("+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) ) "
-    +"WHERE name = $1;",[cities[i].properties.city], function(err, result) {
-      if (err) console.log('error updating locations: ', err);
-      console.log('finished updating locations');
-  });
+  // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
+  //   +"= ("+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) ) "
+  //   +"WHERE name = $1;",[cities[i].properties.city], function(err, result) {
+  //     if (err) console.log('error updating locations: ', err);
+  //     console.log('finished updating locations');
+  // });
 
   // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
   // +"= (null, null, null);", function(err, result) {
@@ -105,7 +130,7 @@ for (var i=0; i < cities.length ;i++) {
 
 
 
-};
+// };
 
 
 
@@ -140,10 +165,14 @@ for (var i=0; i < cities.length ;i++) {
 
 
 
+//CHANNELS
+
+client.query("UPDATE topics SET channel='All' WHERE channel = 'General';", function() {
+
+});
 
 
 
-// //CHANNELS
 // for (var i=0; i < channels.length ;i++) {
 
 //   client.query("INSERT INTO channels (type, name) "

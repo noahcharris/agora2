@@ -110,7 +110,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
             that.app.get('detailView').displayed = 'CreateLocation';
             that.app.get('content2').show(new Agora.Views.LocationCreationView(that.app));
           } else {
-            alert('You must verify your email to create a location');
+            alert(that.app.translate('you must verify your email to create a location'));
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -140,12 +140,11 @@ Agora.Views.SettingsView = Backbone.View.extend({
         },
         success: function(data) {
           //s for successsfulllyyyyyy
-          console.log('WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU: ', data);
           if (data.length && data[0].verified) {
             that.app.get('detailView').displayed = 'CreateChannel';
             that.app.get('content2').show(new Agora.Views.ChannelCreationView(that.app));
           } else {
-            alert('You must verify your email to create a channel');
+            alert(that.app.translate('you must verify your email to create a channel'));
           }
         }, error: function(err) {
           console.log('ajax error ocurred: ', err);
@@ -297,15 +296,13 @@ Agora.Views.SettingsView = Backbone.View.extend({
         var throttledResize = _.throttle(function() {
 
                 //this is how region manager calculates sidebar width
-          var detailWidth = $(window).width() * 0.75 - $('#content1').width();
-
-          console.log('WIDTH: ', detailWidth);
           
 
           for (var i=0; i < that.subViews.length ;i++) {
             if (that.subViews[i].model.image) {          
               var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-              box.css('width', (detailWidth - 180) + 'px');
+              var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
+              box.css('width', (entryWidth - 85) + 'px');
             }
 
           };

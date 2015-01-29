@@ -18,6 +18,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     this.locationTemplate = _.template( $('#sidebarLocationEntryTemplate').html() );
     this.channelTemplate = _.template( $('#sidebarChannelEntryTemplate').html() );
     this.userTemplate = _.template( $('#sidebarUserEntryTemplate').html() );
+    this.RTLuserTemplate = _.template( $('#RTLsidebarUserEntryTemplate').html() );
     this.messageChainTemplate = _.template( $('#sidebarMessageChainEntryTemplate').html() );
 
     this.coordsObject = {};
@@ -342,7 +343,12 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     tempModel.location = temp2.join('/');
 
     tempModel.locationLabel = that.app.translate('Location');
-    this.$el.html( this.userTemplate(tempModel) );
+
+    if (that.app.get('language') !== 'ar') {
+      this.$el.html( this.userTemplate(tempModel) );
+    } else {
+      this.$el.html( this.RTLuserTemplate(tempModel) );
+    }
 
     if (!this.model.image) {
       this.$el.children('.sidebarFloatClear').children('.sidebarTopicImage').css('width', '0px');

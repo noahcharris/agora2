@@ -67,7 +67,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       //that.app.showUserDetailView(that.app.get('username'));
 
       if (!that.app.get('username')) {
-        alert('you must log in to view your profile.')
+        alert(that.app.translate('you must log in to view your profile'));
       } else {
         
         $.ajax({
@@ -146,7 +146,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         }
 
       } else {
-        alert('must be logged in to access settings');
+        alert(that.app.translate('you must be logged in to access settings'));
       }
     });
     //this.$el.append($settingsButton);
@@ -201,7 +201,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         }
 
       } else {
-        alert('Must be logged in to view messages');
+        alert(that.app.translate('you must be logged in to view messages'));
       }
 
     });
@@ -246,7 +246,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
               that.app.get('sidebarView').displayed = 'Search';
               content1.show(that.app.get('sidebarView'));
             } else {
-              alert('search returned no data');
+              alert(that.app.translate('search returned no data'));
             }
           }, error: function(err) {
             console.log('ajax error ocurred: ', err);
@@ -343,7 +343,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
     $('#title').on('click', function() {
-      that.app.changeChannel('General');
+      that.app.changeChannel('All');
       //that.app.get('mapController').showWorld();
 
       //had to do a custom version of show world which doesn't close content2

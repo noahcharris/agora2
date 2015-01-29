@@ -51,10 +51,48 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 
+//COUNT HITS
+var hitCount = 0;
+app.use(function(request, response, next) {
+  console.log(request.path);
+  if (request.path === '/index.html') {
+    hitCount++;
+  }
+  next();
+});
+
+hitWriteHandler = function() {
+  fs.readFile(__dirname + '/../hits.txt', 'utf-8', function(err, data) {
+    if (err) console.log('error reading from hits.txt: ', err);
+    var temp = Number(data);
+    temp += hitCount;
+
+    fs.writeFile(__dirname + '/../hits.txt', temp, function(err) {
+      if (err) throw err;
+      console.log('recorded hit count');
+      hitCount = 0;
+    });
+
+  });
+};
+//writes hitcount once every minute
+setInterval(hitWriteHandler, 60000);
+
+
+
+
+//IP BANNING
+banArray = [];
 
 app.use(function(request, response, next) {
 
-  console.log('serving user client at ip '+request.ip);
+  for (var i=0; i < banArray.length ;i++) {
+    if (banArray[i] === request.ip) {
+      //BANNED!∆!∆!∆!
+      response.end('o_O');
+    }
+  }
+  //console.log('serving user client at ip '+request.ip);
   next();
 });
 

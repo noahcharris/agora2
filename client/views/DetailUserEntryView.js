@@ -10,6 +10,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
     this.template = _.template( $('#detailUserEntryTemplate').html() );
+    this.RTLtemplate = _.template( $('#RTLdetailUserEntryTemplate').html() );
 
     this.subViews = [];
   },
@@ -19,12 +20,17 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     this.model.aboutLabel = this.app.translate('About');
     this.model.locationLabel = this.app.translate('Location');
     this.model.recentlyPostedLabel = this.app.translate('Recently Posted');
-    this.$el.html( this.template(this.model) );
+
+    if (this.app.get('language') !== 'ar') {
+      this.$el.html( this.template(this.model) );
+    } else {
+      this.$el.html( this.RTLtemplate(this.model) );
+    }
 
 
 
 
-    var $messageButton = $('<button>SEND MESSAGE</button>');
+    var $messageButton = $('<button>'+that.app.translate('Send Message')+'</button>');
     $messageButton[0].onclick = function(params) {
       //OPEN UP THE CONVO WITH CONTACT IF IT EXISTS (CONVERSATION VIEW)
       //OTHERWISE MAKE ONE
@@ -71,7 +77,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
               that.app.get('sidebarView').highlightCell(offsetCount);
             },
             error: function() {
-              alert('server error');
+              alert(that.app.translate('server error'));
             }
           });
           break;
@@ -148,7 +154,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                         that.app.get('sidebarView').highlightCell(offsetCount);
                       },
                       error: function() {
-                        alert('server error');
+                        alert(that.app.translate('server error'));
                       }
                     });
 
@@ -165,7 +171,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
           },
           error: function() {
-            alert('server error');
+            alert(that.app.translate('server error'));
           }
         });//end create chain ajax
 
@@ -192,7 +198,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     //CONTACT REQUEST FLOW STUFF
 
 
-    var $contactRequestButton = $('<button>Contact Request</button>');
+    var $contactRequestButton = $('<button>'+that.app.translate('Contact Request')+'</button>');
     var ajaxing = false;
     $contactRequestButton[0].onclick = function() {
 
@@ -214,7 +220,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             },
             success: function(data) {
               if (data) {
-                alert(data);
+                alert(that.app.translate(data));
                 ajaxing = false;
                 //seeing whether we confirmed or sent (because if confirmed, server sends back a 
                 //string that starts with 'y') (HACKY)
@@ -307,9 +313,9 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
     if (that.app.get('login') && this.model.username !== that.app.get('username')) {
         if (isSent) {
-          $toolColumn.append('Pending Request');
+          $toolColumn.append(that.app.translate('Pending Request'));
         } else if (isPending) { 
-          $contactRequestButton.html('Confirm Contact Request');
+          $contactRequestButton.html(that.app.translate('Confirm Contact Request'));
           $toolColumn.append($contactRequestButton);
         } else {
           if (isContact) {
@@ -405,7 +411,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                             topicId: model.id
                           },
                           success: function(model) {
-                            debugger;
+                            //debugger;
                             that.app.get('sidebarView').displayed = 'Topics-Top';
                             that.app.get('content2').show(that.app.get('detailView'), model);
 
@@ -466,15 +472,14 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                 var throttledResize = _.throttle(function() {
 
                         //this is how region manager calculates sidebar width
-                  var detailWidth = $(window).width() * 0.75 - $('#content1').width();
 
-                  console.log('WIDTH: ', detailWidth);
                   
 
                   for (var i=0; i < that.subViews.length ;i++) {
                     if (that.subViews[i].model.image) {          
                       var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-                      box.css('width', (detailWidth - 180) + 'px');
+                      var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
+                      box.css('width', (entryWidth - 85) + 'px');
                     }
 
                   };

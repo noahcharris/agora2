@@ -60,7 +60,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
       $('#channelInput').focusout(function() {
         //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
         setTimeout(function() {
-          // that.app.changeChannel('General');
+          // that.app.changeChannel('All');
           // that.app.get('mapController').showWorld();
         }, 2000);
         $('#channelInput').remove();
@@ -160,7 +160,6 @@ Agora.Views.ChannelView = Backbone.View.extend({
         },
         success: function(data) {
           if (data) {
-            console.log('DATA: ', data);
             
 
             that.app.get('sidebarView').searchCollection = data;
@@ -171,10 +170,10 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
           } else {
-            alert('error');
+            alert(that.app.translate('error'));
           }
         }, error: function(err) {
-          console.log('ajax error ocurred: ', err);
+          console.log(that.app.translate('server error'));
         }
 
       });
@@ -228,31 +227,6 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
     var that = this;
 
-    // $('.channelView').on('click', function(e) {
-    //   that.$el.empty();
-    //   that.$el.append($('<span class="channelName">&nbsp&nbspChannel:&nbsp</span>'));
-
-    //   var searchButton = $('<img id="searchChannelButton" src="/resources/images/search.png" width="10px" height="10px"></img>');
-
-    //   searchButton.on('click', function() { alert('mah dick'); });
-    //   that.$el.append(searchButton);
-
-    //   that.$el.append($('<input id="channelInput"></input>'));
-
-    //   $('#channelInput').focus();
-    //   $('#channelInput').focusout(function() {
-    //     //REMEMBER TO CALL BOTH RENDER AND SETHANDLERS
-    //     $('.channelView').empty();
-    //     that.render();
-    //     that.setHandlers();
-    //   });
-    //   //keyup is the best way to get all the keys, not ideal
-    //   $('#channelInput').on('keyup', function(e) {
-    //     console.log($('#channelInput').val());
-    //     //AJAX CALL FOR SEARCH SUGGESTIONS
-    //     //throttle the ajax call here
-    //   });
-    // });
 
   }
 

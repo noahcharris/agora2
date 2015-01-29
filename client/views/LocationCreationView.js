@@ -32,11 +32,12 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var descriptionLabel = this.app.translate('Description');
     var parentLocationLabel = this.app.translate('Parent City');
     var nextLabel = this.app.translate('Next');
-    var explanationLabel1 = this.app.translate('Your location must belong to a city')
+    var explanationLabel1 = this.app.translate('Your location must belong to a city');
+    var explanationLabel2 = this.app.translate("Don't see your city? Please email us the name at ??? and we will add it into our database.");
 
     this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
                                   radioPrefixLabel: radioPrefixLabel, explanationLabel1: explanationLabel1,
-                                  availabilityLabel: availabilityLabel} ) );
+                                  availabilityLabel: availabilityLabel, explanationLabel2: explanationLabel2} ) );
     this.$el.children('#locationNameInput').attr('placeholder', locationNameLabel);
     this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
     this.$el.children('#parentInput').attr('placeholder', parentLocationLabel);
@@ -74,8 +75,10 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
         this.cityVerified = false;
       }
 
-      if (!that.cityVerified) {
-        alert('You must choose a valid parent city.');
+      if (!that.$el.children('#locationNameInput').val()) {
+        alert(that.app.translate('you must enter a name for your location'));
+      } else if (!that.cityVerified) {
+        alert(that.app.translate('you must choose a valid parent city'));
       } else {
         console.log('RADIO INPUT : ', that.$el.children('input:radio[name=publicPrivate]').val());
 
@@ -91,7 +94,8 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
         placementView.data = {
           name: that.$el.children('#locationNameInput').val(),
-          pub: pub,
+          //CHANGE THIS WHEN WE ADD PUB/PRIV BACK IN~!!!
+          pub: true,
           description: that.$el.children('#descriptionInput').val(),
           parent: that.$el.children('#parentInput').val()
         };
@@ -131,7 +135,9 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
               for (var i=0; i < data.length ;i++) {
 
                 var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-                that.$el.append($element);
+                that.$el.children('#createLocationSearchResultContainer')
+                .append($element);
+                console.log(that.$el.children('#createLocationSearchResultContainer'));
 
                 (function() {
                   var x = data[i].name;
@@ -186,9 +192,9 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
       success: function(data) {
 
         if (data === 'Available') {
-          alert('location available :)');
+          alert(that.app.translate('location available :)'));
         } else {
-          alert(data);
+          alert(that.app.translate(data));
         }
 
       },

@@ -10,6 +10,7 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
     this.template = _.template( $('#detailChannelEntryTemplate').html() );
+    this.RTLtemplate = _.template( $('#RTLdetailChannelEntryTemplate').html() );
   },
 
   render: function() {
@@ -17,7 +18,11 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
 
     this.model.aboutLabel = this.app.translate('About');
     this.model.goToLabel = this.app.translate('Go To Channel');
-    this.$el.html( this.template(this.model) );
+    if (this.app.get('language') !== 'ar') {
+      this.$el.html( this.template(this.model) );
+    } else {
+      this.$el.html( this.RTLtemplate(this.model) );
+    }
 
     var $goTo = this.$el.children('#channelBox').children('#goToButton');
 

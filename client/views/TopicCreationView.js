@@ -79,10 +79,10 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
           //NEED TO CHECK FOR THINGS, INCLUDING CAPTCHA
 
           if (!$('.g-recaptcha-response').val()) {
-            alert('please fill out captcha');
+            alert(that.app.translate('please complete CAPTCHA'));
           } else if (that.$el.children('input#topicCreationHeadline').val() === ''
             && that.$el.children('textarea#topicCreationContent').val() === '') {
-            alert('you must provide either a headline or contents');
+            alert(that.app.translate('you must provide either a headline or contents'));
           } else {
 
                 if (!ajaxing) {
@@ -118,7 +118,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                     success: function(msg) {
                       ajaxing = false;
                       if (msg[0] === 'e') {
-                        alert('make sure that your file size is not over 25MB')
+                        alert(that.app.translate('please make sure that your file size is not over 10MB'));
                       } else {
                         that.app.get('sidebarView').displayed = 'Topics-New'
                         that.app.get('content2').hide();
@@ -126,7 +126,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                       }
                     },
                     error: function() {
-                      alert('post creation failed :(');
+                      alert(that.app.translate('post creation failed :('));
                       ajaxing = false;
                     }
                   });
@@ -141,7 +141,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
 
         } else {
-          alert('must be logged in to create a topic');
+          alert(that.app.translate('you must be logged in to create a topic'));
         }
 
     });//end create topic button

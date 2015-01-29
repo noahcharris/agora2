@@ -136,7 +136,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     } else if (this.displayed === 'Search') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      //display 'results:'?
+      this.$el.append($('<div id="sidebarSpacer"></div>'));
 
     } else if (this.displayed === 'Contacts') {
       var contactsPrefix = this.app.translate('Contacts');
@@ -145,6 +145,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#contactsButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
+      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
@@ -154,6 +155,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#messagesButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
+      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
 
@@ -336,35 +338,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
 
 
-      //#######################################
-      //#########  RESIZING  ##################
-      //#######################################
-
-      //MAYBE JUST LOOP THROUGH SUBVIEWS AND PUT RESIZE LISTENER ON
-      //PARENT SO THAT IT IS AUTOMATICALLY UNBOUND???
-
-      var throttledResize = _.throttle(function() {
-
-        var sidebarTopicWidth = $('#content1').width();
-        
-
-        for (var i=0; i < that.subViews.length ;i++) {
-          if (that.subViews[i].model.image) {          
-            var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
-            box.css('width', (sidebarTopicWidth - 150) + 'px');
-          }
-
-        };
-
-        //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
-      }, 100);
-
-
-      $(window).on('resize', throttledResize);
-
-      throttledResize();
-
-      //NEED TO UNBIND THIS HANDLER SOMEHOW
 
 
 
@@ -445,7 +418,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
           $('#hotButton').css('background-color', '#E8E8E8');
           $('#friendsButton').css('background-color', '#f8f8f8');
         } else {
-          alert('must be logged in to sort topics by friends');
+          alert(that.app.translate('you must be logged in to sort topics by friends'));
         }
 
       });
@@ -497,9 +470,50 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
         }
       } else {
-        alert('you must be logged in to create a topic');
+        alert(that.app.translate('you must be logged in to create a topic'));
       }
     });
+
+
+
+
+
+    
+    //#######################################
+    //#########  RESIZING  ##################
+    //#######################################
+
+    //MAYBE JUST LOOP THROUGH SUBVIEWS AND PUT RESIZE LISTENER ON
+    //PARENT SO THAT IT IS AUTOMATICALLY UNBOUND???
+
+    var throttledResize = _.throttle(function() {
+
+
+      for (var i=0; i < that.subViews.length ;i++) {
+        if (that.subViews[i].model.image) {          
+          var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
+          var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
+          console.log('ENTRYVIEW: ', that.subViews[i].$el.children('.sidebarFloatClear').innerWidth());
+          box.css('width', (entryWidth - 85) + 'px');
+        }
+
+      };
+
+      //THROTTLE TIME (PERHAPS VARY THIS DEPENDING ON USER AGENT??)
+    }, 100);
+
+
+    $(window).on('resize', throttledResize);
+
+    throttledResize();
+
+    //NEED TO UNBIND THIS HANDLER SOMEHOW
+
+
+
+
+
+    
 
 
   },

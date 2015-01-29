@@ -29,7 +29,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('notificationsDisplayed', false);
 
     //keep track of channel here, i wish location was here too.. but it is so tightly coupled right now
-    this.set('channel', 'General');
+    this.set('channel', 'All');
 
     // ## REGION MANAGERS ##
     content1 = this.RegionManager1('#content1');
@@ -474,14 +474,14 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#inputBox').css('height', '0px');
 
           //IF LOCATION/CHANNEL VIEW SEARCH BAR HAS FOCUS, TURN IT OFF
-          // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD GENERAL
+          // IF DISPLAYING SEARCH RESULT, RETURN TO WORLD ALL
         } else if ($('#notificationsDisplay').children().length) {
           $('#notificationsDisplay').empty();
           that.set('notificationsDisplayed', false);
         } else if ($('#pathInput').length || $('#channelInput').length) {
           $('#pathInput').remove();
           $('#channelInput').remove();
-          that.changeChannel('General');
+          that.changeChannel('All');
           that.get('mapController').showWorld();
         } else {
           that.get('content2').hide();
@@ -805,8 +805,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           break;
         case 'Channels':
           renderMethod = 'renderChannel';
-          if (that.get('channel') === 'General') {
-            that.get('mapController').router.navigate('channel/General', { trigger:false });
+          if (that.get('channel') === 'All') {
+            that.get('mapController').router.navigate('channel/All', { trigger:false });
           } else {
             that.get('mapController').router.navigate('channel/'+model.name.slice(8, model.name.length), { trigger:false });
           }
@@ -1051,12 +1051,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       that.app.set('notificationsDisplayed', true);
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
+                      RTLcontactRequestTemplate = _.template( $('#RTLcontactRequestTemplate').html() );
                       newMessageTemplate = _.template( $('#newMessageTemplate').html() );
+                      RTLnewMessageTemplate = _.template( $('#RTLnewMessageTemplate').html() );
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
-
-
-
-
 
 
 
@@ -1071,7 +1069,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from');
-                        var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
+                        } else {
+                          var $notificationBox = $( RTLcontactRequestTemplate(that.contactRequests[i]) );
+                        }
 
                         var x = that.contactRequests[i].sender;
                         $notificationBox.on('click', function() {
@@ -1134,7 +1136,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
 
-                        var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+                        } else {
+                          var $notificationBox = $( RTLnewMessageTemplate(that.newMessages[i]) );
+                        }
 
                         console.log($notificationBox);
 
@@ -1190,7 +1196,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                     $(thet).parent().empty();
                                   },
                                   error: function() {
-                                    alert('server error');
+                                    alert(that.app.translate('server error'));
                                   }
                                 });
                                 break;
@@ -1349,7 +1355,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
         },
         error: function() {
-          alert('server error');
+          alert(that.app.translate('server error'));
         }
       });
 

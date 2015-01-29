@@ -127,10 +127,9 @@ Agora.Views.EditProfileView = Backbone.View.extend({
         processData: false,
         data: fd,
         success: function(data) {
-          alert(data);
+          alert(that.app.translate(data));
 
           if (!data[0] === 's') {
-            alert(data);
           } else {
 
               $.ajax({
