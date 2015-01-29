@@ -34,6 +34,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 body {
+  overflow: hidden;
   position: relative;
   font-family: 'clearSans';
   margin: 0px;
@@ -47,7 +48,7 @@ div#mapPopup {
   height: 20px;
   width: 45%;
   background-color: rgba(175, 236, 238, 0.6);
-  top: 0px;
+  top: .1%;
   left: 29%;
   z-index: 700;
   border-bottom-left-radius: 0.4em;
@@ -85,10 +86,43 @@ img#fullscreenImage {
   width: auto;
 }
 
+#recentlyPostedList {
+  overflow-y:scroll;
+}
+
+#recentlyPostedList::-webkit-scrollbar{
+  width:10px;
+}
+
+#recentlyPostedList::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#recentlyPostedList::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#recentlyPostedList::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#recentlyPostedList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
 
 /****************/
 /***  TOPBAR  ***/
 /****************/
+
+#wrapper {
+  overflow: hidden;
+}
+
+#mainWrapper {
+  overflow:hidden;
+}
 
 
 #topbarWrapper {
@@ -112,7 +146,7 @@ img#fullscreenImage {
   position: relative;
   bottom: 7px;
   font-family: 'clearSans';
-  color: rgba(135,165,185,.8);
+  color: rgba(135,165,225,.8);
   display: inline;
   font-size: 44px;
   font-weight: bold;
@@ -207,7 +241,7 @@ right:22.4%;
 #topbar2 {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 22px;
   /*background-color: #57646D;*/
   background: linear-gradient:to bottom, rgba(140, 153, 183, .1), rgba(140,153,183,.5);
 }
@@ -230,15 +264,17 @@ right:22.4%;
 
 /*what we set as width here will dictate the maximum characters allowed for paths and channels*/
 .locationView {
+  z-index: 999999;
+  position: absolute;
   display: inline-block;
-  width: 420px;
+  width: 50%;
   background-color: rgba(130, 143, 173,1);
    opacity: .8 ;
     -webkit-transition: opacity 0.5s, background-color 0.5s;
     -moz-transition: opacity 0.5s, background-color 0.5s;
     -o-transition: opacity 0.5s, background-color 0.5s;
     transition: opacity 0.5s, background-color 0.5s;
-  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(155,155,155,.6)); /*Standard*/
 }
 
 .locationView:hover {
@@ -277,20 +313,50 @@ right:22.4%;
 
 .signupLocationSearchResult {
   cursor: pointer;
-  position: absolute;
-  bottom: -30px;
+  position: relative;
   height: 30px;
-  left: 20px;
-  background-color: green;
-  color: orange;
+  left: 5px;
+  background-color: rgba(130, 163, 173,1);
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  color: black;
   z-index: 9999;
+
+}
+
+#signupLocation {
+  overflow-y:scroll;
+
+}
+
+#signupLocation::-webkit-scrollbar{
+  width:10px;
+}
+
+#signupLocation::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#signupLocation::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#signupLocation::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#signupLocation::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
 }
 
 
+
+
 .channelView {
+  z-index: 999999;
   display: inline-block;
-  width: 845px;
-  position: relative;
+  width: 50%;
+  position: absolute;
+  left:50%;
   /*display: inline-block;*/
   background-color: rgba(130, 163, 173,1);
    opacity: .8 ;
@@ -298,7 +364,7 @@ right:22.4%;
     -moz-transition: opacity 0.5s, background-color 0.5s;
     -o-transition: opacity 0.5s, background-color 0.5s;
     transition: opacity 0.5s, background-color 0.5s;
-  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(155,155,155,.6)); /*Standard*/
 }
 
 .channelView:hover {
@@ -328,10 +394,81 @@ right:22.4%;
 
 
 .creationChannelSearchResult {
+  cursor: pointer;
   position: relative;
-  background-color: green;
-  color: orange;
+  height: 30px;
+  left: 5px;
+  background-color: rgba(130, 163, 173,1);
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  color: black;
   z-index: 9999;
+}
+
+
+.creationLocationSearchResult {
+  cursor: pointer;
+  position: relative;
+  height: 30px;
+  left: 5px;
+  background-color: rgba(130, 163, 173,1);
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  color: black;
+  z-index: 9999;
+}
+
+/*SEARCH RESULT CONTAINERS*/
+
+#createChannelSearchContainer {
+  overflow-y:scroll;
+  overflow-x: hidden;
+  height:30%;
+}
+
+#createChannelSearchContainer::-webkit-scrollbar{
+  width:10px;
+}
+
+#createChannelSearchContainer::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#createChannelSearchContainer::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#createChannelSearchContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#createChannelSearchContainer::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+#createLocationSearchContainer {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height:30%;
+}
+
+#createLocationSearchContainer::-webkit-scrollbar{
+  width:10px;
+}
+
+#createLocationSearchContainer::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#createLocationSearchContainer::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#createLocationSearchContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#createLocationSearchContainer::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
 }
 
 
@@ -448,7 +585,7 @@ right:22.4%;
   height: 20px;
   margin-bottom: 0px;
   background-color: rgba(166,166,166,1);
-  bottom: 5.8%;
+  bottom: 7.8%;
   z-index: 600;
 }
 
@@ -849,10 +986,10 @@ right:22.4%;
   overflow: hidden;
   margin-bottom: 0px;
   padding-bottom: 0px;
-  top: 94.2%;
+  top: 92.2%;
   left: 0px;
   width: 100%;
-  height: 7.1%;
+  height: 10.1%;
   z-index: 200;
   border-radius: 2px;
   background-color: #E75F3D;
@@ -1126,7 +1263,6 @@ right:22.4%;
 /* TOPICS */
 
 #linkBox{
-<<<<<<< HEAD
   width:60px;
   font-family: sans-serif;
   font-style: underline;
@@ -1784,7 +1920,7 @@ textarea {
 /* ## TOPIC CREATION ##*/
 
 .topicCreationView {
-
+  overflow-y: scroll;
 }
 
 .topicCreationView::-webkit-scrollbar{
@@ -1849,7 +1985,7 @@ textarea {
 #loader {
     position:   absolute;
     z-index:    1000;
-    top:        20px;
+    top:        15px;
     left:       165px;
     height:     50px;
     width:      50px;
