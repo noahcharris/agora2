@@ -87,7 +87,11 @@ img#fullscreenImage {
 }
 
 #recentlyPostedList {
-  overflow-y:scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height:27%;
+  position: absolute;
+  left: 5px;
 }
 
 #recentlyPostedList::-webkit-scrollbar{
