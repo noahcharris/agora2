@@ -1574,7 +1574,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Origin',
   ar: '',
   zh: '',
   fr: '',
@@ -1584,7 +1584,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Current Location',
   ar: '',
   zh: '',
   fr: '',
