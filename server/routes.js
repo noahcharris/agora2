@@ -838,7 +838,7 @@ module.exports.getContacts = function(request, response) {
         if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-            client.query("SELECT type, username, location, image, about FROM users JOIN contactsjoin " 
+            client.query("SELECT type, username, location, origin, image, about FROM users JOIN contactsjoin " 
               +"ON (contactsjoin.username1 = $1 AND contactsjoin.username2 = users.username) "
               +"OR (contactsjoin.username1 = users.username AND contactsjoin.username2 = $1);",
               [queryArgs.username],
