@@ -31,13 +31,15 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var privateLabel = this.app.translate('Private');
     var descriptionLabel = this.app.translate('Description');
     var parentLocationLabel = this.app.translate('Parent City');
-    var nextLabel = this.app.translate('Next');
+    var nextLabel = this.app.translate('Place on Map');
+    var backLabel = this.app.translate('Back');
     var explanationLabel1 = this.app.translate('Your location must belong to a city');
     var explanationLabel2 = this.app.translate("Don't see your city? Please email us the name at ??? and we will add it into our database.");
 
     this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
                                   radioPrefixLabel: radioPrefixLabel, explanationLabel1: explanationLabel1,
-                                  availabilityLabel: availabilityLabel, explanationLabel2: explanationLabel2} ) );
+                                  availabilityLabel: availabilityLabel, explanationLabel2: explanationLabel2,
+                                  backLabel: backLabel} ) );
     this.$el.children('#locationNameInput').attr('placeholder', locationNameLabel);
     this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
     this.$el.children('#parentInput').attr('placeholder', parentLocationLabel);
@@ -49,12 +51,11 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
 
     var backLabel = this.app.translate('Back');
-    var $backButton = $('<button id="backButton">'+backLabel+'</button>')
+    var $backButton = this.$el.children('#backButton');
     $backButton.on('click', function() {
       that.app.get('detailView').displayed = 'Settings';
       that.app.get('content2').show(that.app.get('settingsView'));
     });
-    this.$el.append($backButton);
 
   },
 
@@ -131,13 +132,12 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
               console.log(data);
               $('.creationChannelSearchResult').remove();
 
-              var cssAdjust = -30;
               for (var i=0; i < data.length ;i++) {
 
                 var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-                that.$el.children('#createLocationSearchResultContainer')
+                that.$el.children('#createLocationSearchContainer')
                 .append($element);
-                console.log(that.$el.children('#createLocationSearchResultContainer'));
+                console.log(that.$el.children('#createLocationSearchContainer'));
 
                 (function() {
                   var x = data[i].name;
@@ -148,9 +148,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
                   
                 })();
 
-                $element.css('bottom', cssAdjust + 'px');
 
-                cssAdjust -= 30;
               }
 
             }

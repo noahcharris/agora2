@@ -1544,7 +1544,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Create Channel',
   ar: '',
   zh: '',
   fr: '',
@@ -1554,7 +1554,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Place on Map',
   ar: '',
   zh: '',
   fr: '',
@@ -1564,7 +1564,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Create Location',
   ar: '',
   zh: '',
   fr: '',
