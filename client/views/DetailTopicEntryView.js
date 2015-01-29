@@ -13,9 +13,13 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.app = appController;
 
     this.topicTemplate = _.template( $('#detailTopicEntryTemplate').html() );
+    this.RTLtopicTemplate = _.template( $('#RTLdetailTopicEntryTemplate').html() );
     this.commentTemplate = _.template( $('#detailCommentEntryTemplate').html() );
+    this.RTLcommentTemplate = _.template( $('#RTLdetailCommentEntryTemplate').html() );
     this.responseTemplate = _.template( $('#detailResponseEntryTemplate').html() );
+    this.RTLresponseTemplate = _.template( $('#RTLdetailResponseEntryTemplate').html() );
     this.replyTemplate = _.template( $('#detailReplyEntryTemplate').html() );
+    this.RTLreplyTemplate = _.template( $('#RTLdetailReplyEntryTemplate').html() );
     this.inputBoxTemplate = _.template( $('#inputBoxTemplate').html() );
 
     this.responding = null;
@@ -82,7 +86,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     tempModel.postedAtLabel = this.app.translate('Posted At');
     tempModel.replyLabel = this.app.translate('Reply');
     tempModel.linkLabel = this.app.translate('LINK');
-    this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
+    if (this.app.get('language') !== 'ar') {
+      this.$el.children('#conversationWrapper').prepend( this.topicTemplate(tempModel) );
+    } else {
+      this.$el.children('#conversationWrapper').prepend( this.RTLtopicTemplate(tempModel) );
+    }
 
     this.topicContentBox = this.$el.children('#conversationWrapper').children('.topicBox').children('#detailTopicClear').children('#topicContentBox');
 
@@ -194,7 +202,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       comments[i].userLabel = this.app.translate('User');
       comments[i].fromLabel = this.app.translate('From');
       comments[i].replyLabel = this.app.translate('Reply');
-      var $comment = $(this.commentTemplate(comments[i]));
+      if (this.app.get('language') !== 'ar') {
+        var $comment = $(this.commentTemplate(comments[i]));
+      } else {
+        var $comment = $(this.RTLcommentTemplate(comments[i]));
+      }
 
       (function() {
         var x = comments[i].username;
@@ -355,7 +367,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         comments[i].responses[j].userLabel = this.app.translate('User');
         comments[i].responses[j].fromLabel = this.app.translate('From');
         comments[i].responses[j].replyLabel = this.app.translate('Reply');
-        var $response = $(this.responseTemplate(comments[i].responses[j]));
+        if (this.app.get('language') !== 'ar') {
+          var $response = $(this.responseTemplate(comments[i].responses[j]));
+        } else {
+          var $response = $(this.RTLresponseTemplate(comments[i].responses[j]));
+        }
 
         (function() {
           var x = comments[i].responses[j].username;
@@ -527,7 +543,11 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           comments[i].responses[j].replies[k].userLabel = this.app.translate('User');
           comments[i].responses[j].replies[k].fromLabel = this.app.translate('From');
           comments[i].responses[j].replies[k].replyLabel = this.app.translate('Reply');
-          var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
+          if (this.app.get('language') !== 'ar') {
+            var $reply = $(this.replyTemplate(comments[i].responses[j].replies[k]));
+          } else {
+            var $reply = $(this.RTLreplyTemplate(comments[i].responses[j].replies[k]));
+          }
 
           (function() {
             var x = comments[i].responses[j].replies[k].username;

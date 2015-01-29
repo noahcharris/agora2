@@ -10,6 +10,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
     this.template = _.template( $('#detailUserEntryTemplate').html() );
+    this.RTLtemplate = _.template( $('#RTLdetailUserEntryTemplate').html() );
 
     this.subViews = [];
   },
@@ -19,7 +20,12 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     this.model.aboutLabel = this.app.translate('About');
     this.model.locationLabel = this.app.translate('Location');
     this.model.recentlyPostedLabel = this.app.translate('Recently Posted');
-    this.$el.html( this.template(this.model) );
+
+    if (this.app.get('language') !== 'ar') {
+      this.$el.html( this.template(this.model) );
+    } else {
+      this.$el.html( this.RTLtemplate(this.model) );
+    }
 
 
 

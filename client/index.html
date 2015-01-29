@@ -68,9 +68,21 @@
       </div>
     </script>
 
+    <script id="RTLcontactRequestTemplate" type="text/template">
+      <div class="notificationBox">
+        <p><%= sender %>&nbsp<%= contactRequestLabel %></p>
+      </div>
+    </script>
+
     <script id="newMessageTemplate" type="text/template">
       <div class="notificationBox">
-        <p><%= newMessageLabel %><%= sender %></p>
+        <p><%= newMessageLabel %>&nbsp<%= sender %></p>
+      </div>
+    </script>
+
+    <script id="RTLnewMessageTemplate" type="text/template">
+      <div class="notificationBox">
+        <p><%= sender %>&nbsp<%= newMessageLabel %></p>
       </div>
     </script>
 
@@ -140,11 +152,25 @@
        <div class="contentAndToFromWrapper">
          <div class="sidebarContentWrapper">
             <%= username %></br>
-            <%= locationLabel %>: <%= location %>
+            <%= locationLabel %>:&nbsp<%= location %>
          </div>
         </div>
       </div>
     </script>
+
+    <script id="RTLsidebarUserEntryTemplate" type="text/template">
+      <div class="sidebarFloatClear">
+       <img class="sidebarTopicImage"></img>
+       <div class="contentAndToFromWrapper">
+         <div class="sidebarContentWrapper">
+            <%= username %></br>
+            <%= location %>&nbsp:<%= locationLabel %>
+         </div>
+        </div>
+      </div>
+    </script>
+
+
 
     <script id="sidebarMessageChainEntryTemplate" type="text/template">
       <p class="contactTitle"><%= contact %></p>
@@ -196,10 +222,31 @@
         <div class="replyButton"><%= replyLabel %></div>
 
        </div>
-     
+     </div>
+    </script>
 
+    <script id="RTLdetailTopicEntryTemplate" type="text/template">
+     <div class="topicBox">
+       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+       <span class="topicTopString">
+       &nbsp(<%= rank %>)
+       &nbsp<span id="topicTimestamp"><%= createdat %>&nbsp:<%= postedAtLabel %></span>
+       &nbsp<span id="detailChannelString"><%= channel %>&nbsp:<%= channelLabel %></span>
+       &nbsp<span id="detailUserString"><%= username %>&nbsp:<%= userLabel %></span>
+       </span>
 
+       <div id="detailTopicClear">
 
+        <img id="detailTopicImage"></img>
+
+        <div id="topicContentBox">
+          <p class="topicHeader"> <%= headline %> </p>
+          <p class="topic"> <%= contents %> </p>
+        </div>
+        <div id="linkBox"><%= linkLabel %></div>
+        <div class="replyButton"><%= replyLabel %></div>
+
+       </div>
      </div>
     </script>
 
@@ -212,6 +259,34 @@
       &nbsp(<%= rank %>)
       &nbsp<span class="detailCommentUserString"><%= userLabel %>:&nbsp<%= username %></span>
       <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
+      </span>
+
+      <div class="detailCommentClear">
+        <img src="resources/images/expand.png" class="expandCommentButton"></img>
+
+        <img class="detailCommentImage"></img>
+
+        <div class="commentContentBox">
+          <p class="commentHeader"> <%= headline %> </p>
+          <p class="comment"> <%= contents %> </p>
+        </div>
+        <div class="replyButton"><%= replyLabel %></div>
+
+      </div>
+
+
+
+     </div>
+    </script>
+
+    <script id="RTLdetailCommentEntryTemplate" type="text/template">
+
+     <div class="commentBox">
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="commentTopString">
+      &nbsp(<%= rank %>)
+      <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
+      &nbsp<span class="detailCommentUserString"><%= username %>&nbsp:<%= userLabel %></span>
       </span>
 
       <div class="detailCommentClear">
@@ -260,6 +335,33 @@
      </div>
     </script>
 
+    <script id="RTLdetailResponseEntryTemplate" type="text/template">
+     <div class="responseBox">
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="responseTopString">
+      &nbsp(<%= rank %>)
+      <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
+      &nbsp<span class="detailResponseUserString"><%= username %>&nbsp:<%= userLabel %></span>
+      </span>
+
+      <div class="detailResponseClear">
+
+        <img src="resources/images/expand.png" class="expandResponseButton"></img>
+
+        <img class="detailResponseImage"></img>
+
+        <div class="responseContentBox">
+          <p class="responseHeader"> <%= headline %> </p>
+          <p class="response"> <%= contents %> </p>
+        </div>
+        <div class="replyButton"><%= replyLabel %></div>
+
+      </div>
+
+
+     </div>
+    </script>
+
 
 
     <script id="detailReplyEntryTemplate" type="text/template">
@@ -269,6 +371,30 @@
       &nbsp(<%= rank %>)
       &nbsp<span class="detailReplyUserString"><%= userLabel %>:&nbsp<%= username %></span>
       <span class="fromString" ><%= fromLabel %>:&nbsp<%= authorlocation %></span>
+      </span>
+
+      <div class="detailReplyClear">
+
+        <img class="detailReplyImage"></img>
+
+        <div class="replyContentBox">
+          <p class="replyHeader"> <%= headline %> </p>
+          <p class="reply"> <%= contents %> </p>
+        </div>
+        <!--<div class="replyButton"><%= replyLabel %></div>-->
+
+      </div>
+
+     </div>
+    </script>
+
+    <script id="RTLdetailReplyEntryTemplate" type="text/template">
+     <div class="replyBox">
+      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <span class="replyTopString">
+      &nbsp(<%= rank %>)
+      <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
+      &nbsp<span class="detailReplyUserString"><%= username %>&nbsp:<%= userLabel %></span>
       </span>
 
       <div class="detailReplyClear">
@@ -319,6 +445,23 @@
       </div>
     </script>
 
+    <script id="RTLdetailLocationEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://images.wisegeek.com/map-with-compass.jpg"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>:<%= aboutLabel %></h3>
+      <p><%= description %></p>
+
+      <div id="locationBox">
+        <button id="goToButton"><%= goToLabel %></button>
+        <br/><br/><br/><br/>
+      </div>
+    </script>
+
     <script id="detailChannelEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
         <img id="profilePicture" src="http://upload.wikimedia.org/wikipedia/en/9/98/Laughing_man_logo.png"></img>
@@ -337,8 +480,27 @@
       </div>
     </script>
 
-    <script id="detailUserEntryTemplate" type="text/template">
+    <script id="RTLdetailChannelEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://upload.wikimedia.org/wikipedia/en/9/98/Laughing_man_logo.png"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= name %> </h1>
+        </div>
+      </div>
+      <h3>:<%= aboutLabel %></h3>
+      <p><%= description %></p>
 
+      <div id="channelBox">
+        <h1 > <%= name %> </h1>
+        <button id="goToButton"><%= goToLabel %></button>
+        <br/><br/><br/><br/>
+      </div>
+    </script>
+
+
+
+    <script id="detailUserEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
         <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg"></img>
         <br/>
@@ -354,14 +516,39 @@
       <br/>
       <br/>
       <ul id="recentlyPostedList"></ul>
-
-
-
     </script>
+
+
+    <script id="RTLdetailUserEntryTemplate" type="text/template">
+      <div id="profileColumnWrapper">
+        <img id="profilePicture" src="http://www.utne.com/~/media/Images/UTR/Editorial/Articles/Magazine%20Articles/2012/11-01/Anonymous%20Hacktivist%20Collective/Anonymous-Seal.jpg"></img>
+        <br/>
+        <div id="profileRightColumn">
+          <h1 class="detailHeaderEntry"> <%= username %> </h1>
+          <h4><%= location %>&nbsp:<%= locationLabel %></h4>
+        </div>
+      </div>
+      <h3>:<%= aboutLabel %></h3>
+      <p><%= about %></p>
+      <p><%= recentlyPostedLabel %></p>
+      <br/>
+      <br/>
+      <br/>
+      <ul id="recentlyPostedList"></ul>
+    </script>
+
+
+
 
     <script id="detailMessageEntryTemplate" type="text/template">
       <span class="authorString"><%= sender %>:&nbsp</span>
       <span class="detailHeaderEntry"> <%= contents %> </span>
+      <hr/>
+    </script>
+
+    <script id="RTLdetailMessageEntryTemplate" type="text/template">
+      <span class="detailHeaderEntry"> <%= contents %> </span>
+      <span class="authorString">&nbsp:<%= sender %></span>
       <hr/>
     </script>
 

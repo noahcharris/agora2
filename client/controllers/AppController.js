@@ -1051,12 +1051,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       that.app.set('notificationsDisplayed', true);
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
+                      RTLcontactRequestTemplate = _.template( $('#RTLcontactRequestTemplate').html() );
                       newMessageTemplate = _.template( $('#newMessageTemplate').html() );
+                      RTLnewMessageTemplate = _.template( $('#RTLnewMessageTemplate').html() );
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
-
-
-
-
 
 
 
@@ -1071,7 +1069,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from');
-                        var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
+                        } else {
+                          var $notificationBox = $( RTLcontactRequestTemplate(that.contactRequests[i]) );
+                        }
 
                         var x = that.contactRequests[i].sender;
                         $notificationBox.on('click', function() {
@@ -1134,7 +1136,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
 
-                        var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
+                        } else {
+                          var $notificationBox = $( RTLnewMessageTemplate(that.newMessages[i]) );
+                        }
 
                         console.log($notificationBox);
 

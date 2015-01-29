@@ -1,4 +1,5 @@
 var pg = require('pg');
+var fs = require('fs');
 
 var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
@@ -15,6 +16,30 @@ countries = []//countryData.countries.features;
 // cities = cityData.cities.features;
 states = []//statesData.states.features;
 channels = []//channelData.channels;
+
+
+
+
+
+
+function addCity(name, parent, lat, long) {
+
+  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity) "
+    +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true');", [name, parent, lat, long],
+    function(err, result) {
+      if (err) throw err;
+    })
+
+    //TODO alter cities files
+
+
+};
+
+
+
+
+
+
 
 
 // //INSERT WORLD
