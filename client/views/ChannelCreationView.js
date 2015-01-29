@@ -31,11 +31,13 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
     var privateLabel = this.app.translate('Private');
     var descriptionLabel = this.app.translate('Description');
     var parentChannelLabel = this.app.translate('Parent Channel');
-    var doneLabel = this.app.translate('Done!');
+    var doneLabel = this.app.translate('Create Channel');
+    var backLabel = this.app.translate('Back');
 
 
     this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, doneLabel: doneLabel,
-                                  radioPrefixLabel: radioPrefixLabel, availabilityLabel: availabilityLabel} ) );
+                                  radioPrefixLabel: radioPrefixLabel, availabilityLabel: availabilityLabel,
+                                  backLabel: backLabel} ) );
     this.$el.children('#channelNameInput').attr('placeholder', channelNameLabel);
 
     this.$el.children('#descriptionInput').attr('placeholder', descriptionLabel);
@@ -164,12 +166,10 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
             console.log(data);
             $('.creationChannelSearchResult').remove();
 
-            var cssAdjust = -30;
             for (var i=0; i < data.length ;i++) {
 
               var $element = $('<div class="creationChannelSearchResult">'+data[i].name+'</div>');
-              that.$el.children('#createChannelSearchResultContainer')
-              .append($element);
+              that.$el.children('#createChannelSearchContainer').append($element);
 
               (function() {
                 var x = data[i].name;
@@ -179,10 +179,6 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
                 });
                 
               })();
-
-              $element.css('bottom', cssAdjust + 'px');
-
-              cssAdjust -= 30;
             }
 
           }
@@ -212,13 +208,12 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
   }, 500);
 
 
-  var backLabel = this.app.translate('Back');
-  var $backButton = $('<button id="backButton">'+backLabel+'</button>')
+  
+  var $backButton = this.$el.children('#backButton');
   $backButton.on('click', function() {
     that.app.get('detailView').displayed = 'Settings';
     that.app.get('content2').show(that.app.get('settingsView'));
   });
-  this.$el.append($backButton);
 
 
 

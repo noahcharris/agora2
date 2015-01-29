@@ -250,8 +250,6 @@ Agora.Views.SignupView = Backbone.View.extend({
             console.log(data);
             $('.signupLocationSearchResult').remove();
 
-            var cssAdjust = -30;
-
             for (var i=0; i < data.length ;i++) {
 
               var $element = $('<div style="position:relative" class="signupLocationSearchResult">'+data[i].name+'</div>');
@@ -275,10 +273,6 @@ Agora.Views.SignupView = Backbone.View.extend({
                 
               })();
 
-
-              $element.css('bottom', cssAdjust + 'px');
-
-              cssAdjust -= 15;
 
               $('#signupLocation').append($element);
 
