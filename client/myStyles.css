@@ -34,6 +34,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 body {
+  overflow: hidden;
   position: relative;
   font-family: 'clearSans';
   margin: 0px;
@@ -47,7 +48,7 @@ div#mapPopup {
   height: 20px;
   width: 45%;
   background-color: rgba(175, 236, 238, 0.6);
-  top: 4%;
+  top: .1%;
   left: 29%;
   z-index: 700;
   border-bottom-left-radius: 0.4em;
@@ -114,6 +115,14 @@ img#fullscreenImage {
 /****************/
 /***  TOPBAR  ***/
 /****************/
+
+#wrapper {
+  overflow: hidden;
+}
+
+#mainWrapper {
+  overflow:hidden;
+}
 
 
 #topbarWrapper {
@@ -232,7 +241,7 @@ right:22.4%;
 #topbar2 {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 22px;
   /*background-color: #57646D;*/
   background: linear-gradient:to bottom, rgba(140, 153, 183, .1), rgba(140,153,183,.5);
 }
@@ -304,10 +313,9 @@ right:22.4%;
 
 .signupLocationSearchResult {
   cursor: pointer;
-  position: absolute;
-  bottom: -30px;
+  position: relative;
   height: 30px;
-  left: 20px;
+  left: 5px;
   background-color: rgba(130, 163, 173,1);
   background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
   color: black;
@@ -386,61 +394,80 @@ right:22.4%;
 
 
 .creationChannelSearchResult {
+  cursor: pointer;
   position: relative;
-  background-color: green;
-  color: orange;
+  height: 30px;
+  left: 5px;
+  background-color: rgba(130, 163, 173,1);
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  color: black;
   z-index: 9999;
 }
 
 
-/*SEARCH RESULT CONTAINERS*/
-
-.createChannelSearchContainer {
-  overflow-y:scroll;
+.creationLocationSearchResult {
+  cursor: pointer;
+  position: relative;
+  height: 30px;
+  left: 5px;
+  background-color: rgba(130, 163, 173,1);
+  background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
+  color: black;
+  z-index: 9999;
 }
 
-.createChannelSearchContainer::-webkit-scrollbar{
+/*SEARCH RESULT CONTAINERS*/
+
+#createChannelSearchContainer {
+  overflow-y:scroll;
+  overflow-x: hidden;
+  height:30%;
+}
+
+#createChannelSearchContainer::-webkit-scrollbar{
   width:10px;
 }
 
-.createChannelSearchContainer::-webkit-scrollbar-track {
-  background-color: rgba(222,222,255,.creationChannelSearchContainer3);
+#createChannelSearchContainer::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
 }
 
-.createChannelSearchContainer::-webkit-scrollbar-track:hover{
-  background-color: rgba(100,100,100,.creationChannelSearchContainer7);
+#createChannelSearchContainer::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
 }
 
-.createChannelSearchContainer::-webkit-scrollbar-thumb {
-  background-color: rgba(100,100,100,.creationChannelSearchContainer7);
+#createChannelSearchContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
 }
 
-.createChannelSearchContainer::-webkit-scrollbar-thumb:hover {
+#createChannelSearchContainer::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255,255,255,1);
 }
 
 
-.createLocationSearch {
+#createLocationSearchContainer {
   overflow-y: scroll;
+  overflow-x: hidden;
+  height:30%;
 }
 
-.createLocationSearchContainer::-webkit-scrollbar{
+#createLocationSearchContainer::-webkit-scrollbar{
   width:10px;
 }
 
-.createLocationSearchContainer::-webkit-scrollbar-track {
-  background-color: rgba(222,222,255,.createLocationSearchContainer3);
+#createLocationSearchContainer::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
 }
 
-.createLocationSearchContainer::-webkit-scrollbar-track:hover{
-  background-color: rgba(100,100,100,.createLocationSearchContainer7);
+#createLocationSearchContainer::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
 }
 
-.createLocationSearchContainer::-webkit-scrollbar-thumb {
-  background-color: rgba(100,100,100,.createLocationSearchContainer7);
+#createLocationSearchContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
 }
 
-.createLocationSearchContainer::-webkit-scrollbar-thumb:hover {
+#createLocationSearchContainer::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255,255,255,1);
 }
 
