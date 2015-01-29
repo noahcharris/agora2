@@ -1640,6 +1640,15 @@ right:22.4%;
 /*PROFILE PAGE*/
 /**************/
 
+#profileColumnWrapper {
+  padding:0px;
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+
+
+
 #profilePicture {
   float: left;
   height: 200px;
@@ -1647,13 +1656,15 @@ right:22.4%;
 }
 
 
-#profileColumnWrapper {
-  height: 200px;
-  width: 100%;
+
+#profileAboutSection {
+  position:relative;
+  float:left;
+  width:50%;
+  height:100%;
+  top:0%;
+  overflow: hidden;
 }
-
-
-
 
 
 
