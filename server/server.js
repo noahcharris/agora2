@@ -54,7 +54,6 @@ app.use(cookieParser());
 //COUNT HITS
 var hitCount = 0;
 app.use(function(request, response, next) {
-  console.log(request.path);
   if (request.path === '/index.html') {
     hitCount++;
   }
