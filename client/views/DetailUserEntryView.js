@@ -378,6 +378,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
                 for (var i=0; i < models.length ;i++) {
                   var entryView = new Agora.Views.SidebarEntryView(that.app);
+                  entryView.noMouseover = true;
                   that.subViews.push(entryView);
                   entryView.model = models[i];
                   entryView.renderTopic();

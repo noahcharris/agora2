@@ -678,7 +678,7 @@ module.exports.userSearch = function(request, response) {
 
   console.log('user search input: ', queryArgs.input);
 
-  client.query("SELECT type, username, location, image, about FROM users WHERE username ILIKE $1 LIMIT 500;",
+  client.query("SELECT type, username, location, origin, image, about FROM users WHERE username ILIKE $1 LIMIT 200;",
       [queryArgs.input + '%'],
       function(err, result) {
         if (err) {

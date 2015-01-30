@@ -199,6 +199,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
+          entryView.noMouseover = true;
           that.subViews.push(entryView);
           entryView.model = models[i];
           entryView.renderTopic();

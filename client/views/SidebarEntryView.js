@@ -339,7 +339,13 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
         //}
 
     });
-    this.$el.on('mouseover', mouseoverHandler);
+
+
+
+    if (!this.noMouseover) {
+      this.$el.on('mouseover', mouseoverHandler);
+    }
+
 
 
 
