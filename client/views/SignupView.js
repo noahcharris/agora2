@@ -89,6 +89,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           if ($('#signupUsernameInput').val() === '') {
             alert(that.app.translate('please enter a username'));
+          } else if ($('#signupUsernameInput').val().length > 35) {
+            alert(that.app.translate('username must be 35 characters or less'));
           } else if ($('#signupUsernameInput').val().indexOf('@') !== -1) {
             alert(that.app.translate("username may not contain '@'"));
           } else if ($('#signupPasswordInput').val() === '') {
@@ -243,7 +245,8 @@ Agora.Views.SignupView = Backbone.View.extend({
           url: 'http://liveworld.io:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
-            input: searchParameter
+            input: searchParameter,
+            noHubs: true
           },
           crossDomain: true,
           success: function(data) {
@@ -305,7 +308,8 @@ Agora.Views.SignupView = Backbone.View.extend({
         url: 'http://liveworld.io:80/locationSearch',
         // url: 'http://localhost:80/locationSearch',
         data: {
-          input: searchParameter
+          input: searchParameter,
+          noHubs: true
         },
         crossDomain: true,
         success: function(data) {

@@ -715,21 +715,42 @@ module.exports.locationSearch = function(request, response) {
       input = '';
     }
 
+    if (queryArgs.onlyCities) {
+      client.query("SELECT * FROM locations WHERE name ILIKE $1 AND isCity = true;",
+          ['%' + input + '%'],
+          function(err, result) {
+            if (err) {
+              console.log('error searching locations with ILIKE: ', err);
+              response.end('error');
+            } else {
+              response.json(result.rows);
+            }
+      });
+    } else if (queryArgs.noHubs) {
+      client.query("SELECT * FROM locations WHERE name ILIKE $1 AND isUserCreated = false;",
+          ['%' + input + '%'],
+          function(err, result) {
+            if (err) {
+              console.log('error searching locations with ILIKE: ', err);
+              response.end('error');
+            } else {
+              response.json(result.rows);
+            }
+      });
+    } else {
+      client.query("SELECT * FROM locations WHERE name ILIKE $1;",
+          ['%' + input + '%'],
+          function(err, result) {
+            if (err) {
+              console.log('error searching locations with ILIKE: ', err);
+              response.end('error');
+            } else {
+              response.json(result.rows);
+            }
+      });
+    }
 
-    console.log(input);
 
-    console.log('location search input: ', queryArgs.input);
-
-    client.query("SELECT * FROM locations WHERE name ILIKE $1;",
-        ['%' + input + '%'],
-        function(err, result) {
-          if (err) {
-            console.log('error searching locations with ILIKE: ', err);
-            response.end('error');
-          } else {
-            response.json(result.rows);
-          }
-    });
 
 };
 

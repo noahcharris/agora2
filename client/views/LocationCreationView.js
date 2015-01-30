@@ -125,7 +125,8 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
             url: 'http://liveworld.io:80/locationSearch',
             //url: 'http://localhost:80/channelSearch',
             data: {
-              input: searchParameter
+              input: searchParameter,
+              onlyCities: true
             },
             crossDomain: true,
             success: function(data) {

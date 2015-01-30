@@ -148,6 +148,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
             if (temp === 'World') {
 
+              that.app.get('mapController').highlightWorld();
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightWorld();
               });
@@ -157,6 +158,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
             } else if (temp.split('/').length === 2) {
               //COUNTRY
+              that.app.get('mapController').highlightCountry(temp);
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightCountry(temp);
                 console.log('highlight');
@@ -176,6 +178,18 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
               var temp2 = temp1.join('/');
 
 
+
+
+              var zoom = that.app.get('mapController').get('map').getZoom();
+              //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
+              if (zoom > 3) {
+                //HIGHLIGHT STATE
+                that.app.get('mapController').highlightState(temp);
+              } else {
+                that.app.get('mapController').highlightCountry(temp2);
+              }
+
+
               that.$el.on('mouseover', function() {
                 var zoom = that.app.get('mapController').get('map').getZoom();
                 //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
@@ -186,6 +200,10 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
                   that.app.get('mapController').highlightCountry(temp2);
                 }
               });
+
+
+
+
 
 
               that.$el.on('mouseout', function() {
@@ -211,6 +229,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
               }
 
 
+              that.app.get('mapController').highlightCity(temp);
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightCity(temp);
                 //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE CITY
@@ -250,59 +269,59 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
 
-              that.$el.on('mouseover', function() {
 
-                if (that.coordsObject[temp]) {
+              if (that.coordsObject[temp]) {
 
-
+                that.$el.on('mouseover', function() {
                   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
-                  //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
-                  // var zoom = that.app.get('mapController').get('map').getZoom();
-                  // if (zoom > 3) {
-                  //   //HIGHLIGHT PLACE
-                  //   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
-                  // } else {
-                  //   that.app.get('mapController').highlightCountry(temp2)
-                  // }
+                });
+                that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                // var zoom = that.app.get('mapController').get('map').getZoom();
+                // if (zoom > 3) {
+                //   //HIGHLIGHT PLACE
+                //   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                // } else {
+                //   that.app.get('mapController').highlightCountry(temp2)
+                // }
 
+              } else {
 
+                $.ajax({
+                  url: 'http://liveworld.io:80/placeLatLng',
+                  crossDomain: true,
+                  method: 'GET',
+                  data: {
+                    name: temp
+                  },
+                  success: function(data) {
+                    if (data.length) {
+                      that.coordsObject[temp] = [data[0].latitude, data[0].longitude];
 
-                } else {
-
-                  $.ajax({
-                    url: 'http://liveworld.io:80/placeLatLng',
-                    crossDomain: true,
-                    method: 'GET',
-                    data: {
-                      name: temp
-                    },
-                    success: function(data) {
-                      if (data.length) {
-                        that.coordsObject[temp] = [data[0].latitude, data[0].longitude];
-
-                        var zoom = that.app.get('mapController').get('map').getZoom();
-                        //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                      var zoom = that.app.get('mapController').get('map').getZoom();
+                      //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                      that.$el.on('mouseover', function() {
                         that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+                      });
+                      that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
 
-                        // if (zoom > 3) {
-                        //   //HIGHLIGHT PLACE
-                        //   that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
-                        // } else {
-                        //   that.app.get('mapController').highlightCountry(temp2)
-                        // }
+                      // if (zoom > 3) {
+                      //   //HIGHLIGHT PLACE
+                      //   that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+                      // } else {
+                      //   that.app.get('mapController').highlightCountry(temp2)
+                      // }
 
-                      } else {
-                      }
-                    }, error: function(err) {
-                      console.log('ajax error ocurred: ', err);
+                    } else {
                     }
+                  }, error: function(err) {
+                    console.log('ajax error ocurred: ', err);
+                  }
 
-                  });
-                }
+                });
+              }
 
 
-
-              });
               that.$el.on('mouseout', function() {
                 that.app.get('mapController').removeHighlightPlace(temp);
                 that.app.get('mapController').removeHighlightCountry(temp2);
