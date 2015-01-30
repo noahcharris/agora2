@@ -1604,7 +1604,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'invalid invite code',
   ar: '',
   zh: '',
   fr: '',
@@ -1614,7 +1614,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'View Invite Codes',
   ar: '',
   zh: '',
   fr: '',
@@ -1624,7 +1624,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'invite code',
   ar: '',
   zh: '',
   fr: '',

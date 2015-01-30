@@ -34,6 +34,7 @@ Agora.Views.SignupView = Backbone.View.extend({
     var originLabel = this.app.translate('origin');
     var locationLabel = this.app.translate('current location');
     var aboutLabel = this.app.translate('about');
+    var codeLabel = this.app.translate('invite code');
 
 
     this.$el.html( this.template({bigRegisterLabel: bigRegisterLabel, explanationLabel1: explanationLabel1,
@@ -41,6 +42,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                                  availabilityLabel: availabilityLabel }) );
 
 
+
+    this.$el.children('#signupCodeInput').attr('placeholder', codeLabel);
     this.$el.children('#signupUsernameInput').attr('placeholder', usernameLabel);
     this.$el.children('#signupPasswordInput').attr('placeholder', passwordLabel);
     this.$el.children('#signupConfirmPasswordInput').attr('placeholder', confirmPasswordLabel);
@@ -124,7 +127,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                 location: $('#signupLocationInput').val(),
                 email: $('#signupEmailInput').val(),
                 about: $('#signupAboutInput').val(),
-                responseString: $('.g-recaptcha-response').val()
+                responseString: $('.g-recaptcha-response').val(),
+                code: $('#signupCodeInput').val()
               },
               success: function(data) {
                 if (data.login) {

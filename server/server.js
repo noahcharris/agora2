@@ -196,6 +196,7 @@ app.post('/registerUser', routes.registerUser);
 app.get('/verifyUser', routes.verifyUser);
 app.get('/checkVerification', routes.checkVerification);
 
+app.get('/getInvites', routes.getInvites);
 
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);

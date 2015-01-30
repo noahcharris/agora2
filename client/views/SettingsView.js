@@ -120,7 +120,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    this.$el.children('#buttonBox').append($locationCreationButton);
+    // this.$el.children('#buttonBox').append($locationCreationButton);
 
     var createChannelLabel = this.app.translate('Create Channel');
     var $channelCreationButton = $('<button id="createChannelButton">'+createChannelLabel+'</button>');
@@ -154,7 +154,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    this.$el.children('#buttonBox').append($channelCreationButton);
+    // this.$el.children('#buttonBox').append($channelCreationButton);
 
     var changePasswordLabel = this.app.translate('Change Password');
     var $changePasswordButton = $('<button id="changePasswordButton">'+changePasswordLabel+'</button>');
@@ -179,6 +179,15 @@ Agora.Views.SettingsView = Backbone.View.extend({
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
     });
     this.$el.children('#buttonBox').append($changeEmailButton);
+
+
+    var inviteCodesLabel = this.app.translate('View Invite Codes');
+    var $inviteCodesButton = $('<button id="inviteCodesButton">'+inviteCodesLabel+'</button>');
+    $inviteCodesButton.on('click', function() {
+      that.app.get('detailView').displayed = 'View Invite Codes';
+      that.app.get('content2').show(new Agora.Views.InviteView(that.app));
+    });
+    this.$el.children('#buttonBox').append($inviteCodesButton);
 
 
     //get recently visited topics

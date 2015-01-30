@@ -80,6 +80,18 @@ var transporter = nodemailer.createTransport({
 
 
 
+//for generating invite codes
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+}
+
+
+
+
+
+
 
 
 //CAUTION: THIS SHOULD ONLY RUN ON ONE SERVER AT ANY GIVEN TIME
@@ -91,30 +103,121 @@ var transporter = nodemailer.createTransport({
 // | || (_))((_)_| |_ | _ ) ((_) |_   
 // | __ / -_) _` |  _|| _ \/ _ \  _|  
 // |_||_\___\__,_|\__||___/\___/\__|  
+
+
+//select from heatPost heatVists and heatVote by time
+//remove heat from topics, delete the heat entries
+
+//this should be run every couple of minutes?
+
+
 var coolOff = function() {
-  client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
+
+  console.log('/∆\\ HEATBOT /∆\\');
+
+  client.query("SELECT * FROM heatPostJoin WHERE postedAt < now() - interval '1 hour';",
     function(err, result) {
       if (err) console.log('error cooling off: ', err);
+
+      for (var i=0; i < result.rows.length ;i++) {
+
+        (function(){
+          var x = result.rows[i];
+          client.query("UPDATE topics SET heat = heat - 3 WHERE id = $1;", [x.id],
+            function(err, thet) {
+              if (err) console.log('error cooling topics: ', err);
+
+              client.query("DELETE FROM heatPostJoin WHERE id = $1;", [x.id],
+                function(err, result) {
+                  if (err) {
+                    console.log('error deleting from topics after cooling: ', err);
+                  } else {
+                    console.log('successfully cooled post heat')
+                  }
+                  
+                    
+
+              });
+
+
+          });
+
+        })();
+
+
+      }
+
   });
-  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-  //   function(err, result) {
-  //     if (err) console.log('error cooling off: ', err);
-  // });
-  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-  //   function(err, result) {
-  //     if (err) console.log('error cooling off: ', err);
-  // });
-  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-  //   function(err, result) {
-  //     if (err) console.log('error cooling off: ', err);
-  // });
-  // client.query("UPDATE topics SET heat = heat - 1 WHERE heat > 0;",
-  //   function(err, result) {
-  //     if (err) console.log('error cooling off: ', err);
-  // });
+
+  client.query("SELECT * FROM heatVisitJoin WHERE visitedAt < now() - interval '1 hour';",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+
+      for (var i=0; i < result.rows.length ;i++) {
+
+        (function(){
+          var x = result.rows[i];
+          client.query("UPDATE topics SET heat = heat - 1 WHERE id = $1;", [x.id],
+            function(err, thet) {
+              if (err) console.log('error cooling topics: ', err);
+
+              client.query("DELETE FROM heatVisitJoin WHERE id = $1;", [x.id],
+                function(err, result) {
+                  if (err) {
+                    console.log('error deleting from topics after cooling: ', err);
+                  } else {
+                    console.log('successfully cooled visit heat')
+                  }
+              });
+
+
+          });
+
+        })();
+
+
+
+      }
+
+  });
+
+  client.query("SELECT * FROM heatVoteJoin WHERE votedAt < now() - interval '1 hour';",
+    function(err, result) {
+      if (err) console.log('error cooling off: ', err);
+
+      for (var i=0; i < result.rows.length ;i++) {
+
+        (function(){
+          var x = result.rows[i];
+          client.query("UPDATE topics SET heat = heat - 2 WHERE id = $1;", [x.id],
+            function(err, thet) {
+              if (err) console.log('error cooling topics: ', err);
+
+              client.query("DELETE FROM heatVoteJoin WHERE id = $1;", [x.id],
+                function(err, result) {
+                  if (err) {
+                    console.log('error deleting from topics after cooling: ', err);
+                  } else {
+                    console.log('successfully cooled vote heat')
+                  }
+              });
+
+
+          });
+
+        })();
+
+
+
+
+      }
+
+  });
+
+
 };
-// currently set to 1 hr interval
-setInterval(coolOff, 3600000);
+// currently set to 1 minute
+setInterval(coolOff, 60000);
                                    
 
 
@@ -2438,82 +2541,106 @@ module.exports.registerUser = function(request, response) {
                               response.end('that email is taken!');
                             } else {
 
-                                //REGISTER THE USER
-                                bcrypt.genSalt(10, function(err, salt) {
-                                  bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-                                    postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                                      xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
-                                      xssValidator(request.body.email), function(success) {
-                                        if (success) {
+                              //CHECK INVITE CODE
+                              client.query("SELECT * FROM inviteJoin WHERE code=$1;", [request.body.code], 
+                                function(err, result) {
+                                  if (err) console.log('error checking invite code: ', err);
+                                  if (result.rows.length) {
+                                    //delete the entry from inviteJoin
+                                    client.query("DELETE FROM inviteJoin WHERE code=$1;", [request.body.code],
+                                    function(err, result) {
+                                      if (err) {
+                                        console.log('error deleting inviteJoin entry: ', err);
+                                      } else {
+                                        //INVITE STUFF COMPLETE
+                                                //REGISTER THE USER
+                                                bcrypt.genSalt(10, function(err, salt) {
+                                                  bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-                                          console.log('new user: '+request.body.username);
+                                                    postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                                                      xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
+                                                      xssValidator(request.body.email), function(success) {
+                                                        if (success) {
 
-                                          //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
-                                          var secret = Math.floor(Math.random()*100000000001);
-                                          client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
-                                            +"VALUES ($1, $2, now());",
-                                            [request.body.username, secret],
-                                            function(err, result) {
-                                              if (err) {
-                                                console.log('error inserting into emailVerificationJoin: ', err);
-                                              } else {
+                                                          console.log('new user: '+request.body.username);
 
-                                                var mailOptions = {
-                                                    from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
-                                                    to: request.body.email, // list of receivers
-                                                    subject: 'Hello ✔', // Subject line
-                                                    text: 'KEY', // plaintext body
-                                                    html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
-                                                };
+                                                          //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                                                          var secret = Math.floor(Math.random()*100000000001);
+                                                          client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                                                            +"VALUES ($1, $2, now());",
+                                                            [request.body.username, secret],
+                                                            function(err, result) {
+                                                              if (err) {
+                                                                console.log('error inserting into emailVerificationJoin: ', err);
+                                                              } else {
 
-                                                transporter.sendMail(mailOptions, function(error, info){
-                                                    if(error){
-                                                        console.log(error);
-                                                    }else{
-                                                        // console.log('Message sent: ' + info.response);
-                                                    }
-                                                });
+                                                                var mailOptions = {
+                                                                    from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                                                    to: request.body.email, // list of receivers
+                                                                    subject: 'Hello ✔', // Subject line
+                                                                    text: 'KEY', // plaintext body
+                                                                    html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                                };
 
-
-
-                                              }
-                                          });
-
-
-                                          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                                          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-                                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-
-                                          client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                                            +"VALUES ($1, $2, $3, now());",
-                                            [request.body.username, cookie, token],
-                                            function(err, result) {
-                                              if (err) {
-                                                console.log('error inserting into securityJoin: ', err);
-                                              } else {
-                                                //LOGIN SUCCESSFUL
-
-                                                //set cookie which will be checkd in checkLogin (10 minutes here)
-                                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                                                response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
-
-                                                console.log('Login successful for user: ', request.body.username);
-
-                                                response.json({ login: true, token: token });
+                                                                transporter.sendMail(mailOptions, function(error, info){
+                                                                    if(error){
+                                                                        console.log(error);
+                                                                    }else{
+                                                                        // console.log('Message sent: ' + info.response);
+                                                                    }
+                                                                });
 
 
-                                              }
-                                          });
 
-                                        } else {
-                                          response.end('error');
-                                        }
-                                    });//end create user
+                                                              }
+                                                          });
 
-                                  });
-                                });//end bcrypt async thing
+
+                                                          var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                                                          var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+                                                          // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+                                                          client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                                                            +"VALUES ($1, $2, $3, now());",
+                                                            [request.body.username, cookie, token],
+                                                            function(err, result) {
+                                                              if (err) {
+                                                                console.log('error inserting into securityJoin: ', err);
+                                                              } else {
+                                                                //LOGIN SUCCESSFUL
+
+                                                                //set cookie which will be checkd in checkLogin (10 minutes here)
+                                                                // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                                                response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+                                                                console.log('Login successful for user: ', request.body.username);
+
+                                                                response.json({ login: true, token: token });
+
+
+                                                              }
+                                                          });
+
+                                                        } else {
+                                                          response.end('error');
+                                                        }
+                                                    });//end create user
+
+                                                  });
+                                                });//end bcrypt async thing
+
+
+                                      }
+                                    });//end invite code delete
+
+
+                                  } else {
+                                    response.end('invalid invite code');
+                                  }
+                              });//end invite code check
+
 
 
                             }
@@ -2646,6 +2773,94 @@ module.exports.checkVerification = function(request, response) {
 
 
 
+module.exports.getInvites = function(request, response) {
+
+
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          //check if the user already has invites generated, if so
+          //return them, if not, generate them then return them
+
+          client.query("SELECT * FROM hasInviteJoin WHERE username = $1;",
+            [queryArgs.username], function(err, result) {
+              if (err) console.log('error selecting from inviteJoin: ', err);
+
+              if (result.rows.length) {
+
+                client.query("SELECT * FROM inviteJoin WHERE username = $1;",
+                  [queryArgs.username], function(err, result) {
+                    if (err) console.log('error selecting from inviteJoin: ', err);
+
+                    response.json(result.rows);
+
+                });
+
+
+
+
+
+              } else {
+                //GENERATE THE ROWS
+
+                var returnArray = [];
+
+                for (var i=0; i < 15 ;i++) {
+
+                  var rString = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+                  returnArray.push({ code:rString });
+
+                  client.query("INSERT INTO inviteJoin (username, code) "
+                    +"VALUES ($1, $2);", [queryArgs.username, rString],
+                    function(err, result) {
+                      if (err) console.log('error inserting into inviteJoin: ', err);
+                  });
+
+                }
+
+                client.query("INSERT INTO hasInviteJoin (username) "
+                  +"VALUES ($1);", [queryArgs.username], function(err, result) {
+                    if (err) console.log('error inserting into hasInviteJoin: ', err);
+                });
+
+                response.json(returnArray);
+
+
+              }
+
+
+
+
+          });
+
+
+
+
+
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+
+
+
+};
 
 
 
@@ -3481,7 +3696,7 @@ module.exports.createComment = function(request, response) {
 
           if (request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
-              addPostHeat(fields.username[0], fields.topicId[0], 4);
+              addPostHeat(fields.username[0], fields.topicId[0], 3);
 
               //if an image is sent
               if (files.file) {
@@ -4328,7 +4543,7 @@ module.exports.upvoteTopic = function(request, response) {
                     if (result.rowCount === 0) {
 
 
-                      addVoteHeat(request.body.username, request.body.topicId, 3);
+                      addVoteHeat(request.body.username, request.body.topicId, 2);
 
 
                       client.query("INSERT INTO topicVoteJoin (topic, username) "+
