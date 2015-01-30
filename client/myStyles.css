@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 body::-webkit-scrollbar{
   width:10px;
 }
@@ -512,6 +516,7 @@ right:22.4%;
 
 #content2 {
   z-index: 500;
+  overflow: hidden;
   position: absolute;
   right: 0px;
   width: 500px;
@@ -1457,6 +1462,7 @@ right:22.4%;
   word-wrap: break-word;
 }
 .commentExpansionBox {
+  overflow: hidden;
   position: relative;
   width: 90%;
   left: 10%;

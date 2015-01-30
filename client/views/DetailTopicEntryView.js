@@ -332,6 +332,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $expandCommentButton[0].onclick = function(e) {
           if (!commentCollapsed) {
 
+
             //TODO
             $(e.target).parent().parent().next().css('height', '0px');
             $(e.target).attr('src', 'resources/images/expand.png');
@@ -762,91 +763,101 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         }
         $('#inputBox').css('height', '100px');
 
+        setTimeout(function() {
+          $('#inputBox').children('#inputHeadlineTextArea').focus();
+        }, 700);
+
         var ajaxing = false;
         var sendHandler = function() {
 
-          if (!ajaxing) {
+          if ($('textarea#inputTextArea').val() === '' && $('textarea#inputHeadlineTextArea').val() === '') {
+            alert(that.app.translate('you must provide either a headline or contents'));
+          } else {
 
-              ajaxing = true;
+              if (!ajaxing) {
 
-              var fd = new FormData();    
-              fd.append( 'file', $('#imageInput')[0].files[0] );
-              fd.append( 'username', that.app.get('username') );
-              fd.append( 'token', that.app.get('token') );
+                  ajaxing = true;
 
-              fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
+                  var fd = new FormData();    
+                  fd.append( 'file', $('#imageInput')[0].files[0] );
+                  fd.append( 'username', that.app.get('username') );
+                  fd.append( 'token', that.app.get('token') );
 
-              fd.append( 'link', $('textarea#inputTextArea').val() );
+                  fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
 
-              fd.append( 'contents', $('textarea#inputTextArea').val() );
+                  fd.append( 'link', 'link');
 
-              fd.append( 'location', data.location );
-              fd.append( 'channel', data.channel );
+                  fd.append( 'contents', $('textarea#inputTextArea').val() );
 
-              fd.append( 'topicId', data.topicId );
-              fd.append( 'commentId', data.commentId );
-              fd.append( 'responseId', data.responseId );
+                  fd.append( 'location', data.location );
+                  fd.append( 'channel', data.channel );
 
-              //whaaaa
-              var thet = this;
+                  fd.append( 'topicId', data.topicId );
+                  fd.append( 'commentId', data.commentId );
+                  fd.append( 'responseId', data.responseId );
 
-              $.ajax({
-                url: 'https://liveworld.io:443/' + data.urlSuffix,
-                // url: 'http://localhost/' + data.urlSuffix,
-                method: 'POST',
-                crossDomain: true,
-                xhrFields: {
-                  withCredentials: true
-                },
-                contentType: false,
-                processData: false,
-                data: fd,
-                success: function(msg) {
+                  //whaaaa
+                  var thet = this;
 
-                  if (msg[0] === 'e') {
-                    alert(that.app.translate('please make sure your file is not bigger than 10MB'));
-                  } else {
+                  $.ajax({
+                    url: 'https://liveworld.io:443/' + data.urlSuffix,
+                    // url: 'http://localhost/' + data.urlSuffix,
+                    method: 'POST',
+                    crossDomain: true,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(msg) {
 
-                    alert(that.app.translate('submission successful'));
-                    $('#inputBox').css('height', '0px');
-                    //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+                      if (msg[0] === 'e') {
+                        alert(that.app.translate('please make sure your file is not bigger than 10MB'));
+                      } else {
 
-                    //that.app.trigger('reloadSidebarTopics');
-                    //just reload fuck it
-                    setTimeout(function() {
+                        alert(that.app.translate('submission successful'));
+                        $('#inputBox').css('height', '0px');
+                        //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
 
+                        //that.app.trigger('reloadSidebarTopics');
+                        //just reload fuck it
+                        setTimeout(function() {
+
+                          ajaxing = false;
+
+                          $.ajax({
+                            url: 'http://liveworld.io/topicTree',
+                            // url: 'http://localhost/topicTree',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              //these two models are different scope!
+                              topicId: that.model.id
+                            },
+                            success: function(model) {
+
+                              that.app.get('content2').show(that.app.get('detailView'), model);
+                            },
+                            error: function() {
+                              alert(that.app.translate('server error'));
+                            }
+                          });
+
+                        }, 1000);
+
+                      }
+
+                    },
+                    error: function() {
+                      alert(that.app.translate('server error'));
                       ajaxing = false;
+                    }
+                  });
 
-                      $.ajax({
-                        url: 'http://liveworld.io/topicTree',
-                        // url: 'http://localhost/topicTree',
-                        method: 'GET',
-                        crossDomain: true,
-                        data: {
-                          //these two models are different scope!
-                          topicId: that.model.id
-                        },
-                        success: function(model) {
+              }
+          }//end headline/contents check
 
-                          that.app.get('content2').show(that.app.get('detailView'), model);
-                        },
-                        error: function() {
-                          alert(that.app.translate('server error'));
-                        }
-                      });
-
-                    }, 1000);
-
-                  }
-
-                },
-                error: function() {
-                  alert(that.app.translate('server error'));
-                  ajaxing = false;
-                }
-              });
-
-          }
 
         };//end post button handler
 
