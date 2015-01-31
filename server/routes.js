@@ -2412,7 +2412,7 @@ module.exports.validateChannel = function(request, response) {
       var temp = fullPath.split('/');
 
       if (temp.length > 5) {
-        response.end('your channel is too deeply nested.');
+        response.end('your channel is too deeply nested');
       } else {
 
         client.query("SELECT * FROM channels WHERE name = $1;",
@@ -4304,7 +4304,7 @@ module.exports.createLocation = function(request, response) {
 
                                         } else {
                                           //not within acceptable radius
-                                          response.end('your location is too far from its parent city.');
+                                          response.end('your location is too far from its parent city');
 
                                         }
                                       }

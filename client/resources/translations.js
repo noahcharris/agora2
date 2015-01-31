@@ -974,7 +974,7 @@ var translationData = [{
   ru: '',
   es: 'ubicación creada con éxito',
 },{
-  en: 'your location is too far from its parent city.',
+  en: 'your location is too far from its parent city',
   ar: '',
   zh: '?????????????????',
   fr: '',
@@ -984,7 +984,7 @@ var translationData = [{
   ru: '',
   es: 'su ubicación está demasiado lejos de su ciudad matriz',
 },{
-  en: 'your channel is too deeply nested.',
+  en: 'your channel is too deeply nested',
   ar: '',
   zh: '?????????????????',
   fr: '',
