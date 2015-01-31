@@ -274,6 +274,20 @@ function gatherTweets() {
 
 
             console.log(body);
+            console.log(body.access_token);
+
+            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json?count=5&screen_name=kendricklamar', headers: {
+              Authorization: 'Bearer '+JSON.parse(body).access_token
+            }}, function(err, httpResponse, body) {
+
+              console.log(body);
+
+            });
+
+
+
+
+
 
   });
 
