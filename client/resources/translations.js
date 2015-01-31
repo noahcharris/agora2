@@ -1634,7 +1634,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Connect Twitter Account',
   ar: '',
   zh: '',
   fr: '',
@@ -1644,7 +1644,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Continue',
   ar: '',
   zh: '',
   fr: '',

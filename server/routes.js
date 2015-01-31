@@ -4,6 +4,7 @@ var https = require('https');
 var pg = require('pg');
 var nodemailer = require('nodemailer');
 var url = require('url');
+var qs = require('querystring')
 var bcrypt = require('bcrypt');
 var s3 = require('s3');
 var multiparty = require('multiparty');
@@ -229,6 +230,39 @@ setInterval(coolOff, 60000);
 
 
 
+
+
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //TwitterBot
 //If the user opts in, twitter bot will periodically
 
@@ -296,7 +330,7 @@ function gatherTweets() {
 
 };
 
-gatherTweets();
+//gatherTweets();
 
 
 
@@ -2931,6 +2965,103 @@ module.exports.getInvites = function(request, response) {
       }
   });//end securityJoin select
 
+};
+
+
+
+
+  //NAME CONFLICT WITH THE REQUEST MODULE!!!!
+module.exports.authenticateTwitter = function(req, response) {
+
+  // OAuth1.0 - 3-legged server side flow (Twitter example)
+  // step 1
+  
+
+    var oauth =
+      { callback: 'https://liveworld.io/twitterCallback'
+      , consumer_key: 'VhHhBs93xuxzZfouKSZHKiuMi'
+      , consumer_secret: 'ktOFf2FFA3TfHcKi22L27PPotQeHxKNsV5y5OcWzraYkXRD09Q'
+      }
+    , url = 'https://api.twitter.com/oauth/request_token'
+    ;
+  request.post({url:url, oauth:oauth}, function (e, r, body) {
+    // Ideally, you would take the body in the response
+    // and construct a URL that a user clicks on (like a sign in button).
+    // The verifier is only available in the response after a user has
+    // verified with twitter that they are authorizing your app.
+
+
+    //STORE THE REQ_DATA SECRET IN POSTGRES ALONG WITH USERNAME
+    //FOR USE BY THE CALLBACK
+
+
+
+    // step 2
+    console.log(body);
+    var req_data = qs.parse(body)
+    var uri = 'https://api.twitter.com/oauth/authenticate'
+      + '?' + qs.stringify({oauth_token: req_data.oauth_token});
+
+    response.end(uri);
+    // redirect the user to the authorize uri
+
+    // step 3
+    // after the user is redirected back to your server
+
+  });
+
+
+
+
+};
+
+
+  //NAME CONFLICT WITH REQUEST MODULE!!!!!!
+module.exports.twitterCallback = function(req, response) {
+
+
+  var auth_data = qs.parse(req.body)
+
+    var oauth =
+      { consumer_key: 'VhHhBs93xuxzZfouKSZHKiuMi'
+      , consumer_secret: 'ktOFf2FFA3TfHcKi22L27PPotQeHxKNsV5y5OcWzraYkXRD09Q'
+      , token: auth_data.oauth_token
+      , token_secret: req_data.oauth_token_secret
+      , verifier: auth_data.oauth_verifier
+      }
+    , url = 'https://api.twitter.com/oauth/access_token'
+    ;
+
+
+
+
+  request.post({url:url, oauth:oauth}, function (e, r, body) {
+    // ready to make signed requests on behalf of the user
+
+
+
+    var perm_data = qs.parse(body)
+      , oauth =
+        { consumer_key: 'VhHhBs93xuxzZfouKSZHKiuMi'
+        , consumer_secret: 'ktOFf2FFA3TfHcKi22L27PPotQeHxKNsV5y5OcWzraYkXRD09Q'
+        , token: perm_data.oauth_token
+        , token_secret: perm_data.oauth_token_secret
+        }
+      , url = 'https://api.twitter.com/1.1/users/show.json'
+      , qs =
+        { screen_name: perm_data.screen_name
+        , user_id: perm_data.user_id
+        }
+      ;
+    request.get({url:url, oauth:oauth, json:true}, function (e, r, user) {
+      console.log(user)
+      response.end('whaa');
+
+    })
+
+
+  });
+
 
 
 
@@ -2939,10 +3070,14 @@ module.exports.getInvites = function(request, response) {
 
 
 
+
+
+
+
+
+
+
 module.exports.visitedTopic = function(request, response) {
-
-
-
 
 
   client.query("SELECT * FROM securityJoin WHERE username = $1;",
@@ -2955,10 +3090,8 @@ module.exports.visitedTopic = function(request, response) {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-
                     //add some heat yo
                     addVisitHeat(request.body.username, request.body.topicId);
-
 
                     client.query("SELECT * FROM topicVisitJoin JOIN topics ON topicVisitJoin.username = $1 "
                       +"AND topicVisitJoin.topic = topics.id ORDER BY visitedAt DESC;",

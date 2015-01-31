@@ -198,6 +198,14 @@ app.get('/checkVerification', routes.checkVerification);
 
 app.get('/getInvites', routes.getInvites);
 
+
+
+app.get('/authenticateTwitter', routes.authenticateTwitter);
+app.get('/twitterCallback', routes.twitterCallback);
+
+
+
+
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
 

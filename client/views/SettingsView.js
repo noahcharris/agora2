@@ -184,10 +184,18 @@ Agora.Views.SettingsView = Backbone.View.extend({
     var inviteCodesLabel = this.app.translate('View Invite Codes');
     var $inviteCodesButton = $('<button id="inviteCodesButton">'+inviteCodesLabel+'</button>');
     $inviteCodesButton.on('click', function() {
-      that.app.get('detailView').displayed = 'View Invite Codes';
+      that.app.get('detailView').displayed = 'Invite';
       that.app.get('content2').show(new Agora.Views.InviteView(that.app));
     });
     this.$el.children('#buttonBox').append($inviteCodesButton);
+
+    var twitterLabel = this.app.translate('Connect Twitter Account');
+    var $twitterButton = $('<button id="inviteCodesButton">'+twitterLabel+'</button>');
+    $twitterButton.on('click', function() {
+      that.app.get('detailView').displayed = 'Twitter';
+      that.app.get('content2').show(new Agora.Views.TwitterView(that.app));
+    });
+    this.$el.children('#buttonBox').append($twitterButton);
 
 
     //get recently visited topics
