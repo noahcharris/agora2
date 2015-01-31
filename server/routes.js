@@ -218,10 +218,71 @@ var coolOff = function() {
 };
 // currently set to 1 minute
 setInterval(coolOff, 60000);
-                                   
+
+//end heatbot stuff
 
 
 
+
+
+
+
+
+
+//TwitterBot
+//If the user opts in, twitter bot will periodically
+
+function gatherTweets() {
+
+  // request('https://api.twitter.com/oauth2/token?grant_type=client_credentials', function(err, response, body) {
+  //     if (!err && response.statusCode == 200) {
+  //       console.log(body);
+  //     } else {
+  //       console.log('request error: ', err);
+  //     }
+  // });
+
+
+
+  // var requestOptions = {
+  //   host: 'https://api.twitter.com',
+  //   path: '/oauth2/token',
+  //   port: 443,
+  //   method: 'POST',
+  //   headers: {'Authorization': 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
+  //             'grant_type': 'client_credentials'}
+  //   //accept: '*/*'
+  // };
+  // var req = https.request(requestOptions, function(res) {
+  //   var str = '';
+  //   res.on('data', function(d) {
+  //     str += d;
+  //     // process.stdout.write(d);
+  //   });
+  //   res.on('end', function() {
+  //     console.log(str);
+  //   });
+  // });
+
+
+
+
+
+  request.post( {url:'https://api.twitter.com/oauth2/token', headers: {
+    Authorization: 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
+  }, form: { grant_type: 'client_credentials'} }, function(err, httpResponse, body) {
+
+
+            console.log(body);
+
+  });
+
+
+
+
+};
+
+gatherTweets();
 
 
 
