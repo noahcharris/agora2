@@ -22,7 +22,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.router = null;
     this.app = appController;
-    this.handler;
+    this.handler = function() {};
     //use this for point placement to disable reloading sidebar
     this.placing = false;
     this.placedLatitude;
