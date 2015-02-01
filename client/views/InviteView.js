@@ -19,6 +19,11 @@ Agora.Views.InviteView = Backbone.View.extend({
 
 
 
+    this.$el.append($('<img src="/resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+    });
+
 
     var $backButton = $('<button id="backButton">'+that.app.translate('Back')+'</button>')
     $backButton.on('click', function() {

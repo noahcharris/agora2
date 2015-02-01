@@ -19,6 +19,12 @@ Agora.Views.TwitterView = Backbone.View.extend({
 
 
 
+    this.$el.append($('<img src="/resources/images/x.png" class="x"></img>'));
+    this.$el.children('img.x').on('click', function() {
+      that.app.get('content2').hide();
+    });
+
+
 
     var $backButton = $('<button id="backButton">'+that.app.translate('Back')+'</button>')
     $backButton.on('click', function() {
@@ -30,7 +36,7 @@ Agora.Views.TwitterView = Backbone.View.extend({
 
     //ajax call to getInvites and append them
     $.ajax({
-      url: 'http://liveworld.io:80/authenticateTwitter',
+      url: 'https://liveworld.io:443/authenticateTwitter',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
