@@ -49,9 +49,13 @@ Agora.Views.TwitterView = Backbone.View.extend({
       },
       success: function(data) {
         
-        var twitterLabel = that.app.translate('Continue');
-        var twitterLink = $('<a href="'+data+'" target="_blank">'+twitterLabel+'</a> ')
-        that.$el.append(twitterLink)
+        if (data[0] === 'c') {
+          that.$el.append('you have already associated a twitter account to your profile');
+        } else {
+          var twitterLabel = that.app.translate('Continue');
+          var twitterLink = $('<a href="'+data+'" target="_blank">'+twitterLabel+'</a> ')
+          that.$el.append(twitterLink)
+        }
 
 
 

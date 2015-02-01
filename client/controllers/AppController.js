@@ -416,7 +416,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //CHECK INITIAL LOGIN STATE
     $.ajax({
-      url: 'https://liveworld.io:443/checkLogin',
+      url: 'https://egora.co:443/checkLogin',
       //url: 'http://localhost:80' + urlPath,
       crossDomain: true,
       xhrFields: {

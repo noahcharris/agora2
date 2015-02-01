@@ -99,6 +99,7 @@ app.use(function(request, response, next) {
 app.use(function(request, response, next) {
 
   response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
+  response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
   response.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 

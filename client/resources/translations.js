@@ -1633,7 +1633,14 @@ var translationData = [{
   pt: '',
   ru: '',
   es: '',
-},{
+},
+
+
+
+
+//NEW
+
+{
   en: 'Connect Twitter Account',
   ar: '',
   zh: '',
@@ -1654,7 +1661,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'you have already associated a twitter account to your profile',
   ar: '',
   zh: '',
   fr: '',
@@ -1664,7 +1671,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'that twitter account is already associated with an agora account',
   ar: '',
   zh: '',
   fr: '',
@@ -1674,7 +1681,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'authentication failed',
   ar: '',
   zh: '',
   fr: '',

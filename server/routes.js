@@ -230,77 +230,19 @@ setInterval(coolOff, 60000);
 
 
 
-
-
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-
-
-
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//  _            _ _   _            _           _   
+// | |___      _(_) |_| |_ ___ _ __| |__   ___ | |_ 
+// | __\ \ /\ / / | __| __/ _ \ '__| '_ \ / _ \| __|
+// | |_ \ V  V /| | |_| ||  __/ |  | |_) | (_) | |_ 
+//  \__| \_/\_/ |_|\__|\__\___|_|  |_.__/ \___/ \__|
+                                                 
 
 //TwitterBot
 //If the user opts in, twitter bot will periodically
 
-function gatherTweets() {
+function gatherTweets(screenName) {
 
-  // request('https://api.twitter.com/oauth2/token?grant_type=client_credentials', function(err, response, body) {
-  //     if (!err && response.statusCode == 200) {
-  //       console.log(body);
-  //     } else {
-  //       console.log('request error: ', err);
-  //     }
-  // });
-
-
-
-  // var requestOptions = {
-  //   host: 'https://api.twitter.com',
-  //   path: '/oauth2/token',
-  //   port: 443,
-  //   method: 'POST',
-  //   headers: {'Authorization': 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
-  //             'grant_type': 'client_credentials'}
-  //   //accept: '*/*'
-  // };
-  // var req = https.request(requestOptions, function(res) {
-  //   var str = '';
-  //   res.on('data', function(d) {
-  //     str += d;
-  //     // process.stdout.write(d);
-  //   });
-  //   res.on('end', function() {
-  //     console.log(str);
-  //   });
-  // });
-
-
-
-
+  //grabs the users latest tweets, maximum of ten
 
   request.post( {url:'https://api.twitter.com/oauth2/token', headers: {
     Authorization: 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
@@ -319,18 +261,20 @@ function gatherTweets() {
             });
 
 
-
-
-
-
   });
-
-
 
 
 };
 
 //gatherTweets();
+
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+//∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+
+
+
+
 
 
 
@@ -384,6 +328,8 @@ function dealWithImage(keyString) {
 
 
 module.exports.test = function(request, response) {
+
+  response.end('heyyy');
 
   //need a list of servers that I can iterate through to set all the servers
   //response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
@@ -3088,13 +3034,37 @@ module.exports.twitterCallback = function(req, response) {
 
                   }
 
-                  client.query("UPDATE twitterJoin SET (screenname, isConnected)"
-                    +"=($1, true) WHERE username = $2;",
-                    [parsed.screen_name, result.rows[0].username],
-                    function(err, result) {
-                      if (err) console.log('error updating twitterJoin table: ', err);
-                      response.end('authentication succeeded');
-                  });
+                  if (parsed.screen_name) {
+
+
+                    client.query("SELECT * FROM twitterJoin WHERE screenname = $1",
+                      [parsed.screen_name],
+                      function(err, result) {
+                        if (err) console.log('error selecting from twitterJoin: ', err);
+
+                        if (result.rows.length) {
+                          response.end('that twitter account is already associated with an agora account');
+                        } else {
+
+
+                              client.query("UPDATE twitterJoin SET (screenname, isConnected)"
+                                +"=($1, true) WHERE username = $2;",
+                                [parsed.screen_name, result.rows[0].username],
+                                function(err, result) {
+                                  if (err) console.log('error updating twitterJoin table: ', err);
+                                  response.end('authentication succeeded');
+                              });
+
+
+                        }
+                    });
+
+
+                    
+                  } else {
+                    response.end('authentication failed');
+                  }
+
 
                   
                   //   var oauth =
