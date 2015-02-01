@@ -332,7 +332,7 @@ module.exports.test = function(request, response) {
   response.end('heyyy');
 
   //need a list of servers that I can iterate through to set all the servers
-  //response.setHeader('Access-Control-Allow-Origin', 'http://liveworld.io');
+  //response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
 
   // response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
@@ -2635,7 +2635,7 @@ module.exports.registerUser = function(request, response) {
                                                                     to: request.body.email, // list of receivers
                                                                     subject: 'Hello ✔', // Subject line
                                                                     text: 'KEY', // plaintext body
-                                                                    html: '<b><a href="https://liveworld.io:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                                    html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
                                                                 };
 
                                                                 transporter.sendMail(mailOptions, function(error, info){
@@ -2951,7 +2951,7 @@ module.exports.authenticateTwitter = function(req, response) {
                                         // OAuth1.0 - 3-legged server side flow 
                                       
                                           var oauth =
-                                            { callback: 'https://liveworld.io/twitterCallback'
+                                            { callback: 'https://egora.co/twitterCallback'
                                             , consumer_key: 'VhHhBs93xuxzZfouKSZHKiuMi'
                                             , consumer_secret: 'ktOFf2FFA3TfHcKi22L27PPotQeHxKNsV5y5OcWzraYkXRD09Q'
                                             }

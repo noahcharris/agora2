@@ -105,7 +105,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   
 
                   $.ajax({
-                    url: 'https://liveworld.io:443/createTopic',
+                    url: 'https://egora.co:443/createTopic',
                     // url: 'http://localhost/createTopic',
                     method: 'POST',
                     crossDomain: true,

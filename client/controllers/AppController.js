@@ -180,11 +180,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username;
       if (secure) {
         //only send token and username if we are on SSL!!
-        url = 'https://liveworld.io:443' + urlPath;
+        url = 'https://egora.co:443' + urlPath;
         token = that.get('token');
         username = that.get('username');
       } else {
-        url = 'http://liveworld.io:80' + urlPath;
+        url = 'http://egora.co:80' + urlPath;
       }
 
       $.ajax({
@@ -235,7 +235,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username = that.get('username');
 
       $.ajax({
-        url: 'https://liveworld.io:443/contacts',
+        url: 'https://egora.co:443/contacts',
         //url: 'http://localhost:80/contacts',
         crossDomain: true,
         method: 'GET',
@@ -283,7 +283,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'https://liveworld.io:443/messages',
+        url: 'https://egora.co:443/messages',
         //url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
@@ -512,7 +512,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://liveworld.io:80/user',
+      url: 'http://egora.co:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -554,7 +554,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     console.log('the thing');
     $.ajax({
-      url: 'http://liveworld.io:80/location',
+      url: 'http://egora.co:80/location',
       crossDomain: true,
       data: {
         location: location,
@@ -582,7 +582,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://liveworld.io:80/channel',
+      url: 'http://egora.co:80/channel',
       crossDomain: true,
       data: {
         channel: channel,
@@ -989,7 +989,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log(that);
       $.ajax({
-        url: 'https://liveworld.io:443/notifications',
+        url: 'https://egora.co:443/notifications',
         // url: 'http://localhost:80/notifications',
         method: 'GET',
         crossDomain: true,
@@ -1080,7 +1080,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                           var thet = this;
 
                           $.ajax({
-                            url: 'http://liveworld.io:80/user',
+                            url: 'http://egora.co:80/user',
                             //url: 'http://localhost:80/user',
                             method: 'GET',
                             crossDomain: true,
@@ -1175,7 +1175,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                 that.app.get('content1').show(that.app.get('sidebarView'));
 
                                 $.ajax({
-                                  url: 'https://liveworld.io:443/messageChain',
+                                  url: 'https://egora.co:443/messageChain',
                                   // url: 'http://localhost/messageChain',
                                   method: 'GET',
                                   crossDomain: true,
@@ -1245,7 +1245,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       // $.ajax({
       //   // url: 'http://localhost:80/updateUserProfile',
-      //   url: 'https://liveworld.io:443/refreshToken',
+      //   url: 'https://egora.co:443/refreshToken',
       //   method: 'POST',
       //   crossDomain: true,
       //   xhrFields: {
@@ -1287,7 +1287,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
       $.ajax({
-        url: 'https://liveworld.io:443/messageChain',
+        url: 'https://egora.co:443/messageChain',
         // url: 'http://localhost/messageChain',
         method: 'GET',
         crossDomain: true,

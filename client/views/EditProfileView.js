@@ -49,7 +49,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
 
     $.ajax({
-      url: 'http://liveworld.io:80/user',
+      url: 'http://egora.co:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -117,7 +117,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
 
       $.ajax({
         // url: 'http://localhost:80/updateUserProfile',
-        url: 'https://liveworld.io:443/updateUserProfile',
+        url: 'https://egora.co:443/updateUserProfile',
         method: 'POST',
         crossDomain: true,
         xhrFields: {
@@ -133,7 +133,7 @@ Agora.Views.EditProfileView = Backbone.View.extend({
           } else {
 
               $.ajax({
-                url: 'http://liveworld.io:80/user',
+                url: 'http://egora.co:80/user',
                 // url: 'http://localhost:80/user',
                 method: 'GET',
                 crossDomain: true,

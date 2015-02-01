@@ -142,7 +142,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     $('#logoutButton').on('click', function() {
       
       $.ajax({
-        url: 'https://liveworld.io:443/logout',
+        url: 'https://egora.co:443/logout',
         // url: 'http://localhost/login',
         crossDomain: true,
         xhrFields: {

@@ -71,7 +71,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       } else {
         
         $.ajax({
-          url: 'http://liveworld.io:80/user',
+          url: 'http://egora.co:80/user',
           // url: 'http://localhost:80/user',
           method: 'GET',
           crossDomain: true,
@@ -233,7 +233,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         }
 
         $.ajax({
-          url: 'http://liveworld.io:80/' + urlSuffix,
+          url: 'http://egora.co:80/' + urlSuffix,
           // url: 'http://localhost:80/' + urlSuffix,
           method: 'GET',
           crossDomain: true,

@@ -61,7 +61,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           that.app.get('content1').show(that.app.get('sidebarView'));
 
           $.ajax({
-            url: 'https://liveworld.io:443/messageChain',
+            url: 'https://egora.co:443/messageChain',
             // url: 'http://localhost/messageChain',
             method: 'GET',
             crossDomain: true,
@@ -93,7 +93,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
         console.log('found no chain, gotta make one');
 
         $.ajax({
-          url: 'https://liveworld.io:443/createMessageChain',
+          url: 'https://egora.co:443/createMessageChain',
           // url: 'http://localhost/createMessageChain',
           method: 'POST',
           crossDomain: true,
@@ -139,7 +139,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                   (function() {
                     var x = chains[i].contact
                     $.ajax({
-                      url: 'https://liveworld.io:443/messageChain',
+                      url: 'https://egora.co:443/messageChain',
                       // url: 'http://localhost/messageChain',
                       method: 'GET',
                       crossDomain: true,
@@ -209,7 +209,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
           ajaxing = true;
           $.ajax({
-            url: 'https://liveworld.io:443/addContact',
+            url: 'https://egora.co:443/addContact',
             // url: 'http://localhost:80/sendContactRequest',
             method: 'POST',
             crossDomain: true,
@@ -358,7 +358,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     if (this.app.get('login')) {
 
         $.ajax({
-          url: 'https://liveworld.io:443/recentlyPosted',
+          url: 'https://egora.co:443/recentlyPosted',
           // url: 'http://localhost/topicTree',
           method: 'GET',
           crossDomain: true,
@@ -407,7 +407,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
                         //get specific topic tree from server
                         $.ajax({
-                          url: 'http://liveworld.io:80/topicTree',
+                          url: 'http://egora.co:80/topicTree',
                           // url: 'http://localhost/topicTree',
                           method: 'GET',
                           crossDomain: true,
@@ -444,7 +444,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
 
                         //register the topic visit with the server
                         $.ajax({
-                          url: 'https://liveworld.io:443/visitedTopic',
+                          url: 'https://egora.co:443/visitedTopic',
                           // url: 'http://localhost/topicTree',
                           method: 'POST',
                           crossDomain: true,

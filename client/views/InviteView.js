@@ -35,7 +35,7 @@ Agora.Views.InviteView = Backbone.View.extend({
 
     //ajax call to getInvites and append them
     $.ajax({
-      url: 'https://liveworld.io:443/getInvites',
+      url: 'https://egora.co:443/getInvites',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,

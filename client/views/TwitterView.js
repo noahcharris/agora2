@@ -36,7 +36,7 @@ Agora.Views.TwitterView = Backbone.View.extend({
 
     //ajax call to getInvites and append them
     $.ajax({
-      url: 'https://liveworld.io:443/authenticateTwitter',
+      url: 'https://egora.co:443/authenticateTwitter',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,

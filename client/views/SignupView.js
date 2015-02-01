@@ -113,7 +113,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
             $.ajax({
 
-              url: 'https://liveworld.io:443/registerUser',
+              url: 'https://egora.co:443/registerUser',
               // url: 'https://localhost:443/registerUser',
               method: 'POST',
               crossDomain: true,
@@ -179,7 +179,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
     $.ajax({
-      url: 'http://liveworld.io:80/validateUsername',
+      url: 'http://egora.co:80/validateUsername',
       // url: 'http://localhost:80/locationSearch',
       data: {
         username: that.$el.children('input#signupUsernameInput').val()
@@ -209,7 +209,7 @@ Agora.Views.SignupView = Backbone.View.extend({
   //   var input = $usernameInput.val();
 
   //   $.ajax({
-  //     url: 'http://liveworld.io:80/checkUsername',
+  //     url: 'http://egora.co:80/checkUsername',
   //     // url: 'http://localhost:80/locationSearch',
   //     data: {
   //       username: input
@@ -246,7 +246,7 @@ Agora.Views.SignupView = Backbone.View.extend({
       if (searchParameter.length > 2) {
 
         $.ajax({
-          url: 'http://liveworld.io:80/locationSearch',
+          url: 'http://egora.co:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
             input: searchParameter,
@@ -309,7 +309,7 @@ Agora.Views.SignupView = Backbone.View.extend({
     if (searchParameter.length > 2) {
 
       $.ajax({
-        url: 'http://liveworld.io:80/locationSearch',
+        url: 'http://egora.co:80/locationSearch',
         // url: 'http://localhost:80/locationSearch',
         data: {
           input: searchParameter,
