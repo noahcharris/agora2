@@ -3003,6 +3003,7 @@ module.exports.authenticateTwitter = function(req, response) {
   //NAME CONFLICT WITH REQUEST MODULE!!!!!!
 module.exports.twitterCallback = function(req, response) {
 
+  console.log('whaa');
 
   //console.log(req.body);
   client.query("SELECT * FROM twitterJoin WHERE token = $1;",[req.query.oauth_token],
@@ -3039,10 +3040,10 @@ module.exports.twitterCallback = function(req, response) {
 
                     client.query("SELECT * FROM twitterJoin WHERE screenname = $1",
                       [parsed.screen_name],
-                      function(err, result) {
+                      function(err, result2) {
                         if (err) console.log('error selecting from twitterJoin: ', err);
 
-                        if (result.rows.length) {
+                        if (result2.rows.length) {
                           response.end('that twitter account is already associated with an agora account');
                         } else {
 
