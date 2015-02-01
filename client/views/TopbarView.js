@@ -110,7 +110,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     };
 
-    var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
+    //var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
     $('#registrationButton').on('click', function() {
       var previousDisplayed = that.app.get('detailView').displayed;
       that.app.get('detailView').displayed = 'Registration';
@@ -126,7 +126,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
     //this.$el.append($registrationButton);
 
-    var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
+    //var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
     $('#settingsButton').on('click', function() {
 
       if (that.app.get('login')) {
@@ -158,6 +158,25 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
+
+
+    $('#aboutButton').on('click', function() {
+        
+        var previousDisplayed = that.app.get('detailView').displayed;
+        that.app.get('detailView').displayed = 'About';
+        if (!that.app.get('expanded')) {
+          that.app.get('content2').show(new Agora.Views.AboutView(that.app));
+        } else {
+          //this doesn't work
+          console.log(that.app.get('detailView').displayed);
+          if (previousDisplayed === 'About') {
+            that.app.get('content2').hide();
+          } else {
+            that.app.get('content2').show(new Agora.Views.AboutView(that.app));
+          }
+        }
+
+    });
 
 
 
@@ -216,6 +235,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
     //pressing enter should trigger search
 
     var searchHandler = function() {
+
+      console.log('whyyyyyyyy');
 
         switch ($('#searchSelect').val()) {
           case 'Users':

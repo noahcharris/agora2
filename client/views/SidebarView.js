@@ -321,12 +321,23 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);
 
-
-
-
-
         
-      });
+      });//end iteration through models
+
+
+      //HANDLE THE EMPTY CASE
+      if (!renderCollection.length) {
+
+        if (that.app.get('detailView').displayed === 'Search') {
+
+        } else {
+        }
+          var $empty = $("<li>Couldn't find anything</li>");
+          that.$el.children('ul').append($empty);
+
+
+
+      }
 
 
       
