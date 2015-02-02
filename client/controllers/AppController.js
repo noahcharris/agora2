@@ -1028,6 +1028,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
               for (var i=0; i < data.contactRequests.length ;i++) {
                 count++;
               }
+              for (var i=0; i < data.topicActivity.length ;i++) {
+                count++;
+              }
 
               if (count < 11) {
                 $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon'+count+'.png"></img>'));
@@ -1094,6 +1097,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                                 //is this creating a memory leak????
                                 $(thet).parent().empty();
+                                that.app.set('notificationsDisplayed', false);
 
                                 that.app.get('content2').show(that.app.get('detailView'), data[0]);
                               } else {
@@ -1193,6 +1197,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                     that.app.get('sidebarView').highlightCell(offsetCount);
                                     //Is this creating a memory leak?
                                     $(thet).parent().empty();
+                                    that.app.set('notificationsDisplayed', false);
                                   },
                                   error: function() {
                                     alert(that.app.translate('server error'));
@@ -1226,8 +1231,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.topicActivity.length ;i++) {
 
 
-                        var topicActivityLabel = that.app.translate('New topic activity on ');
-                        var topicNumberLabel = that.topicActivity.topic;
+                        var topicActivityLabel = that.app.translate('New topic activity on /');
+                        var topicNumberLabel = that.topicActivity[i].id;
                         if (that.app.get('language') !== 'ar') {
                           var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
@@ -1239,52 +1244,54 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         (function() {
 
-                          var model = models[i];
-
-                          var x = that.topicActivity[i].channel;
-                          var y = that.topicActivity[i].location;
+                          var model = that.topicActivity[i];
 
                           $notificationBox.on('click', function() {
 
-                            that.app.set('channel', x);
-                            that.app.get('mapController').goToPath(y);
-                            that.app.get('channelView').render();
+                            $(this).parent().empty();
+                            that.app.set('notificationsDisplayed', false);
 
-                            //get specific topic tree from server
-                            $.ajax({
-                              url: 'http://egora.co:80/topicTree',
-                              // url: 'http://localhost/topicTree',
-                              method: 'GET',
-                              crossDomain: true,
-                              data: {
-                                topicId: model.id
-                              },
-                              success: function(model) {
-                                that.app.get('detailView').displayed = 'Topics';
-                                that.app.get('content2').show(that.app.get('detailView'), model);
+                            window.location.href='#topic/'+model.id;
 
-                                // thet.$el.addClass('highlight');
+                            // that.app.set('channel', x);
+                            // that.app.get('mapController').goToPath(y);
+                            // that.app.get('channelView').render();
 
-                              },
-                              error: function() {
-                                console.log('ajax error');
-                              }
-                            });
+                            // //get specific topic tree from server
+                            // $.ajax({
+                            //   url: 'http://egora.co:80/topicTree',
+                            //   // url: 'http://localhost/topicTree',
+                            //   method: 'GET',
+                            //   crossDomain: true,
+                            //   data: {
+                            //     topicId: model.id
+                            //   },
+                            //   success: function(model) {
+                            //     that.app.get('detailView').displayed = 'Topics';
+                            //     that.app.get('content2').show(that.app.get('detailView'), model);
+
+                            //     // thet.$el.addClass('highlight');
+
+                            //   },
+                            //   error: function() {
+                            //     console.log('ajax error');
+                            //   }
+                            // });
 
 
-                            //need to insert topic into the front of the topics collection
-                            //use this crazy callback shit to highlight
-                            var cb = function() {
-                              var subViews = that.app.get('sidebarView').subViews;
-                              for (var i=0; i < subViews.length ;i++) {
-                                if (subViews[i].model.id === model.id) {
-                                  subViews[i].$el.addClass('highlight');
-                                  //maybe scroll also here
+                            // //need to insert topic into the front of the topics collection
+                            // //use this crazy callback shit to highlight
+                            // var cb = function() {
+                            //   var subViews = that.app.get('sidebarView').subViews;
+                            //   for (var i=0; i < subViews.length ;i++) {
+                            //     if (subViews[i].model.id === model.id) {
+                            //       subViews[i].$el.addClass('highlight');
+                            //       //maybe scroll also here
 
-                                }
-                              }
-                            };
-                            that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+                            //     }
+                            //   }
+                            // };
+                            // that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
 
                             // that.app.get('detailView').displayed = 'Topics';
                             // that.app.get('content2').show(that.app.get('detailView'), model);
@@ -1294,68 +1301,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         })();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        var x = that.contactRequests[i].sender;
-                        $notificationBox.on('click', function() {
-                          var thet = this;
-
-                          $.ajax({
-                            url: 'http://egora.co:80/user',
-                            //url: 'http://localhost:80/user',
-                            method: 'GET',
-                            crossDomain: true,
-                            data: {
-                              username: x,
-                              extra: Math.floor((Math.random() * 10000) + 1)
-                            },
-                            success: function(data) {
-                              if (data) {
-                                that.app.get('detailView').displayed = 'Users';
-                                console.log('server returned: ', data);
-
-                                //is this creating a memory leak????
-                                $(thet).parent().empty();
-
-                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
-                              } else {
-                                console.log('no data returned from server');
-                              }
-                            }, error: function(err) {
-                              console.log('ajax error ocurred: ', err);
-                            }
-
-                          });
-                          
-
-                        });//end notification click handler
-
-
                         console.log($notificationBox);
                         $('#notificationsDisplay').append($notificationBox);
 
@@ -1363,36 +1308,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         cssAdjust -= 50;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      }//end topic activity for loop
+                      };//end topic activity for loop
 
 
 
