@@ -96,7 +96,6 @@ Agora.Views.EditProfileView = Backbone.View.extend({
       fd.append( 'token', that.app.get('token') );
       fd.append( 'about', $textArea.val());
 
-      console.log('FORM: ', fd);
 
       // $.ajax({
       //   url: 'http://localhost:80/updateUserImage',

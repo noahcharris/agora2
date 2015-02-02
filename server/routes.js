@@ -3535,7 +3535,14 @@ module.exports.updateUserProfile = function(request, response) {
       if (err.code === 'ETOOBIG') {
         response.end('please make sure that your file size is not over 10MB');
       }
-    } else {
+    } else if (!fields.username
+      || !fields.token) {
+
+      response.end('o_O');
+      //TODO- make sure all form fields are filled out
+      //this still doesn't check ABOUT field!!!!!!
+
+    } else  {
 
 
     client.query("SELECT * FROM securityJoin WHERE username = $1;",
