@@ -312,8 +312,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       }
     }
 
-    console.log('isSent: '+isSent+'isContact: '+isContact);
-
     if (that.app.get('login') && this.model.username !== that.app.get('username')) {
         if (isSent) {
           $toolColumn.append(that.app.translate('Pending Request'));
@@ -324,7 +322,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           if (isContact) {
             $toolColumn.append($messageButton);
           } else {
-            console.log('fjdaskl');
             $toolColumn.append($contactRequestButton);
           }
         }

@@ -218,8 +218,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             var thet = this;
 
-            console.log('putting handler on: ', model.type);
-
             if (model.type === 'Topic') {
 
               that.app.get('detailView').displayed = 'Topics';
@@ -504,7 +502,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
         if (that.subViews[i].model.image) {          
           var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
           var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
-          console.log('ENTRYVIEW: ', that.subViews[i].$el.children('.sidebarFloatClear').innerWidth());
           box.css('width', (entryWidth - 85) + 'px');
         }
 

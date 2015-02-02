@@ -242,7 +242,7 @@ setInterval(coolOff, 60000);
 
 function gatherTweets(screenName) {
 
-  //grabs the users latest tweets, maximum of ten
+  //grabs the users latest tweets, maximum of five
 
   request.post( {url:'https://api.twitter.com/oauth2/token', headers: {
     Authorization: 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
@@ -252,7 +252,8 @@ function gatherTweets(screenName) {
             console.log(body);
             console.log(body.access_token);
 
-            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json?count=5&screen_name=kendricklamar', headers: {
+            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
+              +'?count=5&screen_name='+screenName+'&since_id='+sinceId, headers: {
               Authorization: 'Bearer '+JSON.parse(body).access_token
             }}, function(err, httpResponse, body) {
 
