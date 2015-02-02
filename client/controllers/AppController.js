@@ -1226,13 +1226,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
                       //TOPIC ACTIVITY
-
+                      console.log(that.topicActivity);
 
                       for (var i=0; i < that.topicActivity.length ;i++) {
 
 
                         var topicActivityLabel = that.app.translate('New topic activity on /');
-                        var topicNumberLabel = that.topicActivity[i].id;
+                        var topicNumberLabel = that.topicActivity[i].topic;
                         if (that.app.get('language') !== 'ar') {
                           var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
@@ -1251,50 +1251,32 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             $(this).parent().empty();
                             that.app.set('notificationsDisplayed', false);
 
-                            window.location.href='#topic/'+model.id;
+                            //∆∆∆∆!!!!!!!!∆∆∆∆∆∆∆
+                            //wow this is wayyy simpler than doing all that other shit
+                            window.location.href='#topic/'+model.topic;
 
-                            // that.app.set('channel', x);
-                            // that.app.get('mapController').goToPath(y);
-                            // that.app.get('channelView').render();
+                            //call to clear topicActivity
 
-                            // //get specific topic tree from server
-                            // $.ajax({
-                            //   url: 'http://egora.co:80/topicTree',
-                            //   // url: 'http://localhost/topicTree',
-                            //   method: 'GET',
-                            //   crossDomain: true,
-                            //   data: {
-                            //     topicId: model.id
-                            //   },
-                            //   success: function(model) {
-                            //     that.app.get('detailView').displayed = 'Topics';
-                            //     that.app.get('content2').show(that.app.get('detailView'), model);
+                            $.ajax({
+                              url: 'https://egora.co:443/clearActivity',
+                              // url: 'http://localhost:80/sendContactRequest',
+                              method: 'POST',
+                              crossDomain: true,
+                              xhrFields: {
+                                withCredentials: true
+                              },
+                              data: {
+                                username: that.app.get('username'),
+                                topicId: model.topic,
+                                token: that.app.get('token')
+                              },
+                              success: function(data) {
+                                console.log(data);
+                              }, error: function(err) {
+                                console.log('ajax error ocurred: ', err);
+                              }
+                            });
 
-                            //     // thet.$el.addClass('highlight');
-
-                            //   },
-                            //   error: function() {
-                            //     console.log('ajax error');
-                            //   }
-                            // });
-
-
-                            // //need to insert topic into the front of the topics collection
-                            // //use this crazy callback shit to highlight
-                            // var cb = function() {
-                            //   var subViews = that.app.get('sidebarView').subViews;
-                            //   for (var i=0; i < subViews.length ;i++) {
-                            //     if (subViews[i].model.id === model.id) {
-                            //       subViews[i].$el.addClass('highlight');
-                            //       //maybe scroll also here
-
-                            //     }
-                            //   }
-                            // };
-                            // that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
-
-                            // that.app.get('detailView').displayed = 'Topics';
-                            // that.app.get('content2').show(that.app.get('detailView'), model);
                             
                           });//end entryView click
                           

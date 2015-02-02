@@ -1516,7 +1516,15 @@ module.exports.clearActivity = function(request, response) {
 
 
 
-
+          client.query("DELETE FROM topicActivityJoin WHERE topic = $1",[request.body.topicId],
+            function(err, result) {
+              if (err) {
+                console.log('error deleting from topicActivityJoin: ', err);
+                response.end('error');
+              } else {
+                response.end('successfully cleared topicActivityJoin entry');
+              }
+          });
 
 
 
