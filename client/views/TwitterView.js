@@ -52,6 +52,10 @@ Agora.Views.TwitterView = Backbone.View.extend({
         if (data[0] === 'c') {
           that.$el.append('you have already associated a twitter account to your profile');
         } else {
+          var explanationLabel = that.app.translate('If you connect your twitter account, Egora will pull your latest tweets and place them into your current location under the channel All/Twitter.')
+          that.$el.append('<br/>');
+          that.$el.append(explanationLabel);
+          that.$el.append('<br/>');
           var twitterLabel = that.app.translate('Continue');
           var twitterLink = $('<a href="'+data+'" target="_blank">'+twitterLabel+'</a> ')
           that.$el.append(twitterLink)

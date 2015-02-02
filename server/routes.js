@@ -240,34 +240,71 @@ setInterval(coolOff, 60000);
 //TwitterBot
 //If the user opts in, twitter bot will periodically
 
-function gatherTweets(screenName) {
+function processTweets() {
 
   //grabs the users latest tweets, maximum of five
+  //stores which one it left off on (since_id)
 
-  request.post( {url:'https://api.twitter.com/oauth2/token', headers: {
-    Authorization: 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
-  }, form: { grant_type: 'client_credentials'} }, function(err, httpResponse, body) {
+  client.query("SELECT * FROM twitterJoin WHERE isConnected = true;",
+    function(err, result) {
+      if (err) console.log('error selecting twitterJoin: ', err);
 
-
-            console.log(body);
-            console.log(body.access_token);
-
-            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
-              +'?count=5&screen_name='+screenName+'&since_id='+sinceId, headers: {
-              Authorization: 'Bearer '+JSON.parse(body).access_token
-            }}, function(err, httpResponse, body) {
-
-              console.log(body);
-
-            });
+      request.post( {url:'https://api.twitter.com/oauth2/token', headers: {
+        Authorization: 'Basic VmhIaEJzOTN4dXh6WmZvdUtTWkhLaXVNaTprdE9GZjJGRkEzVGZIY0tpMjJMMjdQUG90UWVIeEtOc1Y1eTVPY1d6cmFZa1hSRDA5UQ==',
+      }, form: { grant_type: 'client_credentials'} }, function(err, httpResponse, body) {
 
 
-  });
+                    //iterate through each, pull the tweets, and put them in the db
+                    for (var i=0; i < result.rows.length ;i++) {
+
+                      //need to pull the current location of user from db
+                      client.query("SELECT * FROM users WHERE username = $1;", [result.rows[i].username],
+                        function(err, res) {
+                          if (err) console.log('error selecting from users: ', err);
+
+
+                                    if (result.rows[i].sinceid) {
+                                      //request tweets with since_id
+
+                                    } else {
+                                      //request tweets without since_id
+
+                                    }
+
+                                            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
+                                              +'?count=5&screen_name='+screenName+'&since_id='+sinceId, headers: {
+                                              Authorization: 'Bearer '+JSON.parse(body).access_token
+                                            }}, function(err, httpResponse, body) {
+
+                                              console.log(body);
+
+                                            });
+
+
+
+                      });//end current location select
+
+                    }//end for loop
+
+
+
+
+
+      });//end /oauth2/token call
+
+
+
+
+  });//end twitter join select
+
+
+
+
 
 
 };
 
-//gatherTweets();
+//processTweets();
 
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆

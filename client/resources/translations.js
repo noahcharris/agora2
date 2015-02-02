@@ -1801,7 +1801,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'If you connect your twitter account, Egora will pull your latest tweets and place them into your current location under the channel All/Twitter.',
   ar: '',
   zh: '',
   fr: '',
