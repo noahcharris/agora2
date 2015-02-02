@@ -366,6 +366,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     $('#title').on('click', function() {
       that.app.changeChannel('All');
+      that.app.get('sidebarView').page = 1;
       //that.app.get('mapController').showWorld();
 
       //had to do a custom version of show world which doesn't close content2

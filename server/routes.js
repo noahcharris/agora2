@@ -1313,7 +1313,6 @@ module.exports.getRecentlyPostedTopics = function(request, response) {
 module.exports.getLocation = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-
   client.query("SELECT * FROM locations WHERE name = $1;",
     [queryArgs.location], function(err, result) {
       if (err) {
@@ -1329,14 +1328,11 @@ module.exports.getLocation = function(request, response) {
 module.exports.getChannel = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log('hohoho: ', queryArgs.channel);
-
   client.query("SELECT * FROM channels WHERE name = $1;",
     [queryArgs.channel], function(err, result) {
       if (err) {
         console.log('error selecting from channel: ', err);
       } else {
-        console.log(result.rows);
         response.json(result.rows[0]);
       }
   });

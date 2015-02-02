@@ -226,6 +226,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
   showWorld: function() {
+    this.app.get('sidebarView').page = 1;
+
     var southWest = L.latLng(-67.474922384787, -153.984375);
     var northEast = L.latLng(79.36770077764092, 162.421875);
     var worldBounds = L.latLngBounds(southWest, northEast);
@@ -366,7 +368,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       if (sidebar.diplayed === 'Topics') {
         for (var i=0; i < sidebar.collection.length ;i++) {
 
-          
+
 
         }
       }
@@ -681,7 +683,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     var that = this;
 
-
+    this.app.get('sidebarView').page = 1;
 
 
     this.app.get('sidebarView').displayed = 'Topics-Top';
