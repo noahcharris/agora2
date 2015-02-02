@@ -281,9 +281,10 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-    $(window).keypress(function(e) {
+    $(document).keypress(function(e) {
 
-      if (e.keyCode === 13 && $('#searchInput').is(':focus')) {
+      console.log('fdjsaklf');
+      if (e.keyCode === 13 && that.$el.children('#searchInput').is(':focus')) {
 
         searchHandler();
 

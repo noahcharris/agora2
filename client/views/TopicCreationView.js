@@ -146,6 +146,9 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
     });//end create topic button
 
+    setTimeout(function() {
+      that.$el.children('#topicCreationHeadline').focus();
+    }, 1000);
 
 
 

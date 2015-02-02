@@ -1515,8 +1515,7 @@ module.exports.clearActivity = function(request, response) {
         if (request.cookies['login'] && request.body.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
 
-
-          client.query("DELETE FROM topicActivityJoin WHERE topic = $1",[request.body.topicId],
+          client.query("DELETE FROM topicActivityJoin WHERE topic = $1 AND username = $2",[request.body.topicId, request.body.username],
             function(err, result) {
               if (err) {
                 console.log('error deleting from topicActivityJoin: ', err);
@@ -4046,24 +4045,28 @@ module.exports.createComment = function(request, response) {
                                                       [imageLink, result.rows[0].id], function(err, res) {
 
 
+                                                        if (queryArgs.username !== queryArgs.OP) {
 
-                                                        //insert into activityJoin if there is nothing there
-                                                        client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                                                          [fields.topicId[0]], function(err, result2) {
+                                                          //insert into activityJoin if there is nothing there
+                                                          client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                                            [fields.topicId[0]], function(err, result2) {
 
-                                                            if (result2.rows.length) {
-                                                              //don't do anything 
-                                                            } else {
+                                                              if (result2.rows.length) {
+                                                                //don't do anything 
+                                                              } else {
 
-                                                              client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                                                +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                                                function(err, result) {
-                                                                  if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                                                client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                                                  +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                                                  function(err, result) {
+                                                                    if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                                              });
+                                                                });
 
-                                                            }
-                                                        });
+                                                              }
+                                                          });
+                                                          
+                                                        }
+
 
 
 
@@ -4109,24 +4112,26 @@ module.exports.createComment = function(request, response) {
                             console.log(fields.username[0]+' has created a comment in '+fields.location[0]+' ~~~ '+fields.channel[0]);
 
 
+                            if (queryArgs.username !== queryArgs.OP) {
+                              
+                              //insert into activityJoin if there is nothing there
+                              client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                [fields.topicId[0]], function(err, result2) {
 
-                            //insert into activityJoin if there is nothing there
-                            client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                              [fields.topicId[0]], function(err, result2) {
+                                  if (result2.rows.length) {
+                                    //don't do anything 
+                                  } else {
 
-                                if (result2.rows.length) {
-                                  //don't do anything 
-                                } else {
+                                    client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                      +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                      function(err, result) {
+                                        if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                  client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                    +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                    function(err, result) {
-                                      if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                    });
 
-                                  });
-
-                                }
-                            });
+                                  }
+                              });
+                            }
 
 
 
@@ -4269,24 +4274,27 @@ module.exports.createResponse = function(request, response) {
                                                                 [imageLink, result.rows[0].id], function(err, result) {
 
 
+                                                                  if (queryArgs.username !== queryArgs.OP) {
+                                                                    
+                                                                    //insert into activityJoin if there is nothing there
+                                                                    client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                                                      [fields.topicId[0]], function(err, result2) {
 
-                                                                  //insert into activityJoin if there is nothing there
-                                                                  client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                                                                    [fields.topicId[0]], function(err, result2) {
+                                                                        if (result2.rows.length) {
+                                                                          //don't do anything 
+                                                                        } else {
 
-                                                                      if (result2.rows.length) {
-                                                                        //don't do anything 
-                                                                      } else {
+                                                                          client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                                                            +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                                                            function(err, result) {
+                                                                              if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                                                        client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                                                          +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                                                          function(err, result) {
-                                                                            if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                                                          });
 
-                                                                        });
+                                                                        }
+                                                                    });
+                                                                  }
 
-                                                                      }
-                                                                  });
 
 
 
@@ -4328,23 +4336,26 @@ module.exports.createResponse = function(request, response) {
 
 
                                     
-                                      //insert into activityJoin if there is nothing there
-                                      client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                                        [fields.topicId[0]], function(err, result2) {
+                                      if (queryArgs.username !== queryArgs.OP) {
+                                        //insert into activityJoin if there is nothing there
+                                        client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                          [fields.topicId[0]], function(err, result2) {
 
-                                          if (result2.rows.length) {
-                                            //don't do anything 
-                                          } else {
+                                            if (result2.rows.length) {
+                                              //don't do anything 
+                                            } else {
 
-                                            client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                              +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                              function(err, result) {
-                                                if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                              client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                                +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                                function(err, result) {
+                                                  if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                            });
+                                              });
 
-                                          }
-                                      });
+                                            }
+                                        });
+                                        
+                                      }
 
 
 
@@ -4489,24 +4500,27 @@ module.exports.createReply = function(request, response) {
 
 
 
+                                                              if (queryArgs.username !== queryArgs.OP) {
+                                                                
+                                                                //insert into activityJoin if there is nothing there
+                                                                client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                                                  [fields.topicId[0]], function(err, result2) {
 
-                                                              //insert into activityJoin if there is nothing there
-                                                              client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                                                                [fields.topicId[0]], function(err, result2) {
+                                                                    if (result2.rows.length) {
+                                                                      //don't do anything 
+                                                                    } else {
 
-                                                                  if (result2.rows.length) {
-                                                                    //don't do anything 
-                                                                  } else {
+                                                                      client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                                                        +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                                                        function(err, result) {
+                                                                          if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                                                    client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                                                      +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                                                      function(err, result) {
-                                                                        if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                                                      });
 
-                                                                    });
+                                                                    }
+                                                                });
+                                                              }
 
-                                                                  }
-                                                              });
 
 
 
@@ -4546,24 +4560,27 @@ module.exports.createReply = function(request, response) {
                                 console.log(fields.username[0]+' has created a reply in '+fields.location[0]+' ~~~ '+fields.channel[0]);
 
 
+                                if (queryArgs.username !== queryArgs.OP) {
+                                  
+                                  //insert into activityJoin if there is nothing there
+                                  client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
+                                    [fields.topicId[0]], function(err, result2) {
 
-                                //insert into activityJoin if there is nothing there
-                                client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
-                                  [fields.topicId[0]], function(err, result2) {
+                                      if (result2.rows.length) {
+                                        //don't do anything 
+                                      } else {
 
-                                    if (result2.rows.length) {
-                                      //don't do anything 
-                                    } else {
+                                        client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
+                                          +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
+                                          function(err, result) {
+                                            if (err) console.log('error inserting into topicActivityJoin: ', err);
 
-                                      client.query("INSERT INTO topicActivityJoin (username, topic, sentAt) "
-                                        +"VALUES ($1, $2, now());", [fields.OP[0], fields.topicId[0]],
-                                        function(err, result) {
-                                          if (err) console.log('error inserting into topicActivityJoin: ', err);
+                                        });
 
-                                      });
+                                      }
+                                  });
+                                }
 
-                                    }
-                                });
 
 
                                 

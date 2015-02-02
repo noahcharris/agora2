@@ -281,7 +281,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   withCredentials: true
                 },
                 data: {
-                  username: that.app.get('username'),
+                  username: that.app.get('username'), 
                   contact: contact,
                   token: that.app.get('token')
                 },

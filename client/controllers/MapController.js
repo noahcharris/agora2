@@ -299,7 +299,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             }
           }
 
-          console.log("RESULT: ", result);
 
           for (var key in result) {
 
@@ -363,9 +362,19 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         name: e.target.city
       }
       that.showMapPopup(data);
+      var sidebar = that.app.get('sidebarView');
+      if (sidebar.diplayed === 'Topics') {
+        for (var i=0; i < sidebar.collection.length ;i++) {
+
+          
+
+        }
+      }
+
     };
     var mouseoutHandler = function(e) {
       that.closeMapPopup();
+      that.app.get('sidebarView').removeHighlights();
     };
 
     //change the intensity of the icon as occurrences increases

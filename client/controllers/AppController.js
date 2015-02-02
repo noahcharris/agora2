@@ -461,7 +461,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         height = height.slice(0, height.length-2);
       }
 
-      if (e.keyCode == 27) {
+      if (e.keyCode === 27) {
 
         console.log(that.get('imageFullscreen'));
         if (that.get('imageFullscreen')) {
@@ -483,8 +483,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#channelInput').remove();
           that.changeChannel('All');
           that.get('mapController').showWorld();
-        } else {
+        } else if (that.get('expanded')) {
           that.get('content2').hide();
+        } else {
+          that.changeChannel('All');
+          that.get('mapController').showWorld();
         }
 
 
