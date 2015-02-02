@@ -282,7 +282,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       };
     })();
 
-    var $toolColumn = this.$el.children('#profileColumnWrapper').children('div#profileRightColumn');
+    var $toolColumn = this.$el.children('#toolColumn');
 
 
     var contacts = this.app.get('cacheManager').contacts;
@@ -312,7 +312,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
       }
     }
 
-
+    console.log('isSent: '+isSent+'isContact: '+isContact);
 
     if (that.app.get('login') && this.model.username !== that.app.get('username')) {
         if (isSent) {
@@ -324,6 +324,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
           if (isContact) {
             $toolColumn.append($messageButton);
           } else {
+            console.log('fjdaskl');
             $toolColumn.append($contactRequestButton);
           }
         }

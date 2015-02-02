@@ -92,8 +92,16 @@
 
     <script id="topicActivityTemplate" type="text/template">
       <div class="notificationBox">
+        <p><%= topicActivityLabel %><%= topicNumberLabel %></p>
       </div>
     </script>
+
+    <script id="RTLtopicActivityTemplate" type="text/template">
+      <div class="notificationBox">
+        <p><%= topicNumberLabel %><%= topicActivityLabel %></p>
+      </div>
+    </script>
+
 
     <!--Sidebar Entry Views-->
 
@@ -515,6 +523,7 @@
       <div id="profileUsername"> <%= username %> </div>
       <div id="profileOrigin"> <%= originLabel %>:&nbsp<%= origin %> </div>
       <div id="profileLocation"><%= locationLabel %>:&nbsp<%= location %> </div>
+      <div id="toolColumn"></div>
       <p><%= recentlyPostedLabel %></p>
       <ul id="recentlyPostedList"></ul>
     </script>

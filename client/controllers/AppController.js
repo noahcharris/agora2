@@ -1014,10 +1014,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
             that.newMessages = data.newMessages;
+            that.topicActivity = data.topicActivity;
 
             if (data.contactRequests.length > 0 ||
-                data.newMessages.length > 0 /*||
-                data.topicActivity.length > 0*/) {
+                data.newMessages.length > 0 ||
+                data.topicActivity.length > 0) {
 
               var count = 0;
 
@@ -1055,9 +1056,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       newMessageTemplate = _.template( $('#newMessageTemplate').html() );
                       RTLnewMessageTemplate = _.template( $('#RTLnewMessageTemplate').html() );
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
-
-
-
+                      RTLtopicActivityTemplate = _.template( $('#RTLtopicActivityTemplate').html() );
 
 
 
@@ -1212,6 +1211,200 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         cssAdjust -= 50;
 
                       }//end new messages for loop
+
+
+
+
+
+
+
+
+
+                      //TOPIC ACTIVITY
+
+
+                      for (var i=0; i < that.topicActivity.length ;i++) {
+
+
+                        var topicActivityLabel = that.app.translate('New topic activity on ');
+                        var topicNumberLabel = that.topicActivity.topic;
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                                                                            topicNumberLabel: topicNumberLabel} ) );
+                        } else {
+                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                                                                            topicNumberLabel: topicNumberLabel} ) );
+                        }
+
+
+                        (function() {
+
+                          var model = models[i];
+
+                          var x = that.topicActivity[i].channel;
+                          var y = that.topicActivity[i].location;
+
+                          $notificationBox.on('click', function() {
+
+                            that.app.set('channel', x);
+                            that.app.get('mapController').goToPath(y);
+                            that.app.get('channelView').render();
+
+                            //get specific topic tree from server
+                            $.ajax({
+                              url: 'http://egora.co:80/topicTree',
+                              // url: 'http://localhost/topicTree',
+                              method: 'GET',
+                              crossDomain: true,
+                              data: {
+                                topicId: model.id
+                              },
+                              success: function(model) {
+                                that.app.get('detailView').displayed = 'Topics';
+                                that.app.get('content2').show(that.app.get('detailView'), model);
+
+                                // thet.$el.addClass('highlight');
+
+                              },
+                              error: function() {
+                                console.log('ajax error');
+                              }
+                            });
+
+
+                            //need to insert topic into the front of the topics collection
+                            //use this crazy callback shit to highlight
+                            var cb = function() {
+                              var subViews = that.app.get('sidebarView').subViews;
+                              for (var i=0; i < subViews.length ;i++) {
+                                if (subViews[i].model.id === model.id) {
+                                  subViews[i].$el.addClass('highlight');
+                                  //maybe scroll also here
+
+                                }
+                              }
+                            };
+                            that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'), model, cb);
+
+                            // that.app.get('detailView').displayed = 'Topics';
+                            // that.app.get('content2').show(that.app.get('detailView'), model);
+                            
+                          });//end entryView click
+                          
+                        })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        var x = that.contactRequests[i].sender;
+                        $notificationBox.on('click', function() {
+                          var thet = this;
+
+                          $.ajax({
+                            url: 'http://egora.co:80/user',
+                            //url: 'http://localhost:80/user',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              username: x,
+                              extra: Math.floor((Math.random() * 10000) + 1)
+                            },
+                            success: function(data) {
+                              if (data) {
+                                that.app.get('detailView').displayed = 'Users';
+                                console.log('server returned: ', data);
+
+                                //is this creating a memory leak????
+                                $(thet).parent().empty();
+
+                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                              } else {
+                                console.log('no data returned from server');
+                              }
+                            }, error: function(err) {
+                              console.log('ajax error ocurred: ', err);
+                            }
+
+                          });
+                          
+
+                        });//end notification click handler
+
+
+                        console.log($notificationBox);
+                        $('#notificationsDisplay').append($notificationBox);
+
+                        $notificationBox.css('bottom', cssAdjust+'px');
+                        cssAdjust -= 50;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      }//end topic activity for loop
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                   } else {//notificationsDisplayed check

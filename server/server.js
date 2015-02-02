@@ -163,6 +163,8 @@ app.get('/channel', routes.getChannel);
 app.get('/notifications', routes.getNotifications);
 app.get('/refreshToken', routes.refreshToken);
 
+app.post('/clearActivity', routes.clearActivity);
+
 
 //POST METHODS (EXCEPT LOGOUT)
 

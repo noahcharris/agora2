@@ -175,7 +175,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         location: that.model.location,
         channel: that.model.channel,
         topicId: that.model.id,
-        urlSuffix: 'createComment'
+        urlSuffix: 'createComment',
+        OP: that.model.username
       }
 
       that.openInputBox(responseParams);
@@ -307,7 +308,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             channel: that.model.channel,
             topicId: that.model.id,
             commentId: comments[x].id,
-            urlSuffix: 'createResponse'
+            urlSuffix: 'createResponse',
+            OP: that.model.username
           }
 
           that.openInputBox(responseParams);
@@ -463,7 +465,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               commentId: comments[x].id,
               responseId: comments[x].responses[y].id,
               urlSuffix: 'createReply',
-              replyToUser: comments[x].responses[y].username
+              replyToUser: comments[x].responses[y].username,
+              OP: that.model.username
             }
 
             that.openInputBox(responseParams);
@@ -795,6 +798,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                   fd.append( 'topicId', data.topicId );
                   fd.append( 'commentId', data.commentId );
                   fd.append( 'responseId', data.responseId );
+                  fd.append( 'OP', data.OP);
 
                   //whaaaa
                   var thet = this;
