@@ -277,7 +277,6 @@ function processTweets() {
                                             }}, function(err, httpResponse, body) {
 
                                               var tweets = JSON.parse(body);
-                                              console.log(tweets);
 
                                               for (var i=tweets.length-1; i > -1 ;i--) {
                                                 //put the last since_id into database
@@ -313,7 +312,6 @@ function processTweets() {
                                             } }, function(err, httpResponse, body) {
 
                                               var tweets = JSON.parse(body);
-                                              console.log(tweets);
 
                                               for (var i=tweets.length-1; i > -1 ;i--) {
                                                 //put the last since_id into database
@@ -367,13 +365,12 @@ function processTweets() {
 
 
 
-
-
-
 };
 
-processTweets();
+// currently set to 1 minute
+setInterval(processTweets, 60000);
 
+//end twitterBot
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
