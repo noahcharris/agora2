@@ -1138,7 +1138,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
-                        that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
+                        that.newMessages[i].newMessageLabel = that.app.translate('New message from');
 
                         if (that.app.get('language') !== 'ar') {
                           var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );

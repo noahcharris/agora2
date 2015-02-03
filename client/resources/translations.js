@@ -1691,6 +1691,16 @@ var translationData = [{
   ru: '',
   es: '',
 },{
+  en: 'authentication succeeded',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
   en: 'Welcome to Egora!',
   ar: '',
   zh: '',

@@ -254,35 +254,103 @@ function processTweets() {
       }, form: { grant_type: 'client_credentials'} }, function(err, httpResponse, body) {
 
 
+
                     //iterate through each, pull the tweets, and put them in the db
                     for (var i=0; i < result.rows.length ;i++) {
 
-                      //need to pull the current location of user from db
-                      client.query("SELECT * FROM users WHERE username = $1;", [result.rows[i].username],
-                        function(err, res) {
-                          if (err) console.log('error selecting from users: ', err);
+                      (function(){
+
+                        var twitterJoinEntry = result.rows[i];
+
+                            //need to pull the current location of user from db
+                            client.query("SELECT * FROM users WHERE username = $1;", [twitterJoinEntry.username],
+                              function(err, res) {
+                                if (err) console.log('error selecting from users: ', err);
 
 
-                                    if (result.rows[i].sinceid) {
-                                      //request tweets with since_id
 
-                                    } else {
-                                      //request tweets without since_id
-
-                                    }
-
+                                          if (twitterJoinEntry.sinceid) {
+                                            //request tweets with since_id
                                             request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
-                                              +'?count=5&screen_name='+screenName+'&since_id='+sinceId, headers: {
+                                              +'?include_rts=false&exclude_replies=true&count=5&screen_name='+twitterJoinEntry.screenname+'&since_id='+twitterJoinEntry.sinceid, headers: {
                                               Authorization: 'Bearer '+JSON.parse(body).access_token
                                             }}, function(err, httpResponse, body) {
 
-                                              console.log(body);
+                                              var tweets = JSON.parse(body);
+                                              console.log(tweets);
+
+                                              for (var i=tweets.length-1; i > -1 ;i--) {
+                                                //put the last since_id into database
+                                                if (i === 0) {
+                                                  client.query("UPDATE twitterJoin SET sinceId = $1 WHERE username = $2;",
+                                                    [tweets[i].id_str, twitterJoinEntry.username], function(err, result) {
+                                                      if (err) console.log('error updating twitterJoin: ', err);
+                                                    });
+                                                }
+                                                //create Topic
+                                                client.query("INSERT INTO topics (type, username, headline, location, locations, channel, createdAt, rank, heat)"
+                                                +"VALUES ('Topic', $1, $2, $3, $4, $5, now(), 0, 30);",
+                                                [xssValidator(twitterJoinEntry.username), xssValidator(tweets[i].text), xssValidator(res.rows[0].location), "{\""+xssValidator(res.rows[0].location)+"\"}", 'All/Twitter'], 
+                                                function(err, result) {
+                                                  if (err) {
+                                                    console.log('error inserting into topics: ', err);
+                                                  } else {
+                                                    console.log('twitterbot has created a topic in '+res.rows[0].location);
+                                                  }
+                                                });
+
+                                              }//end tweet list iteration
+
+                                            });//end twitter API request
+
+                                          } else {
+                                            console.log(JSON.parse(body).access_token);
+                                            //request tweets without since_id
+
+                                            request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
+                                              +'?include_rts=false&exclude_replies=true&count=5&screen_name='+twitterJoinEntry.screenname, headers: {
+                                              Authorization: 'Bearer '+JSON.parse(body).access_token
+                                            } }, function(err, httpResponse, body) {
+
+                                              var tweets = JSON.parse(body);
+                                              console.log(tweets);
+
+                                              for (var i=tweets.length-1; i > -1 ;i--) {
+                                                //put the last since_id into database
+                                                if (i === 0) {
+                                                  client.query("UPDATE twitterJoin SET sinceId = $1 WHERE username = $2;",
+                                                    [tweets[i].id_str, twitterJoinEntry.username], function(err, result) {
+                                                      if (err) console.log('error updating twitterJoin: ', err);
+                                                    });
+                                                }
+                                                //create Topic
+                                                client.query("INSERT INTO topics (type, username, headline, location, locations, channel, createdAt, rank, heat)"
+                                                +"VALUES ('Topic', $1, $2, $3, $4, $5, now(), 0, 30);",
+                                                [xssValidator(twitterJoinEntry.username), xssValidator(tweets[i].text), xssValidator(res.rows[0].location), "{\""+xssValidator(res.rows[0].location)+"\"}", 'All/Twitter'], 
+                                                function(err, result) {
+                                                  if (err) {
+                                                    console.log('error inserting into topics: ', err);
+                                                  } else {
+                                                    console.log('twitterbot has created a topic in '+res.rows[0].location);
+                                                  }
+                                                });
+
+                                              }//end tweet list iteration
 
                                             });
 
+                                          }
 
 
-                      });//end current location select
+
+
+                            });//end current location select
+
+
+
+
+                      })();
+
 
                     }//end for loop
 
@@ -304,7 +372,7 @@ function processTweets() {
 
 };
 
-//processTweets();
+processTweets();
 
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
