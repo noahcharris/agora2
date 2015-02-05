@@ -96,9 +96,17 @@ app.use(function(request, response, next) {
 });
 
 
+
+var accessList = ['http://egora.co', 'http://www.egora.co'];
 app.use(function(request, response, next) {
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
+  //need to read origin, check it against a list, and return allow access
+  var origin = request.get('origin');
+  for (var i=0; i < accessList.length; i++) {
+    if (accessList[i] === origin) {
+      response.setHeader('Access-Control-Allow-Origin', accessList[i]);
+    }
+  }
   response.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 
