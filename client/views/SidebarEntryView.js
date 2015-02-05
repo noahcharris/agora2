@@ -12,6 +12,8 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   },
 
   initialize: function(app) {
+    var that = this;
+    
     this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
     this.RTLtopicTemplate = _.template( $('#RTLsidebarTopicEntryTemplate').html() );
@@ -22,7 +24,223 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     this.messageChainTemplate = _.template( $('#sidebarMessageChainEntryTemplate').html() );
 
     this.coordsObject = {};
+
+
+
+    this.mouseoverHandler = _.once(function () {
+      
+        //var data = that.model.locations;
+
+        //for (var i=0; i < data.length ;i++) {
+
+          var f = function() {
+            var x = that.model.location;
+
+            //DISPLAYING POSTED TO
+
+            var temp = that.model.location;
+
+            if (temp === 'World') {
+
+              that.app.get('mapController').highlightWorld();
+              that.$el.on('mouseover', function() {
+                that.app.get('mapController').highlightWorld();
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightWorld();
+              });
+
+            } else if (temp.split('/').length === 2) {
+              //COUNTRY
+              that.app.get('mapController').highlightCountry(temp);
+              that.$el.on('mouseover', function() {
+                that.app.get('mapController').highlightCountry(temp);
+                console.log('highlight');
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightCountry(temp);
+              });
+
+
+            } else if (temp.split('/').length === 3 && temp.split('/')[1] === 'United States') {
+              //COUNTRY WITH PROVINCES
+              var temp1 = temp.split('/');
+              temp1.pop();
+              var temp2 = temp1.join('/');
+
+              var zoom = that.app.get('mapController').get('map').getZoom();
+              //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
+              if (zoom > 3) {
+                //HIGHLIGHT STATE
+                that.app.get('mapController').highlightState(temp);
+              } else {
+                that.app.get('mapController').highlightCountry(temp2);
+              }
+
+
+              that.$el.on('mouseover', function() {
+                var zoom = that.app.get('mapController').get('map').getZoom();
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
+                if (zoom > 3) {
+                  //HIGHLIGHT STATE
+                  that.app.get('mapController').highlightState(temp);
+                } else {
+                  that.app.get('mapController').highlightCountry(temp2);
+                }
+              });
+
+
+
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightState(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+
+
+            } else if (temp.split('/').length === 3 || (temp.split('/').length === 4 && temp.split('/')[1] === 'United States')) {
+              //CITY
+
+              var temp1 = temp.split('/');
+              var temp2;
+              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
+              if (temp1[1] === 'United States') {
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              } else {
+                temp1.pop();
+                temp2 = temp1.join('/');
+              }
+
+
+              that.app.get('mapController').highlightCity(temp);
+              that.$el.on('mouseover', function() {
+                that.app.get('mapController').highlightCity(temp);
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE CITY
+                // var zoom = that.app.get('mapController').get('map').getZoom();
+                // if (zoom > 3) {
+                //   //HIGHLIGHT CITY
+                // } else {
+                //   that.app.get('mapController').highlightCountry(temp2)
+                // }
+              });
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightCity(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+            } else {
+              //USER 'PLACE'
+
+              var temp1 = temp.split('/');
+              var temp2;
+              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
+              if (temp1[1] === 'United States') {
+                temp1.pop();
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              } else {
+                temp1.pop();
+                temp1.pop();
+                temp2 = temp1.join('/');
+              }
+
+
+              if (that.coordsObject[temp]) {
+
+                that.$el.on('mouseover', function() {
+                  that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                });
+                that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                // var zoom = that.app.get('mapController').get('map').getZoom();
+                // if (zoom > 3) {
+                //   //HIGHLIGHT PLACE
+                //   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
+                // } else {
+                //   that.app.get('mapController').highlightCountry(temp2)
+                // }
+
+              } else {
+
+                $.ajax({
+                  url: 'http://egora.co:80/placeLatLng',
+                  crossDomain: true,
+                  method: 'GET',
+                  data: {
+                    name: temp
+                  },
+                  success: function(data) {
+                    if (data.length) {
+                      that.coordsObject[temp] = [data[0].latitude, data[0].longitude];
+
+                      var zoom = that.app.get('mapController').get('map').getZoom();
+                      //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
+                      that.$el.on('mouseover', function() {
+                        that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+                      });
+                      that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+
+                      // if (zoom > 3) {
+                      //   //HIGHLIGHT PLACE
+                      //   that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
+                      // } else {
+                      //   that.app.get('mapController').highlightCountry(temp2)
+                      // }
+
+                    } else {
+                    }
+                  }, error: function(err) {
+                    console.log('ajax error ocurred: ', err);
+                  }
+
+                });
+              }
+
+
+              that.$el.on('mouseout', function() {
+                that.app.get('mapController').removeHighlightPlace(temp);
+                that.app.get('mapController').removeHighlightCountry(temp2);
+              });
+
+
+            }//end if-else chain
+
+
+
+
+
+          };
+          f();
+        //}
+
+    });
+
+
+
+
+
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   renderTopic: function() {
     var that = this;
@@ -133,217 +351,12 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     });
 
 
-    var mouseoverHandler = _.once(function () {
-      
-        //var data = that.model.locations;
-
-        //for (var i=0; i < data.length ;i++) {
-
-          var f = function() {
-            var x = that.model.location;
-
-            //DISPLAYING POSTED TO
-
-            var temp = that.model.location;
-
-            if (temp === 'World') {
-
-              that.app.get('mapController').highlightWorld();
-              that.$el.on('mouseover', function() {
-                that.app.get('mapController').highlightWorld();
-              });
-              that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightWorld();
-              });
-
-            } else if (temp.split('/').length === 2) {
-              //COUNTRY
-              that.app.get('mapController').highlightCountry(temp);
-              that.$el.on('mouseover', function() {
-                that.app.get('mapController').highlightCountry(temp);
-                console.log('highlight');
-              });
-              that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightCountry(temp);
-              });
-
-
-            } else if (temp.split('/').length === 3 && temp.split('/')[1] === 'United States') {
-              //COUNTRY WITH PROVINCES
-              //TODO
-
-
-              var temp1 = temp.split('/');
-              temp1.pop();
-              var temp2 = temp1.join('/');
-
-
-
-
-              var zoom = that.app.get('mapController').get('map').getZoom();
-              //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
-              if (zoom > 3) {
-                //HIGHLIGHT STATE
-                that.app.get('mapController').highlightState(temp);
-              } else {
-                that.app.get('mapController').highlightCountry(temp2);
-              }
-
-
-              that.$el.on('mouseover', function() {
-                var zoom = that.app.get('mapController').get('map').getZoom();
-                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE STATE
-                if (zoom > 3) {
-                  //HIGHLIGHT STATE
-                  that.app.get('mapController').highlightState(temp);
-                } else {
-                  that.app.get('mapController').highlightCountry(temp2);
-                }
-              });
-
-
-
-
-
-
-              that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightState(temp);
-                that.app.get('mapController').removeHighlightCountry(temp2);
-              });
-
-
-
-            } else if (temp.split('/').length === 3 || (temp.split('/').length === 4 && temp.split('/')[1] === 'United States')) {
-              //CITY
-
-              var temp1 = temp.split('/');
-              var temp2;
-              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
-              if (temp1[1] === 'United States') {
-                temp1.pop();
-                temp1.pop();
-                temp2 = temp1.join('/');
-              } else {
-                temp1.pop();
-                temp2 = temp1.join('/');
-              }
-
-
-              that.app.get('mapController').highlightCity(temp);
-              that.$el.on('mouseover', function() {
-                that.app.get('mapController').highlightCity(temp);
-                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE CITY
-                // var zoom = that.app.get('mapController').get('map').getZoom();
-                // if (zoom > 3) {
-                //   //HIGHLIGHT CITY
-                // } else {
-                //   that.app.get('mapController').highlightCountry(temp2)
-                // }
-              });
-              that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightCity(temp);
-                that.app.get('mapController').removeHighlightCountry(temp2);
-              });
-
-
-
-
-            } else {
-              //USER 'PLACE'
-
-              var temp1 = temp.split('/');
-              var temp2;
-              //IF US (THE ONLY COUNTRY WITH PROVINCES ATM)
-              if (temp1[1] === 'United States') {
-                temp1.pop();
-                temp1.pop();
-                temp1.pop();
-                temp2 = temp1.join('/');
-              } else {
-                temp1.pop();
-                temp1.pop();
-                temp2 = temp1.join('/');
-              }
-
-
-
-
-
-
-              if (that.coordsObject[temp]) {
-
-                that.$el.on('mouseover', function() {
-                  that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
-                });
-                that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
-                //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
-                // var zoom = that.app.get('mapController').get('map').getZoom();
-                // if (zoom > 3) {
-                //   //HIGHLIGHT PLACE
-                //   that.app.get('mapController').highlightPlace(temp, that.coordsObject[temp][0], that.coordsObject[temp][1]);
-                // } else {
-                //   that.app.get('mapController').highlightCountry(temp2)
-                // }
-
-              } else {
-
-                $.ajax({
-                  url: 'http://egora.co:80/placeLatLng',
-                  crossDomain: true,
-                  method: 'GET',
-                  data: {
-                    name: temp
-                  },
-                  success: function(data) {
-                    if (data.length) {
-                      that.coordsObject[temp] = [data[0].latitude, data[0].longitude];
-
-                      var zoom = that.app.get('mapController').get('map').getZoom();
-                      //CHECK IF THE MAP IS ABOVE A CERTAIN ZOOM LEVEL, SHOW THE COUNTRY, ELSE SHOW THE PLACE
-                      that.$el.on('mouseover', function() {
-                        that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
-                      });
-                      that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
-
-                      // if (zoom > 3) {
-                      //   //HIGHLIGHT PLACE
-                      //   that.app.get('mapController').highlightPlace(temp, data[0].latitude, data[0].longitude);
-                      // } else {
-                      //   that.app.get('mapController').highlightCountry(temp2)
-                      // }
-
-                    } else {
-                    }
-                  }, error: function(err) {
-                    console.log('ajax error ocurred: ', err);
-                  }
-
-                });
-              }
-
-
-              that.$el.on('mouseout', function() {
-                that.app.get('mapController').removeHighlightPlace(temp);
-                that.app.get('mapController').removeHighlightCountry(temp2);
-              });
-
-
-            }//end if-else chain
-
-
-
-
-
-          };
-          f();
-        //}
-
-    });
+    
 
 
 
     if (!this.noMouseover) {
-      this.$el.on('mouseover', mouseoverHandler);
+      this.$el.on('mouseover', this.mouseoverHandler);
     }
 
 
@@ -404,12 +417,23 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       };
     })();
 
-    this.$el.on('mouseover', function() {
-      that.app.get('mapController').highlightCountry(that.model.location);
-    });  
-    this.$el.on('mouseout', function() {
-      that.app.get('mapController').removeHighlightCountry(that.model.location);
-    });    
+
+    //mouseover
+
+    this.$el.on('mouseover', this.mouseoverHandler);
+
+    // this.$el.on('mouseover', function() {
+    //   that.app.get('mapController').highlightCountry(that.model.location);
+    // });  
+    // this.$el.on('mouseout', function() {
+    //   that.app.get('mapController').removeHighlightCountry(that.model.location);
+    // });   
+
+
+
+
+
+
   },
 
   renderMessageChain: function() {
