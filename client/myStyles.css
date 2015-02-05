@@ -1043,7 +1043,7 @@ right:22.4%;
 }
 
 
-.detailEntryItem {
+#detailEntryItem {
 
   overflow: hidden; 
   position: relative;

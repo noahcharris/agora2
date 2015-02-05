@@ -8,7 +8,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'detailEntryItem',
+  id: 'detailEntryItem',
 
   initialize: function(appController) {
     this.template = _.template( $('#detailMessageEntryTemplate').html() );

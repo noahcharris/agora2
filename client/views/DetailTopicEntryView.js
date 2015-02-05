@@ -5,7 +5,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'detailEntryItem',
+  id: 'detailEntryItem',
 
   initialize: function(appController) {
 
