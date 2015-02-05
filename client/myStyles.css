@@ -1671,6 +1671,14 @@ right:22.4%;
   overflow: hidden;
 }
 
+#profileOrigin {
+  cursor: pointer;
+}
+
+#profileLocation {
+  cursor: pointer;
+}
+
 
 
 
