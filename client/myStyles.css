@@ -1230,6 +1230,11 @@ right:22.4%;
   cursor: pointer;
 }
 
+.fromString:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 #conversationWrapper {
   margin: 0px;
   padding: 0px;
@@ -1675,8 +1680,19 @@ right:22.4%;
   cursor: pointer;
 }
 
+#profileOrigin:hover {
+  cursor: pointer;
+  text-decoration: underline;
+
+}
+
 #profileLocation {
   cursor: pointer;
+}
+
+#profileLocation:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 
