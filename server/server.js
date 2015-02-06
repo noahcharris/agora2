@@ -12,8 +12,6 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
-//use serve-favicon instead!!!
-// var favicon = require('static-favicon');
 var favicon = require('serve-favicon');
 
 var timeEventLoop = require('time-eventloop');
@@ -47,7 +45,10 @@ app = express();
 //   next();
 // });
 
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 
 
@@ -174,11 +175,8 @@ app.get('/refreshToken', routes.refreshToken);
 app.post('/clearActivity', routes.clearActivity);
 
 
-//POST METHODS (EXCEPT LOGOUT)
-
 //the login route will return a users 'profile', this will be used by the cache manager,
 //contains the user's settings, vote profile, etc.....
-//SECURE
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 app.get('/checkLogin', routes.checkLogin);
@@ -188,13 +186,8 @@ app.post('/changeEmail', routes.changeEmail);
 app.post('/changePassword', routes.changePassword);
 app.post('/changeLocation', routes.changeLocation);
 
-//SECURE
-
-//split this up into sendContactRequest and confirmContactRequest?
 app.post('/addContact', routes.addContact);
 
-// app.post('/sendContactRequest' routes.sendContactRequest);
-// app.post('/confirmContactRequest', routes.confirmContactRequest);
 
 app.post('/createMessageChain', routes.createMessageChain);
 app.post('/sendMessage', routes.sendMessage);
@@ -209,19 +202,12 @@ app.get('/checkVerification', routes.checkVerification);
 app.get('/getInvites', routes.getInvites);
 
 
-
 app.get('/authenticateTwitter', routes.authenticateTwitter);
 app.get('/twitterCallback', routes.twitterCallback);
 
 
-
-
 app.post('/visitedTopic', routes.visitedTopic);
 app.get('/recentlyVisited', routes.recentlyVisitedTopics);
-
-//addVisitHeat
-//addPostHeat
-//addVoteHeat
 
 app.get('/recentLocations', routes.getRecentLocations);
 app.get('/recentChannels', routes.getRecentChannels);
@@ -247,7 +233,6 @@ app.post('/createChannel', routes.createChannel);
 
 app.use(favicon(__dirname + '/../client/resources/images/favicon.png'));
 
-
 app.use(express.static(__dirname + '/../client'));
 
 var options = {
@@ -255,10 +240,22 @@ var options = {
   cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
 };
 
-//this is messing with the cookies somehow
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
-console.log('express server listening on ports 80 and 443');  
+console.log('---------------------------------------------------');  
+console.log('-- express server listening on ports 80 and 443  --');
+console.log('---------------------------------------------------');
+console.log('---------------------------------------------------');
+console.log(' ########  ######    #######  ########     ###     ');
+console.log(' ##       ##    ##  ##     ## ##     ##   ## ##    ');
+console.log(' ##       ##        ##     ## ##     ##  ##   ##   ');
+console.log(' ######   ##   ###  ##     ## ########  ##     ##  ');
+console.log(' ##       ##    ##  ##     ## ##   ##   #########  ');
+console.log(' ##       ##    ##  ##     ## ##    ##  ##     ##  ');
+console.log(' ########  ######    #######  ##     ## ##     ##  ');
+console.log('---------------------------------------------------');
+console.log('---------------------------------------------------');
+
 
 
 
