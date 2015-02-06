@@ -317,7 +317,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
       var height = $(window).height() - $('#topbarWrapper').height();
       $('#sidebarContainer').css('height', height);
-      //$('#map').css('height', height);
+      $('#mainWrapper').css('height', height);
 
 
       if ($(window).width() > 500) {
