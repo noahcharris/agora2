@@ -3640,8 +3640,8 @@ module.exports.getContactTopics = function(request, response) {
 
 
 
-
 module.exports.updateUserProfile = function(request, response) {
+
 
   var form = new multiparty.Form({
     maxFilesSize: AgoraMaxUpload,
@@ -3649,19 +3649,21 @@ module.exports.updateUserProfile = function(request, response) {
 
   form.parse(request, function(err, fields, files) {
 
-
+    var fieldError = false;
+    var fieldsArray = ['file', 'username', 'token', 'about'];
+    for (var i=0; i < fieldsArray ;i++) {
+      if (!fields[fieldsArray[i]])
+        fieldError = true;
+    }
 
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
         response.end('please make sure that your file size is not over 10MB');
       }
-    } else if (!fields.username
-      || !fields.token) {
+    } else if (fieldError) {
 
-      response.end('o_O');
-      //TODO- make sure all form fields are filled out
-      //this still doesn't check ABOUT field!!!!!!
+      response.end('error');
 
     } else  {
 
@@ -3685,7 +3687,7 @@ module.exports.updateUserProfile = function(request, response) {
 
                           imageInfo(files.file[0].path, function(err, result) {
                             if (err)
-                              console.log('errljfdsj', err);
+                              console.log('error getting image info: ', err);
                             if (!err) {
                               // console.log("Type: " + result.type + 
                               //   " width: " + result.width + 
@@ -3815,22 +3817,29 @@ module.exports.createTopic = function(request, response) {
 
 
 
-
-
-
-
-
   var form = new multiparty.Form({
     maxFilesSize: AgoraMaxUpload,
   });
 
   form.parse(request, function(err, fields, files) {
 
+    var fieldError = false;
+    var fieldsArray = ['file', 'username', 'token', 'headline',
+    'link', 'contents', 'location', 'origin', 'channel', 'responseString'];
+    for (var i=0; i < fieldsArray ;i++) {
+      if (!fields[fieldsArray[i]])
+        fieldError = true;
+    }
+
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
         response.end('error');
       }
+    } else if (fieldError) {
+
+      response.end('error');
+
     } else {
 
       var temp;
@@ -4088,11 +4097,24 @@ module.exports.createComment = function(request, response) {
 
   form.parse(request, function(err, fields, files) {
 
+
+    var fieldError = false;
+    var fieldsArray = ['file', 'username', 'token', 'headline',
+    'link', 'contents', 'location', 'channel', 'topicId',
+    'commentId', 'responseId', 'OP'];
+    for (var i=0; i < fieldsArray ;i++) {
+      if (!fields[fieldsArray[i]])
+        fieldError = true;
+    }
+
+
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
         response.end('error');
       }
+    } else if (fieldError) {
+      response.end('error');
     } else {
 
 
@@ -4316,12 +4338,26 @@ module.exports.createResponse = function(request, response) {
   form.parse(request, function(err, fields, files) {
 
 
+    var fieldError = false;
+    var fieldsArray = ['file', 'username', 'token', 'headline',
+    'link', 'contents', 'location', 'channel', 'topicId',
+    'commentId', 'responseId', 'OP'];
+    for (var i=0; i < fieldsArray ;i++) {
+      if (!fields[fieldsArray[i]])
+        fieldError = true;
+    }
+
+
 
     if (err) {
       console.log('multiparty upload error: ', err);
       if (err.code === 'ETOOBIG') {
         response.end('error');
       }
+    } else if (fieldError) {
+
+      response.end('error');
+
     } else {
 
 
@@ -4538,6 +4574,14 @@ module.exports.createReply = function(request, response) {
   form.parse(request, function(err, fields, files) {
 
 
+    var fieldError = false;
+    var fieldsArray = ['file', 'username', 'token', 'headline',
+    'link', 'contents', 'location', 'channel', 'topicId',
+    'commentId', 'responseId', 'OP'];
+    for (var i=0; i < fieldsArray ;i++) {
+      if (!fields[fieldsArray[i]])
+        fieldError = true;
+    }
 
 
     if (err) {
@@ -4545,9 +4589,11 @@ module.exports.createReply = function(request, response) {
       if (err.code === 'ETOOBIG') {
         response.end('error');
       }
+    } else if (fieldError) {
+
+      response.end('error');
+
     } else {
-
-
 
 
     client.query("SELECT * FROM securityJoin WHERE username = $1;",

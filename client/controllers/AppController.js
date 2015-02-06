@@ -970,7 +970,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }
 
 
-      console.log(that);
       $.ajax({
         url: 'https://egora.co:443/notifications',
         // url: 'http://localhost:80/notifications',

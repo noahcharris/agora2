@@ -98,6 +98,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
                   fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
                   fd.append( 'location', that.app.get('mapController').get('location') );
+                  //this is not utilized..
                   fd.append( 'origin', that.app.get('origin') );
                   fd.append( 'channel', that.app.get('channel') );
                   fd.append( 'responseString', $('.g-recaptcha-response').val() );
