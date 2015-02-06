@@ -23,7 +23,7 @@ Agora.Router = Backbone.Router.extend({
   },
 
   index: function() {
-    this.trigger('reloadSidebarTopics', 'World');
+    this.app.trigger('reloadSidebarTopics', 'World');
   },
 
   topic: function(id) {
@@ -67,7 +67,8 @@ Agora.Router = Backbone.Router.extend({
 
   path: function(path) {
     if (!path) {
-      this.app.get('mapController').showWorld();
+      // this.app.get('mapController').showWorld();
+      this.index();
     } else {
       var temp = path.split('#');
       if (temp[0] === '') {

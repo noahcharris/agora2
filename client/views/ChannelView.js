@@ -128,6 +128,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
           that.app.get('sidebarView').displayed = 'Topics-Top';
           that.app.changeChannel(x);
           that.render();
+          that.app.trigger('reloadSidebarTopics');
 
         ;}
 

@@ -93,18 +93,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var locationView = new Agora.Views.LocationView({ model:mapController });
     locationView.app = this;
     locationView.router = router;
-    locationView.render();
     this.set('locationView', locationView);
     $('#topbar2').append(locationView.$el);
+    locationView.render();
 
     var channelView = new Agora.Views.ChannelView({ model: mapController });
     //used by detailChannelView
     this.set('channelView', channelView);
     channelView.app = this;
     channelView.router = router;
-    channelView.render();
     this.set('channelView', channelView);
     $('#topbar2').append(channelView.$el);
+    channelView.render();
     channelView.setHandlers();
 
     var registrationView = new Agora.Views.RegistrationView(this);
@@ -610,15 +610,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   changeChannel: function(channel) {
 
-    //TODO Check if channel is real before blindly switching to it
-
     this.set('channel', channel);
-    this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
     this.get('channelView').render();
-    // console.log('changing channel');
-
-    var location = this.get('mapController').get('location')
-    //this.get('mapController').router.navigate('World'+location.slice(6, location.length)+'#'+this.get('channel'), { trigger:false });
 
   },
 

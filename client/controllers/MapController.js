@@ -560,8 +560,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
   highlightCity: function(cityName) {
 
-    console.log('trying to highlight: ', cityName);
-
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
       if (cities._layers[key].city === cityName) {
@@ -604,7 +602,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
-    console.log('highlishting place: ', latitude, longitude);
     if (this.placeMarker)
       this.get('map').removeLayer(this.placeMarker);
     this.placeMarker = L.layerGroup();
@@ -654,7 +651,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   goToPath: function(path, extra) {
 
 
-    console.log('goingt to path', path);
+    console.log('going to path', path);
 
     var that = this;
 
@@ -676,6 +673,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (name === that.customBounds[i].name) {
           that.get('map').fitBounds(that.customBounds[i].bounds);
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
           foo = true;
           break;
@@ -688,6 +688,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           if (this.get('countries')._layers[key].feature.properties.name === path) {
             this.get('map').fitBounds(this.get('countries')._layers[key].getBounds());
             this.set('location', path);
+            if (!this.placing) {
+              this.app.trigger('reloadSidebarTopics', path, extra);
+            }
             that.updateHeatPoints();
           }
         }
@@ -708,6 +711,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (this.get('states')._layers[key].feature.properties.name === path) {
           this.get('map').fitBounds(this.get('states')._layers[key].getBounds());
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
         }
       }
@@ -724,6 +730,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           this.get('map').setZoom(12);
           this.get('map').panTo(this.get('cities')._layers[key]._latlng);
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
         }
       }
@@ -741,11 +750,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         success: function(data) {
           if (data) {
             that.get('map').setZoom(12);
-            console.log('wjeklajk: ', data[0].latitude, data[0].longitude);
             var coords = L.latLng(data[0].latitude, data[0].longitude);
             that.get('map').panTo(coords);
             that.set('location', path);
-            that.app.trigger('reloadSidebarTopics', path);
+            if (!this.placing) {
+              that.app.trigger('reloadSidebarTopics', path, extra);
+            }
             that.updateHeatPoints();
           } else {
           }
@@ -756,21 +766,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       });
 
 
-
-
-
     }
 
-    if (!this.placing) {
-      if (this.app.get('sidebarView').displayed !== 'Topics'
-      && this.app.get('sidebarView').displayed !== 'Topics-Top'
-      && this.app.get('sidebarView').displayed !== 'Topics-New'
-      && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
-        this.app.get('sidebarView').displayed = 'Topics-Top';
-      }
-      //this.app.get('content2').hide();
-      this.app.trigger('reloadSidebarTopics', path, extra);
-    }
+
 
   },
 
@@ -859,7 +857,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           });
 
           var mouseoverHandler = function(e) {
-            console.log(e);
             var data = {
               name: e.target.city
             }
