@@ -1817,7 +1817,7 @@ module.exports.login = function(request, response) {
                 if (res) {
                     //insert into security join
                     client.query("DELETE FROM securityJoin WHERE username = $1;",
-                      [request.body.username], function(err, result) {
+                      [theUsername], function(err, result) {
                         if (err) {
                           console.log('error deleting from securityJoin: ', err);
                         } else {
@@ -1826,7 +1826,7 @@ module.exports.login = function(request, response) {
                           var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
                           client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
                             +"VALUES ($1, $2, $3, now());",
-                            [request.body.username, cookie, token],
+                            [theUsername, cookie, token],
                             function(err, result) {
                               if (err) {
                                 console.log('error insertin into securityJoin: ', err);
