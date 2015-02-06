@@ -4197,7 +4197,7 @@ module.exports.createComment = function(request, response) {
                                                       [imageLink, result.rows[0].id], function(err, res) {
 
 
-                                                        if (queryArgs.username !== queryArgs.OP) {
+                                                        if (fields.username[0] !== fields.OP[0]) {
 
                                                           //insert into activityJoin if there is nothing there
                                                           client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
@@ -4264,7 +4264,7 @@ module.exports.createComment = function(request, response) {
                             console.log(fields.username[0]+' has created a comment in '+fields.location[0]+' ~~~ '+fields.channel[0]);
 
 
-                            if (queryArgs.username !== queryArgs.OP) {
+                            if (fields.username[0] !== fields.OP[0]) {
                               
                               //insert into activityJoin if there is nothing there
                               client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
@@ -4440,7 +4440,7 @@ module.exports.createResponse = function(request, response) {
                                                                 [imageLink, result.rows[0].id], function(err, result) {
 
 
-                                                                  if (queryArgs.username !== queryArgs.OP) {
+                                                                  if (fields.username[0] !== fields.OP[0]) {
                                                                     
                                                                     //insert into activityJoin if there is nothing there
                                                                     client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
@@ -4460,8 +4460,6 @@ module.exports.createResponse = function(request, response) {
                                                                         }
                                                                     });
                                                                   }
-
-
 
 
 
@@ -4502,7 +4500,7 @@ module.exports.createResponse = function(request, response) {
 
 
                                     
-                                      if (queryArgs.username !== queryArgs.OP) {
+                                      if (fields.username[0] !== fields.OP[0]) {
                                         //insert into activityJoin if there is nothing there
                                         client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
                                           [fields.topicId[0]], function(err, result2) {
@@ -4676,7 +4674,7 @@ module.exports.createReply = function(request, response) {
 
 
 
-                                                              if (queryArgs.username !== queryArgs.OP) {
+                                                              if (fields.username[0] !== fields.OP[0]) {
                                                                 
                                                                 //insert into activityJoin if there is nothing there
                                                                 client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",
@@ -4736,7 +4734,7 @@ module.exports.createReply = function(request, response) {
                                 console.log(fields.username[0]+' has created a reply in '+fields.location[0]+' ~~~ '+fields.channel[0]);
 
 
-                                if (queryArgs.username !== queryArgs.OP) {
+                                if (fields.username[0] !== fields.OP[0]) {
                                   
                                   //insert into activityJoin if there is nothing there
                                   client.query("SELECT * FROM topicActivityJoin WHERE topic = $1;",

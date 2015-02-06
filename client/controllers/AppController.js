@@ -473,6 +473,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           that.get('content2').hide();
         } else {
           that.changeChannel('All');
+          that.get('sidebarView').displayed = 'Topics-Top';
           that.get('mapController').showWorld();
         }
 
