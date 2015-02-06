@@ -320,7 +320,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       console.log('setting to whata', height)
 
-      $('#map').css('height', height);
+      $('#mainWrapper').css('height', height);
 
 
       if ($(window).width() > 500) {
