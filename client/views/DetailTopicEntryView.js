@@ -132,6 +132,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $channelString[0].onclick = function() {
 
       that.app.changeChannel(that.model.channel);
+      that.app.trigger('reloadSidebarTopics');
 
     };
 
@@ -731,9 +732,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       success: function(data) {
         if (data) {
 
-          console.log('whaaa');
           that.app.get('detailView').displayed = 'Users';
-          console.log('server returned: ', data);
 
           //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
 

@@ -22,7 +22,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     this.model.originLabel = this.app.translate('Origin');
     this.model.recentlyPostedLabel = this.app.translate('Recently Posted');
 
-    console.log('fjdsaklfjdsakfjdsalk: ', this.model);
 
     if (this.app.get('language') !== 'ar') {
       this.$el.html( this.template(this.model) );
@@ -109,12 +108,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
             console.log('created message chain');
             that.app.trigger('reloadSidebarMessageChains', function() {
 
-              console.log('reloaded message chains');
-
-
-
               var chains = that.app.get('sidebarView').messagesCollection;
-              console.log('DEESE chains: ', chains);
               var offsetCount = -1;
               for (var i=0; i < chains.length ;i++) {
                 offsetCount++;
@@ -128,7 +122,6 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
                 //will need to account for pagination here eventually
 
                 if (chains[i].contact === that.model.username) {
-                  console.log('found the message chain ehh?');
                   foundChain = true;
                   //open up this shit
                   that.app.get('sidebarView').displayed = 'Messages';

@@ -660,6 +660,10 @@ right:22.4%;
   cursor: pointer;
 }
 
+.sidebarUsername:hover {
+  text-decoration: underline;
+}
+
 .locationString {
   cursor: pointer;
   font-family: 'clearThin';
@@ -667,11 +671,18 @@ right:22.4%;
   font-size: 60%;
   margin: 0px;
   padding: 0px;
+}
 
+.locationString:hover {
+  text-decoration: underline;
 }
 
 .sidebarChannelString {
   cursor:pointer;
+}
+
+.sidebarChannelString:hover {
+  text-decoration: underline;
 }
 
 .sidebarTopicImage {
@@ -1169,6 +1180,10 @@ right:22.4%;
   cursor: pointer;
 }
 
+#detailUserString:hover {
+  text-decoration: underline;
+}
+
 .detailCommentUserString {
   cursor: pointer;
 }
@@ -1183,7 +1198,10 @@ right:22.4%;
 
 #detailChannelString {
   cursor: pointer;
+}
 
+#detailChannelString:hover {
+  text-decoration: underline;
 }
 
 #detailLocationString {
@@ -1234,6 +1252,27 @@ right:22.4%;
   cursor: pointer;
   text-decoration: underline;
 }
+
+.detailCommentUserString:hover {
+  text-decoration: underline;
+}
+
+.detailResponseUserString:hover {
+  text-decoration: underline;
+}
+
+.detailReplyUserString:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
 
 #conversationWrapper {
   margin: 0px;

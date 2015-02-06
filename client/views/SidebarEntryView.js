@@ -55,7 +55,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
               that.app.get('mapController').highlightCountry(temp);
               that.$el.on('mouseover', function() {
                 that.app.get('mapController').highlightCountry(temp);
-                console.log('highlight');
               });
               that.$el.on('mouseout', function() {
                 that.app.get('mapController').removeHighlightCountry(temp);
@@ -314,11 +313,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
         success: function(data) {
           if (data) {
 
-            console.log('whaaa');
             that.app.get('detailView').displayed = 'Users';
-            console.log('server returned: ', data);
-
-            //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
 
             that.app.get('content2').show(that.app.get('detailView'), data[0]);
           } else {
@@ -336,16 +331,12 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
     var $toString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.locationString');
     $toString.on('click', function(e) {
-
-      console.log(that.model.location);
       that.app.get('mapController').goToPath(that.model.location);
-
       e.stopPropagation();
     });
 
     var $channelString = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.sidebarChannelString');
     $channelString.on('click', function(e) {
-
       that.app.changeChannel(that.model.channel);
       that.app.trigger('reloadSidebarTopics');
       e.stopPropagation();

@@ -52,9 +52,6 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
       reader.readAsDataURL(e.target.files[0]);
     });
 
-    if (window.File && window.FileReader) {
-      console.log('ho');
-    }
 
 
     this.$el.append($imageInput);
@@ -90,7 +87,6 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   ajaxing = true;
 
                   var fd = new FormData();    
-                  console.log($('#imageInput'));
                   fd.append( 'file', $('#imageInput')[0].files[0] );
                   fd.append( 'username', that.app.get('username') );
                   fd.append( 'token', that.app.get('token') );

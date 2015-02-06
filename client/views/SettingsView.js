@@ -352,7 +352,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('settingsviewclosing');
     this.remove();
   }
 
