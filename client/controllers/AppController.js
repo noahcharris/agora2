@@ -114,11 +114,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('placementView', placementView);
 
 
-    //WHAT THE FUCK??
-    //need to use this setTimeout otherwise the cancelled tiles are loaded
-    setTimeout(function() { Backbone.history.start(); }, 10);
-
-
     // ## LOCATIONVIEW EVENTING ##
 
     //sets up the highlighting interaction between sidebarView and detailView
@@ -126,11 +121,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       locationView.render();
     });
 
-    locationView.render();
-
-
-
-    
 
 
     //#######################################
@@ -376,7 +366,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     setTimeout(function() {
 
-
       var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
       var sideWidth = $(window).width() - mapWidth;
       $('#content1').css('width', sideWidth+'px');
@@ -491,6 +480,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       } 
 
     });
+
+
+    Backbone.history.start();
     
   },//END CONTROLLER INITIALIZE
 

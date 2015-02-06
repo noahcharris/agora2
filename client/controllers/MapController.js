@@ -9,8 +9,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   defaults: {
     location: 'World',
-    //need to exorcise 'groups'
-    group:'',
     countries: null,
     states: null,
     cities: null,
@@ -58,23 +56,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.set('map', map);
     this.addCountries(); //map starts off with countries loaded
     this.setZoomEvents();
-
-
-    //CLUSTER GROUP
-
-    // var clusterGroup = new L.MarkerClusterGroup({
-    //   disableClusteringAtZoom: 8
-    // });
-    // //use addLayers instead
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // map.addLayer(clusterGroup);
-
-
-
-
-
 
 
 
@@ -992,7 +973,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
                 that.app.get('sidebarView').displayed = 'Topics-Top';
               } 
-            that.set('group', undefined);
             that.app.trigger('reloadSidebarTopics', e.target.city);
           }
         };
@@ -1112,7 +1092,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
               that.app.get('sidebarView').displayed = 'Topics-Top';
             }
-          that.set('group', undefined);
 
 
           that.app.trigger('reloadSidebarTopics', e.target.feature.properties.name);
@@ -1231,7 +1210,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
               that.app.get('sidebarView').displayed = 'Topics-Top';
             }
-          that.set('group', undefined);
 
         }
         that.app.trigger('reloadSidebarTopics', name);
