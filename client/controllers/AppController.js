@@ -312,7 +312,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
 
     var throttledResize = _.throttle(function() {
-
+      //resizeee
 
       //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
       var height = $(window).height() - $('#topbarWrapper').height();
