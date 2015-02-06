@@ -228,6 +228,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //this.app.get('content2').hide();
     this.app.trigger('reloadSidebarTopics', 'World');
 
+    this.updateHeatPoints();
+
   },
 
 

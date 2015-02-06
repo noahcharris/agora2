@@ -373,7 +373,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
       var northEast = L.latLng(79.36770077764092, 162.421875);
       var worldBounds = L.latLngBounds(southWest, northEast);
 
-      // !! to break out of anything that's not topics or groups mode
       if (that.app.get('sidebarView').displayed !== 'Topics-Top'
         && that.app.get('sidebarView').displayed !== 'Topics-New'
         && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
@@ -386,9 +385,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
       that.app.get('mapController').router.navigate('World#'+that.app.get('channel'), { trigger:false });
 
-      //this.app.get('content2').hide();
-      that.app.trigger('reloadSidebarTopics', 'World');
+      if (!that.app.get('mapController').placing) {
+        that.app.trigger('reloadSidebarTopics', 'World');
+      }
 
+      that.app.get('mapController').updateHeatPoints();
 
     });
 
