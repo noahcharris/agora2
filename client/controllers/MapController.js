@@ -961,8 +961,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
          {icon: cityIcon});//.addTo(this.get('map')); 
 
         var clickHandler = function(e) {
-          that.get('map').setZoom(12, { animate:false });
           that.get('map').panTo(e.target._latlng, { animate:false });
+          that.get('map').setZoom(12, { animate:false });
           that.set('location', e.target.city);
           //that.router.navigate('World/'+e.target.city, { trigger:false });
           if (!that.placing) {
