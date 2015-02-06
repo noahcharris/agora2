@@ -133,7 +133,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //update user-locations points
       if (map.getZoom() > 7) {
         center = map.getCenter();
-        console.log(center);
         
         if (!that.placing) {
           that.addPlacesWithinRadius(center.lat, center.lng);
@@ -262,9 +261,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   updateHeatPoints: function() {
     var that = this;
 
-    console.log(that.heatMarkerLayer);
-
-    // this.get('map').removeLayer(this.heatMarkerLayer);
     that.heatMarkerLayer.clearLayers();
 
 
@@ -280,8 +276,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       },
       success: function(data) {
         if (data) {
-
-          console.log('heatpoint data; ', data);
 
           //RECEIVE TOP 100 TOPICS FOR HEAT,
           //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
@@ -865,7 +859,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       },
       success: function(data) {
 
-        console.log('POINTSSZZZZZ::::: ', data);
         that.pointsLayer.clearLayers();
 
         if (data.length) {

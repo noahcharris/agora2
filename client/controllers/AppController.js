@@ -398,7 +398,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //LOADER ANIMATION
     var $body = $('body');
-    console.log('what you need: ', $body.children('#loader'));
     $body.children('#loader').hide();
     $(document).on({
         ajaxStart: function() { 
