@@ -347,6 +347,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     $channelString.on('click', function(e) {
 
       that.app.changeChannel(that.model.channel);
+      that.app.trigger('reloadSidebarTopics');
       e.stopPropagation();
     });
 
