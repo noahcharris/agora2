@@ -276,7 +276,13 @@ function processTweets() {
                                               Authorization: 'Bearer '+JSON.parse(body).access_token
                                             }}, function(err, httpResponse, body) {
 
-                                              var tweets = JSON.parse(body);
+                                              var tweets;
+                                              try {
+                                                tweets = JSON.parse(body);
+                                              } catch(e) {
+                                                console.log('error receiving tweets: ', e);
+                                                tweets = [];
+                                              }
 
                                               for (var i=tweets.length-1; i > -1 ;i--) {
                                                 //put the last since_id into database
@@ -303,7 +309,6 @@ function processTweets() {
                                             });//end twitter API request
 
                                           } else {
-                                            console.log(JSON.parse(body).access_token);
                                             //request tweets without since_id
 
                                             request( { url:'https://api.twitter.com/1.1/statuses/user_timeline.json'
@@ -311,7 +316,13 @@ function processTweets() {
                                               Authorization: 'Bearer '+JSON.parse(body).access_token
                                             } }, function(err, httpResponse, body) {
 
-                                              var tweets = JSON.parse(body);
+                                              var tweets;
+                                              try {
+                                                tweets = JSON.parse(body);
+                                              } catch(e) {
+                                                console.log('error receiving tweets: ', e);
+                                                tweets = [];
+                                              }
 
                                               for (var i=tweets.length-1; i > -1 ;i--) {
                                                 //put the last since_id into database

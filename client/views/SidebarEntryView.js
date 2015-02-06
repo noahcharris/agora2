@@ -13,7 +13,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
   initialize: function(app) {
     var that = this;
-    
+
     this.app = app;
     this.topicTemplate = _.template( $('#sidebarTopicEntryTemplate').html() );
     this.RTLtopicTemplate = _.template( $('#RTLsidebarTopicEntryTemplate').html() );
@@ -419,19 +419,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
     //mouseover
-
     this.$el.on('mouseover', this.mouseoverHandler);
-
-    // this.$el.on('mouseover', function() {
-    //   that.app.get('mapController').highlightCountry(that.model.location);
-    // });  
-    // this.$el.on('mouseout', function() {
-    //   that.app.get('mapController').removeHighlightCountry(that.model.location);
-    // });   
-
-
-
-
 
 
   },
@@ -449,14 +437,6 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     this.model.recipientLabel = this.app.translate('Recipient');
     this.$el.html( this.messageChainTemplate(this.model) );
 
-    var location = this.model.location || 'World';
-
-    this.$el.on('mouseover', function() {
-      that.app.get('mapController').highlightCountry(location);
-    });  
-    this.$el.on('mouseout', function() {
-      that.app.get('mapController').removeHighlightCountry(location);
-    }); 
   },
 
   clickTrigger: function() {
