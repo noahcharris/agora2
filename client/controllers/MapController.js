@@ -1211,7 +1211,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         var foo = false;
         for (var i=0;i<that.customBounds.length;i++) {
           if (name === that.customBounds[i].name) {
-            console.log('for ', name, ' custom bounds: ', that.customBounds[i]);
             that.get('map').fitBounds(that.customBounds[i].bounds);
             foo = true;
             break;

@@ -23,7 +23,7 @@ Agora.Router = Backbone.Router.extend({
   },
 
   index: function() {
-    this.navigate('World');
+    this.trigger('reloadSidebarTopics', 'World');
   },
 
   topic: function(id) {

@@ -141,6 +141,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //THIS TAKES AN 'EXTRA' TOPIC WHICH IS UNSHIFTED INTO THE TOPICSCOLLECTION
     //THIS IS FOR SEARCH & 'RECENTLY VISITED'
+    //GOING TO THROTTLE RELOAD SIDEBAR TOPICS BECAUSE I CALL IT SO MANY PLACES
+
     this.on('reloadSidebarTopics', function(location, extra, cb) { 
       cb = cb || function() {};
 
@@ -387,10 +389,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       
     }, 100);
 
-
-
-    //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
-    this.trigger('reloadSidebarTopics', 'World');
 
 
 
