@@ -317,7 +317,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
       var height = $(window).height() - $('#topbarWrapper').height();
       $('#sidebarContainer').css('height', height);
-      $('#mainWrapper').css('height', height);
+
+      console.log('setting to whata', height)
+
+      $('#map').css('height', height);
 
 
       if ($(window).width() > 500) {
@@ -366,17 +369,19 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     setTimeout(function() {
 
-      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-      var sideWidth = $(window).width() - mapWidth;
-      $('#content1').css('width', sideWidth+'px');
+      throttledResize();
 
-      //do i need this extra bit down here??
-      // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
-      var height = $(window).height() - $('#topbarWrapper').height();
-      $('#sidebarContainer').css('height', height);
-      //$('#map').css('height', height);
+      // var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+      // var sideWidth = $(window).width() - mapWidth;
+      // $('#content1').css('width', sideWidth+'px');
+
+      // //do i need this extra bit down here??
+      // // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
+      // var height = $(window).height() - $('#topbarWrapper').height();
+      // $('#sidebarContainer').css('height', height);
+      // $('#map').css('height', height);
       
-    }, 100);
+    }, 1000);
 
 
 
