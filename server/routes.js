@@ -378,6 +378,8 @@ function processTweets() {
 
 };
 
+
+
 // currently set to 1 minute
 setInterval(processTweets, 60000);
 

@@ -558,7 +558,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(model) {
         if (model) {
 
-          console.log('whatjfdskaldfjsa');
           that.get('detailView').displayed = 'Locations';
           that.get('content2').show(that.get('detailView'), model);
 
