@@ -3681,32 +3681,6 @@ module.exports.updateUserProfile = function(request, response) {
                         if (files.file) {
 
 
-
-                          //check the type jpg/gif is fine, if png convert, else reject
-                          //scale to make it fit in 1000x1000
-
-                          imageInfo(files.file[0].path, function(err, result) {
-                            if (err)
-                              console.log('error getting image info: ', err);
-                            if (!err) {
-                              // console.log("Type: " + result.type + 
-                              //   " width: " + result.width + 
-                              //   " height: " + result.height);
-
-                            
-
-
-
-
-
-
-
-                            }
-                          });
-
-
-
-
                           var keyString = xssValidator(fields.username[0]);
 
                           var params = {
