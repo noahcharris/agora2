@@ -120,7 +120,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    // this.$el.children('#buttonBox').append($locationCreationButton);
+    this.$el.children('#buttonBox').append($locationCreationButton);
 
     var createChannelLabel = this.app.translate('Create Channel');
     var $channelCreationButton = $('<button id="createChannelButton">'+createChannelLabel+'</button>');
@@ -154,7 +154,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    // this.$el.children('#buttonBox').append($channelCreationButton);
+    this.$el.children('#buttonBox').append($channelCreationButton);
 
     var changePasswordLabel = this.app.translate('Change Password');
     var $changePasswordButton = $('<button id="changePasswordButton">'+changePasswordLabel+'</button>');

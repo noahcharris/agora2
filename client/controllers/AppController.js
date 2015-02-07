@@ -318,8 +318,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var height = $(window).height() - $('#topbarWrapper').height();
       $('#sidebarContainer').css('height', height);
 
-      console.log('setting to whata', height)
-
       $('#mainWrapper').css('height', height);
 
 
