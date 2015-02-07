@@ -7,14 +7,14 @@ Agora.Router = Backbone.Router.extend({
 
   routes: {
     '': 'index',
-    'topic/:id': 'topic',
-    'Topic/:id': 'topic',
-    'user/:username': 'user',
-    'User/:username': 'user',
-    'location/:location': 'location',
-    'Location/:location': 'location',
-    'channel/:channel': 'channel',
-    'Channel/:channel': 'channel',
+    'topic/*id': 'topic',
+    'Topic/*id': 'topic',
+    'user/*username': 'user',
+    'User/*username': 'user',
+    'location/*location': 'location',
+    'Location/*location': 'location',
+    'channel/*channel': 'channel',
+    'Channel/*channel': 'channel',
     'World*path': 'path'
   },
 
@@ -155,6 +155,8 @@ Agora.Router = Backbone.Router.extend({
 
   location: function(location) {
 
+    console.log('location: ', location);
+
     var temp1 = location.split('/');
     for (var i=0; i < temp1.length ;i++) {
 
@@ -168,7 +170,7 @@ Agora.Router = Backbone.Router.extend({
       temp1[i] = temp2.join(' ');
 
     }
-    var input = 'World' + temp1.join('/');
+    var input = temp1.join('/');
 
     //SHOW THE LOCATION PROFILE
     this.app.changeChannel('All');
@@ -177,6 +179,9 @@ Agora.Router = Backbone.Router.extend({
   },
 
   channel: function(channel) {
+
+    console.log('channel: ', channel);
+
 
     var temp1 = channel.split('/');
     for (var i=0; i < temp1.length ;i++) {

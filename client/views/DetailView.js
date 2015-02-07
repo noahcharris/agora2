@@ -15,7 +15,6 @@ Agora.Views.DetailView = Backbone.View.extend({
   initialize: function(appController) {
     this.app = appController;
 
-    //!!!!!hopefully this will help to solve the problems with rendering detailView shit
     this.displayed = 'Topics';
 
     //response box variables
@@ -25,13 +24,6 @@ Agora.Views.DetailView = Backbone.View.extend({
 
   render: function() {
     console.log('something called render on DetailView, but all this does is nothing');
-
-    // this.$el.empty();
-    // if (this.view) {
-    //   this.view.close();
-    // }
-    //wow so I guess backbone defaults to renderTopic if 
-    //render() is called and there is no render method
   },
 
 
@@ -57,15 +49,6 @@ Agora.Views.DetailView = Backbone.View.extend({
       that.app.get('content2').hide();
     }
 
-    // document.getElementsByClassName('x').onclick = function() {
-    //   that.app.get('content2').hide();
-    // }
-
-    // document.getElementsByClassName('x')[0].addEventListener('click', function() {
-    //   that.app.get('content2').hide();
-    // });
-
-
 
     var entryView = new Agora.Views.DetailTopicEntryView(this.app);
     entryView.model = model;
@@ -80,8 +63,6 @@ Agora.Views.DetailView = Backbone.View.extend({
 
 
   renderMessage: function(model, contact) {
-
-    console.log('rendering message with model: ', model);
 
     var that = this;
     this.$el.empty();
@@ -139,8 +120,6 @@ Agora.Views.DetailView = Backbone.View.extend({
       that.app.get('content2').hide();
       console.log('closing detailview');
     };
-
-    console.log('rendering location wooooo');
 
     console.log(Agora.Views.DetailLocationEntryView);
     var entryView = new Agora.Views.DetailLocationEntryView(this.app);
