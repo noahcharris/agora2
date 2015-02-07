@@ -448,7 +448,6 @@ module.exports.createTables = function() {
 //   });
 // };
 
-console.log('postgres functions loaded');
 
 
 

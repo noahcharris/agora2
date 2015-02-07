@@ -71,7 +71,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       } else {
         
         $.ajax({
-          url: 'http://liveworld.io:80/user',
+          url: 'http://egora.co:80/user',
           // url: 'http://localhost:80/user',
           method: 'GET',
           crossDomain: true,
@@ -110,7 +110,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     };
 
-    var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
+    //var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
     $('#registrationButton').on('click', function() {
       var previousDisplayed = that.app.get('detailView').displayed;
       that.app.get('detailView').displayed = 'Registration';
@@ -126,7 +126,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
     //this.$el.append($registrationButton);
 
-    var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
+    //var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
     $('#settingsButton').on('click', function() {
 
       if (that.app.get('login')) {
@@ -158,6 +158,25 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
+
+
+    $('#aboutButton').on('click', function() {
+        
+        var previousDisplayed = that.app.get('detailView').displayed;
+        that.app.get('detailView').displayed = 'About';
+        if (!that.app.get('expanded')) {
+          that.app.get('content2').show(new Agora.Views.AboutView(that.app));
+        } else {
+          //this doesn't work
+          console.log(that.app.get('detailView').displayed);
+          if (previousDisplayed === 'About') {
+            that.app.get('content2').hide();
+          } else {
+            that.app.get('content2').show(new Agora.Views.AboutView(that.app));
+          }
+        }
+
+    });
 
 
 
@@ -217,6 +236,8 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     var searchHandler = function() {
 
+      console.log('whyyyyyyyy');
+
         switch ($('#searchSelect').val()) {
           case 'Users':
             urlSuffix = 'userSearch';
@@ -233,7 +254,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
         }
 
         $.ajax({
-          url: 'http://liveworld.io:80/' + urlSuffix,
+          url: 'http://egora.co:80/' + urlSuffix,
           // url: 'http://localhost:80/' + urlSuffix,
           method: 'GET',
           crossDomain: true,
@@ -260,9 +281,9 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
 
 
-    $(window).keypress(function(e) {
+    $(document).keypress(function(e) {
 
-      if (e.keyCode === 13 && $('#searchInput').is(':focus')) {
+      if (e.keyCode === 13 && that.$el.children('#searchInput').is(':focus')) {
 
         searchHandler();
 
@@ -344,6 +365,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     $('#title').on('click', function() {
       that.app.changeChannel('All');
+      that.app.get('sidebarView').page = 1;
       //that.app.get('mapController').showWorld();
 
       //had to do a custom version of show world which doesn't close content2
@@ -351,7 +373,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
       var northEast = L.latLng(79.36770077764092, 162.421875);
       var worldBounds = L.latLngBounds(southWest, northEast);
 
-      // !! to break out of anything that's not topics or groups mode
       if (that.app.get('sidebarView').displayed !== 'Topics-Top'
         && that.app.get('sidebarView').displayed !== 'Topics-New'
         && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
@@ -364,9 +385,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
       that.app.get('mapController').router.navigate('World#'+that.app.get('channel'), { trigger:false });
 
-      //this.app.get('content2').hide();
-      that.app.trigger('reloadSidebarTopics', 'World');
+      if (!that.app.get('mapController').placing) {
+        that.app.trigger('reloadSidebarTopics', 'World');
+      }
 
+      that.app.get('mapController').updateHeatPoints();
 
     });
 

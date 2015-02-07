@@ -39,7 +39,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
       //THIS ONE ADDS A RANDOM QUERY VARIABLE TO THE REQUEST TO REFRESH THE IMAGE
       $.ajax({
-        url: 'http://liveworld.io:80/user',
+        url: 'http://egora.co:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -94,7 +94,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'https://liveworld.io:443/checkVerification',
+        url: 'https://egora.co:443/checkVerification',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -127,7 +127,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $channelCreationButton.on('click', function() {
 
       $.ajax({
-        url: 'https://liveworld.io:443/checkVerification',
+        url: 'https://egora.co:443/checkVerification',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -181,9 +181,26 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.children('#buttonBox').append($changeEmailButton);
 
 
+    var inviteCodesLabel = this.app.translate('View Invite Codes');
+    var $inviteCodesButton = $('<button id="inviteCodesButton">'+inviteCodesLabel+'</button>');
+    $inviteCodesButton.on('click', function() {
+      that.app.get('detailView').displayed = 'Invite';
+      that.app.get('content2').show(new Agora.Views.InviteView(that.app));
+    });
+    this.$el.children('#buttonBox').append($inviteCodesButton);
+
+    var twitterLabel = this.app.translate('Connect Twitter Account');
+    var $twitterButton = $('<button id="inviteCodesButton">'+twitterLabel+'</button>');
+    $twitterButton.on('click', function() {
+      that.app.get('detailView').displayed = 'Twitter';
+      that.app.get('content2').show(new Agora.Views.TwitterView(that.app));
+    });
+    this.$el.children('#buttonBox').append($twitterButton);
+
+
     //get recently visited topics
     $.ajax({
-      url: 'https://liveworld.io:443/recentlyVisited',
+      url: 'https://egora.co:443/recentlyVisited',
       // url: 'http://localhost/topicTree',
       method: 'GET',
       crossDomain: true,
@@ -199,6 +216,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
           var entryView = new Agora.Views.SidebarEntryView(that.app);
+          entryView.noMouseover = true;
           that.subViews.push(entryView);
           entryView.model = models[i];
           entryView.renderTopic();
@@ -221,7 +239,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               //get specific topic tree from server
               $.ajax({
-                url: 'http://liveworld.io:80/topicTree',
+                url: 'http://egora.co:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
@@ -242,7 +260,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               //register the topic visit with the server
               $.ajax({
-                url: 'https://liveworld.io:443/visitedTopic',
+                url: 'https://egora.co:443/visitedTopic',
                 // url: 'http://localhost/topicTree',
                 method: 'POST',
                 crossDomain: true,
@@ -334,7 +352,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
   },
 
   close: function() {
-    console.log('settingsviewclosing');
     this.remove();
   }
 

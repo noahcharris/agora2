@@ -78,7 +78,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
         if ($('#channelInput').val().length > 0) {
 
           $.ajax({
-            url: 'http://liveworld.io:80/channelSearch',
+            url: 'http://egora.co:80/channelSearch',
             //url: 'http://localhost:80/channelSearch',
             data: {
               input: searchParameter
@@ -128,6 +128,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
           that.app.get('sidebarView').displayed = 'Topics-Top';
           that.app.changeChannel(x);
           that.render();
+          that.app.trigger('reloadSidebarTopics');
 
         ;}
 
@@ -151,7 +152,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'http://liveworld.io:80/channelSubtree',
+        url: 'http://egora.co:80/channelSubtree',
         //url: 'http://localhost:80/channelSubtree',
         crossDomain: true,
         method: 'GET',
@@ -161,7 +162,6 @@ Agora.Views.ChannelView = Backbone.View.extend({
         success: function(data) {
           if (data) {
             
-
             that.app.get('sidebarView').searchCollection = data;
             that.app.get('sidebarView').displayed = 'Search';
             that.app.get('content1').show(that.app.get('sidebarView'));

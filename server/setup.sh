@@ -60,14 +60,14 @@ echo "copying files to ec2";
 echo "...";
 mkdir client;
 mkdir server;
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/* ec2-user@liveworld.io:/home/ec2-user/client/;
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/server/* ec2-user@liveworld.io:/home/ec2-user/server/;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/* ec2-user@egora.co:/home/ec2-user/client/;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/server/* ec2-user@egora.co:/home/ec2-user/server/;
 
 #update client files with these, it's much faster (no resources)
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/controllers/* ec2-user@liveworld.io:/home/ec2-user/client/controllers/;
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/views/* ec2-user@liveworld.io:/home/ec2-user/client/views/;
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/index.html ec2-user@liveworld.io:/home/ec2-user/client/index.html;
-scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/myStyles.css ec2-user@liveworld.io:/home/ec2-user/client/myStyles.css;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/controllers/* ec2-user@egora.co:/home/ec2-user/client/controllers/;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/views/* ec2-user@egora.co:/home/ec2-user/client/views/;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/index.html ec2-user@egora.co:/home/ec2-user/client/index.html;
+scp -i /Users/noahharris/Desktop/ArgentHearted/blogServerKeyPair.pem -r /Users/noahharris/Desktop/agora2/client/myStyles.css ec2-user@egora.co:/home/ec2-user/client/myStyles.css;
 
 
 

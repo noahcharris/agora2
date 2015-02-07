@@ -5,7 +5,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'detailEntryItem',
+  id: 'detailEntryItem',
 
   initialize: function(appController) {
 
@@ -132,6 +132,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $channelString[0].onclick = function() {
 
       that.app.changeChannel(that.model.channel);
+      that.app.trigger('reloadSidebarTopics');
 
     };
 
@@ -140,7 +141,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $upvote[0].onclick = function() {
 
       $.ajax({
-        url: 'https://liveworld.io:443/upvoteTopic',
+        url: 'https://egora.co:443/upvoteTopic',
         // url: 'http://localhost/upvoteTopic',
         method: 'POST',
         crossDomain: true,
@@ -175,7 +176,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         location: that.model.location,
         channel: that.model.channel,
         topicId: that.model.id,
-        urlSuffix: 'createComment'
+        urlSuffix: 'createComment',
+        OP: that.model.username
       }
 
       that.openInputBox(responseParams);
@@ -183,12 +185,10 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     };
 
     $linkButton = this.$el.children('#conversationWrapper').children('div.topicBox').children('#detailTopicClear').children('#linkBox');
-    console.log($linkButton);
     if (!that.model.link) {
       $linkButton.hide();
     }
     $linkButton[0].onclick = function() {
-      console.log('liNKK');
       //maybe shouldn't use this, maybe just use navigate, because of compatibility concerns
       window.open(that.model.link, '_blank');
     };
@@ -265,7 +265,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $upvote[0].onclick = function() {
 
           $.ajax({
-            url: 'https://liveworld.io:443/upvoteComment',
+            url: 'https://egora.co:443/upvoteComment',
             // url: 'http://localhost/upvoteComment',
             method: 'POST',
             crossDomain: true,
@@ -307,7 +307,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             channel: that.model.channel,
             topicId: that.model.id,
             commentId: comments[x].id,
-            urlSuffix: 'createResponse'
+            urlSuffix: 'createResponse',
+            OP: that.model.username
           }
 
           that.openInputBox(responseParams);
@@ -331,6 +332,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         var commentCollapsed = true;
         $expandCommentButton[0].onclick = function(e) {
           if (!commentCollapsed) {
+
 
             //TODO
             $(e.target).parent().parent().next().css('height', '0px');
@@ -386,7 +388,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           var x = comments[i].responses[j].id;
           $upvote[0].onclick = function() {
             $.ajax({
-              url: 'https://liveworld.io:443/upvoteResponse',
+              url: 'https://egora.co:443/upvoteResponse',
               // url: 'http://localhost/upvoteResponse',
               method: 'POST',
               crossDomain: true,
@@ -462,7 +464,8 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               commentId: comments[x].id,
               responseId: comments[x].responses[y].id,
               urlSuffix: 'createReply',
-              replyToUser: comments[x].responses[y].username
+              replyToUser: comments[x].responses[y].username,
+              OP: that.model.username
             }
 
             that.openInputBox(responseParams);
@@ -564,7 +567,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             var x = comments[i].responses[j].replies[k].id;
             $upvote[0].onclick = function() {
               $.ajax({
-                url: 'https://liveworld.io:443/upvoteReply',
+                url: 'https://egora.co:443/upvoteReply',
                 // url: 'http://localhost/upvoteReply',
                 method: 'POST',
                 crossDomain: true,
@@ -718,7 +721,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
   goToUser: function(user) {
     var that = this;
     $.ajax({
-      url: 'http://liveworld.io:80/user',
+      url: 'http://egora.co:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -729,9 +732,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       success: function(data) {
         if (data) {
 
-          console.log('whaaa');
           that.app.get('detailView').displayed = 'Users';
-          console.log('server returned: ', data);
 
           //SERVER NEEDS TO RETURN WHETHER A USER IS A CONTACT OR NOT......
 
@@ -762,91 +763,102 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         }
         $('#inputBox').css('height', '100px');
 
+        setTimeout(function() {
+          $('#inputBox').children('#inputHeadlineTextArea').focus();
+        }, 700);
+
         var ajaxing = false;
         var sendHandler = function() {
 
-          if (!ajaxing) {
+          if ($('textarea#inputTextArea').val() === '' && $('textarea#inputHeadlineTextArea').val() === '') {
+            alert(that.app.translate('you must provide either a headline or contents'));
+          } else {
 
-              ajaxing = true;
+              if (!ajaxing) {
 
-              var fd = new FormData();    
-              fd.append( 'file', $('#imageInput')[0].files[0] );
-              fd.append( 'username', that.app.get('username') );
-              fd.append( 'token', that.app.get('token') );
+                  ajaxing = true;
 
-              fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
+                  var fd = new FormData();    
+                  fd.append( 'file', $('#imageInput')[0].files[0] );
+                  fd.append( 'username', that.app.get('username') );
+                  fd.append( 'token', that.app.get('token') );
 
-              fd.append( 'link', $('textarea#inputTextArea').val() );
+                  fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
 
-              fd.append( 'contents', $('textarea#inputTextArea').val() );
+                  fd.append( 'link', 'link');
 
-              fd.append( 'location', data.location );
-              fd.append( 'channel', data.channel );
+                  fd.append( 'contents', $('textarea#inputTextArea').val() );
 
-              fd.append( 'topicId', data.topicId );
-              fd.append( 'commentId', data.commentId );
-              fd.append( 'responseId', data.responseId );
+                  fd.append( 'location', data.location );
+                  fd.append( 'channel', data.channel );
 
-              //whaaaa
-              var thet = this;
+                  fd.append( 'topicId', data.topicId );
+                  fd.append( 'commentId', data.commentId );
+                  fd.append( 'responseId', data.responseId );
+                  fd.append( 'OP', data.OP);
 
-              $.ajax({
-                url: 'https://liveworld.io:443/' + data.urlSuffix,
-                // url: 'http://localhost/' + data.urlSuffix,
-                method: 'POST',
-                crossDomain: true,
-                xhrFields: {
-                  withCredentials: true
-                },
-                contentType: false,
-                processData: false,
-                data: fd,
-                success: function(msg) {
+                  //whaaaa
+                  var thet = this;
 
-                  if (msg[0] === 'e') {
-                    alert(that.app.translate('please make sure your file is not bigger than 10MB'));
-                  } else {
+                  $.ajax({
+                    url: 'https://egora.co:443/' + data.urlSuffix,
+                    // url: 'http://localhost/' + data.urlSuffix,
+                    method: 'POST',
+                    crossDomain: true,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(msg) {
 
-                    alert(that.app.translate('submission successful'));
-                    $('#inputBox').css('height', '0px');
-                    //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+                      if (msg[0] === 'e') {
+                        alert(that.app.translate('please make sure your file is not bigger than 10MB'));
+                      } else {
 
-                    //that.app.trigger('reloadSidebarTopics');
-                    //just reload fuck it
-                    setTimeout(function() {
+                        alert(that.app.translate('submission successful'));
+                        $('#inputBox').css('height', '0px');
+                        //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
 
+                        //that.app.trigger('reloadSidebarTopics');
+                        //just reload fuck it
+                        setTimeout(function() {
+
+                          ajaxing = false;
+
+                          $.ajax({
+                            url: 'http://egora.co/topicTree',
+                            // url: 'http://localhost/topicTree',
+                            method: 'GET',
+                            crossDomain: true,
+                            data: {
+                              //these two models are different scope!
+                              topicId: that.model.id
+                            },
+                            success: function(model) {
+
+                              that.app.get('content2').show(that.app.get('detailView'), model);
+                            },
+                            error: function() {
+                              alert(that.app.translate('server error'));
+                            }
+                          });
+
+                        }, 1000);
+
+                      }
+
+                    },
+                    error: function() {
+                      alert(that.app.translate('server error'));
                       ajaxing = false;
+                    }
+                  });
 
-                      $.ajax({
-                        url: 'http://liveworld.io/topicTree',
-                        // url: 'http://localhost/topicTree',
-                        method: 'GET',
-                        crossDomain: true,
-                        data: {
-                          //these two models are different scope!
-                          topicId: that.model.id
-                        },
-                        success: function(model) {
+              }
+          }//end headline/contents check
 
-                          that.app.get('content2').show(that.app.get('detailView'), model);
-                        },
-                        error: function() {
-                          alert(that.app.translate('server error'));
-                        }
-                      });
-
-                    }, 1000);
-
-                  }
-
-                },
-                error: function() {
-                  alert(that.app.translate('server error'));
-                  ajaxing = false;
-                }
-              });
-
-          }
 
         };//end post button handler
 

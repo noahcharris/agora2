@@ -34,6 +34,7 @@
      <div id="notificationsButton" class="topbarIcon">
      <img id="notificationsImage" src="/resources/images/notifications.png"></img>
      </div>
+     <img id="aboutButton" class="topbarIcon" src="/resources/images/questionMark.png" height="20px" width="20px"></img>
      <!--<img id="notificationsImage" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/notifications.png"></img>-->
      </div>
       <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
@@ -85,14 +86,22 @@
 
     <script id="RTLnewMessageTemplate" type="text/template">
       <div class="notificationBox">
-        <p><%= sender %>&nbsp<%= newMessageLabel %></p>
+        <p><%= sender %>&nbsp&nbsp<%= newMessageLabel %></p>
       </div>
     </script>
 
     <script id="topicActivityTemplate" type="text/template">
       <div class="notificationBox">
+        <p><%= topicActivityLabel %><%= topicNumberLabel %></p>
       </div>
     </script>
+
+    <script id="RTLtopicActivityTemplate" type="text/template">
+      <div class="notificationBox">
+        <p><%= topicNumberLabel %><%= topicActivityLabel %></p>
+      </div>
+    </script>
+
 
     <!--Sidebar Entry Views-->
 
@@ -477,7 +486,6 @@
       <p><%= description %></p>
 
       <div id="channelBox">
-        <h1 > <%= name %> </h1>
         <button id="goToButton"><%= goToLabel %></button>
         <br/><br/><br/><br/>
       </div>
@@ -514,6 +522,7 @@
       <div id="profileUsername"> <%= username %> </div>
       <div id="profileOrigin"> <%= originLabel %>:&nbsp<%= origin %> </div>
       <div id="profileLocation"><%= locationLabel %>:&nbsp<%= location %> </div>
+      <div id="toolColumn"></div>
       <p><%= recentlyPostedLabel %></p>
       <ul id="recentlyPostedList"></ul>
     </script>
@@ -665,6 +674,8 @@
       <%= bigRegisterLabel %>
       <br/>
       <br/><br/>
+      <input placeholder="invite code" id="signupCodeInput"></input>
+      <br/>
       <input placeholder="username" id="signupUsernameInput"></input>
       <button id="checkAvailabilityButton"><%= availabilityLabel %></button>
       <br/>
@@ -726,7 +737,10 @@
     <!-- ### DEPENDENCIES ### -->
 
     <!--<script src="dependencies/jquery/jquery.js"></script>-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+
+    <!-- this cdn link gets blocked by reed proxy wtf??? -->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>-->
+    <script src="https://s3-us-west-2.amazonaws.com/agora-static-storage/jQuery.js" ></script>
     <script src="dependencies/underscore/underscore.js"></script>
     <script src="dependencies/backbone/backbone.js"></script>
     <script src="dependencies/q.js"></script>
@@ -737,7 +751,8 @@
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 
 
-    <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
+    <script src="http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
+
     <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     
     <script src="/resources/us-states.js"></script>
@@ -770,6 +785,9 @@
     <script src="views/LocationCreationView.js"></script>
     <script src="views/ChannelCreationView.js"></script>
     <script src="views/PlacementView.js"></script>
+    <script src="views/AboutView.js"></script>
+    <script src="views/InviteView.js"></script>
+    <script src="views/TwitterView.js"></script>
 
     <!--minified/concated output-->
     <!--<script src="dist/output.js"></script>-->

@@ -8,7 +8,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
   tagName: 'div',
 
-  className: 'detailEntryItem',
+  id: 'detailEntryItem',
 
   initialize: function(appController) {
     this.template = _.template( $('#detailMessageEntryTemplate').html() );
@@ -75,7 +75,7 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
 
         ajaxing = true;
         $.ajax({
-          url: 'https://liveworld.io:443/sendMessage',
+          url: 'https://egora.co:443/sendMessage',
           // url: 'http://localhost:80/sendMessage',
           method: 'POST',
           crossDomain: true,

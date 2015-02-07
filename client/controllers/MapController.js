@@ -9,8 +9,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
   defaults: {
     location: 'World',
-    //need to exorcise 'groups'
-    group:'',
     countries: null,
     states: null,
     cities: null,
@@ -22,7 +20,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.router = null;
     this.app = appController;
-    this.handler;
+    this.handler = function() {};
     //use this for point placement to disable reloading sidebar
     this.placing = false;
     this.placedLatitude;
@@ -58,23 +56,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.set('map', map);
     this.addCountries(); //map starts off with countries loaded
     this.setZoomEvents();
-
-
-    //CLUSTER GROUP
-
-    // var clusterGroup = new L.MarkerClusterGroup({
-    //   disableClusteringAtZoom: 8
-    // });
-    // //use addLayers instead
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // clusterGroup.addLayer( new L.Marker([21.28937435586041, 4.21875]));
-    // map.addLayer(clusterGroup);
-
-
-
-
-
 
 
 
@@ -133,7 +114,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //update user-locations points
       if (map.getZoom() > 7) {
         center = map.getCenter();
-        console.log(center);
         
         if (!that.placing) {
           that.addPlacesWithinRadius(center.lat, center.lng);
@@ -226,6 +206,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
   showWorld: function() {
+    this.app.get('sidebarView').page = 1;
+
     var southWest = L.latLng(-67.474922384787, -153.984375);
     var northEast = L.latLng(79.36770077764092, 162.421875);
     var worldBounds = L.latLngBounds(southWest, northEast);
@@ -246,6 +228,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //this.app.get('content2').hide();
     this.app.trigger('reloadSidebarTopics', 'World');
 
+    this.updateHeatPoints();
+
   },
 
 
@@ -260,9 +244,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   updateHeatPoints: function() {
     var that = this;
 
-    console.log(that.heatMarkerLayer);
-
-    // this.get('map').removeLayer(this.heatMarkerLayer);
     that.heatMarkerLayer.clearLayers();
 
 
@@ -270,7 +251,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
     $.ajax({
-      url: 'http://liveworld.io:80/heatPoints',
+      url: 'http://egora.co:80/heatPoints',
       crossDomain: true,
       data: {
         location: this.get('location'),
@@ -278,8 +259,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       },
       success: function(data) {
         if (data) {
-
-          console.log('heatpoint data; ', data);
 
           //RECEIVE TOP 100 TOPICS FOR HEAT,
           //BUILD A TOP 10 OBJECT OF DISTINCT AREAS,
@@ -299,7 +278,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             }
           }
 
-          console.log("RESULT: ", result);
 
           for (var key in result) {
 
@@ -363,9 +341,19 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         name: e.target.city
       }
       that.showMapPopup(data);
+      var sidebar = that.app.get('sidebarView');
+      if (sidebar.diplayed === 'Topics') {
+        for (var i=0; i < sidebar.collection.length ;i++) {
+
+
+
+        }
+      }
+
     };
     var mouseoutHandler = function(e) {
       that.closeMapPopup();
+      that.app.get('sidebarView').removeHighlights();
     };
 
     //change the intensity of the icon as occurrences increases
@@ -446,7 +434,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //USER-CREATED PLACE
 
       $.ajax({
-        url: 'http://liveworld.io:80/placeLatLng',
+        url: 'http://egora.co:80/placeLatLng',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -574,8 +562,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   },
   highlightCity: function(cityName) {
 
-    console.log('trying to highlight: ', cityName);
-
     var cities = this.get('cities') || {};
     for (var key in cities._layers) {
       if (cities._layers[key].city === cityName) {
@@ -612,13 +598,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         iconUrl: '/resources/images/dot.png',
         shadowUrl: '/resources/images/leaf-shadow.png',
 
-        iconSize:     [20, 26], // size of the icon
+        iconSize:     [20, 20], // size of the icon
         shadowSize:   [0, 0], // size of the shadow
-        iconAnchor:   [4.5, 26], // point of the icon which will correspond to marker's location
+        iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
-    console.log('highlishting place: ', latitude, longitude);
     if (this.placeMarker)
       this.get('map').removeLayer(this.placeMarker);
     this.placeMarker = L.layerGroup();
@@ -668,11 +653,11 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   goToPath: function(path, extra) {
 
 
-    console.log('goingt to path', path);
+    console.log('going to path', path);
 
     var that = this;
 
-
+    this.app.get('sidebarView').page = 1;
 
 
     this.app.get('sidebarView').displayed = 'Topics-Top';
@@ -690,6 +675,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (name === that.customBounds[i].name) {
           that.get('map').fitBounds(that.customBounds[i].bounds);
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
           foo = true;
           break;
@@ -702,6 +690,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           if (this.get('countries')._layers[key].feature.properties.name === path) {
             this.get('map').fitBounds(this.get('countries')._layers[key].getBounds());
             this.set('location', path);
+            if (!this.placing) {
+              this.app.trigger('reloadSidebarTopics', path, extra);
+            }
             that.updateHeatPoints();
           }
         }
@@ -722,6 +713,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         if (this.get('states')._layers[key].feature.properties.name === path) {
           this.get('map').fitBounds(this.get('states')._layers[key].getBounds());
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
         }
       }
@@ -738,6 +732,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           this.get('map').setZoom(12);
           this.get('map').panTo(this.get('cities')._layers[key]._latlng);
           this.set('location', path);
+          if (!this.placing) {
+            this.app.trigger('reloadSidebarTopics', path, extra);
+          }
           that.updateHeatPoints();
         }
       }
@@ -746,7 +743,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
       //MAKE AN AJAX CALL TO GET LAT AND LNG OF THE PLACE
       $.ajax({
-        url: 'http://liveworld.io:80/placeLatLng',
+        url: 'http://egora.co:80/placeLatLng',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -755,11 +752,12 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         success: function(data) {
           if (data) {
             that.get('map').setZoom(12);
-            console.log('wjeklajk: ', data[0].latitude, data[0].longitude);
             var coords = L.latLng(data[0].latitude, data[0].longitude);
             that.get('map').panTo(coords);
             that.set('location', path);
-            that.app.trigger('reloadSidebarTopics', path);
+            if (!this.placing) {
+              that.app.trigger('reloadSidebarTopics', path, extra);
+            }
             that.updateHeatPoints();
           } else {
           }
@@ -770,21 +768,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       });
 
 
-
-
-
     }
 
-    if (!this.placing) {
-      if (this.app.get('sidebarView').displayed !== 'Topics'
-      && this.app.get('sidebarView').displayed !== 'Topics-Top'
-      && this.app.get('sidebarView').displayed !== 'Topics-New'
-      && this.app.get('sidebarView').displayed !== 'Topics-Hot') {
-        this.app.get('sidebarView').displayed = 'Topics-Top';
-      }
-      //this.app.get('content2').hide();
-      this.app.trigger('reloadSidebarTopics', path, extra);
-    }
+
 
   },
 
@@ -846,7 +832,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     $.ajax({
       //this is not for 'placing' points, it is retrieving points of 'Places'
-      url: 'http://liveworld.io:80/placePoints',
+      url: 'http://egora.co:80/placePoints',
       method: 'GET',
       data: { 
         latitude: latitude,
@@ -854,7 +840,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       },
       success: function(data) {
 
-        console.log('POINTSSZZZZZ::::: ', data);
         that.pointsLayer.clearLayers();
 
         if (data.length) {
@@ -874,7 +859,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           });
 
           var mouseoverHandler = function(e) {
-            console.log(e);
             var data = {
               name: e.target.city
             }
@@ -977,8 +961,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
          {icon: cityIcon});//.addTo(this.get('map')); 
 
         var clickHandler = function(e) {
-          that.get('map').setZoom(12, { animate:false });
           that.get('map').panTo(e.target._latlng, { animate:false });
+          that.get('map').setZoom(12, { animate:false });
           that.set('location', e.target.city);
           //that.router.navigate('World/'+e.target.city, { trigger:false });
           if (!that.placing) {
@@ -988,7 +972,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
               && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
                 that.app.get('sidebarView').displayed = 'Topics-Top';
               } 
-            that.set('group', undefined);
             that.app.trigger('reloadSidebarTopics', e.target.city);
           }
         };
@@ -1108,7 +1091,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
               that.app.get('sidebarView').displayed = 'Topics-Top';
             }
-          that.set('group', undefined);
 
 
           that.app.trigger('reloadSidebarTopics', e.target.feature.properties.name);
@@ -1207,7 +1189,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
         var foo = false;
         for (var i=0;i<that.customBounds.length;i++) {
           if (name === that.customBounds[i].name) {
-            console.log('for ', name, ' custom bounds: ', that.customBounds[i]);
             that.get('map').fitBounds(that.customBounds[i].bounds);
             foo = true;
             break;
@@ -1228,7 +1209,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
             && that.app.get('sidebarView').displayed !== 'Topics-Hot') {
               that.app.get('sidebarView').displayed = 'Topics-Top';
             }
-          that.set('group', undefined);
 
         }
         that.app.trigger('reloadSidebarTopics', name);

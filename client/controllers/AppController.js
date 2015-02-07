@@ -93,18 +93,18 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var locationView = new Agora.Views.LocationView({ model:mapController });
     locationView.app = this;
     locationView.router = router;
-    locationView.render();
     this.set('locationView', locationView);
     $('#topbar2').append(locationView.$el);
+    locationView.render();
 
     var channelView = new Agora.Views.ChannelView({ model: mapController });
     //used by detailChannelView
     this.set('channelView', channelView);
     channelView.app = this;
     channelView.router = router;
-    channelView.render();
     this.set('channelView', channelView);
     $('#topbar2').append(channelView.$el);
+    channelView.render();
     channelView.setHandlers();
 
     var registrationView = new Agora.Views.RegistrationView(this);
@@ -114,11 +114,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     this.set('placementView', placementView);
 
 
-    //WHAT THE FUCK??
-    //need to use this setTimeout otherwise the cancelled tiles are loaded
-    setTimeout(function() { Backbone.history.start(); }, 10);
-
-
     // ## LOCATIONVIEW EVENTING ##
 
     //sets up the highlighting interaction between sidebarView and detailView
@@ -126,11 +121,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       locationView.render();
     });
 
-    locationView.render();
-
-
-
-    
 
 
     //#######################################
@@ -141,6 +131,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //THIS TAKES AN 'EXTRA' TOPIC WHICH IS UNSHIFTED INTO THE TOPICSCOLLECTION
     //THIS IS FOR SEARCH & 'RECENTLY VISITED'
+    //GOING TO THROTTLE RELOAD SIDEBAR TOPICS BECAUSE I CALL IT SO MANY PLACES
+
     this.on('reloadSidebarTopics', function(location, extra, cb) { 
       cb = cb || function() {};
 
@@ -180,11 +172,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username;
       if (secure) {
         //only send token and username if we are on SSL!!
-        url = 'https://liveworld.io:443' + urlPath;
+        url = 'https://egora.co:443' + urlPath;
         token = that.get('token');
         username = that.get('username');
       } else {
-        url = 'http://liveworld.io:80' + urlPath;
+        url = 'http://egora.co:80' + urlPath;
       }
 
       $.ajax({
@@ -235,7 +227,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username = that.get('username');
 
       $.ajax({
-        url: 'https://liveworld.io:443/contacts',
+        url: 'https://egora.co:443/contacts',
         //url: 'http://localhost:80/contacts',
         crossDomain: true,
         method: 'GET',
@@ -283,7 +275,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'https://liveworld.io:443/messages',
+        url: 'https://egora.co:443/messages',
         //url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
@@ -320,12 +312,13 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //#######################################
 
     var throttledResize = _.throttle(function() {
-
+      //resizeee
 
       //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
       var height = $(window).height() - $('#topbarWrapper').height();
       $('#sidebarContainer').css('height', height);
-      //$('#map').css('height', height);
+
+      $('#mainWrapper').css('height', height);
 
 
       if ($(window).width() > 500) {
@@ -374,23 +367,20 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     setTimeout(function() {
 
+      throttledResize();
 
-      var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
-      var sideWidth = $(window).width() - mapWidth;
-      $('#content1').css('width', sideWidth+'px');
+      // var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
+      // var sideWidth = $(window).width() - mapWidth;
+      // $('#content1').css('width', sideWidth+'px');
 
-      //do i need this extra bit down here??
-      // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
-      var height = $(window).height() - $('#topbarWrapper').height();
-      $('#sidebarContainer').css('height', height);
-      //$('#map').css('height', height);
+      // //do i need this extra bit down here??
+      // // //SETTING SIDEBAR CONTAINER AND MAP HEIGHT
+      // var height = $(window).height() - $('#topbarWrapper').height();
+      // $('#sidebarContainer').css('height', height);
+      // $('#map').css('height', height);
       
-    }, 100);
+    }, 1000);
 
-
-
-    //NEED TO LOAD HERE NOW CAUSE ROUTER NO LONGER DOES IT
-    this.trigger('reloadSidebarTopics', 'World');
 
 
 
@@ -398,7 +388,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //LOADER ANIMATION
     var $body = $('body');
-    console.log('what you need: ', $body.children('#loader'));
     $body.children('#loader').hide();
     $(document).on({
         ajaxStart: function() { 
@@ -416,7 +405,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //CHECK INITIAL LOGIN STATE
     $.ajax({
-      url: 'https://liveworld.io:443/checkLogin',
+      url: 'https://egora.co:443/checkLogin',
       //url: 'http://localhost:80' + urlPath,
       crossDomain: true,
       xhrFields: {
@@ -461,7 +450,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         height = height.slice(0, height.length-2);
       }
 
-      if (e.keyCode == 27) {
+      if (e.keyCode === 27) {
 
         console.log(that.get('imageFullscreen'));
         if (that.get('imageFullscreen')) {
@@ -483,14 +472,21 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           $('#channelInput').remove();
           that.changeChannel('All');
           that.get('mapController').showWorld();
-        } else {
+        } else if (that.get('expanded')) {
           that.get('content2').hide();
+        } else {
+          that.changeChannel('All');
+          that.get('sidebarView').displayed = 'Topics-Top';
+          that.get('mapController').showWorld();
         }
 
 
       } 
 
     });
+
+
+    Backbone.history.start();
     
   },//END CONTROLLER INITIALIZE
 
@@ -512,7 +508,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://liveworld.io:80/user',
+      url: 'http://egora.co:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -554,7 +550,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     console.log('the thing');
     $.ajax({
-      url: 'http://liveworld.io:80/location',
+      url: 'http://egora.co:80/location',
       crossDomain: true,
       data: {
         location: location,
@@ -582,7 +578,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://liveworld.io:80/channel',
+      url: 'http://egora.co:80/channel',
       crossDomain: true,
       data: {
         channel: channel,
@@ -618,15 +614,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
   changeChannel: function(channel) {
 
-    //TODO Check if channel is real before blindly switching to it
-
     this.set('channel', channel);
-    this.trigger('reloadSidebarTopics', this.get('mapController').get('location'));
     this.get('channelView').render();
-    // console.log('changing channel');
-
-    var location = this.get('mapController').get('location')
-    //this.get('mapController').router.navigate('World'+location.slice(6, location.length)+'#'+this.get('channel'), { trigger:false });
 
   },
 
@@ -816,8 +805,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           break;
       };
 
-      console.log('render method: ', renderMethod);
-
       if (currentView && currentView.close) {
         currentView.close();
       }
@@ -987,9 +974,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       }
 
 
-      console.log(that);
       $.ajax({
-        url: 'https://liveworld.io:443/notifications',
+        url: 'https://egora.co:443/notifications',
         // url: 'http://localhost:80/notifications',
         method: 'GET',
         crossDomain: true,
@@ -1014,10 +1000,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
             that.sentRequests = data.sentRequests;
             that.contactRequests = data.contactRequests;
             that.newMessages = data.newMessages;
+            that.topicActivity = data.topicActivity;
 
             if (data.contactRequests.length > 0 ||
-                data.newMessages.length > 0 /*||
-                data.topicActivity.length > 0*/) {
+                data.newMessages.length > 0 ||
+                data.topicActivity.length > 0) {
 
               var count = 0;
 
@@ -1025,6 +1012,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                 count++;
               }
               for (var i=0; i < data.contactRequests.length ;i++) {
+                count++;
+              }
+              for (var i=0; i < data.topicActivity.length ;i++) {
                 count++;
               }
 
@@ -1055,9 +1045,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       newMessageTemplate = _.template( $('#newMessageTemplate').html() );
                       RTLnewMessageTemplate = _.template( $('#RTLnewMessageTemplate').html() );
                       topicActivityTemplate = _.template( $('#topicActivityTemplate').html() );
-
-
-
+                      RTLtopicActivityTemplate = _.template( $('#RTLtopicActivityTemplate').html() );
 
 
 
@@ -1068,7 +1056,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       var cssAdjust = -75;
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
-                        that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from');
+                        that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from ');
                         if (that.app.get('language') !== 'ar') {
                           var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
                         } else {
@@ -1080,7 +1068,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                           var thet = this;
 
                           $.ajax({
-                            url: 'http://liveworld.io:80/user',
+                            url: 'http://egora.co:80/user',
                             //url: 'http://localhost:80/user',
                             method: 'GET',
                             crossDomain: true,
@@ -1095,6 +1083,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                                 //is this creating a memory leak????
                                 $(thet).parent().empty();
+                                that.app.set('notificationsDisplayed', false);
 
                                 that.app.get('content2').show(that.app.get('detailView'), data[0]);
                               } else {
@@ -1134,7 +1123,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                       for (var i=0; i < that.newMessages.length ;i++) {
 
-                        that.newMessages[i].newMessageLabel = that.app.translate('Add contact request from');
+                        that.newMessages[i].newMessageLabel = that.app.translate('New message from ');
 
                         if (that.app.get('language') !== 'ar') {
                           var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
@@ -1175,7 +1164,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                 that.app.get('content1').show(that.app.get('sidebarView'));
 
                                 $.ajax({
-                                  url: 'https://liveworld.io:443/messageChain',
+                                  url: 'https://egora.co:443/messageChain',
                                   // url: 'http://localhost/messageChain',
                                   method: 'GET',
                                   crossDomain: true,
@@ -1194,6 +1183,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                     that.app.get('sidebarView').highlightCell(offsetCount);
                                     //Is this creating a memory leak?
                                     $(thet).parent().empty();
+                                    that.app.set('notificationsDisplayed', false);
                                   },
                                   error: function() {
                                     alert(that.app.translate('server error'));
@@ -1212,6 +1202,93 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         cssAdjust -= 50;
 
                       }//end new messages for loop
+
+
+
+
+
+
+
+
+
+                      //TOPIC ACTIVITY
+                      console.log(that.topicActivity);
+
+                      for (var i=0; i < that.topicActivity.length ;i++) {
+
+
+                        var topicActivityLabel = that.app.translate('New topic activity on /');
+                        var topicNumberLabel = that.topicActivity[i].topic;
+                        if (that.app.get('language') !== 'ar') {
+                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                                                                            topicNumberLabel: topicNumberLabel} ) );
+                        } else {
+                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                                                                            topicNumberLabel: topicNumberLabel} ) );
+                        }
+
+
+                        (function() {
+
+                          var model = that.topicActivity[i];
+
+                          $notificationBox.on('click', function() {
+
+                            $(this).parent().empty();
+                            that.app.set('notificationsDisplayed', false);
+
+                            //∆∆∆∆!!!!!!!!∆∆∆∆∆∆∆
+                            //wow this is wayyy simpler than doing all that other shit
+                            window.location.href='#topic/'+model.topic;
+
+                            //call to clear topicActivity
+
+                            $.ajax({
+                              url: 'https://egora.co:443/clearActivity',
+                              // url: 'http://localhost:80/sendContactRequest',
+                              method: 'POST',
+                              crossDomain: true,
+                              xhrFields: {
+                                withCredentials: true
+                              },
+                              data: {
+                                username: that.app.get('username'),
+                                topicId: model.topic,
+                                token: that.app.get('token')
+                              },
+                              success: function(data) {
+                                console.log(data);
+                              }, error: function(err) {
+                                console.log('ajax error ocurred: ', err);
+                              }
+                            });
+
+                            
+                          });//end entryView click
+                          
+                        })();
+
+
+                        console.log($notificationBox);
+                        $('#notificationsDisplay').append($notificationBox);
+
+                        $notificationBox.css('bottom', cssAdjust+'px');
+                        cssAdjust -= 50;
+
+
+                      };//end topic activity for loop
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                   } else {//notificationsDisplayed check
@@ -1245,7 +1322,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       // $.ajax({
       //   // url: 'http://localhost:80/updateUserProfile',
-      //   url: 'https://liveworld.io:443/refreshToken',
+      //   url: 'https://egora.co:443/refreshToken',
       //   method: 'POST',
       //   crossDomain: true,
       //   xhrFields: {
@@ -1287,7 +1364,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
       $.ajax({
-        url: 'https://liveworld.io:443/messageChain',
+        url: 'https://egora.co:443/messageChain',
         // url: 'http://localhost/messageChain',
         method: 'GET',
         crossDomain: true,

@@ -52,9 +52,6 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
       reader.readAsDataURL(e.target.files[0]);
     });
 
-    if (window.File && window.FileReader) {
-      console.log('ho');
-    }
 
 
     this.$el.append($imageInput);
@@ -90,7 +87,6 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   ajaxing = true;
 
                   var fd = new FormData();    
-                  console.log($('#imageInput'));
                   fd.append( 'file', $('#imageInput')[0].files[0] );
                   fd.append( 'username', that.app.get('username') );
                   fd.append( 'token', that.app.get('token') );
@@ -98,6 +94,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
                   fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
                   fd.append( 'location', that.app.get('mapController').get('location') );
+                  //this is not utilized..
                   fd.append( 'origin', that.app.get('origin') );
                   fd.append( 'channel', that.app.get('channel') );
                   fd.append( 'responseString', $('.g-recaptcha-response').val() );
@@ -105,7 +102,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   
 
                   $.ajax({
-                    url: 'https://liveworld.io:443/createTopic',
+                    url: 'https://egora.co:443/createTopic',
                     // url: 'http://localhost/createTopic',
                     method: 'POST',
                     crossDomain: true,
@@ -146,6 +143,9 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
 
     });//end create topic button
 
+    setTimeout(function() {
+      that.$el.children('#topicCreationHeadline').focus();
+    }, 1000);
 
 
 

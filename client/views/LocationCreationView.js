@@ -122,10 +122,11 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
         if ($('#parentInput').val().length > 1) {
 
           $.ajax({
-            url: 'http://liveworld.io:80/locationSearch',
+            url: 'http://egora.co:80/locationSearch',
             //url: 'http://localhost:80/channelSearch',
             data: {
-              input: searchParameter
+              input: searchParameter,
+              onlyCities: true
             },
             crossDomain: true,
             success: function(data) {
@@ -180,7 +181,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
 
       console.log(that.$el.children('input#parentInput').val())
     $.ajax({
-      url: 'http://liveworld.io:80/validateLocation',
+      url: 'http://egora.co:80/validateLocation',
       // url: 'http://localhost:80/locationSearch',
       data: {
         name: that.$el.children('input#locationNameInput').val(),

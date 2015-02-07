@@ -23,7 +23,7 @@ var translationData = [{
   es: 'Tema',
 },{
   en: 'Top',
-  ar: '',
+  ar: 'فوق',
   zh: '?? ',
   fr: '',
   de: '',
@@ -33,7 +33,7 @@ var translationData = [{
   es: 'Popular',
 },{
   en: 'New',
-  ar: '',
+  ar: 'جديد',
   zh: '??',
   fr: '',
   de: '',
@@ -43,7 +43,7 @@ var translationData = [{
   es: 'Nuevo',
 },{
   en: 'Hot',
-  ar: '',
+  ar: 'شائع',
   zh: '??',
   fr: '',
   de: '',
@@ -53,7 +53,7 @@ var translationData = [{
   es: 'Activo',
 },{
   en: 'Friends',
-  ar: '',
+  ar: 'أصدقاء',
   zh: '??',
   fr: '',
   de: '',
@@ -63,7 +63,7 @@ var translationData = [{
   es: 'Amigos',
 },{
   en: 'Post to',
-  ar: '',
+  ar: 'خلق',
   zh: '?????',
   fr: '',
   de: '',
@@ -73,7 +73,7 @@ var translationData = [{
   es: 'Publicar en',
 },{
   en: 'Next',
-  ar: '',
+  ar: 'التالى',
   zh: '???',
   fr: '',
   de: '',
@@ -83,7 +83,7 @@ var translationData = [{
   es: 'Proximo',
 },{
   en: 'Not Logged In',
-  ar: 'لم تقم بتسجيل الدخول',
+  ar: 'لا تسجيل',
   zh: '?????',
   fr: '',
   de: '',
@@ -93,7 +93,7 @@ var translationData = [{
   es: 'No estás autenticado',
 },{
   en: 'Users',
-  ar: '',
+  ar: 'المستخدمين',
   zh: '?????',
   fr: '',
   de: '',
@@ -103,7 +103,7 @@ var translationData = [{
   es: 'Usuarios',
 },{
   en: 'Locations',
-  ar: '',
+  ar: 'مواقع',
   zh: '????',
   fr: '',
   de: '',
@@ -113,7 +113,7 @@ var translationData = [{
   es: 'Lugares',
 },{
   en: 'Channels',
-  ar: '',
+  ar: 'مواضع',
   zh: '?????',
   fr: '',
   de: '',
@@ -123,7 +123,7 @@ var translationData = [{
   es: 'Temas',
 },{
   en: 'User',
-  ar: 'المستعمل',
+  ar: 'مستعمل',
   zh: '??',
   fr: '',
   de: '',
@@ -143,7 +143,7 @@ var translationData = [{
   es: 'A',
 },{
   en: 'Add contact request from ',
-  ar: '',
+  ar: 'إضافة شخص من ',
   zh: '????',
   fr: '',
   de: '',
@@ -153,7 +153,7 @@ var translationData = [{
   es: 'Ańadir petición de contacto de',
 },{
   en: 'New message from ',
-  ar: '',
+  ar: 'رسالة جديدة من ',
   zh: '',
   fr: '',
   de: '',
@@ -163,7 +163,7 @@ var translationData = [{
   es: 'Nuevo mensaje de',
 },{
   en: 'Recipient',
-  ar: '',
+  ar: 'وصفة',
   zh: '?????',
   fr: '',
   de: '',
@@ -173,7 +173,7 @@ var translationData = [{
   es: 'Recipiente',
 },{
   en: 'Contacts',
-  ar: '',
+  ar: 'اتصالات',
   zh: '????',
   fr: '',
   de: '',
@@ -183,7 +183,7 @@ var translationData = [{
   es: 'Contactos',
 },{
   en: 'Messages',
-  ar: '',
+  ar: 'رسائل',
   zh: '?????',
   fr: '',
   de: '',
@@ -192,18 +192,8 @@ var translationData = [{
   ru: '',
   es: 'Mensajes',
 },{
-  en: 'User',
-  ar: '',
-  zh: '???',
-  fr: '',
-  de: '',
-  ja: '',
-  pt: '',
-  ru: '',
-  es: 'Usuario',
-},{
   en: 'Posted At',
-  ar: '',
+  ar: 'إنشاؤه على ',
   zh: '??????',
   fr: '',
   de: '',
@@ -213,7 +203,7 @@ var translationData = [{
   es: 'Publicado en',
 },{
   en: 'LINK',
-  ar: '',
+  ar: 'رابط',
   zh: '????',
   fr: '',
   de: '',
@@ -223,7 +213,7 @@ var translationData = [{
   es: 'ENLACE',
 },{
   en: 'Reply',
-  ar: '',
+  ar: 'رد',
   zh: '????',
   fr: '',
   de: '',
@@ -233,7 +223,7 @@ var translationData = [{
   es: 'Responder',
 },{
   en: 'From',
-  ar: '',
+  ar: 'من',
   zh: '????',
   fr: '',
   de: '',
@@ -243,7 +233,7 @@ var translationData = [{
   es: 'De',
 },{
   en: 'Post',
-  ar: '',
+  ar: 'أبدع',
   zh: '????',
   fr: '',
   de: '',
@@ -253,7 +243,7 @@ var translationData = [{
   es: 'Publicar',
 },{
   en: 'Headline',
-  ar: '',
+  ar: 'عنوان',
   zh: '??????',
   fr: '',
   de: '',
@@ -263,7 +253,7 @@ var translationData = [{
   es: 'Titular',
 },{
   en: 'Content',
-  ar: '',
+  ar: 'مضمون',
   zh: '??????',
   fr: '',
   de: '',
@@ -273,7 +263,7 @@ var translationData = [{
   es: 'Contenido',
 },{
   en: 'Send',
-  ar: '',
+  ar: 'إرسال',
   zh: '???',
   fr: '',
   de: '',
@@ -283,7 +273,7 @@ var translationData = [{
   es: 'Enviar',
 },{
   en: 'About',
-  ar: '',
+  ar: 'ملصق',
   zh: '????',
   fr: '',
   de: '',
@@ -293,7 +283,7 @@ var translationData = [{
   es: 'Acerca De',
 },{
   en: 'Go To Location',
-  ar: '',
+  ar: 'اذهب إلى موقع',
   zh: '????',
   fr: '',
   de: '',
@@ -303,7 +293,7 @@ var translationData = [{
   es: 'Ubicar',
 },{
   en: 'Go To Channel',
-  ar: '',
+  ar: 'اذهب إلى مواضع',
   zh: '??????????',
   fr: '',
   de: '',
@@ -313,7 +303,7 @@ var translationData = [{
   es: 'Ir Al Tema',
 },{
   en: 'Recently Posted',
-  ar: '',
+  ar: 'خلق مؤخرا',
   zh: '?????????????',
   fr: '',
   de: '',
@@ -323,7 +313,7 @@ var translationData = [{
   es: 'Recientemente publicado',
 },{
   en: 'Link',
-  ar: '',
+  ar: 'رابط',
   zh: '????',
   fr: '',
   de: '',
@@ -333,7 +323,7 @@ var translationData = [{
   es: 'Enlace',
 },{
   en: 'This group is',
-  ar: '',
+  ar: 'هذه المجموعة ',
   zh: '????????',
   fr: '',
   de: '',
@@ -343,7 +333,7 @@ var translationData = [{
   es: 'Este grupo es',
 },{
   en: 'Public',
-  ar: '',
+  ar: 'عمومي',
   zh: '??????',
   fr: '',
   de: '',
@@ -353,7 +343,7 @@ var translationData = [{
   es: 'Público',
 },{
   en: 'Private',
-  ar: '',
+  ar: 'خاص',
   zh: '???????',
   fr: '',
   de: '',
@@ -363,7 +353,7 @@ var translationData = [{
   es: 'Privado',
 },{
   en: 'Channel Name',
-  ar: '',
+  ar: 'اسم الموضوع',
   zh: '??????????',
   fr: '',
   de: '',
@@ -373,7 +363,7 @@ var translationData = [{
   es: 'Nombre del Tema',
 },{
   en: 'Description',
-  ar: '',
+  ar: 'وصف',
   zh: '?????????',
   fr: '',
   de: '',
@@ -403,7 +393,7 @@ var translationData = [{
   es: 'Nobre del Lugar',
 },{
   en: 'Parent Location',
-  ar: '',
+  ar: 'اسم الموقع',
   zh: '?????????????',
   fr: '',
   de: '',
@@ -413,7 +403,7 @@ var translationData = [{
   es: 'Ubicación Matriz',
 },{
   en: 'Back',
-  ar: '',
+  ar: 'عد',
   zh: '????',
   fr: '',
   de: '',
@@ -423,7 +413,7 @@ var translationData = [{
   es: 'Regresar',
 },{
   en: 'Place a point! Click Done when finished.',
-  ar: '',
+  ar: 'ضع نقطة ! انقر فوق تم عند الانتهاء.',
   zh: '??????????????????????????????????????',
   fr: '',
   de: '',
@@ -433,7 +423,7 @@ var translationData = [{
   es: 'Colocar un punto! Haga clic en Terminado cuando haya terminado',
 },{
   en: 'Recently Visited',
-  ar: '',
+  ar: 'زار مؤخرا',
   zh: '????????????????',
   fr: '',
   de: '',
@@ -443,7 +433,7 @@ var translationData = [{
   es: 'Recientemente Visitado',
 },{
   en: 'Menu',
-  ar: '',
+  ar: 'القائمة الرئيسية',
   zh: '?????',
   fr: '',
   de: '',
@@ -453,7 +443,7 @@ var translationData = [{
   es: 'Menú',
 },{
   en: 'REGISTER',
-  ar: '',
+  ar: 'تسجل',
   zh: '????????',
   fr: '',
   de: '',
@@ -463,7 +453,7 @@ var translationData = [{
   es: 'Inscribirse',
 },{
   en: 'Check Availability',
-  ar: '',
+  ar: 'فحص توافر',
   zh: '????????????????',
   fr: '',
   de: '',
@@ -483,7 +473,7 @@ var translationData = [{
   es: 'Contraseña',
 },{
   en: 'confirm password',
-  ar: '',
+  ar: 'تأكيد كلمة',
   zh: '???????????????',
   fr: '',
   de: '',
@@ -493,7 +483,7 @@ var translationData = [{
   es: 'confirmar contraseña',
 },{
   en: 'Your email is never displayed to other users.',
-  ar: '',
+  ar: 'ويشارك البريد الإلكتروني الخاص بك أبدا للجمهور',
   zh: '??????????????????????????????????????????',
   fr: '',
   de: '',
@@ -503,7 +493,7 @@ var translationData = [{
   es: 'Su dirección de correo electrónico nunca se muestra a otros usuarios',
 },{
   en: 'email',
-  ar: '',
+  ar: 'البريد الإلكتروني',
   zh: '??????',
   fr: '',
   de: '',
@@ -513,7 +503,7 @@ var translationData = [{
   es: 'Correo electrónico',
 },{
   en: 'origin',
-  ar: '',
+  ar: 'جذر',
   zh: '???????',
   fr: '',
   de: '',
@@ -523,7 +513,7 @@ var translationData = [{
   es: 'Origen',
 },{
   en: 'current location',
-  ar: '',
+  ar: 'الموقع الحالي',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -533,7 +523,7 @@ var translationData = [{
   es: 'Ubicación actual',
 },{
   en: 'about',
-  ar: '',
+  ar: 'ملصق',
   zh: '?????',
   fr: '',
   de: '',
@@ -543,7 +533,7 @@ var translationData = [{
   es: 'Acerca de',
 },{
   en: 'Register',
-  ar: '',
+  ar: 'تسجيل',
   zh: '????????',
   fr: '',
   de: '',
@@ -553,7 +543,7 @@ var translationData = [{
   es: 'Inscribirse',
 },{
   en: 'username',
-  ar: '',
+  ar: 'اسم المستخدم',
   zh: '????????',
   fr: '',
   de: '',
@@ -563,7 +553,7 @@ var translationData = [{
   es: 'Nobre de usuario',
 },{
   en: 'You cannot change origin once it is set!',
-  ar: '',
+  ar: 'لا يمكنك تغيير الجذر بعد أن كنت قد تعيينها !',
   zh: '????????????????????????????????????',
   fr: '',
   de: '',
@@ -573,7 +563,7 @@ var translationData = [{
   es: 'No se puede cambiar el origen cuando se establece',
 },{
   en: 'LOG IN',
-  ar: '',
+  ar: 'تسجيل الدخول',
   zh: '??????',
   fr: '',
   de: '',
@@ -583,7 +573,7 @@ var translationData = [{
   es: 'INICIAR SESIÓN',
 },{
   en: 'Log In',
-  ar: '',
+  ar: 'تسجيل الدخول',
   zh: '??????',
   fr: '',
   de: '',
@@ -593,7 +583,7 @@ var translationData = [{
   es: 'Iniciar Sesión',
 },{
   en: 'Log Out',
-  ar: '',
+  ar: 'تسجيل الخروج',
   zh: '??????',
   fr: '',
   de: '',
@@ -603,7 +593,7 @@ var translationData = [{
   es: 'Finalizar la Sesión',
 },{
   en: 'Done!',
-  ar: '',
+  ar: 'منجز',
   zh: '????',
   fr: '',
   de: '',
@@ -613,7 +603,7 @@ var translationData = [{
   es: 'Terminado',
 },{
   en: 'Edit My Profile',
-  ar: '',
+  ar: 'تعديل ملفي الشخصي',
   zh: '?????????????',
   fr: '',
   de: '',
@@ -623,7 +613,7 @@ var translationData = [{
   es: 'Editar Mi Perfil',
 },{
   en: 'Change Location',
-  ar: '',
+  ar: 'غيير المكان',
   zh: '????????',
   fr: '',
   de: '',
@@ -633,7 +623,7 @@ var translationData = [{
   es: 'Cambiar de Ubicación',
 },{
   en: 'Change Password',
-  ar: '',
+  ar: 'غيير كلمة المرور',
   zh: '?????????',
   fr: '',
   de: '',
@@ -643,7 +633,7 @@ var translationData = [{
   es: 'Cambiar Contraseña',
 },{
   en: 'Create Location',
-  ar: '',
+  ar: 'خلق المكان',
   zh: '??????????',
   fr: '',
   de: '',
@@ -653,7 +643,7 @@ var translationData = [{
   es: 'Crear Ubicación',
 },{
   en: 'Create Channel',
-  ar: '',
+  ar: 'غيير الموضوع',
   zh: '?????????????',
   fr: '',
   de: '',
@@ -663,7 +653,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Change Email',
-  ar: '',
+  ar: 'تغيير عنوان البريد الإلكتروني',
   zh: '????????????',
   fr: '',
   de: '',
@@ -673,7 +663,7 @@ var translationData = [{
   es: 'Cambiar Correo Electrónico',
 },{
   en: 'View My Profile',
-  ar: '',
+  ar: 'عرض ملفك الشخصي',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -683,7 +673,7 @@ var translationData = [{
   es: 'Ver Mi Perfil',
 },{
   en: 'Current Password',
-  ar: '',
+  ar: 'كلمة المرور الحالية',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -693,7 +683,7 @@ var translationData = [{
   es: 'Contraseña Actual',
 },{
   en: 'New Password',
-  ar: '',
+  ar: 'المرور الجديدة',
   zh: '????????????',
   fr: '',
   de: '',
@@ -703,7 +693,7 @@ var translationData = [{
   es: 'Nueva Contraseña',
 },{
   en: 'Confirm New Password',
-  ar: '',
+  ar: 'كلمة المرور الجديدة',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -713,7 +703,7 @@ var translationData = [{
   es: 'Confirmar Nueva Contraseña',
 },{
   en: 'CHANGE PASSWORD',
-  ar: '',
+  ar: 'غيير كلمة المرور',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -723,7 +713,7 @@ var translationData = [{
   es: 'CAMBIAR CONTRASEÑA',
 },{
   en: 'password confirmation does not match',
-  ar: '',
+  ar: 'لا يتطابق تأكيد كلمة',
   zh: '?????????????????????',
   fr: '',
   de: '',
@@ -733,7 +723,7 @@ var translationData = [{
   es: 'confirmación de la contraseña no coincide',
 },{
   en: 'CHANGE EMAIL',
-  ar: '',
+  ar: 'غيير عنوان البريد الإلكتروني',
   zh: '??????????',
   fr: '',
   de: '',
@@ -743,7 +733,7 @@ var translationData = [{
   es: 'CAMBIAR CORREO ELECTRÓNICO',
 },{
   en: 'This location is',
-  ar: '',
+  ar: 'هذا الموقع هو ',
   zh: '????????????',
   fr: '',
   de: '',
@@ -753,7 +743,7 @@ var translationData = [{
   es: 'Esta ubicación es',
 },{
   en: 'This channel is',
-  ar: '',
+  ar: 'هذا الموضوع هو',
   zh: '????????????',
   fr: '',
   de: '',
@@ -763,7 +753,7 @@ var translationData = [{
   es: 'Este tema es',
 },{
   en: 'ABOUT ME',
-  ar: '',
+  ar: 'عني',
   zh: '?????????',
   fr: '',
   de: '',
@@ -773,7 +763,7 @@ var translationData = [{
   es: 'Acerca de mí',
 },{
   en: 'Save Changes',
-  ar: '',
+  ar: 'حفظ التغييرات',
   zh: '??????????',
   fr: '',
   de: '',
@@ -782,10 +772,8 @@ var translationData = [{
   ru: '',
   es: 'Guardar los cambios',
 },{
-
-  //SERVER ONES
   en: 'error',
-  ar: '',
+  ar: 'خطأ !',
   zh: '?????',
   fr: '',
   de: '',
@@ -795,7 +783,7 @@ var translationData = [{
   es: 'error',
 },{
   en: 'not authorized',
-  ar: '',
+  ar: 'غير مصرح',
   zh: '??????????',
   fr: '',
   de: '',
@@ -805,7 +793,7 @@ var translationData = [{
   es: 'no autorizado',
 },{
   en: 'incorrect password',
-  ar: '',
+  ar: 'كلمة المرور غير صحيحة',
   zh: '????????????????',
   fr: '',
   de: '',
@@ -815,7 +803,7 @@ var translationData = [{
   es: 'contraseña incorrecta',
 },{
   en: "couldn't find user in database",
-  ar: '',
+  ar: 'لا يمكن أن تجد المستعمل',
   zh: '????????????????????',
   fr: '',
   de: '',
@@ -825,7 +813,7 @@ var translationData = [{
   es: 'no se puede encontra el usario en la base de datos',
 },{
   en: 'successfully updated email',
-  ar: '',
+  ar: 'تحديث البريد الإلكتروني',
   zh: '??????????????????',
   fr: '',
   de: '',
@@ -835,7 +823,7 @@ var translationData = [{
   es: 'correo electrónico actualizado correctamente',
 },{
   en: 'that email is taken!',
-  ar: '',
+  ar: 'أن البريد الإلكتروني غير متوفر',
   zh: '??????????????????',
   fr: '',
   de: '',
@@ -845,7 +833,7 @@ var translationData = [{
   es: 'ese correo ya existe!',
 },{
   en: 'successfully updated password',
-  ar: '',
+  ar: 'كلمة محدثة بنجاح',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -855,7 +843,7 @@ var translationData = [{
   es: 'contraseña actualizada correctamente',
 },{
   en: 'successfully updated location',
-  ar: '',
+  ar: 'موقع المحدثة بنجاح',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -865,7 +853,7 @@ var translationData = [{
   es: 'ubicación actualizada correctamente',
 },{
   en: 'success!',
-  ar: '',
+  ar: 'نجاح!',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -875,7 +863,7 @@ var translationData = [{
   es: 'Éxito',
 },{
   en: 'sent contact request',
-  ar: '',
+  ar: 'تم ارسال طلب الاتصال',
   zh: '????????????????',
   fr: '',
   de: '',
@@ -885,7 +873,7 @@ var translationData = [{
   es: 'solicitud de contacto enviada',
 },{
   en: 'Taken',
-  ar: '',
+  ar: 'مأخوذ',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -895,7 +883,7 @@ var translationData = [{
   es: 'Tomado',
 },{
   en: 'Available',
-  ar: '',
+  ar: 'متوفر',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -905,7 +893,7 @@ var translationData = [{
   es: 'Disponible',
 },{
   en: "username may not contain '@'",
-  ar: '',
+  ar: 'لا يمكن أن يحتوي اسم المستخدم رمز "@ "',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -915,7 +903,7 @@ var translationData = [{
   es: 'nombre de usuario no puede contener @',
 },{
   en: 'that username is taken!',
-  ar: '',
+  ar: 'يؤخذ أن اسم المستخدم',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -925,7 +913,7 @@ var translationData = [{
   es: 'Ese nombre de usuario ya está en uso',
 },{
   en: 'please make sure that your file size is not over 10MB',
-  ar: '',
+  ar: 'يجب أن يكون الملف الخاص بك أقل من 10 ميغابايت',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -935,7 +923,7 @@ var translationData = [{
   es: 'por favor asegúrese de que el tamaño del archivo no sea superior a 10 MB',
 },{
   en: 'successfully updated profile',
-  ar: '',
+  ar: 'تعريف تم تحديث بنجاح',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -945,7 +933,7 @@ var translationData = [{
   es: 'perfil actualizado correctamente',
 },{
   en: 'successfully submitted topic',
-  ar: '',
+  ar: 'قدمت بنجاح خلقك',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -955,7 +943,7 @@ var translationData = [{
   es: 'tema enviado correctamente',
 },{
   en: 'submission successful',
-  ar: '',
+  ar: 'تقديم الناجح',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -965,7 +953,7 @@ var translationData = [{
   es: 'sumisíon lograda',
 },{
   en: 'successfully created location',
-  ar: '',
+  ar: 'نجحت في إنشاء موقع',
   zh: '',
   fr: '',
   de: '',
@@ -974,8 +962,8 @@ var translationData = [{
   ru: '',
   es: 'ubicación creada con éxito',
 },{
-  en: 'your location is too far from its parent city.',
-  ar: '',
+  en: 'your location is too far from its parent city',
+  ar: 'الموقع الخاص بك بعيدا جدا عن المدينة الأم',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -984,8 +972,8 @@ var translationData = [{
   ru: '',
   es: 'su ubicación está demasiado lejos de su ciudad matriz',
 },{
-  en: 'your channel is too deeply nested.',
-  ar: '',
+  en: 'your channel is too deeply nested',
+  ar: 'و متداخلة الموضوع الخاص بك عميقا جدا',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -995,7 +983,7 @@ var translationData = [{
   es: 'su tema está demasiado profundamente anidado',
 },{
   en: 'successfully created channel',
-  ar: '',
+  ar: 'بنجاح إنشاء الموضوع',
   zh: '?????????????????',
   fr: '',
   de: '',
@@ -1005,7 +993,7 @@ var translationData = [{
   es: 'tema creado correctamente',
 },{
   en: 'succesfully voted',
-  ar: '',
+  ar: 'صوت بنجاح',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -1015,7 +1003,7 @@ var translationData = [{
   es: 'voto logrado',
 },{
   en: 'already voted',
-  ar: '',
+  ar: 'بالتصويت بالفعل',
   zh: '??????????????',
   fr: '',
   de: '',
@@ -1025,7 +1013,7 @@ var translationData = [{
   es: 'ya votó',
 },{
   en: 'Parent City',
-  ar: '',
+  ar: 'المدينة الأم',
   zh: '',
   fr: '',
   de: '',
@@ -1035,7 +1023,7 @@ var translationData = [{
   es: 'Cuidad Matriz',
 },{
   en: 'your location must belong to a city',
-  ar: '',
+  ar: 'موقعك يجب ان تعود الى المدينة',
   zh: '',
   fr: '',
   de: '',
@@ -1043,9 +1031,21 @@ var translationData = [{
   pt: '',
   ru: '',
   es: 'su ubicación debe pertenecer a una ciudad',
-},{
+},
+
+
+
+
+
+
+
+
+
+
+
+{
   en: 'server error',
-  ar: '',
+  ar: 'خطأ في الخادم',
   zh: '',
   fr: '',
   de: '',
@@ -1055,7 +1055,7 @@ var translationData = [{
   es: '',
 },{
   en: 'password confirmation does not match',
-  ar: '',
+  ar: 'لا يتطابق تأكيد كلمة',
   zh: '',
   fr: '',
   de: '',
@@ -1065,7 +1065,7 @@ var translationData = [{
   es: '',
 },{
   en: 'channel unavailable :(',
-  ar: '',
+  ar: 'الموضوع غير متاحة :(',
   zh: '',
   fr: '',
   de: '',
@@ -1075,7 +1075,7 @@ var translationData = [{
   es: '',
 },{
   en: "channel name cannot contain '/'",
-  ar: '',
+  ar: 'اسم الموضوع لا يمكن أن تحتوي على الرمز "/"',
   zh: '',
   fr: '',
   de: '',
@@ -1085,7 +1085,7 @@ var translationData = [{
   es: '',
 },{
   en: 'location unavailable :(',
-  ar: '',
+  ar: 'موقع غير متوفر',
   zh: '',
   fr: '',
   de: '',
@@ -1105,7 +1105,7 @@ var translationData = [{
   es: '',
 },{
   en: "username may not contain '@'",
-  ar: '',
+  ar: 'الموقع لا يمكن أن تحتوي على الرمز “@“',
   zh: '',
   fr: '',
   de: '',
@@ -1115,7 +1115,7 @@ var translationData = [{
   es: '',
 },{
   en: 'that location already exists',
-  ar: '',
+  ar: 'هذا الموقع موجود بالفعل',
   zh: '',
   fr: '',
   de: '',
@@ -1125,7 +1125,7 @@ var translationData = [{
   es: '',
 },{
   en: 'that channel already exists',
-  ar: '',
+  ar: 'هذا الموضوع موجود بالفعل',
   zh: '',
   fr: '',
   de: '',
@@ -1135,7 +1135,7 @@ var translationData = [{
   es: '',
 },{
   en: 'succesfully voted',
-  ar: '',
+  ar: 'صوت بنجاح',
   zh: '',
   fr: '',
   de: '',
@@ -1145,7 +1145,7 @@ var translationData = [{
   es: '',
 },{
   en: 'already voted',
-  ar: '',
+  ar: 'بالتصويت بالفعل',
   zh: '',
   fr: '',
   de: '',
@@ -1155,7 +1155,7 @@ var translationData = [{
   es: '',
 },{
   en: 'upvote failed',
-  ar: '',
+  ar: 'فشل التصويت الإيجابي',
   zh: '',
   fr: '',
   de: '',
@@ -1165,7 +1165,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to post a reply',
-  ar: '',
+  ar: 'يجب أن تكون مسجلا لمرحلة ما بعد الرد',
   zh: '',
   fr: '',
   de: '',
@@ -1175,7 +1175,7 @@ var translationData = [{
   es: '',
 },{
   en: 'your parent channel must begin with "All"',
-  ar: '',
+  ar: 'يجب أن يبدأ الموضوع والديك مع "All"',
   zh: '',
   fr: '',
   de: '',
@@ -1185,7 +1185,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please complete CAPTCHA',
-  ar: '',
+  ar: 'يرجى إكمال اختبار صدق',
   zh: '',
   fr: '',
   de: '',
@@ -1195,7 +1195,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must enter a name for your channel',
-  ar: '',
+  ar: 'يجب إدخال اسم لقناتك',
   zh: '',
   fr: '',
   de: '',
@@ -1205,7 +1205,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must choose a valid parent city',
-  ar: '',
+  ar: 'يجب عليك اختيار المدينة الأم صالحة',
   zh: '',
   fr: '',
   de: '',
@@ -1215,7 +1215,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must enter a name for your location',
-  ar: '',
+  ar: 'يجب إدخال اسم لل موقع',
   zh: '',
   fr: '',
   de: '',
@@ -1225,7 +1225,7 @@ var translationData = [{
   es: '',
 },{
   en: 'location available',
-  ar: '',
+  ar: 'موقع متاح',
   zh: '',
   fr: '',
   de: '',
@@ -1235,7 +1235,7 @@ var translationData = [{
   es: '',
 },{
   en: 'channel available :)',
-  ar: '',
+  ar: 'الموضوع متاح :)',
   zh: '',
   fr: '',
   de: '',
@@ -1245,7 +1245,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please place a point on the map',
-  ar: '',
+  ar: 'يرجى وضع نقطة على الخريطة',
   zh: '',
   fr: '',
   de: '',
@@ -1255,7 +1255,7 @@ var translationData = [{
   es: '',
 },{
   en: 'logout failed',
-  ar: '',
+  ar: 'فشل تسجيل الخروج',
   zh: '',
   fr: '',
   de: '',
@@ -1265,7 +1265,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must verify your email to create a location',
-  ar: '',
+  ar: 'يجب عليك التحقق من البريد الإلكتروني الخاص بك ل إنشاء موقع',
   zh: '',
   fr: '',
   de: '',
@@ -1275,7 +1275,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must verify your email to create a channel',
-  ar: '',
+  ar: 'يجب عليك التحقق من البريد الإلكتروني الخاص بك لإنشاء موضوع',
   zh: '',
   fr: '',
   de: '',
@@ -1285,7 +1285,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to sort topics by friends',
-  ar: '',
+  ar: 'يجب أن تكون مسجلا ل فرز الموضوعات من قبل الأصدقاء',
   zh: '',
   fr: '',
   de: '',
@@ -1295,7 +1295,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to create a topic',
-  ar: '',
+  ar: 'يجب أن تكون مسجلا ل خلق الخلق الأصلي',
   zh: '',
   fr: '',
   de: '',
@@ -1305,7 +1305,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must provide either a headline or contents',
-  ar: '',
+  ar: 'يجب توفير إما عنوانا أو محتويات',
   zh: '',
   fr: '',
   de: '',
@@ -1315,7 +1315,7 @@ var translationData = [{
   es: '',
 },{
   en: 'post creation failed :(',
-  ar: '',
+  ar: 'خلق آخر فشل',
   zh: '',
   fr: '',
   de: '',
@@ -1325,7 +1325,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to create a topic',
-  ar: '',
+  ar: 'يجب أن تكون مسجلا ل خلق الخلق الأصلي',
   zh: '',
   fr: '',
   de: '',
@@ -1335,7 +1335,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must log in to view your profile',
-  ar: '',
+  ar: 'يجب عليك تسجيل الدخول لمشاهدة ملفك الشخصي',
   zh: '',
   fr: '',
   de: '',
@@ -1345,7 +1345,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to access settings',
-  ar: '',
+  ar: 'يجب أن تكون مسجلا ل إعدادات الوصول',
   zh: '',
   fr: '',
   de: '',
@@ -1355,7 +1355,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you must be logged in to view messages',
-  ar: '',
+  ar: 'يجب تسجيل الدخول لمشاهدة الرسائل',
   zh: '',
   fr: '',
   de: '',
@@ -1365,7 +1365,7 @@ var translationData = [{
   es: '',
 },{
   en: 'search returned no data',
-  ar: '',
+  ar: 'أسفر بحثك أية بيانات',
   zh: '',
   fr: '',
   de: '',
@@ -1385,7 +1385,7 @@ var translationData = [{
   es: '',
 },{
   en: "username may not contain '@'",
-  ar: '',
+  ar: 'يحتوي اسم المستخدم رمز "@ "',
   zh: '',
   fr: '',
   de: '',
@@ -1395,7 +1395,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please enter a password',
-  ar: '',
+  ar: 'يرجى إدخال كلمة المرور',
   zh: '',
   fr: '',
   de: '',
@@ -1405,7 +1405,7 @@ var translationData = [{
   es: '',
 },{
   en: 'password confirmation does not match',
-  ar: '',
+  ar: 'لا يتطابق تأكيد كلمة',
   zh: '',
   fr: '',
   de: '',
@@ -1415,7 +1415,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please enter an email',
-  ar: '',
+  ar: 'يرجى إدخال البريد الإلكتروني',
   zh: '',
   fr: '',
   de: '',
@@ -1425,7 +1425,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please enter a valid origin',
-  ar: '',
+  ar: 'من فضلك ادخل موقع أصل صحيح',
   zh: '',
   fr: '',
   de: '',
@@ -1435,7 +1435,7 @@ var translationData = [{
   es: '',
 },{
   en: 'please enter a valid current location',
-  ar: '',
+  ar: 'يرجى إدخال الموقع الحالي ساري المفعول',
   zh: '',
   fr: '',
   de: '',
@@ -1445,7 +1445,7 @@ var translationData = [{
   es: '',
 },{
   en: 'registration successful',
-  ar: '',
+  ar: 'التسجيل بنجاح',
   zh: '',
   fr: '',
   de: '',
@@ -1455,7 +1455,7 @@ var translationData = [{
   es: '',
 },{
   en: 'username unavailable',
-  ar: '',
+  ar: 'إسم العضو غير متوفر',
   zh: '',
   fr: '',
   de: '',
@@ -1465,7 +1465,7 @@ var translationData = [{
   es: '',
 },{
   en: 'username available',
-  ar: '',
+  ar: 'اسم المستخدم متاح',
   zh: '',
   fr: '',
   de: '',
@@ -1475,7 +1475,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Confirm Contact Request',
-  ar: '',
+  ar: 'تأكيد طلب الاتصال',
   zh: '',
   fr: '',
   de: '',
@@ -1485,7 +1485,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Pending Request',
-  ar: '',
+  ar: 'طلب معلقة',
   zh: '',
   fr: '',
   de: '',
@@ -1495,7 +1495,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Send Message',
-  ar: '',
+  ar: 'إرسال رسالة',
   zh: '',
   fr: '',
   de: '',
@@ -1505,7 +1505,7 @@ var translationData = [{
   es: '',
 },{
   en: 'Contact Request',
-  ar: '',
+  ar: 'الاتصال طلب',
   zh: '',
   fr: '',
   de: '',
@@ -1515,7 +1515,7 @@ var translationData = [{
   es: '',
 },{
   en: "Don't see your city? Please email us the name at ??? and we will add it into our database.",
-  ar: '',
+  ar: 'لا ترى مدينتك ؟ يرجى مراسلتنا على اسم في ؟؟؟ وسوف نقوم إضافته إلى قاعدة البيانات الخاصة بنا .',
   zh: '',
   fr: '',
   de: '',
@@ -1525,7 +1525,7 @@ var translationData = [{
   es: '',
 },{
   en: 'you two are already contacts',
-  ar: '',
+  ar: 'كنت بالفعل اتصالات مع هذا المستخدم',
   zh: '',
   fr: '',
   de: '',
@@ -1535,17 +1535,7 @@ var translationData = [{
   es: '',
 },{
   en: 'contact confirmed!',
-  ar: '',
-  zh: '',
-  fr: '',
-  de: '',
-  ja: '',
-  pt: '',
-  ru: '',
-  es: '',
-},{
-  en: 'Create Channel',
-  ar: '',
+  ar: 'الاتصال أكد',
   zh: '',
   fr: '',
   de: '',
@@ -1564,25 +1554,15 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: 'Create Location',
-  ar: '',
-  zh: '',
-  fr: '',
-  de: '',
-  ja: '',
-  pt: '',
-  ru: '',
-  es: '',
-},{
   en: 'Origin',
-  ar: '',
+  ar: 'جذر',
   zh: '',
   fr: '',
   de: '',
   ja: '',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Origen',
 },{
   en: 'Current Location',
   ar: '',
@@ -1594,7 +1574,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'username must be 35 characters or less',
   ar: '',
   zh: '',
   fr: '',
@@ -1604,7 +1584,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'invalid invite code',
   ar: '',
   zh: '',
   fr: '',
@@ -1614,7 +1594,207 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'View Invite Codes',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'invite code',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Connect Twitter Account',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Continue',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'you have already associated a twitter account to your profile',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'that twitter account is already associated with an agora account',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'authentication failed',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'authentication succeeded',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Welcome to Egora!',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'This site is designed to show what people are thinking about, everywhere in the world, at both large and small scales.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'The map is used to navigate through Locations and display user activity.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Users navigate Egora by changing Location and Channel.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Users may create Posts for any combination of Location and Channel.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Inside each Post, users can have an organized discussion with text and images.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Locations and Channels can be nested, and they are organized like a tree (see picture below).',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'To get started, choose a Location and a Channel (or just hang out in World ~ All). Happy posting!',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'P.S. Egora is a portmanteau of Electronic-Agora.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'i) Electronic as it exists in cyberspace, which is substantiated in the electronic digital computer.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'ii) Agora as we invoke the gathering place of the ancient Greek city-states. A rich centerpiece of public life.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'If you connect your twitter account, Egora will pull your latest tweets and place them into your current location under the channel All/Twitter.',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'New topic activity on /',
   ar: '',
   zh: '',
   fr: '',

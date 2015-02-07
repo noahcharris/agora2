@@ -34,6 +34,7 @@ Agora.Views.SignupView = Backbone.View.extend({
     var originLabel = this.app.translate('origin');
     var locationLabel = this.app.translate('current location');
     var aboutLabel = this.app.translate('about');
+    var codeLabel = this.app.translate('invite code');
 
 
     this.$el.html( this.template({bigRegisterLabel: bigRegisterLabel, explanationLabel1: explanationLabel1,
@@ -41,6 +42,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                                  availabilityLabel: availabilityLabel }) );
 
 
+
+    this.$el.children('#signupCodeInput').attr('placeholder', codeLabel);
     this.$el.children('#signupUsernameInput').attr('placeholder', usernameLabel);
     this.$el.children('#signupPasswordInput').attr('placeholder', passwordLabel);
     this.$el.children('#signupConfirmPasswordInput').attr('placeholder', confirmPasswordLabel);
@@ -89,6 +92,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           if ($('#signupUsernameInput').val() === '') {
             alert(that.app.translate('please enter a username'));
+          } else if ($('#signupUsernameInput').val().length > 35) {
+            alert(that.app.translate('username must be 35 characters or less'));
           } else if ($('#signupUsernameInput').val().indexOf('@') !== -1) {
             alert(that.app.translate("username may not contain '@'"));
           } else if ($('#signupPasswordInput').val() === '') {
@@ -108,7 +113,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
             $.ajax({
 
-              url: 'https://liveworld.io:443/registerUser',
+              url: 'https://egora.co:443/registerUser',
               // url: 'https://localhost:443/registerUser',
               method: 'POST',
               crossDomain: true,
@@ -122,7 +127,8 @@ Agora.Views.SignupView = Backbone.View.extend({
                 location: $('#signupLocationInput').val(),
                 email: $('#signupEmailInput').val(),
                 about: $('#signupAboutInput').val(),
-                responseString: $('.g-recaptcha-response').val()
+                responseString: $('.g-recaptcha-response').val(),
+                code: $('#signupCodeInput').val()
               },
               success: function(data) {
                 if (data.login) {
@@ -173,7 +179,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
     $.ajax({
-      url: 'http://liveworld.io:80/validateUsername',
+      url: 'http://egora.co:80/validateUsername',
       // url: 'http://localhost:80/locationSearch',
       data: {
         username: that.$el.children('input#signupUsernameInput').val()
@@ -203,7 +209,7 @@ Agora.Views.SignupView = Backbone.View.extend({
   //   var input = $usernameInput.val();
 
   //   $.ajax({
-  //     url: 'http://liveworld.io:80/checkUsername',
+  //     url: 'http://egora.co:80/checkUsername',
   //     // url: 'http://localhost:80/locationSearch',
   //     data: {
   //       username: input
@@ -240,10 +246,11 @@ Agora.Views.SignupView = Backbone.View.extend({
       if (searchParameter.length > 2) {
 
         $.ajax({
-          url: 'http://liveworld.io:80/locationSearch',
+          url: 'http://egora.co:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
-            input: searchParameter
+            input: searchParameter,
+            noHubs: true
           },
           crossDomain: true,
           success: function(data) {
@@ -302,10 +309,11 @@ Agora.Views.SignupView = Backbone.View.extend({
     if (searchParameter.length > 2) {
 
       $.ajax({
-        url: 'http://liveworld.io:80/locationSearch',
+        url: 'http://egora.co:80/locationSearch',
         // url: 'http://localhost:80/locationSearch',
         data: {
-          input: searchParameter
+          input: searchParameter,
+          noHubs: true
         },
         crossDomain: true,
         success: function(data) {

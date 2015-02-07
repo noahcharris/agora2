@@ -7,15 +7,15 @@ var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-
 var client = new pg.Client(conString);
 client.connect();
 
-// var countryData = require('../client/resources/newCountries.js');
+var countryData = require('../client/resources/newCountries.js');
 var cityData = require('../client/resources/cities.js');
-// var statesData = require('../client/resources/us-states.js');
-// var channelData = require('../client/resources/channels.js');
+var statesData = require('../client/resources/us-states.js');
+var channelData = require('../client/resources/channels.js');
 
-countries = []//countryData.countries.features;
-// cities = cityData.cities.features;
-states = []//statesData.states.features;
-channels = []//channelData.channels;
+countries = countryData.countries.features;
+cities = cityData.cities.features;
+states = statesData.states.features;
+channels = channelData.channels;
 
 
 
@@ -42,34 +42,35 @@ function addCity(name, parent, lat, long) {
 
 
 
-// //INSERT WORLD
-// client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-//   +"VALUES ('Location', false, $1, 0, true);",
-//   ['World'],
-//   function(err, result) {
-//     if (err) {
-//       console.log('error inserting into locations: ', err);
-//     } else {
+//INSERT WORLD
+client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public) "
+  +"VALUES ('Location', false, false, false, false, $1, 0, true);",
+  ['World'],
+  function(err, result) {
+    if (err) {
+      console.log('error inserting into locations: ', err);
+    } else {
+      console.log('inserted world');
 
-//     }
-// });
-// console.log('finished inserting world');
+    }
+});
 
 
 
-// //INSERT COUNTRIES
-// for (var i=0; i < countries.length ;i++) {
+//INSERT COUNTRIES
+for (var i=0; i < countries.length ;i++) {
 
-//   // client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-//   //   +"VALUES ('Location', false, $1, 0, true);",
-//   //   [countries[i].properties.name],
-//   //   function(err, result) {
-//   //     if (err) {
-//   //       console.log('error inserting into locations: ', err);
-//   //     } else {
+  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public) "
+    +"VALUES ('Location', 'World', 'false', 'true', 'false', 'false', $1, 0, 'true');",
+    [countries[i].properties.name],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into locations: ', err);
+      } else {
+        console.log('inserted country');
 
-//   //     }
-//   // });
+      }
+  });
 
 //   // client.query("UPDATE locations SET parent = 'World' WHERE name = $1;",
 //   //   [countries[i].properties.name],
@@ -83,26 +84,26 @@ function addCity(name, parent, lat, long) {
 
 
 
-// };
+};
 
 
 
 //INSERT CITIES
-// for (var i=0; i < cities.length ;i++) {
+for (var i=0; i < cities.length ;i++) {
 
-  // client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-  //   +"VALUES ('Location', false, $1, 0, true);",
-  //   [cities[i].properties.city],
-  //   function(err, result) {
-  //     if (err) {
-  //       console.log('error inserting into locations: ', err);
-  //     } else {
-
-  //     }
-  // });
+  var parent = cities[i].properties.city.split('/').slice(0, cities[i].properties.city.split('/').length - 1).join('/');
+  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, latitude, longitude, pointGeometry) "
+    +"VALUES ('Location',$2 , false, false, false, true, $1, 0, true, "+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) );",
+    [cities[i].properties.city, parent],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into locations: ', err);
+      } else {
+        console.log('inserted city');
+      }
+  });
 
   
-  // var parent = cities[i].properties.city.split('/').slice(0, cities[i].properties.city.split('/').length - 1).join('/');
 
 
   // client.query("UPDATE locations SET parent = $1 WHERE name = $2;",
@@ -130,36 +131,36 @@ function addCity(name, parent, lat, long) {
 
 
 
-// };
+};
 
 
 
-// //INSERT STATES
-// for (var i=0; i < states.length ;i++) {
+//INSERT STATES
+for (var i=0; i < states.length ;i++) {
 
-//   // client.query("INSERT INTO locations (type, isusercreated, name, population, public) "
-//   //   +"VALUES ('Location', false, $1, 0, true);",
-//   //   [states[i].properties.name],
-//   //   function(err, result) {
-//   //     if (err) {
-//   //       console.log('error inserting into locations: ', err);
-//   //     } else {
+  client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, parent) "
+    +"VALUES ('Location', false, false, true, false, $1, 0, true, 'World/United States');",
+    [states[i].properties.name],
+    function(err, result) {
+      if (err) {
+        console.log('error inserting into locations: ', err);
+      } else {
+        console.log('inserted state');
+      }
+  });
 
-//   //     }
-//   // });
 
+// client.query("UPDATE locations SET parent = 'World/United States' WHERE name = $1;",
+//     [states[i].properties.name],
+//     function(err, result) {
+//       if (err) {
+//         console.log('error updating locations: ', err);
+//       } else {
 
-// // client.query("UPDATE locations SET parent = 'World/United States' WHERE name = $1;",
-// //     [states[i].properties.name],
-// //     function(err, result) {
-// //       if (err) {
-// //         console.log('error updating locations: ', err);
-// //       } else {
+//       }
+//   });
 
-// //       }
-// //   });
-
-// };
+};
 
 
 
@@ -167,9 +168,9 @@ function addCity(name, parent, lat, long) {
 
 //CHANNELS
 
-client.query("UPDATE topics SET channel='All' WHERE channel = 'General';", function() {
+// client.query("UPDATE topics SET channel='All' WHERE channel = 'General';", function() {
 
-});
+// });
 
 
 

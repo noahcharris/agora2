@@ -57,7 +57,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
 
       console.log(that.$el.children('input#parentInput').val());
       $.ajax({
-        url: 'http://liveworld.io:80/validateChannel',
+        url: 'http://egora.co:80/validateChannel',
         // url: 'http://localhost:80/locationSearch',
         data: {
           name: that.$el.children('input#channelNameInput').val(),
@@ -107,7 +107,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
         alert(that.app.translate('please complete CAPTCHA'));
       } else {
         $.ajax({
-          url: 'https://liveworld.io:443/createChannel',
+          url: 'https://egora.co:443/createChannel',
           crossDomain: true,
           xhrFields: {
             withCredentials: true
@@ -156,7 +156,7 @@ Agora.Views.ChannelCreationView = Backbone.View.extend({
       if ($('#parentInput').val().length > 1) {
 
         $.ajax({
-          url: 'http://liveworld.io:80/channelSearch',
+          url: 'http://egora.co:80/channelSearch',
           //url: 'http://localhost:80/channelSearch',
           data: {
             input: searchParameter

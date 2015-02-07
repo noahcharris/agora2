@@ -1,3 +1,4 @@
+
 body::-webkit-scrollbar{
   width:10px;
 }
@@ -116,26 +117,89 @@ img#fullscreenImage {
 
 
 
+
+/****************/
+/***  MAP     ***/
+/****************/
+
+#map {
+  /*height: 600px;*/
+  height: 100%;
+  width: 70%;
+  right:0px;
+  margin: 0px;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition-duration:0.4s;
+  -moz-transition-duration:1s;
+}
+
+#content1 {
+  position: relative;
+  height: 100%;
+  width: auto;
+  z-index: 501;
+}
+
+#content2 {
+  z-index: 500;
+  overflow: hidden;
+  position: absolute;
+  right: 0px;
+  width: 500px;
+  height: 100%;
+  position: absolute;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-width: 6px;
+  border-color: #E8E8E8;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  background-color: #f8f8f8;
+}
+
+
+
+
+
+
+
+
 /****************/
 /***  TOPBAR  ***/
 /****************/
 
 #wrapper {
+  position: relative;
   overflow: hidden;
+  height: auto;
 }
 
 #mainWrapper {
-  overflow:hidden;
+  position: relative;
+  overflow: hidden;
+  height: auto;
 }
 
 
 #topbarWrapper {
+  position: relative;
   width: 100%;
-  /*height: 100px;*/
   height: auto;
 }
 
+
+
+
+
+
+
+
+
+
 #topbar1 {
+  position: relative;
   padding: 14px;
   height: 42px;
   background-color: #f8f8f8;
@@ -484,48 +548,7 @@ right:22.4%;
 }
 
 
-/****************/
-/***  MAP     ***/
-/****************/
 
-#map {
-  /*height: 600px;*/
-  height: 100%;
-  width: 70%;
-  right:0px;
-  margin: 0px;
-  position: absolute;
-  z-index: 0;
-  -webkit-transition-duration:0.4s;
-  -moz-transition-duration:1s;
-}
-
-
-
-
-#content1 {
-  position: relative;
-  height: 100%;
-  width: auto;
-  z-index: 501;
-}
-
-#content2 {
-  z-index: 500;
-  position: absolute;
-  right: 0px;
-  width: 500px;
-  height: 100%;
-  position: absolute;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-width: 6px;
-  border-color: #E8E8E8;
-  top: 0px;
-  right: 0px;
-  display: inline-block;
-  background-color: #f8f8f8;
-}
 
 
 /****************/
@@ -535,8 +558,9 @@ right:22.4%;
 #sidebarContainer {
 
 /* width definted in appController*/
-/* height of this and map used to be 625 */
-  height: 600px;
+
+/* why does this affect that white space???? */
+  height: 700px;
   left: 0px;
   background-color: rgba(255,255,255,0);
   border-style: solid;
@@ -656,6 +680,10 @@ right:22.4%;
   cursor: pointer;
 }
 
+.sidebarUsername:hover {
+  text-decoration: underline;
+}
+
 .locationString {
   cursor: pointer;
   font-family: 'clearThin';
@@ -663,11 +691,18 @@ right:22.4%;
   font-size: 60%;
   margin: 0px;
   padding: 0px;
+}
 
+.locationString:hover {
+  text-decoration: underline;
 }
 
 .sidebarChannelString {
   cursor:pointer;
+}
+
+.sidebarChannelString:hover {
+  text-decoration: underline;
 }
 
 .sidebarTopicImage {
@@ -1039,7 +1074,7 @@ right:22.4%;
 }
 
 
-.detailEntryItem {
+#detailEntryItem {
 
   overflow: hidden; 
   position: relative;
@@ -1165,6 +1200,10 @@ right:22.4%;
   cursor: pointer;
 }
 
+#detailUserString:hover {
+  text-decoration: underline;
+}
+
 .detailCommentUserString {
   cursor: pointer;
 }
@@ -1179,7 +1218,10 @@ right:22.4%;
 
 #detailChannelString {
   cursor: pointer;
+}
 
+#detailChannelString:hover {
+  text-decoration: underline;
 }
 
 #detailLocationString {
@@ -1225,6 +1267,32 @@ right:22.4%;
 .fromString {
   cursor: pointer;
 }
+
+.fromString:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.detailCommentUserString:hover {
+  text-decoration: underline;
+}
+
+.detailResponseUserString:hover {
+  text-decoration: underline;
+}
+
+.detailReplyUserString:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
 
 #conversationWrapper {
   margin: 0px;
@@ -1457,6 +1525,7 @@ right:22.4%;
   word-wrap: break-word;
 }
 .commentExpansionBox {
+  overflow: hidden;
   position: relative;
   width: 90%;
   left: 10%;
@@ -1664,6 +1733,25 @@ right:22.4%;
   height:100%;
   top:0%;
   overflow: hidden;
+}
+
+#profileOrigin {
+  cursor: pointer;
+}
+
+#profileOrigin:hover {
+  cursor: pointer;
+  text-decoration: underline;
+
+}
+
+#profileLocation {
+  cursor: pointer;
+}
+
+#profileLocation:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 

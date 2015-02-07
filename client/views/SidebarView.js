@@ -139,7 +139,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="sidebarSpacer"></div>'));
 
     } else if (this.displayed === 'Contacts') {
-      var contactsPrefix = this.app.translate('Contacts');
+      var contactsPrefix = this.app.translate('Friends');
       var messagesPrefix = this.app.translate('Messages');
       this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
@@ -149,7 +149,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
-      var contactsPrefix = this.app.translate('Contacts');
+      var contactsPrefix = this.app.translate('Friends');
       var messagesPrefix = this.app.translate('Messages');
       this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
@@ -218,15 +218,13 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
             var thet = this;
 
-            console.log('putting handler on: ', model.type);
-
             if (model.type === 'Topic') {
 
               that.app.get('detailView').displayed = 'Topics';
 
               //get specific topic tree from server
               $.ajax({
-                url: 'http://liveworld.io:80/topicTree',
+                url: 'http://egora.co:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
@@ -244,7 +242,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
               //register the topic visit with the server
               $.ajax({
-                url: 'https://liveworld.io:443/visitedTopic',
+                url: 'https://egora.co:443/visitedTopic',
                 // url: 'http://localhost/topicTree',
                 method: 'POST',
                 crossDomain: true,
@@ -273,7 +271,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
               var contact = model.contact;
 
               $.ajax({
-                url: 'https://liveworld.io:443/messageChain',
+                url: 'https://egora.co:443/messageChain',
                 // url: 'http://localhost/messageChain',
                 method: 'GET',
                 crossDomain: true,
@@ -281,7 +279,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
                   withCredentials: true
                 },
                 data: {
-                  username: that.app.get('username'),
+                  username: that.app.get('username'), 
                   contact: contact,
                   token: that.app.get('token')
                 },
@@ -321,12 +319,23 @@ Agora.Views.SidebarView = Backbone.View.extend({
         that.$el.children('ul').append(entryView.$el);
         that.subViews.push(entryView);
 
-
-
-
-
         
-      });
+      });//end iteration through models
+
+
+      //HANDLE THE EMPTY CASE
+      if (!renderCollection.length) {
+
+        if (that.app.get('detailView').displayed === 'Search') {
+
+        } else {
+        }
+          var $empty = $("<li>Couldn't find anything</li>");
+          that.$el.children('ul').append($empty);
+
+
+
+      }
 
 
       
@@ -493,7 +502,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
         if (that.subViews[i].model.image) {          
           var box = that.subViews[i].$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper');
           var entryWidth = that.subViews[i].$el.children('.sidebarFloatClear').width();
-          console.log('ENTRYVIEW: ', that.subViews[i].$el.children('.sidebarFloatClear').innerWidth());
           box.css('width', (entryWidth - 85) + 'px');
         }
 
