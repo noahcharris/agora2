@@ -139,7 +139,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="sidebarSpacer"></div>'));
 
     } else if (this.displayed === 'Contacts') {
-      var contactsPrefix = this.app.translate('Contacts');
+      var contactsPrefix = this.app.translate('Friends');
       var messagesPrefix = this.app.translate('Messages');
       this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
@@ -149,7 +149,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
-      var contactsPrefix = this.app.translate('Contacts');
+      var contactsPrefix = this.app.translate('Friends');
       var messagesPrefix = this.app.translate('Messages');
       this.$el.append($('<div id="contactsButton"><span class="tabLabel">'+contactsPrefix+'</span></div>'));
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));

@@ -117,31 +117,6 @@ img#fullscreenImage {
 
 
 
-/****************/
-/***  TOPBAR  ***/
-/****************/
-
-#wrapper {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-#mainWrapper {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-
-#topbarWrapper {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-
-
 
 /****************/
 /***  MAP     ***/
@@ -183,6 +158,40 @@ img#fullscreenImage {
   display: inline-block;
   background-color: #f8f8f8;
 }
+
+
+
+
+
+
+
+
+/****************/
+/***  TOPBAR  ***/
+/****************/
+
+#wrapper {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+
+#mainWrapper {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+
+
+#topbarWrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+
+
+
 
 
 
@@ -549,8 +558,9 @@ right:22.4%;
 #sidebarContainer {
 
 /* width definted in appController*/
-/* height of this and map used to be 625 */
-  height: 600px;
+
+/* why does this affect that white space???? */
+  height: 700px;
   left: 0px;
   background-color: rgba(255,255,255,0);
   border-style: solid;
