@@ -288,8 +288,9 @@ right:22.4%;
 #username {
   color: rgba(150,150,150,1);
   position: relative;
-  left: 35%;
-  bottom: 22px;
+  float: right;
+/*  left: 35%;
+  bottom: 22px;*/
   cursor: pointer;
   -webkit-transition: color .7s;
   }
