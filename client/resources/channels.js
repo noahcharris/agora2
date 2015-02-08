@@ -1,8 +1,8 @@
 
 module.exports.channels = [{
-  name: 'General/Politics'
+  name: 'All'
 },{
-  name: 'General/Pictures'
+  name: 'All/Twitter'
 },{
-  name: 'General/Musics'
+  name: ''
 }];

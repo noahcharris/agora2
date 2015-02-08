@@ -256,6 +256,7 @@ Agora.Views.SignupView = Backbone.View.extend({
           success: function(data) {
             console.log(data);
             $('.signupLocationSearchResult').remove();
+            $('#signupLocation').show();
 
             for (var i=0; i < data.length ;i++) {
 
@@ -274,6 +275,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
                   $('#signupOriginInput').val(x);
                   $('.signupLocationSearchResult').remove();
+                  $('#signupLocation').hide();
 
 
                 });
@@ -368,7 +370,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
 
-
+  $('#signupLocation').hide();
 
 
 

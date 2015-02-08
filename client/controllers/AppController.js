@@ -392,11 +392,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     $(document).on({
         ajaxStart: function() { 
           $body.children('#loader').show();
-          $body.children('#loaderMask').show();
+          // $body.children('#loaderMask').show();
         },
         ajaxStop: function() { 
           $body.children('#loader').hide();
-          $body.children('#loaderMask').hide();
+          // $body.children('#loaderMask').hide();
         }    
     });
 
@@ -548,7 +548,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
   showLocationDetailView: function(location) {
     var that = this;
 
-    console.log('the thing');
     $.ajax({
       url: 'http://egora.co:80/location',
       crossDomain: true,
@@ -558,7 +557,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       success: function(model) {
         if (model) {
 
-          console.log('whatjfdskaldfjsa');
           that.get('detailView').displayed = 'Locations';
           that.get('content2').show(that.get('detailView'), model);
 
@@ -784,12 +782,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         case 'Contacts':
           renderMethod = 'renderUser';
           break;
+
+
+          //WTF IS GOING ON HERE
         case 'Locations':
           renderMethod = 'renderLocation';
           if (that.get('mapController').get('location') === 'World') {
             that.get('mapController').router.navigate('location/World', { trigger:false });
           } else {
-            that.get('mapController').router.navigate('location/'+model.name.slice(6, model.name.length), { trigger:false });
+            that.get('mapController').router.navigate('location/'+model.name, { trigger:false });
           }
           break;
         case 'Channels':
@@ -797,9 +798,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           if (that.get('channel') === 'All') {
             that.get('mapController').router.navigate('channel/All', { trigger:false });
           } else {
-            that.get('mapController').router.navigate('channel/'+model.name.slice(8, model.name.length), { trigger:false });
+            that.get('mapController').router.navigate('channel/'+model.name, { trigger:false });
           }
           break;
+
+
         default:
           renderMethod = 'render';
           break;

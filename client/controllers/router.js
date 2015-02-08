@@ -7,14 +7,14 @@ Agora.Router = Backbone.Router.extend({
 
   routes: {
     '': 'index',
-    'topic/:id': 'topic',
-    'Topic/:id': 'topic',
-    'user/:username': 'user',
-    'User/:username': 'user',
-    'location/:location': 'location',
-    'Location/:location': 'location',
-    'channel/:channel': 'channel',
-    'Channel/:channel': 'channel',
+    'topic/*id': 'topic',
+    'Topic/*id': 'topic',
+    'user/*username': 'user',
+    'User/*username': 'user',
+    'location/*location': 'location',
+    'Location/*location': 'location',
+    'channel/*channel': 'channel',
+    'Channel/*channel': 'channel',
     'World*path': 'path'
   },
 
@@ -39,8 +39,8 @@ Agora.Router = Backbone.Router.extend({
       },
       success: function(model) {
         that.app.get('detailView').displayed = 'Topics';
-        that.app.get('mapController').goToPath(model.location);
         that.app.changeChannel(model.channel);
+        that.app.get('mapController').goToPath(model.location);
         
         //need to insert topic into the front of the topics collection
         that.app.get('sidebarView').displayed = 'Topics-Top';
@@ -67,16 +67,47 @@ Agora.Router = Backbone.Router.extend({
 
   path: function(path) {
     if (!path) {
-      // this.app.get('mapController').showWorld();
       this.index();
     } else {
       var temp = path.split('#');
+      var location, channel;
+
       if (temp[0] === '') {
-        this.app.get('mapController').showWorld();
+        location = 'World';
       } else {
-        this.app.get('mapController').goToPath('World'+temp[0]);
+        location = 'World' + temp[0];
       }
-      this.app.changeChannel(temp[1]);
+
+      if (temp[1] === '') {
+        channel = 'All';
+      } else {
+        channel = temp[1];
+      }
+
+      //CAPITALIZE
+      var temp1 = location.split('/');
+      var temp2 = channel.split('/');
+      for (var i=0; i < temp1.length ;i++) {
+        var x = temp1[i].split(' ');
+        for (var j=0; j < x.length ;j++) {
+          x[j] = x[j][0].toUpperCase() + x[j].slice(1,x[j].length);
+        }
+        temp1[i] = x.join(' ');
+      }
+      location = temp1.join('/');
+
+      for (var i=0; i < temp2.length ;i++) {
+        var y = temp2[i].split(' ');
+        for (var j=0; j < y.length ;j++) {
+          y[j] = y[j][0].toUpperCase() + y[j].slice(1,y[j].length);
+        }
+        temp2[i] = y.join(' ');
+      }
+      channel = temp2.join('/');
+
+
+      this.app.changeChannel(channel);
+      this.app.get('mapController').goToPath(location);
 
     }
   },
@@ -124,6 +155,8 @@ Agora.Router = Backbone.Router.extend({
 
   location: function(location) {
 
+    console.log('location: ', location);
+
     var temp1 = location.split('/');
     for (var i=0; i < temp1.length ;i++) {
 
@@ -139,13 +172,16 @@ Agora.Router = Backbone.Router.extend({
     }
     var input = temp1.join('/');
 
-    //SHOW THE USER PROFILE
-    this.app.showLocationDetailView('World/'+input);
-    this.app.get('mapController').goToPath('World/'+input);
+    //SHOW THE LOCATION PROFILE
     this.app.changeChannel('All');
+    this.app.get('mapController').goToPath(input);
+    this.app.showLocationDetailView(input);
   },
 
   channel: function(channel) {
+
+    console.log('channel: ', channel);
+
 
     var temp1 = channel.split('/');
     for (var i=0; i < temp1.length ;i++) {
@@ -161,10 +197,10 @@ Agora.Router = Backbone.Router.extend({
 
     }
     var input = temp1.join('/');
-    //SHOW THE USER PROFILE
-    this.app.showChannelDetailView('All/'+input);
-    this.app.changeChannel('All/'+input);
+    //SHOW THE CHANNEL PROFILE
+    this.app.changeChannel(input);
     this.app.get('mapController').showWorld();
+    this.app.showChannelDetailView(input);
   },
 
 

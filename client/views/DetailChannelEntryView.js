@@ -26,8 +26,10 @@ Agora.Views.DetailChannelEntryView = Backbone.View.extend({
 
     var $goTo = this.$el.children('#channelBox').children('#goToButton');
 
-    if (this.app.get('channel') === that.model.name)
+    if (this.app.get('channel') === this.model.name)
       $goTo.hide();
+
+    this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image);
 
     $goTo[0].onclick = function() {
 
