@@ -188,10 +188,7 @@
     <script id="sidebarMessageChainEntryTemplate" type="text/template">
       <p class="contactTitle"><%= contact %></p>
       <p class="messageChainPreview"><%= preview %></p>
-      <br/>
-      <br/>
-      <br/>
-      <!--<p class="sidebarEntryTopicOrigin"><%= recipientLabel %>:<%= type %></p>-->
+      <p class="messageChainTimestamp"><%= lastMessage %></p>
     </script>
 
 
@@ -720,9 +717,17 @@
 
     <script id="settingsViewTemplate" type="text/template">
       <h1 id="menu title"> <%= menuLabel %> </h1>
-      <div id="buttonBox"></div>
-      <button id="viewProfileButton">
-      <br/><br/><br/>
+      <button id="viewProfileButton"><%= viewProfileLabel %></button>
+      <button id="editProfileButton"><%= editProfileLabel %></button>
+      <button id="createLocationButton"><%= createLocationLabel %></button>
+      <button id="createChannelButton"><%= createChannelLabel %></button>
+      <button id="changePasswordButton"><%= changePasswordLabel %></button>
+      <button id="changeLocationButton"><%= changeLocationLabel %></button>
+      <button id="changeEmailButton"><%= changeEmailLabel %></button>
+      <button id="inviteCodesButton"><%= inviteCodesLabel %></button>
+      <button id="twitterButton"><%= twitterLabel %></button>
+
+      <br/><br/>
       <%= recentlyVisitedLabel %>
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
     </script>
