@@ -285,6 +285,11 @@ right:22.4%;
   margin-top: 10px;
   margin-right: 8px;
 }
+#languageSelect {
+  position: absolute;
+  top: 15px;
+  left: 20%;
+}
 #username {
   color: rgba(150,150,150,1);
   position: relative;
