@@ -2023,6 +2023,24 @@ textarea {
 
 }
 
+#twitterButton {
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:100px;
+  top:25%;
+}
+
+#inviteCodesButton {
+  width:100px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:0px;
+  top: 20%
+}
+
 #viewProfileButton {
   width:100px;
   height:30px;
