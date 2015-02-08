@@ -77,23 +77,11 @@ Agora.Views.TopbarView = Backbone.View.extend({
           crossDomain: true,
           data: {
             username: that.app.get('username'),
-            //so that this is never cached
-            extra: Math.floor((Math.random() * 10000) + 1)
           },
           success: function(data) {
             if (data[0]) {
               that.app.get('detailView').displayed = 'Users';
               console.log('server returned: ', data);
-
-
-              //CHECK TO SEE IF THE USERNAME IS THE USER AND GENERATE A RANDOM STRING TO 
-              //ATTACH TO THE REQUEST SO THAT WE DON'T CACHE THE IMAGE
-              //SO THAT CHANGING A PROFILE PICTURE IS A SEAMLESS EXPERIENCE
-
-              //JUST GOING TO DO THIS FOR NOW, BUT I NEED A SYSTEM
-              //SAME SITUATION AS UPVOTES AND EXPAND/CONTRACT
-
-              data[0].isContact = true;
               that.app.get('content2').show(that.app.get('detailView'), data[0]);
 
             } else {
@@ -235,8 +223,6 @@ Agora.Views.TopbarView = Backbone.View.extend({
     //pressing enter should trigger search
 
     var searchHandler = function() {
-
-      console.log('whyyyyyyyy');
 
         switch ($('#searchSelect').val()) {
           case 'Users':
