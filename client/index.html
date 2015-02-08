@@ -550,12 +550,12 @@
 
     <script id="detailMessageEntryTemplate" type="text/template">
       <span class="authorString"><%= sender %>:&nbsp</span>
-      <span class="detailHeaderEntry"> <%= contents %> </span>
+      <span class="messageContent"> <%= contents %> </span>
       <hr/>
     </script>
 
     <script id="RTLdetailMessageEntryTemplate" type="text/template">
-      <span class="detailHeaderEntry"> <%= contents %> </span>
+      <span class="messageContent"> <%= contents %> </span>
       <span class="authorString">&nbsp:<%= sender %></span>
       <hr/>
     </script>
@@ -721,6 +721,7 @@
     <script id="settingsViewTemplate" type="text/template">
       <h1 id="menu title"> <%= menuLabel %> </h1>
       <div id="buttonBox"></div>
+      <button id="viewProfileButton">
       <br/><br/><br/>
       <%= recentlyVisitedLabel %>
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
