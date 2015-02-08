@@ -15,7 +15,7 @@ var channelData = require('../client/resources/channels.js');
 countries = countryData.countries.features;
 cities = cityData.cities.features;
 states = statesData.states.features;
-channels = channelData.channels;
+// channels = channelData.channels;
 
 
 
@@ -24,8 +24,8 @@ channels = channelData.channels;
 
 function addCity(name, parent, lat, long) {
 
-  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity) "
-    +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true');", [name, parent, lat, long],
+  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity, image) "
+    +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');", [name, parent, lat, long],
     function(err, result) {
       if (err) throw err;
     })
@@ -43,8 +43,8 @@ function addCity(name, parent, lat, long) {
 
 
 //INSERT WORLD
-client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public) "
-  +"VALUES ('Location', false, false, false, false, $1, 0, true);",
+client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, image) "
+  +"VALUES ('Location', false, false, false, false, $1, 0, true, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
   ['World'],
   function(err, result) {
     if (err) {
@@ -60,8 +60,8 @@ client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, is
 //INSERT COUNTRIES
 for (var i=0; i < countries.length ;i++) {
 
-  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public) "
-    +"VALUES ('Location', 'World', 'false', 'true', 'false', 'false', $1, 0, 'true');",
+  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, image) "
+    +"VALUES ('Location', 'World', 'false', 'true', 'false', 'false', $1, 0, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
     [countries[i].properties.name],
     function(err, result) {
       if (err) {
@@ -92,8 +92,12 @@ for (var i=0; i < countries.length ;i++) {
 for (var i=0; i < cities.length ;i++) {
 
   var parent = cities[i].properties.city.split('/').slice(0, cities[i].properties.city.split('/').length - 1).join('/');
-  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, latitude, longitude, pointGeometry) "
-    +"VALUES ('Location',$2 , false, false, false, true, $1, 0, true, "+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) );",
+
+  if (parent === 'World')
+    continue;
+
+  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, latitude, longitude, pointGeometry, image) "
+    +"VALUES ('Location',$2 , false, false, false, true, $1, 0, true, "+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269), 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
     [cities[i].properties.city, parent],
     function(err, result) {
       if (err) {
@@ -138,8 +142,8 @@ for (var i=0; i < cities.length ;i++) {
 //INSERT STATES
 for (var i=0; i < states.length ;i++) {
 
-  client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, parent) "
-    +"VALUES ('Location', false, false, true, false, $1, 0, true, 'World/United States');",
+  client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, parent, image) "
+    +"VALUES ('Location', false, false, true, false, $1, 0, true, 'World/United States', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
     [states[i].properties.name],
     function(err, result) {
       if (err) {
