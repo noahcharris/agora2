@@ -289,6 +289,8 @@ right:22.4%;
   color: rgba(150,150,150,1);
   position: relative;
   float: right;
+  padding: 10px;
+  padding-right: 26px;
 /*  left: 35%;
   bottom: 22px;*/
   cursor: pointer;
@@ -384,6 +386,7 @@ right:22.4%;
   cursor: pointer;
   position: relative;
   height: 30px;
+  width: 100%;
   left: 5px;
   background-color: rgba(130, 163, 173,1);
   background: linear-gradient(to bottom, rgba(109,109,159,1), rgba(255,255,255,.3)); /*Standard*/
@@ -394,6 +397,9 @@ right:22.4%;
 
 #signupLocation {
   overflow-y:scroll;
+  background-color: white;
+  position: absolute;
+  height: 30%;
 
 }
 
