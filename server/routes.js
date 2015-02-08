@@ -2531,9 +2531,9 @@ module.exports.sendMessage = function(request, response) {
                             response.end('successfully created message');
 
                             //update last message in the proper message chain
-                            client.query("UPDATE messageChains SET lastMessage = now() WHERE "
+                            client.query("UPDATE messageChains SET lastMessage = now(), preview = $3 WHERE "
                               +"(username1 = $1 AND username2 = $2) OR (username1 = $2 AND username2 = $1);",
-                              [request.body.sender, request.body.recipient], function(err, result) {
+                              [request.body.sender, request.body.recipient, xssValidator(request.body.contents.slice(0,70))], function(err, result) {
                                 if (err) 
                                   console.log('error updating messageChains table: ', err);
                             });
