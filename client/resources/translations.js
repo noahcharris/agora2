@@ -1804,7 +1804,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'ADD FRIEND',
   ar: '',
   zh: '',
   fr: '',
