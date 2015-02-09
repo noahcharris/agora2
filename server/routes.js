@@ -5053,9 +5053,9 @@ module.exports.createChannel = function(request, response) {
                                                     //CREATE THE CHANNEL
                                                     //haha so I guess people can hack the system and create channels outside
                                                     //of the all tree, I guess that's cool for now
-                                                    client.query("INSERT INTO channels (type, name, description, parent, image) "
-                                                      +"VALUES ('Channel', $1, $2, $3, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg');",
-                                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent)],
+                                                    client.query("INSERT INTO channels (type, name, description, parent, creator, isUserCreated, image) "
+                                                      +"VALUES ('Channel', $1, $2, $3, $4, true, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg');",
+                                                      [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.username)],
                                                       function(err, result) {
                                                         if (err) {
                                                           console.log('error inserting into channels: ', err);
@@ -5069,8 +5069,6 @@ module.exports.createChannel = function(request, response) {
                                                 }
                                             });//end channel name check
                                           }
-
-
 
 
 
