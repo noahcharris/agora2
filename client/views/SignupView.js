@@ -143,11 +143,13 @@ Agora.Views.SignupView = Backbone.View.extend({
                   that.app.get('cacheManager').start();
                   
                   that.app.get('topbarView').render();
-                  that.app.get('content2').hide();
 
                   that.app.trigger('reloadSidebarContacts');
-                  //the last argument suppresses reloading of content1
                   that.app.trigger('reloadSidebarMessageChains');
+
+                  that.app.get('content2').show(new Agora.Views.AboutView(that.app));
+
+
                 } else {
                   alert(data);
                   grecaptcha.reset();
@@ -321,6 +323,7 @@ Agora.Views.SignupView = Backbone.View.extend({
         success: function(data) {
           console.log(data);
           $('.signupLocationSearchResult').remove();
+          $('#signupLocation').show();
 
           var cssAdjust = -30;
 
@@ -341,6 +344,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
                 $('#signupLocationInput').val(x);
                 $('.signupLocationSearchResult').remove();
+                $('#signupLocation').hide();
 
 
               });

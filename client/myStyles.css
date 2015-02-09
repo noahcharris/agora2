@@ -1858,8 +1858,12 @@ ul#messageChain {
 
 }
 
+
 .messageContent {
   word-wrap:break-word;
+}
+.messageChainListItem {
+
 }
 
 

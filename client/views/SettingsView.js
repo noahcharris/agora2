@@ -21,8 +21,21 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var menuLabel = this.app.translate('Menu');
     var recentlyVisitedLabel = this.app.translate('Recently Visited');
+    var viewProfileLabel = this.app.translate('View My Profile');
+    var editProfileLabel = this.app.translate('Edit My Profile');
+    var createLocationLabel = this.app.translate('Create Location');
+    var createChannelLabel = this.app.translate('Create Channel');
+    var changePasswordLabel = this.app.translate('Change Password');
+    var changeLocationLabel = this.app.translate('Change Location');
+    var changeEmailLabel = this.app.translate('Change Email');
+    var inviteCodesLabel = this.app.translate('View Invite Codes');
+    var twitterLabel = this.app.translate('Connect Twitter Account');
 
-    this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel} ) );
+
+    this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel,
+      viewProfileLabel: viewProfileLabel, editProfileLabel: editProfileLabel, createLocationLabel: createLocationLabel,
+      createChannelLabel: createChannelLabel, changePasswordLabel: changePasswordLabel, changeLocationLabel: changeLocationLabel,
+      changeEmailLabel: changeEmailLabel, inviteCodesLabel: inviteCodesLabel, twitterLabel: twitterLabel } ) );
 
 
     this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
@@ -30,8 +43,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
       that.app.get('content2').hide();
     });
 
-    var viewLabel = this.app.translate('View My Profile')
-    var $viewProfileButton = $('<button id="viewProfileButton">'+viewLabel+'</button>');
+    var $viewProfileButton = this.$el.children('#viewProfileButton');
     $viewProfileButton[0].onclick = function() {
       
       //there is an example in editProfileView
@@ -79,8 +91,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     };
     this.$el.children('#buttonBox').append($viewProfileButton);
 
-    var editProfileLabel = this.app.translate('Edit My Profile')
-    var $editProfileButton = $('<button id="editProfileButton">'+editProfileLabel+'</button>');
+    var $editProfileButton = this.$el.children('#editProfileButton');
     $editProfileButton[0].onclick = function() {
       that.app.get('detailView').displayed = 'Edit Profile';
       that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
@@ -88,8 +99,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.children('#buttonBox').append($editProfileButton);
     this.$el.children('#buttonBox').append('<br/>');
 
-    var locationCreationLabel = this.app.translate('Create Location');
-    var $locationCreationButton = $('<button id="createLocationButton">'+locationCreationLabel+'</button>');
+    var $locationCreationButton = this.$el.children('#createLocationButton');
     $locationCreationButton.on('click', function() {
 
 
@@ -122,8 +132,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($locationCreationButton);
 
-    var createChannelLabel = this.app.translate('Create Channel');
-    var $channelCreationButton = $('<button id="createChannelButton">'+createChannelLabel+'</button>');
+    var $channelCreationButton = this.$el.children('#createChannelButton');
     $channelCreationButton.on('click', function() {
 
       $.ajax({
@@ -156,24 +165,21 @@ Agora.Views.SettingsView = Backbone.View.extend({
     });
     this.$el.children('#buttonBox').append($channelCreationButton);
 
-    var changePasswordLabel = this.app.translate('Change Password');
-    var $changePasswordButton = $('<button id="changePasswordButton">'+changePasswordLabel+'</button>');
+    var $changePasswordButton = this.$el.children('#changePasswordButton');
     $changePasswordButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangePassword';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));
     });
     this.$el.children('#buttonBox').append($changePasswordButton);
 
-    var changeLocationLabel = this.app.translate('Change Location');
-    var $changeLocationButton = $('<button id="changeLocationButton">'+changeLocationLabel+'</button>');
+    var $changeLocationButton = this.$el.children('#changeLocationButton');
     $changeLocationButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeLocation';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Location'));
     });
     this.$el.children('#buttonBox').append($changeLocationButton);
 
-    var changeEmailLabel = this.app.translate('Change Email');
-    var $changeEmailButton = $('<button id="changeEmailButton">'+changeEmailLabel+'</button>');
+    var $changeEmailButton = this.$el.children('#changeEmailButton');
     $changeEmailButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeEmail';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
@@ -181,16 +187,14 @@ Agora.Views.SettingsView = Backbone.View.extend({
     this.$el.children('#buttonBox').append($changeEmailButton);
 
 
-    var inviteCodesLabel = this.app.translate('View Invite Codes');
-    var $inviteCodesButton = $('<button id="inviteCodesButton">'+inviteCodesLabel+'</button>');
+    var $inviteCodesButton = this.$el.children('#inviteCodesButton');
     $inviteCodesButton.on('click', function() {
       that.app.get('detailView').displayed = 'Invite';
       that.app.get('content2').show(new Agora.Views.InviteView(that.app));
     });
     this.$el.children('#buttonBox').append($inviteCodesButton);
 
-    var twitterLabel = this.app.translate('Connect Twitter Account');
-    var $twitterButton = $('<button id="inviteCodesButton">'+twitterLabel+'</button>');
+    var $twitterButton = this.$el.children('#twitterButton');
     $twitterButton.on('click', function() {
       that.app.get('detailView').displayed = 'Twitter';
       that.app.get('content2').show(new Agora.Views.TwitterView(that.app));

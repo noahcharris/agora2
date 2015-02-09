@@ -264,9 +264,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //TAKES A CALL BACK (USED IN DetailUserEntryView)
     this.on('reloadSidebarMessageChains', function(cb, suppress) { 
 
-    //takes a flag to tell it whether it should suppress reloading content1
-    //this is used in login and registration and checkLogin so that
-    //this handler does not try to reload content1, there must be a better way
+      //supress stops sidebar from reloading
 
       cb = cb || function() { /*oi.io*/ };
       suppress = suppress || false;
@@ -1067,7 +1065,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         }
 
                         var x = that.contactRequests[i].sender;
-                        $notificationBox.on('click', function() {
+                        $notificationBox[0].onclick = function() {
                           var thet = this;
 
                           $.ajax({
@@ -1100,7 +1098,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                           
       
 
-                        });//end notification click handler
+                        };//end notification click handler
 
 
                         console.log($notificationBox);
@@ -1137,7 +1135,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                         console.log($notificationBox);
 
                           var x = that.newMessages[i].sender;
-                          $notificationBox.on('click', function() {
+                          $notificationBox[0].onclick = function() {
 
 
                             //OPEN CONVERSATION SUBROUTINE
@@ -1198,7 +1196,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             }//end chain searching for loop
                             //END OPENING CONVO SUBROUTINE
 
-                        });
+                        };//end onclick
 
                         $('#notificationsDisplay').append($notificationBox);
                         $notificationBox.css('bottom', cssAdjust+'px');
@@ -1235,7 +1233,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                           var model = that.topicActivity[i];
 
-                          $notificationBox.on('click', function() {
+                          $notificationBox[0].onclick = function() {
 
                             $(this).parent().empty();
                             that.app.set('notificationsDisplayed', false);
@@ -1267,7 +1265,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             });
 
                             
-                          });//end entryView click
+                          };//end entryView click
                           
                         })();
 
