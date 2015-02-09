@@ -1894,7 +1894,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'This site is designed to show what people are thinking about everywhere in the world.',
   ar: '',
   zh: '',
   fr: '',
@@ -1903,8 +1903,8 @@ var translationData = [{
   pt: '',
   ru: '',
   es: '',
-}{
-  en: '',
+},{
+  en: 'Locations and Channels are organized in a tree (see picture below).',
   ar: '',
   zh: '',
   fr: '',
@@ -1913,7 +1913,27 @@ var translationData = [{
   pt: '',
   ru: '',
   es: '',
-}{
+},{
+  en: 'To get started, choose a Location and a Channel (or just hang out in World ~ All).',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Happy posting!',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
   en: '',
   ar: '',
   zh: '',

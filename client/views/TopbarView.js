@@ -282,8 +282,10 @@ Agora.Views.TopbarView = Backbone.View.extend({
       searchHandler();
     });
 
-
-
+    //focus on search bar after selecting category
+    $('#searchSelect').on('change', function() {
+      $('#searchInput').focus();
+    });
 
 
 
