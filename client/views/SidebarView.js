@@ -320,10 +320,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       });//end iteration through models
 
 
-      //ADD SPACER LIST ITEM?????
-
-      var $spacer = $('<li id="sidebarSpacer"></li>');
-      that.$el.children('ul').append($spacer);
 
       //HANDLE THE EMPTY CASE
       if (!renderCollection.length) {
@@ -334,12 +330,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
         }
           var $empty = $("<li>Couldn't find anything</li>");
           that.$el.children('ul').append($empty);
-
-
-
       }
+      
 
 
+      var $spacer = $('<li id="sidebarSpacer"></li>');
+      that.$el.children('ul').append($spacer);
       
 
 
