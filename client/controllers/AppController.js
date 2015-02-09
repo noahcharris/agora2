@@ -264,9 +264,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     //TAKES A CALL BACK (USED IN DetailUserEntryView)
     this.on('reloadSidebarMessageChains', function(cb, suppress) { 
 
-    //takes a flag to tell it whether it should suppress reloading content1
-    //this is used in login and registration and checkLogin so that
-    //this handler does not try to reload content1, there must be a better way
+      //supress stops sidebar from reloading
 
       cb = cb || function() { /*oi.io*/ };
       suppress = suppress || false;
