@@ -441,7 +441,9 @@
 
     <script id="detailLocationEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg"></img>
+
+        <img id="profilePicture" src="/resources/images/defaultlocation.jpg"></img>
+
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -458,7 +460,7 @@
 
     <script id="RTLdetailLocationEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg"></img>
+        <img id="profilePicture" src="/resources/images/defaultlocation.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -475,7 +477,8 @@
 
     <script id="detailChannelEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg"></img>
+
+        <img id="profilePicture" src="/resources/images/defaultchannel.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -492,7 +495,9 @@
 
     <script id="RTLdetailChannelEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg"></img>
+
+        <img id="profilePicture" src="/resources/images/defaultchannel.jpg"></img>
+
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -512,10 +517,12 @@
 
     <script id="detailUserEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultprofile.jpg"></img>
+
+        <img id="profilePicture" src="/resources/images/defaultprofile.jpg"></img>
+
         <div id="profileAboutSection">
-          <h3><%= aboutLabel %>:</h3>
-          <p><%= about %></p>
+          <h3 style="text-align:center;"><%= aboutLabel %>:</h3>
+          <p style="font-size:13px;word-wrap:word-break;"><%= about %></p>
         </div>
       </div>
       <div id="profileUsername"> <%= username %> </div>
@@ -529,7 +536,9 @@
 
     <script id="RTLdetailUserEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultprofile.jpg"></img>
+
+        <img id="profilePicture" src="/resources/images/defaultprofile.jpg"></img>
+
         <div id="profileRightColumn">
           <div id="profileUsername"> <%= username %> </div>
           <div id="profileOrigin"> <%= origin %>&nbsp:<%= originLabel %> </div>
@@ -728,8 +737,10 @@
       <button id="twitterButton"><%= twitterLabel %></button>
 
       <br/><br/>
-      <%= recentlyVisitedLabel %>
+      <span id="recentlyVisitedLabel"><%= recentlyVisitedLabel %></span>
+      <div id="recentlyVisitedBox">
       <ul id="recentlyVisited" style="list-style-type:none;"></ul>
+      </div>
     </script>
 
     <script id="changeViewTemplate" type="text/template">
@@ -737,7 +748,7 @@
     </script>
 
     <script id="aboutTemplate" type="text/template">
-      <h1>ABOUT</h1>
+      <h1 style="text-align:center">ABOUT</h1>
       <div id="aboutSectionOne"></div>
       <div id="aboutSectionTwo"></div>
       <div id="aboutSectionThree"></div>

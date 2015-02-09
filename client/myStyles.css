@@ -42,6 +42,46 @@ body {
   background-color: rgba(170, 212, 255, 1);
 }
 
+/*****************/
+   /*ABOUT AGORA*/
+ /*******************/
+
+#aboutSectionOne {
+  font-family: sans-serif;
+  font-weight: lighter;
+  font-size: 20px;
+  word-wrap: break-word;
+  width: 50%;
+  text-align: center;
+  left:25%;
+  position: relative;
+  padding: 0px;
+  background-image: url("/resources/images/aboutbackground.png");
+  color: rgba(70,70,70,1);
+}
+
+#aboutSectionTwo {
+  font-size: 12px;  
+  text-align: center;
+  margin: 0px;
+}
+
+#aboutSectionThree {
+  font-size: 12px;
+  text-align: center;
+  margin: 0px;
+}
+
+#aboutSectionFour {
+  font-size: 12px;
+  text-align: center;
+  margin: 0px;
+}
+
+
+
+
+ /*MAP*/
 
 
 div#mapPopup {
@@ -583,6 +623,10 @@ right:22.4%;
   -webkit-transition-duration:.2s;
   -moz-transition-duration:.2s;
 
+}
+
+#sidebarSpacer {
+  height: 200px;
 }
 
 .sidebarView {
@@ -1745,11 +1789,40 @@ right:22.4%;
   width:50%;
   height:100%;
   top:0%;
-  overflow: hidden;
+  overflow-y:scroll;
+}
+
+#profileAboutSection::-webkit-scrollbar{
+  width:10px;
+}
+
+#profileAboutSection::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#profileAboutSection::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#profileAboutSection::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#profileAboutSection::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+#profileUsername {
+  margin: 10px;
+  font-size: 16px;
+  width:200px;
+  left:25%;
+  text-align: center;
 }
 
 #profileOrigin {
   cursor: pointer;
+  font-size: 11px;
 }
 
 #profileOrigin:hover {
@@ -1760,6 +1833,7 @@ right:22.4%;
 
 #profileLocation {
   cursor: pointer;
+  font-size: 11px;
 }
 
 #profileLocation:hover {
@@ -1785,10 +1859,64 @@ ul#messageChain {
   width: 100%;
   height: 90%;
   overflow-y: scroll;
+  padding: 0px;
+
+}
+
+ul#messageChain::-webkit-scrollbar{
+  width:10px;
+}
+
+ul#messageChain::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+ul#messageChain::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+ul#messageChain::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+ul#messageChain::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+p.contactTitle {
+  font-family: 'clearBold';
+  color: rgba(70,70,70,.7);
+  padding-left: 3px;
+}
+
+p.messageChainPreview {
+  font-size: 14px;
+  overflow: hidden;
+  padding-left: 20px;
+}
+
+p.messageChainTimestamp {
+  font-size: 10px;
+  color: rgba(70,70,70,.7);
+
+}
+
+.authorString {
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+span.messageContent {
+  word-wrap:break-word;
+
 
 }
 
 .messageChainListItem {
+  width:85%
+  margin-left: 15%;
 }
 
 
@@ -1956,8 +2084,88 @@ textarea {
 
 }
 
+.settingsView::-webkit-scrollbar{
+  width:10px;
+}
+
+.settingsView::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.settingsView::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.settingsView::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.settingsView::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+#recentlyVisitedBox {
+  position: relative;
+  top: 40%;
+  height: 500px;
+  width: 70%;
+  left: 8%;
+  overflow-y: scroll;
+}
+
+#recentlyVisitedLabel {
+  position: absolute;
+  top: 50%;
+  font-family: sans-serif;
+  font-weight: bold;
+
+}
+
+ul#recentlyVisited {
+  padding-left: 0px;
+}
+
+#recentlyVisitedBox::-webkit-scrollbar{
+  width:10px;
+}
+
+#recentlyVisitedBox::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+#recentlyVisitedBox::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+#recentlyVisitedBox::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+#recentlyVisitedBox::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+#twitterButton {
+  width:110px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:110px;
+  top:25%;
+}
+
+#inviteCodesButton {
+  width:110px;
+  height:30px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:0px;
+  top: 25%
+}
+
 #viewProfileButton {
-  width:100px;
+  width:110px;
   height:30px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
@@ -1966,16 +2174,16 @@ textarea {
 }
 
 #editProfileButton {
-  width:100px;
+  width:110px;
   height:30px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
-  left:100px;
+  left:110px;
   top: 20%
 }
 
 #createChannelButton {
-  width:100px;
+  width:110px;
   height:30px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
@@ -1985,22 +2193,17 @@ textarea {
 }
 
 #createLocationButton {
-  width:100px;
+  width:110px;
   height:30px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
-  left:100px;
+  left:110px;
   top:15%;
 
 }
 
-
-
-
-
-
 #changePasswordButton {
-  width:100px;
+  width:110px;
   height:32px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
@@ -2009,7 +2212,7 @@ textarea {
 }
 
 #changeLocationButton {
-  width:100px;
+  width:110px;
   height:32px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
@@ -2018,7 +2221,7 @@ textarea {
 }
 
 #changeEmailButton {
-  width:100px;
+  width:110px;
   height:32px;
   background-color:rgba(101, 148, 214, 0.38);
   position:absolute;
