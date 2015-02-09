@@ -1803,7 +1803,12 @@ var translationData = [{
   pt: '',
   ru: '',
   es: '',
-},{
+},
+
+
+//NEW ∆∆∆∆∆∆∆∆∆∆∆!!!!!!!!!!!!
+
+{
   en: 'ADD FRIEND',
   ar: '',
   zh: '',
@@ -1814,7 +1819,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: "Couldn't find anything",
   ar: '',
   zh: '',
   fr: '',
@@ -1824,7 +1829,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: "Location name may not contain '/'",
   ar: '',
   zh: '',
   fr: '',
@@ -1834,7 +1839,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: "Channel name may not contain '/'",
   ar: '',
   zh: '',
   fr: '',

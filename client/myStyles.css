@@ -1788,6 +1788,9 @@ ul#messageChain {
 
 }
 
+.messageChainListItem {
+}
+
 
 #messageInputBox {
   position: absolute;

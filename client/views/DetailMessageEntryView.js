@@ -44,9 +44,9 @@ Agora.Views.DetailMessageEntryView = Backbone.View.extend({
     for (var i = 0; i<this.model.length ;i++) {
       //append the template inside a list element
       if (this.app.get('language') !== 'ar') {
-        var $message = $('<li></li>').append(this.template(this.model[i]));
+        var $message = $('<li class="messageChainListItem"></li>').append(this.template(this.model[i]));
       } else {
-        var $message = $('<li></li>').append(this.RTLtemplate(this.model[i]));
+        var $message = $('<li class="messageChainListItem"></li>').append(this.RTLtemplate(this.model[i]));
       }
       $messageChainList.prepend($message);
 

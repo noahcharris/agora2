@@ -194,7 +194,7 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     //CONTACT REQUEST FLOW STUFF
 
 
-    var $contactRequestButton = $('<button>'+that.app.translate('Contact Request')+'</button>');
+    var $contactRequestButton = $('<button id="addFriendButton">'+that.app.translate('ADD FRIEND')+'</button>');
     var ajaxing = false;
     $contactRequestButton[0].onclick = function() {
 
