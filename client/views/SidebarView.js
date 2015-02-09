@@ -323,6 +323,9 @@ Agora.Views.SidebarView = Backbone.View.extend({
       });//end iteration through models
 
 
+      //ADD SPACER LIST ITEM?????
+
+
       //HANDLE THE EMPTY CASE
       if (!renderCollection.length) {
 

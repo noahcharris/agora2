@@ -21,15 +21,15 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     var menuLabel = this.app.translate('Menu');
     var recentlyVisitedLabel = this.app.translate('Recently Visited');
-    var viewProfileLabel = this.app.translate('View My Profile');
-    var editProfileLabel = this.app.translate('Edit My Profile');
+    var viewProfileLabel = this.app.translate('View Profile');
+    var editProfileLabel = this.app.translate('Edit Profile');
     var createLocationLabel = this.app.translate('Create Location');
     var createChannelLabel = this.app.translate('Create Channel');
     var changePasswordLabel = this.app.translate('Change Password');
     var changeLocationLabel = this.app.translate('Change Location');
     var changeEmailLabel = this.app.translate('Change Email');
-    var inviteCodesLabel = this.app.translate('View Invite Codes');
-    var twitterLabel = this.app.translate('Connect Twitter Account');
+    var inviteCodesLabel = this.app.translate('Invite Codes');
+    var twitterLabel = this.app.translate('Link Twitter');
 
 
     this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel,

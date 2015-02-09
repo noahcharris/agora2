@@ -1806,6 +1806,11 @@ var translationData = [{
 },
 
 
+
+
+
+
+
 //NEW ∆∆∆∆∆∆∆∆∆∆∆!!!!!!!!!!!!
 
 {
@@ -1849,7 +1854,7 @@ var translationData = [{
   ru: '',
   es: '',
 },{
-  en: '',
+  en: 'Invite Codes',
   ar: '',
   zh: '',
   fr: '',
@@ -1859,6 +1864,56 @@ var translationData = [{
   ru: '',
   es: '',
 },{
+  en: 'View Profile',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Edit Profile',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: 'Link Twitter',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+},{
+  en: '',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+}{
+  en: '',
+  ar: '',
+  zh: '',
+  fr: '',
+  de: '',
+  ja: '',
+  pt: '',
+  ru: '',
+  es: '',
+}{
   en: '',
   ar: '',
   zh: '',

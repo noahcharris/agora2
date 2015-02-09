@@ -376,6 +376,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
       }
 
       that.app.get('mapController').updateHeatPoints();
+      that.app.get('content2').hide();
 
     });
 
