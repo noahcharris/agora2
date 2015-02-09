@@ -26,19 +26,31 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     this.coordsObject = {};
 
 
+                                            //this is a temp workaround for
+                                            //location and channel search result
+    this.mouseoverHandler = _.once(function (search) {
 
-    this.mouseoverHandler = _.once(function () {
+        console.log('MOUSEOVER');
       
         //var data = that.model.locations;
 
         //for (var i=0; i < data.length ;i++) {
 
           var f = function() {
-            var x = that.model.location;
+            var x;
+            if (!search) {
+              x = that.model.location;
+            } else {
+              x = that.model.name;
+            }
 
-            //DISPLAYING POSTED TO
+            var temp;
+            if (!search) {
+              temp = that.model.location;
+            } else {
+              temp = that.model.name;
+            }
 
-            var temp = that.model.location;
 
             if (temp === 'World') {
 
@@ -348,7 +360,9 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
     if (!this.noMouseover) {
-      this.$el.on('mouseover', this.mouseoverHandler);
+      this.$el.on('mouseover', function() {
+        that.mouseoverHandler(false);
+      });
     }
 
 
@@ -357,11 +371,21 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
   },
 
   renderLocation: function() {
+    var that = this;
     this.$el.html( this.locationTemplate(this.model) );
+
+    if (!this.noMouseover) {
+      this.$el.on('mouseover', function() {
+        that.mouseoverHandler(true);
+      });
+    }
   },
 
   renderChannel: function() {
     this.$el.html( this.channelTemplate(this.model) );
+
+    //MOUSEOVER FOR THIS WILL BE WAYY MORE COMPLICATED IF IT HAPPENS
+    //DOWN THE LINE
   },
 
   renderUser: function() {
@@ -411,8 +435,11 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
 
 
     //mouseover
-    this.$el.on('mouseover', this.mouseoverHandler);
-
+    if (!this.noMouseover) {
+      this.$el.on('mouseover', function() {
+        that.mouseoverHandler(false);
+      });
+    }
 
   },
 
@@ -427,7 +454,16 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
       this.model.contact = this.model.username1;
     }
     this.model.recipientLabel = this.app.translate('Recipient');
-    this.$el.html( this.messageChainTemplate(this.model) );
+
+    //format the date yo
+    var tempModel = JSON.parse(JSON.stringify(this.model));
+    var temp = new Date(tempModel.lastmessage);
+    var temp2 = String(temp).split(' ');
+    var temp3 = temp2.slice(1);
+    tempModel.lastmessage = temp3.join(' ');
+
+
+    this.$el.html( this.messageChainTemplate(tempModel) );
 
   },
 
