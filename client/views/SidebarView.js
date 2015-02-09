@@ -136,7 +136,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     } else if (this.displayed === 'Search') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
 
     } else if (this.displayed === 'Contacts') {
       var contactsPrefix = this.app.translate('Friends');
@@ -145,7 +144,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#contactsButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
@@ -155,7 +153,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#messagesButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
 
@@ -325,6 +322,8 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       //ADD SPACER LIST ITEM?????
 
+      var $spacer = $('<li id="sidebarSpacer"></li>');
+      that.$el.children('ul').append($spacer);
 
       //HANDLE THE EMPTY CASE
       if (!renderCollection.length) {
