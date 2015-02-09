@@ -478,10 +478,112 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           that.get('mapController').showWorld();
         }
 
-
       } 
 
     });
+
+
+
+    var topicsRightArrowObject = {
+      'Topics-Top': 'Topics-New',
+      'Topics-New': 'Topics-Hot',
+      'Topics-Hot': 'Topics-Top'
+    }
+    var topicsLeftArrowObject = {
+      'Topics-Top': 'Topics-Hot',
+      'Topics-New': 'Topics-Top',
+      'Topics-Hot': 'Topics-New'
+    }
+
+    var loginTopicsRightArrowObject = {
+      'Topics-Top': 'Topics-New',
+      'Topics-New': 'Topics-Hot',
+      'Topics-Hot': 'Topics-Contacts',
+      'Topics-Contacts': 'Topics-Top'
+    }
+    var loginTopicsLeftArrowObject = {
+      'Topics-Top': 'Topics-Contacts',
+      'Topics-New': 'Topics-Top',
+      'Topics-Hot': 'Topics-New',
+      'Topics-Contacts': 'Topics-Hot'
+    }
+
+    var changeColor = function(destination) {
+      if (destination === 'Topics-Top') {
+        $('#topButton').css('background-color', '#f8f8f8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-New') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#f8f8f8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-Hot') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#f8f8f8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-Contacts') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#f8f8f8');
+      }
+    };
+  
+    //arrow key behavior
+    $(document).keyup(function(e) {
+
+      var x = that.get('sidebarView').displayed;
+      if (x === 'Topics-Top' 
+        || x === 'Topics-New' 
+        || x === 'Topics-Hot' 
+        || x === 'Topics-Contacts') {
+
+        if (e.keyCode === 39) {
+          if (that.get('login')) {
+            that.get('sidebarView').displayed = loginTopicsRightArrowObject[x];
+            that.trigger('reloadSidebarTopics');
+            changeColor(loginTopicsRightArrowObject[x]);
+          } else {
+            that.get('sidebarView').displayed = topicsRightArrowObject[x];
+            that.trigger('reloadSidebarTopics');
+            changeColor(topicsRightArrowObject[x]);
+          }
+        } else if (e.keyCode === 37) {
+          if (that.get('login')) {
+            that.get('sidebarView').displayed = loginTopicsLeftArrowObject[x];
+            that.trigger('reloadSidebarTopics');
+            changeColor(loginTopicsLeftArrowObject[x]);
+          } else {
+            that.get('sidebarView').displayed = topicsLeftArrowObject[x];
+            that.trigger('reloadSidebarTopics');
+            changeColor(topicsLeftArrowObject[x]);
+          }
+        }
+
+
+      } else if (x === 'Contacts') {
+        that.get('sidebarView').displayed = 'Messages';
+        that.get('content1').show(that.get('sidebarView'));
+        $('#messagesButton').css('background-color', '#f8f8f8');
+        $('#contactsButton').css('background-color', '#E8E8E8');
+      } else if (x === 'Messages') {
+        that.get('sidebarView').displayed = 'Contacts';
+        that.get('content1').show(that.get('sidebarView'));
+        $('#messagesButton').css('background-color', '#E8E8E8');
+        $('#contactsButton').css('background-color', '#f8f8f8');
+      }
+
+
+
+
+
+    });
+  
+
+    
 
 
     Backbone.history.start();
