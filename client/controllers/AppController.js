@@ -443,15 +443,15 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     $(document).keyup(function(e) {
 
-      $('input').blur();
-      $('textarea').blur();
-
       if ($('#inputBox').css('height')) {
         var height = $('#inputBox').css('height');
         height = height.slice(0, height.length-2);
       }
 
       if (e.keyCode === 27) {
+
+        $('input').blur();
+        $('textarea').blur();
 
         console.log(that.get('imageFullscreen'));
         if (that.get('imageFullscreen')) {
