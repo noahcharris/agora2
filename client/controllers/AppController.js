@@ -443,6 +443,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     $(document).keyup(function(e) {
 
+      $('input').blur();
+      $('textarea').blur();
+
       if ($('#inputBox').css('height')) {
         var height = $('#inputBox').css('height');
         height = height.slice(0, height.length-2);
@@ -482,6 +485,17 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     });
 
+
+
+
+
+
+
+
+
+
+
+    //ARROW KEY BEHAVIOR
 
 
     var topicsRightArrowObject = {
@@ -531,59 +545,77 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         $('#friendsButton').css('background-color', '#f8f8f8');
       }
     };
+
+    //oh god, need to put all the inputs on the site into here ioi
+    var inputsArray = ['#searchInput', ];
   
-    //arrow key behavior
     $(document).keyup(function(e) {
 
-      var x = that.get('sidebarView').displayed;
-      if (x === 'Topics-Top' 
-        || x === 'Topics-New' 
-        || x === 'Topics-Hot' 
-        || x === 'Topics-Contacts') {
+      //check if any of the input boxes or textareas are currently selected
+      var flag = false;
 
-        if (e.keyCode === 39) {
-          if (that.get('login')) {
-            that.get('sidebarView').displayed = loginTopicsRightArrowObject[x];
-            that.trigger('reloadSidebarTopics');
-            changeColor(loginTopicsRightArrowObject[x]);
-          } else {
-            that.get('sidebarView').displayed = topicsRightArrowObject[x];
-            that.trigger('reloadSidebarTopics');
-            changeColor(topicsRightArrowObject[x]);
+      $('input').each(function() {
+        if ($(this).is(':focus'))
+          flag = true;
+      });
+
+      $('textarea').each(function() {
+        if ($(this).is(':focus'))
+          flag = true;
+      });
+
+      if (!flag) {
+        
+        var x = that.get('sidebarView').displayed;
+        if (x === 'Topics-Top' 
+          || x === 'Topics-New' 
+          || x === 'Topics-Hot' 
+          || x === 'Topics-Contacts') {
+
+          if (e.keyCode === 39) {
+            if (that.get('login')) {
+              that.get('sidebarView').displayed = loginTopicsRightArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(loginTopicsRightArrowObject[x]);
+            } else {
+              that.get('sidebarView').displayed = topicsRightArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(topicsRightArrowObject[x]);
+            }
+          } else if (e.keyCode === 37) {
+            if (that.get('login')) {
+              that.get('sidebarView').displayed = loginTopicsLeftArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(loginTopicsLeftArrowObject[x]);
+            } else {
+              that.get('sidebarView').displayed = topicsLeftArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(topicsLeftArrowObject[x]);
+            }
           }
-        } else if (e.keyCode === 37) {
-          if (that.get('login')) {
-            that.get('sidebarView').displayed = loginTopicsLeftArrowObject[x];
-            that.trigger('reloadSidebarTopics');
-            changeColor(loginTopicsLeftArrowObject[x]);
-          } else {
-            that.get('sidebarView').displayed = topicsLeftArrowObject[x];
-            that.trigger('reloadSidebarTopics');
-            changeColor(topicsLeftArrowObject[x]);
+        } else if (x === 'Contacts') {
+          if (e.keyCode === 39 || e.keyCode === 37) {
+            that.get('sidebarView').displayed = 'Messages';
+            that.get('content1').show(that.get('sidebarView'));
+            $('#messagesButton').css('background-color', '#f8f8f8');
+            $('#contactsButton').css('background-color', '#E8E8E8');
+          }
+        } else if (x === 'Messages') {
+          if (e.keyCode === 39 || e.keyCode === 37) {
+            that.get('sidebarView').displayed = 'Contacts';
+            that.get('content1').show(that.get('sidebarView'));
+            $('#messagesButton').css('background-color', '#E8E8E8');
+            $('#contactsButton').css('background-color', '#f8f8f8');
           }
         }
 
-
-      } else if (x === 'Contacts') {
-        that.get('sidebarView').displayed = 'Messages';
-        that.get('content1').show(that.get('sidebarView'));
-        $('#messagesButton').css('background-color', '#f8f8f8');
-        $('#contactsButton').css('background-color', '#E8E8E8');
-      } else if (x === 'Messages') {
-        that.get('sidebarView').displayed = 'Contacts';
-        that.get('content1').show(that.get('sidebarView'));
-        $('#messagesButton').css('background-color', '#E8E8E8');
-        $('#contactsButton').css('background-color', '#f8f8f8');
-      }
-
-
-
-
+      }//end input focus check
 
     });
   
 
-    
+  
+
 
 
     Backbone.history.start();
