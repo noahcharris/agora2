@@ -2613,7 +2613,7 @@ module.exports.validateChannel = function(request, response) {
   if (queryArgs.name.indexOf('/') !== -1) {
 
     response.end("channel name cannot contain '/'");
-    
+
     
   } else {
       //capitalize the name
@@ -4883,8 +4883,8 @@ module.exports.createLocation = function(request, response) {
 
                                                           //create teh location
                                                           client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                                                            +" creator, population, rank, public, pointGeometry, latitude, longitude, image) "
-                                                            +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
+                                                            +" creator, population, rank, public, pointGeometry, latitude, longitude, image, isCountry, isState, isCity) "
+                                                            +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg', false, false, false);",
                                                             [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
                                                             request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
                                                             function(err, result) {
