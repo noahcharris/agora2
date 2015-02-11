@@ -2612,6 +2612,10 @@ module.exports.validateChannel = function(request, response) {
 
   if (queryArgs.name.indexOf('/') !== -1) {
 
+    response.end("channel name cannot contain '/'");
+    
+    
+  } else {
       //capitalize the name
       var temp = queryArgs.name.split(' ');
       for (var i=0; i < temp.length ;i++) {
@@ -2642,10 +2646,6 @@ module.exports.validateChannel = function(request, response) {
             }
         });
       }
-
-    
-  } else {
-    response.end("channel name cannot contain '/'");
   }
 
 
@@ -2656,10 +2656,15 @@ module.exports.validateLocation = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
+
+
   if (queryArgs.name.indexOf('/') !== -1) {
 
+    response.end("location name cannot contain '/'");
+
+  } else {
       //capitalize the name
-      var temp = queryArgs.parent + '/' + queryArgs.name;
+      var temp = queryArgs.name.split(' ');
       for (var i=0; i < temp.length ;i++) {
         temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
       }
@@ -2682,9 +2687,6 @@ module.exports.validateLocation = function(request, response) {
               }
           }
       });
-
-  } else {
-    reponse.end("location name cannot contain '/'");
   }
 
 
