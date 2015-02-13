@@ -122,7 +122,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       var postToLabel = this.app.translate('Post to');
 
-      this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
+      var x = this.app.get('language');
+      if (x === 'ar' || x === 'ja') {
+        this.$el.append($('<div id="creationButton"><span id="createLabel">'+postLabel+' '+postToLabel+'</span></div>'));
+      } else {
+        this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
+      }
       //Set the correct button lighter
       if (this.displayed === 'Topics-Top') {
         this.$el.children('div#topButton').css('background-color','#f8f8f8');

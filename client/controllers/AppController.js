@@ -1192,10 +1192,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from ');
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
-                        } else {
+                        var x = that.app.get('language');
+                        if ( x === 'ar' || x === 'ja' || x === 'zh') {
                           var $notificationBox = $( RTLcontactRequestTemplate(that.contactRequests[i]) );
+                        } else {
+                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
                         }
 
                         var x = that.contactRequests[i].sender;
@@ -1259,11 +1260,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.newMessages.length ;i++) {
 
                         that.newMessages[i].newMessageLabel = that.app.translate('New message from ');
-
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
-                        } else {
+                        var x = that.app.get('language');
+                        if ( x === 'ar' || x === 'ja') {
                           var $notificationBox = $( RTLnewMessageTemplate(that.newMessages[i]) );
+                        } else {
+                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
                         }
 
                         console.log($notificationBox);
@@ -1354,11 +1355,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         var topicActivityLabel = that.app.translate('New topic activity on /');
                         var topicNumberLabel = that.topicActivity[i].topic;
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                        var x = that.app.get('language');
+                        if (x === 'ar' || x === 'ja') {
+                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
                         } else {
-                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
                         }
 
