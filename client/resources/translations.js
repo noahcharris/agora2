@@ -1929,8 +1929,13 @@ var translationData = [{
   pt: '',
   ru: '',
   es: '',
-},{
-  en: '',
+},
+
+
+  //NEW NEW 
+
+{
+  en: 'We are not currently accepting any new registrations. Please try again soon!',
   ar: '',
   zh: '',
   fr: '',
