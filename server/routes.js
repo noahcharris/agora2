@@ -2836,7 +2836,7 @@ module.exports.registerUser = function(request, response) {
                                                                     // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
                                                                     response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
 
-                                                                    console.log('Login successful for user: ', request.body.username);
+                                                                    // console.log('Login successful for user: ', request.body.username);
 
                                                                     response.json({ login: true, token: token });
 

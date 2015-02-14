@@ -24,7 +24,7 @@ states = statesData.states.features;
 
 function addCity(name, parent, lat, long) {
 
-  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity, image) "
+  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity, image, hasStates) "
     +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');", [name, parent, lat, long],
     function(err, result) {
       if (err) throw err;
@@ -60,8 +60,8 @@ client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, is
 //INSERT COUNTRIES
 for (var i=0; i < countries.length ;i++) {
 
-  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, image) "
-    +"VALUES ('Location', 'World', 'false', 'true', 'false', 'false', $1, 0, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
+  client.query("INSERT INTO locations (type, parent, isusercreated, isCountry, isState, isCity, name, population, public, image, hasStates) "
+    +"VALUES ('Location', 'World', 'false', 'true', 'false', 'false', $1, 0, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg', false);",
     [countries[i].properties.name],
     function(err, result) {
       if (err) {
