@@ -46,6 +46,32 @@ body {
    /*ABOUT AGORA*/
  /*******************/
 
+.aboutView {
+  overflow: scroll;
+  height:100%;
+}
+
+.aboutView::-webkit-scrollbar{
+  width:10px;
+}
+
+.aboutView::-webkit-scrollbar-track {
+  background-color: rgba(222,222,255,.3);
+}
+
+.aboutView::-webkit-scrollbar-track:hover{
+  background-color: rgba(100,100,100,.7);
+}
+
+.aboutView::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,.7);
+}
+
+.aboutView::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
 #aboutSectionOne {
   font-family: sans-serif;
   font-weight: lighter;
@@ -626,7 +652,8 @@ right:22.4%;
 }
 
 #sidebarSpacer {
-  height: 200px;
+  height: 100px;
+  width: 100%;
 }
 
 .sidebarView {
@@ -2299,15 +2326,15 @@ ul#recentlyVisited {
 #loader {
     position:   absolute;
     z-index:    1000;
-    top:        15px;
-    left:       165px;
+    top:        12px;
+    left:       160px;
     height:     50px;
     width:      50px;
     background: url('/resources/images/loading.gif') no-repeat;
     background-position: center;
     background-color: transparent;
     background-size: 50px;
-    opacity: 1;
+    opacity: .8;
     padding: 0px;
 }
 
