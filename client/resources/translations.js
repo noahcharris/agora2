@@ -76,7 +76,7 @@ var translationData = [{
   ar: 'التالى',
   zh: '下一个',
   fr: '',
-  de: 'Nächste Seite',
+  de: 'Nächste',
   ja: '次へ',
   pt: '',
   ru: 'дальше',

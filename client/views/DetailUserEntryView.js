@@ -509,13 +509,15 @@ Agora.Views.DetailUserEntryView = Backbone.View.extend({
     var $origin = this.$el.children('#profileOrigin');
     var $currentLocation = this.$el.children('#profileLocation');
 
-    $origin.on('click', function() {
+    $origin[0].onclick = function() {
+      console.log('whhhha');
       that.app.get('mapController').goToPath(that.model.origin);
-    });
+    };
 
-    $currentLocation.on('click', function() {
+    $currentLocation[0].onclick = function() {
+      console.log('whhhha');
       that.app.get('mapController').goToPath(that.model.location);
-    });
+    };
 
 
 
