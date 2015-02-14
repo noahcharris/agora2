@@ -665,7 +665,7 @@ var translationData = [{
   ja: 'チャンネルを作成する',
   pt: '',
   ru: '',
-  es: '',
+  es: 'Crear canal',
 },{
   en: 'Change Email',
   ar: 'تغيير عنوان البريد الإلكتروني',
@@ -1068,7 +1068,7 @@ var translationData = [{
   ja: 'サーバーエラー',
   pt: '',
   ru: 'ошибка сервера',
-  es: '',
+  es: 'error en el servidor',
 },{
   en: 'password confirmation does not match',
   ar: 'لا يتطابق تأكيد كلمة',
@@ -1078,7 +1078,7 @@ var translationData = [{
   ja: ' パスワード確認が一致しません',
   pt: '',
   ru: 'пароли не совпадают',
-  es: '',
+  es: 'confirmación de la contraseña no coincide',
 },{
   en: 'channel unavailable :(',
   ar: 'الموضوع غير متاحة :(',
@@ -1088,7 +1088,7 @@ var translationData = [{
   ja: 'チャンネルが使用できません:(',
   pt: '',
   ru: 'канал недоступен :(',
-  es: '',
+  es: 'canal no disponible :(',
 },{
   en: "channel name cannot contain '/'",
   ar: 'اسم الموضوع لا يمكن أن تحتوي على الرمز "/"',
@@ -1098,7 +1098,7 @@ var translationData = [{
   ja: 'チャンネル名に/は使用できません',
   pt: '',
   ru: 'название канала не может содержать “/“',
-  es: '',
+  es: 'el nombre del canal no puede contener "/"',
 },{
   en: 'location unavailable :(',
   ar: 'موقع غير متوفر',
@@ -1108,7 +1108,7 @@ var translationData = [{
   ja: 'ロケーションが使用できません:(',
   pt: '',
   ru: 'местоположени недоступно :(',
-  es: '',
+  es: 'ubicación no está disponible :(',
 },{
   en: "location name cannot contain '/'",
   ar: '',
@@ -1118,7 +1118,7 @@ var translationData = [{
   ja: 'ロケーション名に/は使用できません',
   pt: '',
   ru: 'местоположение не может содержать “/“',
-  es: '',
+  es: 'el nombre del lugar no puede contener "/"',
 },{
   en: "username may not contain '@'",
   ar: 'الموقع لا يمكن أن تحتوي على الرمز “@“',
@@ -1128,7 +1128,7 @@ var translationData = [{
   ja: 'ユーザー名に＠は使用できません',
   pt: '',
   ru: 'имя пользователя не должно содержать “@“',
-  es: '',
+  es: 'nombre de usuario no puede contener "@"',
 },{
   en: 'that location already exists',
   ar: 'هذا الموقع موجود بالفعل',
@@ -1138,7 +1138,7 @@ var translationData = [{
   ja: 'このロケーションは既に存在します',
   pt: '',
   ru: 'это местоположение уже существует',
-  es: '',
+  es: 'esa ubicación ya existe',
 },{
   en: 'that channel already exists',
   ar: 'هذا الموضوع موجود بالفعل',
@@ -1148,7 +1148,7 @@ var translationData = [{
   ja: 'このチャンネルは既に存在します',
   pt: '',
   ru: 'этот канал уже существует',
-  es: '',
+  es: 'ese canal ya existe',
 },{
   en: 'succesfully voted',
   ar: 'صوت بنجاح',
@@ -1158,7 +1158,7 @@ var translationData = [{
   ja: '投票に成功しました',
   pt: '',
   ru: 'ваш голос успешно добавлен',
-  es: '',
+  es: 'voto logrado',
 },{
   en: 'already voted',
   ar: 'بالتصويت بالفعل',
@@ -1168,7 +1168,7 @@ var translationData = [{
   ja: '投票済です',
   pt: '',
   ru: 'вы уже проголосовали',
-  es: '',
+  es: 'ya votaste',
 },{
   en: 'upvote failed',
   ar: 'فشل التصويت الإيجابي',
@@ -1178,7 +1178,7 @@ var translationData = [{
   ja: '投票取消に失敗しました',
   pt: '',
   ru: '',
-  es: '',
+  es: 'voto cumulativo falló',
 },{
   en: 'you must be logged in to post a reply',
   ar: 'يجب أن تكون مسجلا لمرحلة ما بعد الرد',
@@ -1188,7 +1188,7 @@ var translationData = [{
   ja: '返信するにはログインが必要になります',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debe estar conectado para publicar una respuesta',
 },{
   en: 'your parent channel must begin with "All"',
   ar: 'يجب أن يبدأ الموضوع والديك مع "All"',
@@ -1198,7 +1198,7 @@ var translationData = [{
   ja: 'ペアレントチャンネル名は"All"で始まる必要があります',
   pt: '',
   ru: 'ваш родительский канал должен начинаться с “All”',
-  es: '',
+  es: 'su canal matriz debe comenzar con "All"',
 },{
   en: 'please complete CAPTCHA',
   ar: 'يرجى إكمال اختبار صدق',
@@ -1208,7 +1208,7 @@ var translationData = [{
   ja: 'キャプチャを完了して下さい',
   pt: '',
   ru: 'пожалуйста, введите CAPTCHA',
-  es: '',
+  es: 'por favor complete CAPTCHA',
 },{
   en: 'you must enter a name for your channel',
   ar: 'يجب إدخال اسم لقناتك',
@@ -1218,7 +1218,7 @@ var translationData = [{
   ja: 'チャンネル名を入力して下さい',
   pt: '',
   ru: 'вы должны ввести имя своего канала',
-  es: '',
+  es: 'debe introducir un nombre para el canal',
 },{
   en: 'you must choose a valid parent city',
   ar: 'يجب عليك اختيار المدينة الأم صالحة',
@@ -1228,7 +1228,7 @@ var translationData = [{
   ja: '有効なペアレントシティーを入力して下さい',
   pt: '',
   ru: 'вы должны выбрать правильно родителский город',
-  es: '',
+  es: 'usted debe elegir un ciudad matriz válida',
 },{
   en: 'you must enter a name for your location',
   ar: 'يجب إدخال اسم لل موقع',
@@ -1238,7 +1238,7 @@ var translationData = [{
   ja: 'ロケーション名を入力して下さい',
   pt: '',
   ru: 'вы должны ввести називание вашего местоположения',
-  es: '',
+  es: 'debe introducir un nombre para su lugar',
 },{
   en: 'location available :)',
   ar: 'موقع متاح',
@@ -1248,7 +1248,7 @@ var translationData = [{
   ja: 'ロケーション使用可能 :)',
   pt: '',
   ru: 'местоположени доступно :)',
-  es: '',
+  es: 'ubicación disponible :)',
 },{
   en: 'channel available :)',
   ar: 'الموضوع متاح :)',
@@ -1258,7 +1258,7 @@ var translationData = [{
   ja: 'ロケーション使用可能 :)',
   pt: '',
   ru: 'канал доступен :)',
-  es: '',
+  es: 'canal disponible :)',
 },{
   en: 'please place a point on the map',
   ar: 'يرجى وضع نقطة على الخريطة',
@@ -1268,7 +1268,7 @@ var translationData = [{
   ja: 'マップ上にポイントを設置して下さい',
   pt: '',
   ru: 'пожалуйста, укажите точку на карте',
-  es: '',
+  es: 'por favor coloque un punto en el mapa',
 },{
   en: 'logout failed',
   ar: 'فشل تسجيل الخروج',
@@ -1278,7 +1278,7 @@ var translationData = [{
   ja: 'ログアウト失敗',
   pt: '',
   ru: 'вы не вышли',
-  es: '',
+  es: 'cierre de sesión falló',
 },{
   en: 'you must verify your email to create a location',
   ar: 'يجب عليك التحقق من البريد الإلكتروني الخاص بك ل إنشاء موقع',
@@ -1288,7 +1288,7 @@ var translationData = [{
   ja: 'ロケーション作成をする前にEメールの認証が必要です',
   pt: '',
   ru: 'вы должны подтвердить ваш email, чтобы создать местоположение',
-  es: '',
+  es: 'debes verificar tu correo electrónico para crear ubicación',
 },{
   en: 'you must verify your email to create a channel',
   ar: 'يجب عليك التحقق من البريد الإلكتروني الخاص بك لإنشاء موضوع',
@@ -1298,7 +1298,7 @@ var translationData = [{
   ja: 'チャンネル作成をする前にEメールの認証が必要です',
   pt: '',
   ru: 'вы должны подтвердить ваш email, чтобы создать канал',
-  es: '',
+  es: 'debes verificar tu correo electrónico para crear un canal',
 },{
   en: 'you must be logged in to sort topics by friends',
   ar: 'يجب أن تكون مسجلا ل فرز الموضوعات من قبل الأصدقاء',
@@ -1308,7 +1308,7 @@ var translationData = [{
   ja: 'トピックを友だち別にソートするにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para ordenar los temas por amigos',
 },{
   en: 'you must be logged in to create a topic',
   ar: 'يجب أن تكون مسجلا ل خلق الخلق الأصلي',
@@ -1318,7 +1318,7 @@ var translationData = [{
   ja: 'トピックを作成するにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para crear un tema',
 },{
   en: 'you must provide either a headline or contents',
   ar: 'يجب توفير إما عنوانا أو محتويات',
@@ -1328,7 +1328,7 @@ var translationData = [{
   ja: 'ヘッドラインかコンテンツのいずれかを入力して下さい',
   pt: '',
   ru: 'вы должны заполнить заголовок или содержание',
-  es: '',
+  es: 'debes proporcionar ya sea un título o contenido',
 },{
   en: 'post creation failed :(',
   ar: 'خلق آخر فشل',
@@ -1338,7 +1338,7 @@ var translationData = [{
   ja: '投稿作成に失敗しました:(',
   pt: '',
   ru: 'пост не создан :(',
-  es: '',
+  es: 'creación de la publicación falló :(',
 },{
   en: 'you must be logged in to create a topic',
   ar: 'يجب أن تكون مسجلا ل خلق الخلق الأصلي',
@@ -1348,7 +1348,7 @@ var translationData = [{
   ja: 'トピックを作成するにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para crear un tema',
 },{
   en: 'you must log in to view your profile',
   ar: 'يجب عليك تسجيل الدخول لمشاهدة ملفك الشخصي',
@@ -1358,7 +1358,7 @@ var translationData = [{
   ja: 'プロフィールを閲覧するにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para ver tu perfil',
 },{
   en: 'you must be logged in to access settings',
   ar: 'يجب أن تكون مسجلا ل إعدادات الوصول',
@@ -1368,7 +1368,7 @@ var translationData = [{
   ja: '設定にアクセスするにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para acceder a la configuración',
 },{
   en: 'you must be logged in to view messages',
   ar: 'يجب تسجيل الدخول لمشاهدة الرسائل',
@@ -1378,7 +1378,7 @@ var translationData = [{
   ja: 'メッセージを閲覧するにはログインが必要です',
   pt: '',
   ru: '',
-  es: '',
+  es: 'debes estar conectado para ver mensajes',
 },{
   en: 'search returned no data',
   ar: 'أسفر بحثك أية بيانات',
@@ -1388,7 +1388,7 @@ var translationData = [{
   ja: '検索結果が見つかりませんでした',
   pt: '',
   ru: 'поиск ничего не обнаружил',
-  es: '',
+  es: 'busqueda no regreso data',
 },{
   en: 'please enter a username',
   ar: '',
@@ -1398,7 +1398,7 @@ var translationData = [{
   ja: 'ユーザー名を入力して下さい',
   pt: '',
   ru: 'пожалйуста, введите имя пользователя',
-  es: '',
+  es: 'por favor escriba el nombre de usuario',
 },{
   en: "username may not contain '@'",
   ar: 'يحتوي اسم المستخدم رمز "@ "',
@@ -1408,7 +1408,7 @@ var translationData = [{
   ja: 'ユーザー名に＠は使用できません',
   pt: '',
   ru: 'имя пользователя не может содержать “@“',
-  es: '',
+  es: 'nombre de usuario no puede contener @',
 },{
   en: 'please enter a password',
   ar: 'يرجى إدخال كلمة المرور',
@@ -1418,7 +1418,7 @@ var translationData = [{
   ja: 'パスワードを入力して下さい',
   pt: '',
   ru: 'пожалуйста, введите пароль',
-  es: '',
+  es: 'por favor escriba una contraseña',
 },{
   en: 'password confirmation does not match',
   ar: 'لا يتطابق تأكيد كلمة',
@@ -1428,7 +1428,7 @@ var translationData = [{
   ja: 'パスワード確認が一致しません',
   pt: '',
   ru: 'пароли не совпадают',
-  es: '',
+  es: 'las contraseñas no coinciden',
 },{
   en: 'please enter an email',
   ar: 'يرجى إدخال البريد الإلكتروني',
@@ -1438,7 +1438,7 @@ var translationData = [{
   ja: 'Eメールを入力して下さい',
   pt: '',
   ru: 'пожалуйста, введите адрес электронной почты',
-  es: '',
+  es: 'por favor escriba un correo electronico valido',
 },{
   en: 'please enter a valid origin',
   ar: 'من فضلك ادخل موقع أصل صحيح',
@@ -1448,7 +1448,7 @@ var translationData = [{
   ja: '有効な基点を入力して下さい',
   pt: '',
   ru: '',
-  es: '',
+  es: 'por favor escriba un origen válido',
 },{
   en: 'please enter a valid current location',
   ar: 'يرجى إدخال الموقع الحالي ساري المفعول',
@@ -1458,7 +1458,7 @@ var translationData = [{
   ja: '有効な現在地を入力して下さい',
   pt: '',
   ru: '',
-  es: '',
+  es: 'por favor, introduzca una ubicación actual válida',
 },{
   en: 'registration successful',
   ar: 'التسجيل بنجاح',
@@ -1468,7 +1468,7 @@ var translationData = [{
   ja: '登録完了',
   pt: '',
   ru: 'регистрация прошла успешно ',
-  es: '',
+  es: 'registro logrado',
 },{
   en: 'username unavailable',
   ar: 'إسم العضو غير متوفر',
@@ -1478,7 +1478,7 @@ var translationData = [{
   ja: 'ユーザー名が既に使用されています',
   pt: '',
   ru: 'имя пользователя уже занято',
-  es: '',
+  es: 'nombre de usuario no esta disponible',
 },{
   en: 'username available',
   ar: 'اسم المستخدم متاح',
@@ -1488,7 +1488,7 @@ var translationData = [{
   ja: 'ユーザー名使用可能',
   pt: '',
   ru: 'имя пользователя свободно',
-  es: '',
+  es: 'nombre de usuario esta disponible',
 },{
   en: 'Confirm Contact Request',
   ar: 'تأكيد طلب الاتصال',
@@ -1498,7 +1498,7 @@ var translationData = [{
   ja: '連絡先追加リクエスト確認',
   pt: '',
   ru: 'подтвердить добавление в друзья',
-  es: '',
+  es: 'Confirmar Solicitud de Contacto',
 },{
   en: 'Pending Request',
   ar: 'طلب معلقة',
@@ -1508,7 +1508,7 @@ var translationData = [{
   ja: '待機中リクエスト',
   pt: '',
   ru: 'ожидается запрос',
-  es: '',
+  es: 'Solicitud pendiente',
 },{
   en: 'Send Message',
   ar: 'إرسال رسالة',
@@ -1518,7 +1518,7 @@ var translationData = [{
   ja: 'メッセージ送信',
   pt: '',
   ru: 'отправить сообщение',
-  es: '',
+  es: 'Enviar Mensaje',
 },{
   en: 'Contact Request',
   ar: 'الاتصال طلب',
@@ -1528,7 +1528,7 @@ var translationData = [{
   ja: '連絡先追加リクエスト',
   pt: '',
   ru: 'запрос в друзья',
-  es: '',
+  es: 'Solicitud de Contacto',
 },{
   en: "Don't see your city? Please email us the name at ??? and we will add it into our database.",
   ar: 'لا ترى مدينتك ؟ يرجى مراسلتنا على اسم في ؟؟؟ وسوف نقوم إضافته إلى قاعدة البيانات الخاصة بنا .',
@@ -1538,7 +1538,7 @@ var translationData = [{
   ja: 'お住まいの街が見つかりませんか？???までEメールでご連絡ください。データベースに追加致します',
   pt: '',
   ru: 'Не находите город? Пожалуйста, свяжитесь нами по ??? и мы добавим его в базу.',
-  es: '',
+  es: 'No ves tu ciudad? Por favor envianos el nombre por correo electrónico a ??? y lo agregaremos a nuestra base de datos',
 },{
   en: 'you two are already contacts',
   ar: 'كنت بالفعل اتصالات مع هذا المستخدم',
@@ -1548,7 +1548,7 @@ var translationData = [{
   ja: '既に連絡先に追加されています',
   pt: '',
   ru: 'вы уже друзья',
-  es: '',
+  es: 'ustedes dos ya son contactos',
 },{
   en: 'contact confirmed!',
   ar: 'الاتصال أكد',
@@ -1558,7 +1558,7 @@ var translationData = [{
   ja: '連絡先が確認されました！',
   pt: '',
   ru: 'контакт подтвержден!',
-  es: '',
+  es: 'contacto confirmado',
 },{
   en: 'Place on Map',
   ar: '',
@@ -1568,7 +1568,7 @@ var translationData = [{
   ja: 'マップ上に設置する',
   pt: '',
   ru: 'отметить на карте',
-  es: '',
+  es: 'Colocar en el Mapa',
 },{
   en: 'Origin',
   ar: 'جذر',
@@ -1588,7 +1588,7 @@ var translationData = [{
   ja: '現在地',
   pt: '',
   ru: 'текущее местоположение',
-  es: '',
+  es: 'Ubicacion actual',
 },{
   en: 'username must be 35 characters or less',
   ar: '',
@@ -1598,7 +1598,7 @@ var translationData = [{
   ja: 'ユーザー名は35文字以内でなければなりません',
   pt: '',
   ru: 'имя пользователя должно содержать не более 35 букв',
-  es: '',
+  es: 'nombre de usuario debe ser de 35 caracteres o menos',
 },{
   en: 'invalid invite code',
   ar: '',
@@ -1608,7 +1608,7 @@ var translationData = [{
   ja: ' 紹介コードが無効です',
   pt: '',
   ru: 'неверный пригласительный код',
-  es: '',
+  es: 'el código de invitación no es válido',
 },{
   en: 'View Invite Codes',
   ar: '',
@@ -1618,7 +1618,7 @@ var translationData = [{
   ja: '招待コードを見る',
   pt: '',
   ru: 'посмотреть пригласительный код',
-  es: '',
+  es: 'Ver Codigos de Invitacion',
 },{
   en: 'invite code',
   ar: '',
@@ -1628,7 +1628,7 @@ var translationData = [{
   ja: '招待コード',
   pt: '',
   ru: 'пригласительный код',
-  es: '',
+  es: 'codigo de invitacion',
 },{
   en: 'Connect Twitter Account',
   ar: '',
@@ -1638,7 +1638,7 @@ var translationData = [{
   ja: 'ツイッターアカウントと結ぶ',
   pt: '',
   ru: 'добавить твиттер-аккунт',
-  es: '',
+  es: 'Conectar con Cuenta de Twitter',
 },{
   en: 'Continue',
   ar: '',
@@ -1648,7 +1648,7 @@ var translationData = [{
   ja: '続ける',
   pt: '',
   ru: 'продолжить',
-  es: '',
+  es: 'Continuar',
 },{
   en: 'you have already associated a twitter account to your profile',
   ar: '',
@@ -1658,17 +1658,17 @@ var translationData = [{
   ja: '既にプロフィールとツイッターアカウントが関連づけされています',
   pt: '',
   ru: 'вы уже связали свой аккаунт с твиттер-аккаунтом',
-  es: '',
+  es: 'ya tienes una cuenta de twitter asociada con la cuenta de tu perfil',
 },{
   en: 'that twitter account is already associated with an agora account',
   ar: '',
-  zh: '那个twitter账号已经联系到agora账号',
+  zh: '那个twitter账号已经联系到Egora账号',
   fr: '',
   de: '',
   ja: 'このツイッターアカウントは既にEgoraアカウントと関連づけされています',
   pt: '',
   ru: 'этот твиттер-аккунт уже связан с Eгора-аккунтом',
-  es: '',
+  es: 'esa cuenta de twitter ya esta asociada con tu cuenta de Egora',
 },{
   en: 'authentication failed',
   ar: '',
@@ -1678,7 +1678,7 @@ var translationData = [{
   ja: '認証失敗',
   pt: '',
   ru: 'ошибка идентификации',
-  es: '',
+  es: 'autenticación falló',
 },{
   en: 'authentication succeeded',
   ar: '',
@@ -1688,7 +1688,7 @@ var translationData = [{
   ja: '認証成功',
   pt: '',
   ru: 'идентификация успешно пройдена',
-  es: '',
+  es: 'autenticación lograda',
 },{
   en: 'Welcome to Egora!',
   ar: '',
@@ -1698,7 +1698,7 @@ var translationData = [{
   ja: 'Egoraへようこそ！',
   pt: '',
   ru: 'Добро пожаловать в Egora!',
-  es: '',
+  es: 'Bienvenidos a Egora!',
 },{
   en: 'This site is designed to show what people are thinking about everywhere in the world.',
   ar: '',
@@ -1708,7 +1708,7 @@ var translationData = [{
   ja: 'このウェブサイトは人々の関心を大小問わず反映させるためにデザインされています。',
   pt: '',
   ru: 'Этот сайт создан для того, чтобы показать, о чем думаю люди по всему миру как в малых, так и в больших масштабах.',
-  es: '',
+  es: 'Este sitio está diseñado para mostrar lo que la gente está pensando, por todas partes del mundo, ya sea a pequeña o gran escala.',
 },{
   en: 'The map is used to navigate through Locations and display user activity.',
   ar: '',
@@ -1718,7 +1718,7 @@ var translationData = [{
   ja: 'マップではロケーションを通してユーザーアクティビティーを見ることができます。',
   pt: '',
   ru: 'Карта используется для навигации через местоположения и отображает активность пользователя.',
-  es: '',
+  es: 'El mapa se utiliza para navegar por ubicaciones y para mostrar la actividad del usuario',
 },{
   en: 'Users navigate Egora by changing Location and Channel.',
   ar: '',
@@ -1728,7 +1728,7 @@ var translationData = [{
   ja: 'ユーザーはロケーションやチャンネルを通してEgora内をナビゲートします。',
   pt: '',
   ru: 'Пользователи могут менять место и канал.',
-  es: '',
+  es: 'Usuarios navegan Egora cambiando la Ubicación y el Canal',
 },{
   en: 'Users may create Posts for any combination of Location and Channel.',
   ar: '',
@@ -1738,7 +1738,7 @@ var translationData = [{
   ja: 'ユーザーはロケーションやチャンネルに一致する投稿を作成できます。',
   pt: '',
   ru: 'Пользователи могут создавать записи для любых комбинаций из мест и каналов.',
-  es: '',
+  es: 'Los usuarios pueden crear mensajes para cualquier combinación de ubicación y de canales',
 },{
   en: 'Inside each Post, users can have an organized discussion with text and images.',
   ar: '',
@@ -1748,7 +1748,7 @@ var translationData = [{
   ja: 'それぞれの投稿でユーザーはテキストや写真を使用してディスカッションを展開することが可能です。',
   pt: '',
   ru: 'Внутри каждого поста пользователи могут начать дискуссию с помощью картинок и текста.',
-  es: '',
+  es: 'Dentro de cada post, los usuarios pueden tener una discusión organizada con texto e imágenes.',
 },{
   en: 'Locations and Channels are organized in a tree (see picture below).',
   ar: '',
@@ -1758,7 +1758,7 @@ var translationData = [{
   ja: 'ロケーションやチャンネルはネストすることができ、木の枝のように管理されます（下の写真を参照）。',
   pt: '',
   ru: 'Местоположени и каналы могут наслаиваться, так что они структурированы по типу дерева (как на картинке).',
-  es: '',
+  es: 'Ubicaciones y Canales se pueden anidar, y están organizados como un árbol (ver foto abajo).',
 },{
   en: 'To get started, choose a Location and a Channel (or just hang out in World ~ All). Happy posting!',
   ar: '',
@@ -1768,7 +1768,7 @@ var translationData = [{
   ja: 'まずはロケーションとチャンネルを選択（あるいはWorld ~ Allで時間を過ごすのも良し）。お楽しみください！',
   pt: '',
   ru: 'Чтобы начать, выберите место и канал (или просто зависайте со всем миром). Счастливого постинга!',
-  es: '',
+  es: 'Para empezar, elige una ubicación y un canal (o simplemente pasa el rato en Mundial ~ Todo). Diviertete!',
 },{
   en: 'P.S. Egora is a portmanteau of Electronic-Agora.',
   ar: '',
@@ -1788,7 +1788,7 @@ var translationData = [{
   ja: 'i) コンピューターによって実体化されたサイバースペースを指すElectronic',
   pt: '',
   ru: 'i) Electronic так как это существует в киберпространстве, и отображается через компьютер.',
-  es: '',
+  es: 'i) Electrónicoo tal como existe en el ciberespacio, que se fundamenta en el ordenador digital electrónico.',
 },{
   en: 'ii) Agora as we invoke the gathering place of the ancient Greek city-states. A rich centerpiece of public life.',
   ar: '',
@@ -1798,7 +1798,7 @@ var translationData = [{
   ja: 'ii) Agoraとは古代ギリシャの都市で人々が集まる場所であった公共生活の豊かな中心地を指します。',
   pt: '',
   ru: 'ii) Agora - это места общего сбора в греческих городах. Богатые общественной жизнью центры.”',
-  es: '',
+  es: 'ii) Agora como invocamos el lugar de reunión de las antiguas ciudades de estado griegas. Una pieza central de la vida pública.',
 },{
   en: 'If you connect your twitter account, Egora will pull your latest tweets and place them into your current location under the channel All/Twitter.',
   ar: '',
@@ -1808,7 +1808,7 @@ var translationData = [{
   ja: 'ツイッターアカウントと関連づけするとEgoraは最新のツイートをAll/Twitterチャンネルの現在位置に貼付けます。',
   pt: '',
   ru: 'Если мы присоединили свой твиттер-аккаунт, Egora загрузит ваши последние твиты и присоединит их к вашему текущему местоположению на канале All/Twitter.',
-  es: '',
+  es: 'Si conecta su cuenta de twitter, Egora tomará sus últimos tweets y los colocara en su posición actual en el marco del canal.',
 },
 
 
@@ -1884,7 +1884,7 @@ var translationData = [{
   ja: '招待コード',
   pt: '',
   ru: 'посмотреть пригласительный код',
-  es: '',
+  es: 'Codigos de invitacion',
 },{
   en: 'View Profile',
   ar: '',
@@ -1924,7 +1924,7 @@ var translationData = [{
   ja: '認証成功',
   pt: '',
   ru: 'проверка успешно пройдена',
-  es: '',
+  es: 'Verificacion Lograda',
 },{
   en: 'Verification Failed',
   ar: '',
@@ -1934,7 +1934,7 @@ var translationData = [{
   ja: '認証失敗',
   pt: '',
   ru: 'проверка не пройдена',
-  es: '',
+  es: 'Verificación Falló',
 },
 
 
