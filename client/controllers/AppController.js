@@ -450,6 +450,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       if (e.keyCode === 27) {
 
+        $('input').blur();
+        $('textarea').blur();
+
         console.log(that.get('imageFullscreen'));
         if (that.get('imageFullscreen')) {
           $('#fullscreen').remove();
@@ -478,10 +481,141 @@ Agora.Controllers.AppController = Backbone.Model.extend({
           that.get('mapController').showWorld();
         }
 
-
       } 
 
     });
+
+
+
+
+
+
+
+
+
+
+
+    //ARROW KEY BEHAVIOR
+
+
+    var topicsRightArrowObject = {
+      'Topics-Top': 'Topics-New',
+      'Topics-New': 'Topics-Hot',
+      'Topics-Hot': 'Topics-Top'
+    }
+    var topicsLeftArrowObject = {
+      'Topics-Top': 'Topics-Hot',
+      'Topics-New': 'Topics-Top',
+      'Topics-Hot': 'Topics-New'
+    }
+
+    var loginTopicsRightArrowObject = {
+      'Topics-Top': 'Topics-New',
+      'Topics-New': 'Topics-Hot',
+      'Topics-Hot': 'Topics-Contacts',
+      'Topics-Contacts': 'Topics-Top'
+    }
+    var loginTopicsLeftArrowObject = {
+      'Topics-Top': 'Topics-Contacts',
+      'Topics-New': 'Topics-Top',
+      'Topics-Hot': 'Topics-New',
+      'Topics-Contacts': 'Topics-Hot'
+    }
+
+    var changeColor = function(destination) {
+      if (destination === 'Topics-Top') {
+        $('#topButton').css('background-color', '#f8f8f8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-New') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#f8f8f8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-Hot') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#f8f8f8');
+        $('#friendsButton').css('background-color', '#E8E8E8');
+      } else if (destination === 'Topics-Contacts') {
+        $('#topButton').css('background-color', '#E8E8E8');
+        $('#newButton').css('background-color', '#E8E8E8');
+        $('#hotButton').css('background-color', '#E8E8E8');
+        $('#friendsButton').css('background-color', '#f8f8f8');
+      }
+    };
+
+    //oh god, need to put all the inputs on the site into here ioi
+    var inputsArray = ['#searchInput', ];
+  
+    $(document).keyup(function(e) {
+
+      //check if any of the input boxes or textareas are currently selected
+      var flag = false;
+
+      $('input').each(function() {
+        if ($(this).is(':focus'))
+          flag = true;
+      });
+
+      $('textarea').each(function() {
+        if ($(this).is(':focus'))
+          flag = true;
+      });
+
+      if (!flag) {
+        
+        var x = that.get('sidebarView').displayed;
+        if (x === 'Topics-Top' 
+          || x === 'Topics-New' 
+          || x === 'Topics-Hot' 
+          || x === 'Topics-Contacts') {
+
+          if (e.keyCode === 39) {
+            if (that.get('login')) {
+              that.get('sidebarView').displayed = loginTopicsRightArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(loginTopicsRightArrowObject[x]);
+            } else {
+              that.get('sidebarView').displayed = topicsRightArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(topicsRightArrowObject[x]);
+            }
+          } else if (e.keyCode === 37) {
+            if (that.get('login')) {
+              that.get('sidebarView').displayed = loginTopicsLeftArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(loginTopicsLeftArrowObject[x]);
+            } else {
+              that.get('sidebarView').displayed = topicsLeftArrowObject[x];
+              that.trigger('reloadSidebarTopics');
+              changeColor(topicsLeftArrowObject[x]);
+            }
+          }
+        } else if (x === 'Contacts') {
+          if (e.keyCode === 39 || e.keyCode === 37) {
+            that.get('sidebarView').displayed = 'Messages';
+            that.get('content1').show(that.get('sidebarView'));
+            $('#messagesButton').css('background-color', '#f8f8f8');
+            $('#contactsButton').css('background-color', '#E8E8E8');
+          }
+        } else if (x === 'Messages') {
+          if (e.keyCode === 39 || e.keyCode === 37) {
+            that.get('sidebarView').displayed = 'Contacts';
+            that.get('content1').show(that.get('sidebarView'));
+            $('#messagesButton').css('background-color', '#E8E8E8');
+            $('#contactsButton').css('background-color', '#f8f8f8');
+          }
+        }
+
+      }//end input focus check
+
+    });
+  
+
+  
+
 
 
     Backbone.history.start();
@@ -1058,10 +1192,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from ');
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
-                        } else {
+                        var x = that.app.get('language');
+                        if ( x === 'ar' || x === 'ja' || x === 'zh') {
                           var $notificationBox = $( RTLcontactRequestTemplate(that.contactRequests[i]) );
+                        } else {
+                          var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
                         }
 
                         var x = that.contactRequests[i].sender;
@@ -1125,11 +1260,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.newMessages.length ;i++) {
 
                         that.newMessages[i].newMessageLabel = that.app.translate('New message from ');
-
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
-                        } else {
+                        var x = that.app.get('language');
+                        if ( x === 'ar' || x === 'ja') {
                           var $notificationBox = $( RTLnewMessageTemplate(that.newMessages[i]) );
+                        } else {
+                          var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
                         }
 
                         console.log($notificationBox);
@@ -1220,11 +1355,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         var topicActivityLabel = that.app.translate('New topic activity on /');
                         var topicNumberLabel = that.topicActivity[i].topic;
-                        if (that.app.get('language') !== 'ar') {
-                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                        var x = that.app.get('language');
+                        if (x === 'ar' || x === 'ja') {
+                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
                         } else {
-                          var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
+                          var $notificationBox = $( topicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
                         }
 

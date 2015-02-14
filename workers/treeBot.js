@@ -9,6 +9,26 @@ client.connect();
 
 var test = 82;
 
+var cacheArray = []
+
+
+
+
+
+for (var i=0; i < cacheArray.length ;i++) {
+
+
+
+  //loop through cacheArray, build trees for every
+
+
+
+
+}
+
+
+
+
 
 
 //how should 
@@ -26,50 +46,7 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
 
 
 
-        function cacheTree(obj, topicId) {
-
-          client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
-            [topicId], function(err, result) {
-              if (err)
-                console.log('err checking tree cache: ', err);
-
-              if (result.rows.length) {
-                //update cache
-
-
-                client.query("UPDATE topicTreeCache SET (tree, createdAt) = "
-                  +"($1, now()) WHERE topicId = $2;",
-                  [JSON.stringify(obj), topicId],
-                  function(err, result) {
-                    if (err)
-                      console.log('error updating topic tree cache: ', err);
-                    console.log('successfully cached topic');
-                    process.exit();
-                  });
-
-              } else {
-                //create new entry
-
-
-                client.query("INSERT INTO topicTreeCache (topicId, tree, createdAt) "
-                  +"VALUES ($1, $2, now());", [topicId, JSON.stringify(obj)],
-                  function(err, result) {
-                    if (err) { 
-                      console.log('error caching tree: ', err);
-                      process.exit();
-                    } else {
-                      console.log('successfully cached topic ');
-                      process.exit();
-                    }
-                });
-
-
-
-              }
-          });// end tree cache check
-
-
-        };
+        
 
 
 
@@ -87,6 +64,9 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
             var responses = [];
             var replies = [];
 
+            var length = temp.length;
+            var counter = i;
+
             client.query("SELECT * FROM topics WHERE topics.id=$1",[temp[i].id], function(err, result) {
               if (err) {
                 console.log('error selecting from topics: ', err);
@@ -94,8 +74,9 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
               } else {
                 count++;
                 topic = result.rows[0];
+                var flag = (counter === length - 1)
                 if (count === 4) {
-
+                  cacheTree(buildSequence(topic, comments, responses, replies), id, flag);
                 }
               }
 
@@ -108,8 +89,9 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
               } else {
                 count++;
                 comments = result.rows;
+                var flag = (counter === length - 1)
                 if (count === 4) {
-                  cacheTree(buildSequence(topic, comments, responses, replies), id);
+                  cacheTree(buildSequence(topic, comments, responses, replies), id, flag);
                 }
               }
             });
@@ -121,8 +103,9 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
               } else {
                 count++;
                 responses = result.rows;
+                var flag = (counter === length - 1)
                 if (count === 4) {
-                  cacheTree(buildSequence(topic, comments, responses, replies), id);
+                  cacheTree(buildSequence(topic, comments, responses, replies), id, flag);
                 }
               }
             });
@@ -134,8 +117,9 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
               } else {
                 count++;
                 replies = result.rows;
+                var flag = (counter === length - 1)
                 if (count === 4) {
-                  cacheTree(buildSequence(topic, comments, responses, replies), id);
+                  cacheTree(buildSequence(topic, comments, responses, replies), id, flag);
                 }
               } 
             });
@@ -195,31 +179,73 @@ client.query("SELECT * FROM topics WHERE heat > 50 OR rank > 100 OR id=$1 ORDER 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       }//end results for loop
 
     }
 });//end topics select
+
+
+
+
+
+
+function cacheTree(obj, topicId, isLast) {
+
+  client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
+    [topicId], function(err, result) {
+      if (err)
+        console.log('err checking tree cache: ', err);
+
+      if (result.rows.length) {
+        //update cache
+
+
+        client.query("UPDATE topicTreeCache SET (tree, createdAt) = "
+          +"($1, now()) WHERE topicId = $2;",
+          [JSON.stringify(obj), topicId],
+          function(err, result) {
+            if (err) {
+              console.log('error updating topic tree cache: ', err);
+            } else {
+              console.log('successfully cached topic');
+              if (isLast)
+                console.log('finished');
+            }
+          });
+
+      } else {
+        //create new entry
+
+
+        client.query("INSERT INTO topicTreeCache (topicId, tree, createdAt) "
+          +"VALUES ($1, $2, now());", [topicId, JSON.stringify(obj)],
+          function(err, result) {
+            if (err) { 
+              console.log('error caching tree: ', err);
+            } else {
+              console.log('successfully cached topic ');
+              if (isLast)
+                console.log('finished');
+            }
+        });
+
+
+
+      }
+  });// end tree cache check
+
+
+};
+
+
+
+
+
+
+
+
+
+
 
 
 

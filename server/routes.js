@@ -22,6 +22,8 @@ var fs = require('fs')
 
 //var treeBuilder = require('../workers/treebuilder.js');
 
+var registrationAllowed = true;
+
 var AgoraMaxUpload = 10000000;
 var workerSecret = 'courtesytointervene';
 var placeRadiusThreshold = 1.2;
@@ -2612,6 +2614,10 @@ module.exports.validateChannel = function(request, response) {
 
   if (queryArgs.name.indexOf('/') !== -1) {
 
+    response.end("channel name cannot contain '/'");
+
+    
+  } else {
       //capitalize the name
       var temp = queryArgs.name.split(' ');
       for (var i=0; i < temp.length ;i++) {
@@ -2642,10 +2648,6 @@ module.exports.validateChannel = function(request, response) {
             }
         });
       }
-
-    
-  } else {
-    response.end("channel name cannot contain '/'");
   }
 
 
@@ -2656,10 +2658,15 @@ module.exports.validateLocation = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
+
+
   if (queryArgs.name.indexOf('/') !== -1) {
 
+    response.end("location name cannot contain '/'");
+
+  } else {
       //capitalize the name
-      var temp = queryArgs.parent + '/' + queryArgs.name;
+      var temp = queryArgs.name.split(' ');
       for (var i=0; i < temp.length ;i++) {
         temp[i] = temp[i][0].toUpperCase() + temp[i].slice(1, temp[i].length);
       }
@@ -2682,9 +2689,6 @@ module.exports.validateLocation = function(request, response) {
               }
           }
       });
-
-  } else {
-    reponse.end("location name cannot contain '/'");
   }
 
 
@@ -2696,196 +2700,206 @@ module.exports.validateLocation = function(request, response) {
 
 module.exports.registerUser = function(request, response) {
 
-  //need to verify captcha:
-  var requestOptions = {
-    host: 'www.google.com',
-    path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
-    //IS THIS A VULNERABILITY???
-    +'&response='+request.body.responseString
-    +'&remoteip='+request.ip,
-    port: 443,
-    method: 'POST',
-    //accept: '*/*'
-  };
 
 
-  try {
-    var req = https.request(requestOptions, function(res) {
-      var str = '';
-      res.on('data', function(d) {
-        str += d;
-        // process.stdout.write(d);
-      });
-      res.on('end', function() {
+  if (registrationAllowed) {
+    //need to verify captcha:
+    var requestOptions = {
+      host: 'www.google.com',
+      path: '/recaptcha/api/siteverify?secret=6LcMXQATAAAAAKbMsqf8U9j1kqp1hxmG-sBJQI22'
+      //IS THIS A VULNERABILITY???
+      +'&response='+request.body.responseString
+      +'&remoteip='+request.ip,
+      port: 443,
+      method: 'POST',
+      //accept: '*/*'
+    };
 
-        //recaptcha verification succeeded
-        if (str.indexOf('true') != -1) {
+
+    try {
+      var req = https.request(requestOptions, function(res) {
+        var str = '';
+        res.on('data', function(d) {
+          str += d;
+          // process.stdout.write(d);
+        });
+        res.on('end', function() {
+
+          //recaptcha verification succeeded
+          if (str.indexOf('true') != -1) {
 
 
-              var temp = request.body.username;
-              var flag = false;
-              for (var i=0; i < temp.length ;i++) {
-                if (temp[i] === '@') {
-                  flag = true;
+                var temp = request.body.username;
+                var flag = false;
+                for (var i=0; i < temp.length ;i++) {
+                  if (temp[i] === '@') {
+                    flag = true;
+                  }
                 }
-              }
-              if (flag) {
-                response.end("username may not contain '@'");
-              } else {
+                if (flag) {
+                  response.end("username may not contain '@'");
+                } else {
 
-                client.query("SELECT * FROM users WHERE username = $1;",
-                  [request.body.username], function(err, result) {
-                    if (err) {
-                      console.log('error selecting from users: ', err);
-                    } else {
-                      if (result.rows.length) {
-                        //username unavailable
-                        response.end('that username is taken!');
+                  client.query("SELECT * FROM users WHERE username = $1;",
+                    [request.body.username], function(err, result) {
+                      if (err) {
+                        console.log('error selecting from users: ', err);
                       } else {
-                        //USERNAME AVAILABLE!!!!
+                        if (result.rows.length) {
+                          //username unavailable
+                          response.end('that username is taken!');
+                        } else {
+                          //USERNAME AVAILABLE!!!!
 
-                        //CHECK EMAIL NOW
-                        client.query("SELECT * FROM users WHERE email = $1;",
-                          [request.body.email], function(err, result) {
-                            if (err) {
-                              console.log('error selecting from users: ', err);
-                            } else {
-                              if (result.rows.length) {
-                                //email unavailable
-                                response.end('that email is taken!');
+                          //CHECK EMAIL NOW
+                          client.query("SELECT * FROM users WHERE email = $1;",
+                            [request.body.email], function(err, result) {
+                              if (err) {
+                                console.log('error selecting from users: ', err);
                               } else {
+                                if (result.rows.length) {
+                                  //email unavailable
+                                  response.end('that email is taken!');
+                                } else {
 
 
-                                //CHECK INVITE CODE
-                                client.query("SELECT * FROM inviteJoin WHERE code=$1;", [request.body.code], 
-                                  function(err, result) {
-                                    if (err) console.log('error checking invite code: ', err);
-                                    if (result.rows.length) {
-                                      //delete the entry from inviteJoin
-                                      client.query("DELETE FROM inviteJoin WHERE code=$1;", [request.body.code],
-                                      function(err, result) {
-                                        if (err) {
-                                          console.log('error deleting inviteJoin entry: ', err);
-                                        } else {
-                                          //INVITE STUFF COMPLETE
-                                                  //REGISTER THE USER
-                                                  bcrypt.genSalt(10, function(err, salt) {
-                                                    bcrypt.hash(request.body.password, salt, function(err, hash) {
+                                  //CHECK INVITE CODE
+                                  client.query("SELECT * FROM inviteJoin WHERE code=$1;", [request.body.code], 
+                                    function(err, result) {
+                                      if (err) console.log('error checking invite code: ', err);
+                                      if (result.rows.length) {
+                                        //delete the entry from inviteJoin
+                                        client.query("DELETE FROM inviteJoin WHERE code=$1;", [request.body.code],
+                                        function(err, result) {
+                                          if (err) {
+                                            console.log('error deleting inviteJoin entry: ', err);
+                                          } else {
+                                            //INVITE STUFF COMPLETE
+                                                    //REGISTER THE USER
+                                                    bcrypt.genSalt(10, function(err, salt) {
+                                                      bcrypt.hash(request.body.password, salt, function(err, hash) {
 
-                                                      postgres.createUser(xssValidator(request.body.username), hash, salt, 
-                                                        xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
-                                                        xssValidator(request.body.email), function(success) {
-                                                          if (success) {
+                                                        postgres.createUser(xssValidator(request.body.username), hash, salt, 
+                                                          xssValidator(request.body.origin), xssValidator(request.body.location), xssValidator(request.body.about),
+                                                          xssValidator(request.body.email), function(success) {
+                                                            if (success) {
 
-                                                            console.log('new user: '+request.body.username);
+                                                              console.log('new user: '+request.body.username);
 
-                                                            //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
-                                                            var secret = Math.floor(Math.random()*100000000001);
-                                                            client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
-                                                              +"VALUES ($1, $2, now());",
-                                                              [request.body.username, secret],
-                                                              function(err, result) {
-                                                                if (err) {
-                                                                  console.log('error inserting into emailVerificationJoin: ', err);
-                                                                } else {
+                                                              //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                                                              var secret = Math.floor(Math.random()*100000000001);
+                                                              client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                                                                +"VALUES ($1, $2, now());",
+                                                                [request.body.username, secret],
+                                                                function(err, result) {
+                                                                  if (err) {
+                                                                    console.log('error inserting into emailVerificationJoin: ', err);
+                                                                  } else {
 
-                                                                  var mailOptions = {
-                                                                      from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
-                                                                      to: request.body.email, // list of receivers
-                                                                      subject: 'Hello ✔', // Subject line
-                                                                      text: 'KEY', // plaintext body
-                                                                      html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
-                                                                  };
+                                                                    var mailOptions = {
+                                                                        from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                                                        to: request.body.email, // list of receivers
+                                                                        subject: 'Hello ✔', // Subject line
+                                                                        text: 'KEY', // plaintext body
+                                                                        html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                                    };
 
-                                                                  transporter.sendMail(mailOptions, function(error, info){
-                                                                      if(error){
-                                                                          console.log(error);
-                                                                      }else{
-                                                                          // console.log('Message sent: ' + info.response);
-                                                                      }
-                                                                  });
-
-
-
-                                                                }
-                                                            });
-
-
-                                                            var token = Math.floor(Math.random()*100000000000000000001); //generate token here
-                                                            var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
-
-                                                            // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-
-                                                            client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
-                                                              +"VALUES ($1, $2, $3, now());",
-                                                              [request.body.username, cookie, token],
-                                                              function(err, result) {
-                                                                if (err) {
-                                                                  console.log('error inserting into securityJoin: ', err);
-                                                                } else {
-                                                                  //LOGIN SUCCESSFUL
-
-                                                                  //set cookie which will be checkd in checkLogin (10 minutes here)
-                                                                  // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                                                                  response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
-
-                                                                  console.log('Login successful for user: ', request.body.username);
-
-                                                                  response.json({ login: true, token: token });
-
-
-                                                                }
-                                                            });
-
-                                                          } else {
-                                                            response.end('error');
-                                                          }
-                                                      });//end create user
-
-                                                    });
-                                                  });//end bcrypt async thing
-
-
-                                        }
-                                      });//end invite code delete
-
-
-                                    } else {
-                                      response.end('invalid invite code');
-                                    }
-                                });//end invite code check
+                                                                    transporter.sendMail(mailOptions, function(error, info){
+                                                                        if(error){
+                                                                            console.log(error);
+                                                                        }else{
+                                                                            // console.log('Message sent: ' + info.response);
+                                                                        }
+                                                                    });
 
 
 
+                                                                  }
+                                                              });
+
+
+                                                              var token = Math.floor(Math.random()*100000000000000000001); //generate token here
+                                                              var cookie = Math.floor(Math.random()*1000000000000000000001);  //generate cookie here
+
+                                                              // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+
+                                                              client.query ("INSERT INTO securityJoin (username, cookie, token, registeredAt) "
+                                                                +"VALUES ($1, $2, $3, now());",
+                                                                [request.body.username, cookie, token],
+                                                                function(err, result) {
+                                                                  if (err) {
+                                                                    console.log('error inserting into securityJoin: ', err);
+                                                                  } else {
+                                                                    //LOGIN SUCCESSFUL
+
+                                                                    //set cookie which will be checkd in checkLogin (10 minutes here)
+                                                                    // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
+                                                                    response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+
+                                                                    console.log('Login successful for user: ', request.body.username);
+
+                                                                    response.json({ login: true, token: token });
+
+
+                                                                  }
+                                                              });
+
+                                                            } else {
+                                                              response.end('error');
+                                                            }
+                                                        });//end create user
+
+                                                      });
+                                                    });//end bcrypt async thing
+
+
+                                          }
+                                        });//end invite code delete
+
+
+                                      } else {
+                                        response.end('invalid invite code');
+                                      }
+                                  });//end invite code check
+
+
+
+                                }
                               }
-                            }
-                        });//end email check
+                          });//end email check
 
+                        }
                       }
-                    }
-                });//end username check from users
+                  });//end username check from users
 
-              }//end username @ check
-
+                }//end username @ check
 
 
 
 
-        } else { //end recaptcha verification test
-        //recaptcha verification failed
-        //MAYBE HACKERS
-          response.end('RECAPTCHA FAILED o_O');
-        }
+
+          } else { //end recaptcha verification test
+          //recaptcha verification failed
+          //MAYBE HACKERS
+            response.end('RECAPTCHA FAILED o_O');
+          }
+        });
       });
+
+    } catch(e) {
+      console.log('error verifying captcha: ', e);
+    }
+    req.end();
+    req.on('error', function(e) {
+      console.log('error', e);
     });
 
-  } catch(e) {
-    console.log('error verifying captcha: ', e);
+
+  } else {//end registration allowed check
+    response.end('We are not currently accepting any new registrations. Please try again soon!')
   }
-  req.end();
-  req.on('error', function(e) {
-    console.log('error', e);
-  });
+
+
 
 
 
@@ -4881,8 +4895,8 @@ module.exports.createLocation = function(request, response) {
 
                                                           //create teh location
                                                           client.query("INSERT INTO locations (type, isUserCreated, name, description, parent, "
-                                                            +" creator, population, rank, public, pointGeometry, latitude, longitude, image) "
-                                                            +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
+                                                            +" creator, population, rank, public, pointGeometry, latitude, longitude, image, isCountry, isState, isCity) "
+                                                            +"VALUES ('Location', true, $1, $2, $3, $4, 0, 0, $5, ST_PointFromText($6, 4269), $7, $8, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg', false, false, false);",
                                                             [xssValidator(request.body.parent+'/'+name), xssValidator(request.body.description), xssValidator(request.body.parent), xssValidator(request.body.creator),
                                                             request.body.pub, 'POINT('+request.body.longitude+' '+request.body.latitude+')', request.body.latitude, request.body.longitude],
                                                             function(err, result) {

@@ -122,7 +122,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       var postToLabel = this.app.translate('Post to');
 
-      this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
+      var x = this.app.get('language');
+      if (x === 'ar' || x === 'ja') {
+        this.$el.append($('<div id="creationButton"><span id="createLabel">'+postLabel+' '+postToLabel+'</span></div>'));
+      } else {
+        this.$el.append($('<div id="creationButton"><span id="createLabel">'+postToLabel+': '+postLabel+'</span></div>'));
+      }
       //Set the correct button lighter
       if (this.displayed === 'Topics-Top') {
         this.$el.children('div#topButton').css('background-color','#f8f8f8');
@@ -136,7 +141,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
     } else if (this.displayed === 'Search') {
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
 
     } else if (this.displayed === 'Contacts') {
       var contactsPrefix = this.app.translate('Friends');
@@ -145,7 +149,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#contactsButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //do I need this? might just move the message kickoff to user detail view but i'm not sure
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     } else if (this.displayed === 'Messages') {
@@ -155,7 +158,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       this.$el.append($('<div id="messagesButton"><span class="tabLabel">'+messagesPrefix+'</span></div>'));
       this.$el.children('div#messagesButton').css('background-color','#f8f8f8');
       this.$el.append($('<ul class="sidebarInnerList"></ul>'));
-      this.$el.append($('<div id="sidebarSpacer"></div>'));
       //this.$el.append($('<div id="creationButton"><span class="createLabel">Create Message</span></div>'));
     }
 
@@ -323,8 +325,6 @@ Agora.Views.SidebarView = Backbone.View.extend({
       });//end iteration through models
 
 
-      //ADD SPACER LIST ITEM?????
-
 
       //HANDLE THE EMPTY CASE
       if (!renderCollection.length) {
@@ -335,12 +335,12 @@ Agora.Views.SidebarView = Backbone.View.extend({
         }
           var $empty = $("<li>Couldn't find anything</li>");
           that.$el.children('ul').append($empty);
-
-
-
       }
+      
 
 
+      var $spacer = $('<li id="sidebarSpacer"></li>');
+      that.$el.children('ul').append($spacer);
       
 
 
