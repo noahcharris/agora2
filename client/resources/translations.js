@@ -1177,7 +1177,7 @@ var translationData = [{
   de: 'Vote war nicht erfolgreich',
   ja: '投票取消に失敗しました',
   pt: 'falha no upvote',
-  ru: '',
+  ru: 'голосов не удалось',
   es: 'voto cumulativo falló',
 },{
   en: 'you must be logged in to post a reply',
@@ -1187,7 +1187,7 @@ var translationData = [{
   de: 'Sie muessen sich einloggen um dem Post zu antworten',
   ja: '返信するにはログインが必要になります',
   pt: 'você deve estar conectado para postar uma resposta',
-  ru: '',
+  ru: 'Вы должны быть подключены, чтобы оставить комментарий',
   es: 'debe estar conectado para publicar una respuesta',
 },{
   en: 'your parent channel must begin with "All"',
@@ -1307,7 +1307,7 @@ var translationData = [{
   de: 'Um Themen unter Freunde zu organisieren muessen Sie sich einloggen',
   ja: 'トピックを友だち別にソートするにはログインが必要です',
   pt: 'você deve estar conectado para organizar assuntos de amigos',
-  ru: '',
+  ru: 'вы должны быть подключены, чтобы сортировать темы по друзьям',
   es: 'debes estar conectado para ordenar los temas por amigos',
 },{
   en: 'you must be logged in to create a topic',
@@ -1317,7 +1317,7 @@ var translationData = [{
   de: 'Sie muessen Sich einloggen um ein Thema zu kreieren',
   ja: 'トピックを作成するにはログインが必要です',
   pt: 'você dever estar conectado para criar um assunto',
-  ru: '',
+  ru: 'Вы должны быть подключены, чтобы создать сообщение',
   es: 'debes estar conectado para crear un tema',
 },{
   en: 'you must provide either a headline or contents',
@@ -1340,16 +1340,6 @@ var translationData = [{
   ru: 'пост не создан :(',
   es: 'creación de la publicación falló :(',
 },{
-  en: 'you must be logged in to create a topic',
-  ar: 'يجب أن تكون مسجلا ل خلق الخلق الأصلي',
-  zh: '你必须登陆以创建一个话题',
-  fr: '',
-  de: 'Sie muessen sich einloggen um ein Thema zu kreieren',
-  ja: 'トピックを作成するにはログインが必要です',
-  pt: 'voce deve estar conectado para criar um assunto',
-  ru: '',
-  es: 'debes estar conectado para crear un tema',
-},{
   en: 'you must log in to view your profile',
   ar: 'يجب عليك تسجيل الدخول لمشاهدة ملفك الشخصي',
   zh: '你必须登陆以查看你的个人资料',
@@ -1357,7 +1347,7 @@ var translationData = [{
   de: 'Um ein Profil zu sehen muessen Sie sich einloggen',
   ja: 'プロフィールを閲覧するにはログインが必要です',
   pt: 'você deve estar conectado para ver seu perfil',
-  ru: '',
+  ru: 'вы должны быть подключены, чтобы смотреть свой профайл',
   es: 'debes estar conectado para ver tu perfil',
 },{
   en: 'you must be logged in to access settings',
@@ -1367,7 +1357,7 @@ var translationData = [{
   de: 'Um zu Einstellungen Zugang zu haben muessen Sie sich einloggen',
   ja: '設定にアクセスするにはログインが必要です',
   pt: 'você deve estar conectado para ter acesso às configurações',
-  ru: '',
+  ru: 'вы должны быть подключены, чтобы получить доступ к настройкам',
   es: 'debes estar conectado para acceder a la configuración',
 },{
   en: 'you must be logged in to view messages',
@@ -1377,7 +1367,7 @@ var translationData = [{
   de: 'Um zu Nachrichten Zugang zu haben muessen Sie sich einloggen',
   ja: 'メッセージを閲覧するにはログインが必要です',
   pt: 'voce deve estar conectado para ver mensagens',
-  ru: '',
+  ru: 'вы должны быть подключены, чтобы посмотреть сообщения',
   es: 'debes estar conectado para ver mensajes',
 },{
   en: 'search returned no data',
@@ -1447,7 +1437,7 @@ var translationData = [{
   de: 'Bitte gueltige Herkunft eingeben',
   ja: '有効な基点を入力して下さい',
   pt: 'por favor introduza uma origem válida',
-  ru: '',
+  ru: 'Пожалуйста, введите правильный происхождение',
   es: 'por favor escriba un origen válido',
 },{
   en: 'please enter a valid current location',
@@ -1457,7 +1447,7 @@ var translationData = [{
   de: 'Bitte gueltige Lage eingeben',
   ja: '有効な現在地を入力して下さい',
   pt: 'por favor introduza uma Localização atual válida',
-  ru: '',
+  ru: 'Пожалуйста, введите правильное расположение',
   es: 'por favor, introduzca una ubicación actual válida',
 },{
   en: 'registration successful',
@@ -1756,7 +1746,7 @@ var translationData = [{
   fr: '',
   de: 'Lagen und Kanaele koennen vernseted sein. Sie sing geordnet wie ein Baum.',
   ja: 'ロケーションやチャンネルはネストすることができ、木の枝のように管理されます（下の写真を参照）。',
-  pt: '',
+  pt: 'Localizações e canais estão organizados em uma árvore.',
   ru: 'Местоположени и каналы могут наслаиваться, так что они структурированы по типу дерева (как на картинке).',
   es: 'Ubicaciones y Canales se pueden anidar, y están organizados como un árbol (ver foto abajo).',
 },{
@@ -1770,7 +1760,7 @@ var translationData = [{
   ru: 'Чтобы начать, выберите место и канал (или просто зависайте со всем миром). Счастливого постинга!',
   es: 'Para empezar, elige una ubicación y un canal (o simplemente pasa el rato en Mundial ~ Todo). Diviertete!',
 },{
-  en: 'P.S. Egora is a portmanteau of Electronic-Agora.',
+  en: 'P.S. Egora is a portmanteau of Electrónicoo-Agora.',
   ar: 'إيغوره هو مزيج من الأجهزة الإلكترونية في أغورا.',
   zh: '附言；Egora是Electronic-Agora的混合词',
   fr: '',
@@ -1778,7 +1768,7 @@ var translationData = [{
   ja: 'P.S. EgoraはElectronicとAgoraを合わせた造語です。',
   pt: 'P.S. Egora é uma mistura de Eletrônico- Agora.',
   ru: 'P.S. Egora - это производное от Electronic-Agora.',
-  es: '',
+  es: 'P.S. Egora es un compuesto de Electronic-Agora',
 },{
   en: 'i) Electronic as it exists in cyberspace, which is substantiated in the electronic digital computer.',
   ar: 'i) الالكترونية كما هو موجود في الفضاء النظام، الذي مسبب في الكمبيوتر الرقمية الالكترونية.',
@@ -1821,10 +1811,10 @@ var translationData = [{
   zh: '关于...的最新动态 ',
   fr: '',
   de: 'Neue Themenaktivität in /',
-  ja: '上の新トピックアクティビティー ',
-  pt: 'Nova atividade em ',
-  ru: '',
-  es: 'Nueva Actividad de Temas ',
+  ja: '上の新トピックアクティビティー /',
+  pt: 'Nova atividade em /',
+  ru: 'Новый вид деятельности на /',
+  es: 'Nueva Actividad de Temas /',
 },
 
 

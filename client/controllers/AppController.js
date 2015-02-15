@@ -776,7 +776,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       for (var i=0; i < translationData.length ;i++) {
         if (translationData[i]['en'] === input) {
-          return translationData[i][lang];
+          
+          if (translationData[i][lang] !== '') {
+            return translationData[i][lang];
+          }
+
         }
       }
       
