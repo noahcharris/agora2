@@ -1192,48 +1192,53 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.contactRequests.length ;i++) {
 
                         that.contactRequests[i].contactRequestLabel = that.app.translate('Add contact request from ');
-                        var x = that.app.get('language');
-                        if ( x === 'ar' || x === 'ja' || x === 'zh') {
+                        var y = that.app.get('language');
+                        if ( y === 'ar' || y === 'ja' || y === 'zh') {
                           var $notificationBox = $( RTLcontactRequestTemplate(that.contactRequests[i]) );
                         } else {
                           var $notificationBox = $( contactRequestTemplate(that.contactRequests[i]) );
                         }
 
-                        var x = that.contactRequests[i].sender;
-                        $notificationBox[0].onclick = function() {
-                          var thet = this;
+                        (function() {
 
-                          $.ajax({
-                            url: 'http://egora.co:80/user',
-                            //url: 'http://localhost:80/user',
-                            method: 'GET',
-                            crossDomain: true,
-                            data: {
-                              username: x,
-                              extra: Math.floor((Math.random() * 10000) + 1)
-                            },
-                            success: function(data) {
-                              if (data) {
-                                that.app.get('detailView').displayed = 'Users';
-                                console.log('server returned: ', data);
+                          var x = that.contactRequests[i].sender;
+                          $notificationBox[0].onclick = function() {
+                            var thet = this;
 
-                                //is this creating a memory leak????
-                                $(thet).parent().empty();
-                                that.app.set('notificationsDisplayed', false);
+                            $.ajax({
+                              url: 'http://egora.co:80/user',
+                              //url: 'http://localhost:80/user',
+                              method: 'GET',
+                              crossDomain: true,
+                              data: {
+                                username: x,
+                                extra: Math.floor((Math.random() * 10000) + 1)
+                              },
+                              success: function(data) {
+                                if (data) {
+                                  that.app.get('detailView').displayed = 'Users';
+                                  console.log('server returned: ', data);
 
-                                that.app.get('content2').show(that.app.get('detailView'), data[0]);
-                              } else {
-                                console.log('no data returned from server');
+                                  //is this creating a memory leak????
+                                  $(thet).parent().empty();
+                                  that.app.set('notificationsDisplayed', false);
+
+                                  that.app.get('content2').show(that.app.get('detailView'), data[0]);
+                                } else {
+                                  console.log('no data returned from server');
+                                }
+                              }, error: function(err) {
+                                console.log('ajax error ocurred: ', err);
                               }
-                            }, error: function(err) {
-                              console.log('ajax error ocurred: ', err);
-                            }
 
-                          });
-                          
+                            });
+                            
       
+                          };//end notification click handler
 
-                        };//end notification click handler
+
+                        })();
+
 
 
                         console.log($notificationBox);
@@ -1246,13 +1251,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-
-
-
-
-
-
-
                       //NEW MESSAGES
 
                       console.log('NEW MESSAGES: ', that.newMessages);
@@ -1260,14 +1258,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                       for (var i=0; i < that.newMessages.length ;i++) {
 
                         that.newMessages[i].newMessageLabel = that.app.translate('New message from ');
-                        var x = that.app.get('language');
-                        if ( x === 'ar' || x === 'ja') {
+                        var y = that.app.get('language');
+                        if ( y === 'ar' || y === 'ja') {
                           var $notificationBox = $( RTLnewMessageTemplate(that.newMessages[i]) );
                         } else {
                           var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
                         }
 
                         console.log($notificationBox);
+
+                        (function() {
 
                           var x = that.newMessages[i].sender;
                           $notificationBox[0].onclick = function() {
@@ -1331,7 +1331,9 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             }//end chain searching for loop
                             //END OPENING CONVO SUBROUTINE
 
-                        };//end onclick
+                          };//end onclick
+                          
+                        })();
 
                         $('#notificationsDisplay').append($notificationBox);
                         $notificationBox.css('bottom', cssAdjust+'px');
@@ -1355,8 +1357,8 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
                         var topicActivityLabel = that.app.translate('New topic activity on /');
                         var topicNumberLabel = that.topicActivity[i].topic;
-                        var x = that.app.get('language');
-                        if (x === 'ar' || x === 'ja') {
+                        var y = that.app.get('language');
+                        if (y === 'ar' || y === 'ja') {
                           var $notificationBox = $( RTLtopicActivityTemplate( {topicActivityLabel: topicActivityLabel, 
                                                                             topicNumberLabel: topicNumberLabel} ) );
                         } else {

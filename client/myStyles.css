@@ -22,16 +22,19 @@ body::-webkit-scrollbar-thumb:hover {
 @font-face {
   font-family: 'clearSans';
   src: url('resources/TTF/ClearSans-Light.ttf');
+  /*src: url('https://s3-us-west-2.amazonaws.com/agora-static-storage/ClearSans-Light.ttf');*/
 }
 
 @font-face {
   font-family: 'clearBold';
   src: url('resources/TTF/ClearSans-Bold.ttf');
+  /*src: url('https://s3-us-west-2.amazonaws.com/agora-static-storage/ClearSans-Bold.ttf');*/
 }
 
 @font-face {
   font-family: 'clearThin';
   src: url('resources/TTF/ClearSans-Thin.ttf');
+  /*src: url('https://s3-us-west-2.amazonaws.com/agora-static-storage/ClearSans-Thin.ttf');*/
 }
 
 body {
@@ -82,7 +85,8 @@ body {
   left:25%;
   position: relative;
   padding: 0px;
-  background-image: url("/resources/images/aboutbackground.png");
+  /*background-image: url("/resources/images/aboutbackground.png");*/
+  background-image: url("https://s3-us-west-2.amazonaws.com/agora-static-storage/aboutbackground.png");
   color: rgba(70,70,70,1);
 }
 
@@ -2330,7 +2334,8 @@ ul#recentlyVisited {
     left:       160px;
     height:     50px;
     width:      50px;
-    background: url('/resources/images/loading.gif') no-repeat;
+    /*background: url('/resources/images/loading.gif') no-repeat;*/
+    background: url('https://s3-us-west-2.amazonaws.com/agora-static-storage/loading.gif') no-repeat;
     background-position: center;
     background-color: transparent;
     background-size: 50px;

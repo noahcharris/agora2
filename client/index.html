@@ -774,14 +774,19 @@
     <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 
 
-    <script src="http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script>
+     <!-- <script src="http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js"></script> -->
 
-    <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <!-- <script src="dependencies/leaflet.markercluster/dist/leaflet.markercluster.js"></script> -->
     
-    <script src="/resources/us-states.js"></script>
-    <script src="/resources/newCountries.js"></script>
-    <script src="/resources/cities.js"></script>
+    <!--<script src="/resources/us-states.js"></script>-->
+    <!--<script src="/resources/newCountries.js"></script>-->
+    <!--<script src="/resources/cities.js"></script>-->
     <script src="/resources/translations.js"></script>
+
+    <!-- serving from s3 now -->
+    <script src="https://s3-us-west-2.amazonaws.com/agora-static-storage/newCountries.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/agora-static-storage/us-states.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/agora-static-storage/cities.js"></script>
 
     <script src="controllers/AppController.js"></script>
     <script src="controllers/MapController.js"></script>
@@ -824,6 +829,7 @@
          <div id="topbar2"></div>
       </div>
 
+      <!-- take this shit outttt -->
       <div id="mobileSelectionBarWrapper">
         <button>HELLO</button>
       </div>
