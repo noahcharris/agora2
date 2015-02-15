@@ -34,7 +34,7 @@ Agora.Views.LocationCreationView = Backbone.View.extend({
     var nextLabel = this.app.translate('Place on Map');
     var backLabel = this.app.translate('Back');
     var explanationLabel1 = this.app.translate('Your location must belong to a city');
-    var explanationLabel2 = this.app.translate("Don't see your city? Please email us the name at ??? and we will add it into our database.");
+    var explanationLabel2 = this.app.translate("Don't see your city? Please email us the name at egora.city.selection@gmail.com and we will add it into our database.");
 
     this.$el.html( this.template( {publicLabel: publicLabel, privateLabel: privateLabel, nextLabel: nextLabel,
                                   radioPrefixLabel: radioPrefixLabel, explanationLabel1: explanationLabel1,
