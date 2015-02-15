@@ -235,7 +235,20 @@ app.use(favicon(__dirname + '/../client/resources/images/favicon.png'));
 
 app.use(express.static(__dirname + '/../client'));
 
+var ca = [];
+var chain = fs.readFileSync(__dirname + '/agoraCaBundle', 'utf-8');
+chain = chain.split('\n');
+cert = [];
+for (var i=0; i < chain.length ;i++) {
+  cert.push(chain[i]);
+  if (chain[i] === '-----END CERTIFICATE-----') {
+    ca.push(cert.join('\n'));
+    cert = [];
+  }
+}
+
 var options = {
+  ca: ca,
   key: fs.readFileSync(__dirname + '/agoraSSL.key'),
   cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
 };

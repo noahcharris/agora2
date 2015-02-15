@@ -49,6 +49,11 @@ body {
    /*ABOUT AGORA*/
  /*******************/
 
+ #ytplayer {
+  position: relative;
+  left: 60px;
+ }
+
 .aboutView {
   overflow: scroll;
   height:100%;

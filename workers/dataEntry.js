@@ -1,7 +1,8 @@
 var pg = require('pg');
 var fs = require('fs');
 
-var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
+var conString = 'postgres://keybornCat:prairiePiratesPicnic@agora-production-server.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/mahDb';
+// var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
 
 var client = new pg.Client(conString);

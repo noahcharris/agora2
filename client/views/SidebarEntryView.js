@@ -294,7 +294,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
         if (!that.app.get('imageFullscreen')) {
           on = true;
           that.app.set('imageFullscreen', true);
-          var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image +'"></img></div>')
+          var $overlayImage = $('<div id="fullscreen"><img id=fullscreenImage" src="'+ that.model.image+'full' +'"></img></div>')
           $overlayImage.on('click', function() {
             $(this).fadeOut(333, function() {
               $(this).remove();

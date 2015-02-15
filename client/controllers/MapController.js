@@ -132,6 +132,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.addCities();
     this.removeCities();
+    this.addStates();
+    this.removeStates();
 
     that.updateHeatPoints();
 

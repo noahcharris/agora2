@@ -1794,7 +1794,7 @@ var translationData = [{
   ar: 'إذا قمت بالاتصال حساب تويتر، سوف تويت الأخيرة تكون قابلة للعرض تحت موقعك الحالي وهذا الموضوع',
   zh: '如果你连接你的twitter账号，Agora将拉出你最近的tweets并且将他们放在你ALL/Twitter列表下的现在位置中',
   fr: '',
-  de: '',
+  de: 'Mit Twitter verbunden? Egora posted Ihre neuesten Tweets und ordnet sie unter Ihrer aktuellen Lage und unter dem Kanal, All/Twitter.',
   ja: 'ツイッターアカウントと関連づけするとEgoraは最新のツイートをAll/Twitterチャンネルの現在位置に貼付けます。',
   pt: 'Se você conectar sua conta de twitter, Egora colocar ’a seus tweets mais recentes na sua Localização atual em All/Twitter',
   ru: 'Если мы присоединили свой твиттер-аккаунт, Egora загрузит ваши последние твиты и присоединит их к вашему текущему местоположению на канале All/Twitter.',

@@ -71,23 +71,45 @@ Agora.Views.SignupView = Backbone.View.extend({
 
           var temp1 = that.app.get('mapController').get('cities');
           var temp2 = that.app.get('mapController').get('countries');
+          var temp3 = that.app.get('mapController').get('states');
           var flag1 = false;
-           var flag2 = true;
+           var flag2 = false;
           for (var key in temp1._layers) {
             if (temp1._layers[key].city === $('#signupOriginInput').val()) {
               flag1 = true;
             }
-            // if (temp1._layers[key].city === $('#signupLocationInput').val()) {
-            //   flag2 = true;
-            // }
           }
-          for (var key in temp2._layers) {
-            if (temp2._layers[key].feature.properties.name === $('#signupOriginInput').val()) {
+          for (var key2 in temp2._layers) {
+            if (temp2._layers[key2].feature.properties.name === $('#signupOriginInput').val()) {
               flag1 = true;
             }
-            // if (temp2._layers[key].feature.properties.name === $('#signupLocationInput').val()) {
-            //   flag2 = true;
-            // }
+          }
+          for (var key3 in temp3._layers) {
+            if (temp3._layers[key3].feature.properties.name === $('#signupOriginInput').val()) {
+              flag1 = true;
+            }
+          }
+          if ($('#signupOriginInput').val() === 'World') {
+            flag1 = true;
+          }
+
+          for (var key in temp1._layers) {
+            if (temp1._layers[key].city === $('#signupLocationInput').val()) {
+              flag2 = true;
+            }
+          }
+          for (var key2 in temp2._layers) {
+            if (temp2._layers[key2].feature.properties.name === $('#signupLocationInput').val()) {
+              flag2 = true;
+            }
+          }
+          for (var key3 in temp3._layers) {
+            if (temp3._layers[key3].feature.properties.name === $('#signupLocationInput').val()) {
+              flag2 = true;
+            }
+          }
+          if ($('#signupLocationInput').val() === 'World') {
+            flag2 = true;
           }
 
           if ($('#signupUsernameInput').val() === '') {
@@ -151,7 +173,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
                 } else {
-                  alert(data);
+                  alert(that.app.translate(data));
                   grecaptcha.reset();
                 }
 
@@ -159,7 +181,7 @@ Agora.Views.SignupView = Backbone.View.extend({
                 //show them success screen (introduction/tutorial?)
               },
               error: function(data) {
-                alert(data);
+                alert(that.app.translate(data));
               }
 
             });

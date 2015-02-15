@@ -34,12 +34,7 @@ sudo npm install client-sessions;
 sudo npm install cookie-parser;
 sudo npm install cookie-session;
 
-sudo npm install connect-redis-sessions;
-
-sudo npm install csurf;
-
-#use serve-favicon instead!!!
-sudo npm install static-favicon;
+sudo npm install serve-favicon
 
 sudo npm install pg;
 sudo npm install bcrypt;

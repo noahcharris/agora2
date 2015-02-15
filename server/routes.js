@@ -50,7 +50,8 @@ var q = 'tasks';
 //####  Postgres  ####
 //####################
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
-var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
+// var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
+var conString = 'postgres://keybornCat:prairiePiratesPicnic@agora-production-server.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/mahDb';
 //var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
 var client = new pg.Client(conString);
 client.connect();
@@ -401,7 +402,7 @@ setInterval(processTweets, 60000);
 function dealWithImage(keyString) {
 
 
-  request('http://54.191.79.51:80/resizeImage?keyString='+keyString
+  request('http://52.10.3.29:80/resizeImage?keyString='+keyString
     +'&secret='+workerSecret, function(err, response, body) {
       if (!err && response.statusCode == 200) {
         console.log(body);
@@ -2796,21 +2797,26 @@ module.exports.registerUser = function(request, response) {
                                                                     console.log('error inserting into emailVerificationJoin: ', err);
                                                                   } else {
 
-                                                                    var mailOptions = {
-                                                                        from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
-                                                                        to: request.body.email, // list of receivers
-                                                                        subject: 'Hello ✔', // Subject line
-                                                                        text: 'KEY', // plaintext body
-                                                                        html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
-                                                                    };
+                                                                    try {
+                                                                      var mailOptions = {
+                                                                          from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                                                          to: request.body.email, // list of receivers
+                                                                          subject: 'Hello ✔', // Subject line
+                                                                          text: 'KEY', // plaintext body
+                                                                          html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                                      };
 
-                                                                    transporter.sendMail(mailOptions, function(error, info){
-                                                                        if(error){
-                                                                            console.log(error);
-                                                                        }else{
-                                                                            // console.log('Message sent: ' + info.response);
-                                                                        }
-                                                                    });
+                                                                      transporter.sendMail(mailOptions, function(error, info){
+                                                                          if(error){
+                                                                              console.log(error);
+                                                                          }else{
+                                                                              // console.log('Message sent: ' + info.response);
+                                                                          }
+                                                                      });
+                                                                      
+                                                                    } catch (e) {
+                                                                      console.log('error sending verification email: ', e);
+                                                                    }
 
 
 
@@ -2834,7 +2840,7 @@ module.exports.registerUser = function(request, response) {
 
                                                                     //set cookie which will be checkd in checkLogin (10 minutes here)
                                                                     // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
-                                                                    response.cookie('login', request.body.username+'/'+cookie, { maxAge: 300000, httpOnly: true, secure: true });
+                                                                    response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
 
                                                                     // console.log('Login successful for user: ', request.body.username);
 
