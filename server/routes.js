@@ -3221,7 +3221,7 @@ module.exports.twitterCallback = function(req, response) {
                         if (err) console.log('error selecting from twitterJoin: ', err);
 
                         if (result2.rows.length) {
-                          response.end('that twitter account is already associated with an agora account');
+                          response.end('that twitter account is already associated with an Egora account');
                         } else {
 
 
