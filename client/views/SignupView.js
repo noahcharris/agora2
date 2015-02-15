@@ -55,7 +55,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
     this.$el.append();
 
-    this.$el.append($('<img src="/resources/images/x.png" class="x"></img>'));
+    this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('img.x').on('click', function() {
       that.app.get('content2').hide();
     });

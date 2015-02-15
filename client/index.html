@@ -27,18 +27,16 @@
      <!--<button id="boundsButton">Get Bounds!</button>-->
      <h1 id="title">Egora</h1>
      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-     <img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>
-     <!--<img id="registrationButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/registration.png" height="20px" width="20px"></img>-->
-     <img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>
-     <img id="messagingButton" class="topbarIcon" src="/resources/images/messaging.png" height="20px" width="20px"></img>
+     <img id="registrationButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/registration.png" height="20px" width="20px"></img>
+     <img id="settingsButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/settings.png" height="20px" width="20px"></img>
+     <img id="messagingButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/messaging.png" height="20px" width="20px"></img>
      <div id="notificationsButton" class="topbarIcon">
-     <img id="notificationsImage" src="/resources/images/notifications.png"></img>
+     <img id="notificationsImage" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/notifications.png"></img>
      </div>
-     <img id="aboutButton" class="topbarIcon" src="/resources/images/questionMark.png" height="20px" width="20px"></img>
-     <!--<img id="notificationsImage" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/notifications.png"></img>-->
+     <img id="aboutButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/questionMark.png" height="20px" width="20px"></img>
      </div>
       <div id="notificationsDisplay" class="topbarIcon" height="0px" width="0px"></div>
-     <img id="searchButton" class="topbarSearchIcon" src="/resources/images/search.png" height="20px" width="20px"></img>
+     <img id="searchButton" class="topbarSearchIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/search.png" height="20px" width="20px"></img>
      <input id="searchInput" type="text"></input>
      <select id="searchSelect">
        <!--leave topics off for now, it will be way more complicated-->
@@ -213,7 +211,7 @@
 
     <script id="detailTopicEntryTemplate" type="text/template">
      <div class="topicBox">
-       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+       <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
        <span class="topicTopString">
        &nbsp(<%= rank %>)
        &nbsp<span id="detailUserString"><%= userLabel %>:&nbsp<%= username %></span>
@@ -238,7 +236,7 @@
 
     <script id="RTLdetailTopicEntryTemplate" type="text/template">
      <div class="topicBox">
-       <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+       <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
        <span class="topicTopString">
        &nbsp(<%= rank %>)
        &nbsp<span id="topicTimestamp"><%= createdat %>&nbsp:<%= postedAtLabel %></span>
@@ -265,7 +263,7 @@
     <script id="detailCommentEntryTemplate" type="text/template">
 
      <div class="commentBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="commentTopString">
       &nbsp(<%= rank %>)
       &nbsp<span class="detailCommentUserString"><%= userLabel %>:&nbsp<%= username %></span>
@@ -273,7 +271,7 @@
       </span>
 
       <div class="detailCommentClear">
-        <img src="resources/images/expand.png" class="expandCommentButton"></img>
+        <img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png" class="expandCommentButton"></img>
 
         <img class="detailCommentImage"></img>
 
@@ -293,7 +291,7 @@
     <script id="RTLdetailCommentEntryTemplate" type="text/template">
 
      <div class="commentBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="commentTopString">
       &nbsp(<%= rank %>)
       <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
@@ -301,7 +299,7 @@
       </span>
 
       <div class="detailCommentClear">
-        <img src="resources/images/expand.png" class="expandCommentButton"></img>
+        <img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png" class="expandCommentButton"></img>
 
         <img class="detailCommentImage"></img>
 
@@ -321,7 +319,7 @@
 
     <script id="detailResponseEntryTemplate" type="text/template">
      <div class="responseBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="responseTopString">
       &nbsp(<%= rank %>)
       &nbsp<span class="detailResponseUserString"><%= userLabel %>:&nbsp<%= username %></span>
@@ -330,7 +328,7 @@
 
       <div class="detailResponseClear">
 
-        <img src="resources/images/expand.png" class="expandResponseButton"></img>
+        <img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png" class="expandResponseButton"></img>
 
         <img class="detailResponseImage"></img>
 
@@ -348,7 +346,7 @@
 
     <script id="RTLdetailResponseEntryTemplate" type="text/template">
      <div class="responseBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="responseTopString">
       &nbsp(<%= rank %>)
       <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
@@ -357,7 +355,7 @@
 
       <div class="detailResponseClear">
 
-        <img src="resources/images/expand.png" class="expandResponseButton"></img>
+        <img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png" class="expandResponseButton"></img>
 
         <img class="detailResponseImage"></img>
 
@@ -377,7 +375,7 @@
 
     <script id="detailReplyEntryTemplate" type="text/template">
      <div class="replyBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="replyTopString">
       &nbsp(<%= rank %>)
       &nbsp<span class="detailReplyUserString"><%= userLabel %>:&nbsp<%= username %></span>
@@ -401,7 +399,7 @@
 
     <script id="RTLdetailReplyEntryTemplate" type="text/template">
      <div class="replyBox">
-      <img class="upvoteButton" src="/resources/images/upvote.png" height="20px" width="20px"></img>
+      <img class="upvoteButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/upvote.png" height="20px" width="20px"></img>
       <span class="replyTopString">
       &nbsp(<%= rank %>)
       <span class="fromString" ><%= authorlocation %>&nbsp:<%= fromLabel %></span>
@@ -442,7 +440,7 @@
     <script id="detailLocationEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
 
-        <img id="profilePicture" src="/resources/images/defaultlocation.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg"></img>
 
         <br/>
         <div id="profileRightColumn">
@@ -460,7 +458,7 @@
 
     <script id="RTLdetailLocationEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
-        <img id="profilePicture" src="/resources/images/defaultlocation.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -478,7 +476,7 @@
     <script id="detailChannelEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
 
-        <img id="profilePicture" src="/resources/images/defaultchannel.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg"></img>
         <br/>
         <div id="profileRightColumn">
           <h1 class="detailHeaderEntry"> <%= name %> </h1>
@@ -496,7 +494,7 @@
     <script id="RTLdetailChannelEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
 
-        <img id="profilePicture" src="/resources/images/defaultchannel.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultchannel.jpg"></img>
 
         <br/>
         <div id="profileRightColumn">
@@ -518,7 +516,7 @@
     <script id="detailUserEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
 
-        <img id="profilePicture" src="/resources/images/defaultprofile.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultprofile.jpg"></img>
 
         <div id="profileAboutSection">
           <h3 style="text-align:center;"><%= aboutLabel %>:</h3>
@@ -537,7 +535,7 @@
     <script id="RTLdetailUserEntryTemplate" type="text/template">
       <div id="profileColumnWrapper">
 
-        <img id="profilePicture" src="/resources/images/defaultprofile.jpg"></img>
+        <img id="profilePicture" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultprofile.jpg"></img>
 
         <div id="profileRightColumn">
           <div id="profileUsername"> <%= username %> </div>

@@ -312,8 +312,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     if (that.get('map').getZoom() < 9) {
       var greenIcon = L.icon({
-          iconUrl: '/resources/images/logo.png',
-          shadowUrl: '/resources/images/logo.png',
+          iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo.png',
+          shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo.png',
 
           iconSize:     [20, 20], // size of the icon
           shadowSize:   [0, 0], // size of the shadow
@@ -323,8 +323,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       });
     } else {
       var greenIcon = L.icon({
-          iconUrl: '/resources/images/logo2.png',
-          shadowUrl: '/resources/images/logo2.png',
+          iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo2.png',
+          shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo2.png',
 
           iconSize:     [200, 200], // size of the icon
           shadowSize:   [0, 0], // size of the shadow
@@ -567,8 +567,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       if (cities._layers[key].city === cityName) {
 
         var cityIcon = L.icon({
-            iconUrl: '/resources/images/dot.png',
-            shadowUrl: '/resources/images/leaf-shadow.png',
+            iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/dot.png',
+            shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/leaf-shadow.png',
 
             iconSize:     [20, 20], // size of the icon
             shadowSize:   [0, 0], // size of the shadow
@@ -595,8 +595,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   //need to pass in lat and long because we don't store it like the others
   highlightPlace: function(placeName, latitude, longitude) {
     var placeIcon = L.icon({
-        iconUrl: '/resources/images/dot.png',
-        shadowUrl: '/resources/images/leaf-shadow.png',
+        iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/dot.png',
+        shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/leaf-shadow.png',
 
         iconSize:     [20, 20], // size of the icon
         shadowSize:   [0, 0], // size of the shadow
@@ -848,8 +848,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           //CHECK TO SEE WHAT ZOOM LEVEL WE ARE AT AND PUT DOWN EITHER CIRCLES OR ICONS DEPENDING
 
           var placeIcon = L.icon({
-              iconUrl: '/resources/images/house.png',
-              shadowUrl: '/resources/images/leaf-shadow.png',
+              iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/house.png',
+              shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/leaf-shadow.png',
 
               iconSize:     [17, 20], // size of the icon
               shadowSize:   [0, 0], // size of the shadow
@@ -933,8 +933,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
 
     var cityIcon = L.icon({
-        iconUrl: '/resources/images/city.png',
-        shadowUrl: '/resources/images/leaf-shadow.png',
+        iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/city.png',
+        shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/leaf-shadow.png',
 
         iconSize:     [32, 40], // size of the icon
         shadowSize:   [0, 0], // size of the shadow

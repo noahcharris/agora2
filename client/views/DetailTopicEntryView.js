@@ -62,7 +62,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     this.$el.children('div#inputBox').append($imageInput);
 
 
-    this.$el.children('#inputBox').append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.children('#inputBox').append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('#inputBox').children('img.x')[0].onclick = function() {
       that.closeInputBox();
     };
@@ -316,10 +316,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
       };
       a();
 
-      //$starIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/star.png"></img>');
-      //$shareIcon = $('<img class="yolo" height="20px" width="20px" src="resources/images/share.png"></img>');
-      //$comment.children('div.commentContentBox').append($starIcon);
-      //$comment.children('div.commentContentBox').append($shareIcon);
 
 
       var $commentExpansionBox = $('<div class="commentExpansionBox">');
@@ -336,7 +332,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
             //TODO
             $(e.target).parent().parent().next().css('height', '0px');
-            $(e.target).attr('src', 'resources/images/expand.png');
+            $(e.target).attr('src', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png');
             commentCollapsed = true;
           } else if (commentCollapsed) {
 
@@ -352,7 +348,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
             $(e.target).parent().parent().next().css('height', height + 'px');
 
-            $(e.target).attr('src', 'resources/images/contract.png');
+            $(e.target).attr('src', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/contract.png');
             commentCollapsed = false;
           }
         };
@@ -477,10 +473,6 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
         //$comment.children('div.replyContentBox').append($replyReplyButton);
 
-        //$starIcon = $('<img height="20px" width="20px" src="resources/images/star.png"></img>');
-        //$shareIcon = $('<img height="20px" width="20px" src="resources/images/share.png"></img>');
-        //$comment.children('div.replyContentBox').append($starIcon);
-        //$comment.children('div.replyContentBox').append($shareIcon);
 
         var $responseExpansionBox = $('<div class="responseExpansionBox">');
 
@@ -503,12 +495,12 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
 
 
-              $(e.target).attr('src', 'resources/images/expand.png');
+              $(e.target).attr('src', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/expand.png');
               responseCollapsed = true;
             } else if (responseCollapsed) {
               //TODO
               // $(e.target).parent().next().css('height', 'auto');
-              // $(e.target).attr('src', 'resources/images/contract.png');
+              // $(e.target).attr('src', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/contract.png');
               // responseCollapsed = false;
               var height = that.app.params.adjustedReplyHeight;
               $(e.target).parent().parent().next().children().each(function(index) {
@@ -524,7 +516,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
               $(e.target).parent().parent().parent().css('height', x + height + 'px');
 
 
-              $(e.target).attr('src', 'resources/images/contract.png');
+              $(e.target).attr('src', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/contract.png');
               responseCollapsed = false;
 
             }

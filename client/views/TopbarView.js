@@ -98,7 +98,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
 
     };
 
-    //var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="/resources/images/registration.png" height="20px" width="20px"></img>');
+    //var $registrationButton = $('<img id="registrationButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/registration.png" height="20px" width="20px"></img>');
     $('#registrationButton').on('click', function() {
       var previousDisplayed = that.app.get('detailView').displayed;
       that.app.get('detailView').displayed = 'Registration';
@@ -114,7 +114,7 @@ Agora.Views.TopbarView = Backbone.View.extend({
     });
     //this.$el.append($registrationButton);
 
-    //var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="/resources/images/settings.png" height="20px" width="20px"></img>');
+    //var $settingsButton = $('<img id="settingsButton" class="topbarIcon" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/settings.png" height="20px" width="20px"></img>');
     $('#settingsButton').on('click', function() {
 
       if (that.app.get('login')) {

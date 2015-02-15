@@ -1154,9 +1154,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
               }
 
               if (count < 11) {
-                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon'+count+'.png"></img>'));
+                // $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon'+count+'.png"></img>'));
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/nIcon'+count+'.png"></img>'));
               } else {
-                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon11.png"></img>'));
+                // $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="resources/images/nIcon11.png"></img>'));
+                $('#notificationsButton').append($('<img id="notificationsAlertOverlay" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/nIcon11.png"></img>'));
               }
 
 

@@ -50,7 +50,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
 
-    var searchButton = $('<img id="channelSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+    var searchButton = $('<img id="channelSearchButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
 
@@ -145,7 +145,7 @@ Agora.Views.ChannelView = Backbone.View.extend({
 
 
 
-    var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
+    var $treeButton = $('<img class="treeButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/treeIcon.png"></img>');
     $treeButton.on('click', function() {
 
 

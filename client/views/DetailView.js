@@ -33,7 +33,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     var that = this;
     this.$el.empty();
 
-    var $x = $('<img src="resources/images/x.png" class="x"></img>')
+    var $x = $('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>')
 
 
     this.$el.append( $x );
@@ -70,7 +70,7 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.view.close();
     }
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
@@ -92,7 +92,7 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.view.close();
     }
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
@@ -115,7 +115,7 @@ Agora.Views.DetailView = Backbone.View.extend({
     }
 
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');
@@ -140,7 +140,7 @@ Agora.Views.DetailView = Backbone.View.extend({
       this.view.close();
     }
 
-    this.$el.append($('<img src="resources/images/x.png" class="x"></img>'));
+    this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
     this.$el.children('img.x')[0].onclick = function() {
       that.app.get('content2').hide();
       console.log('closing detailview');

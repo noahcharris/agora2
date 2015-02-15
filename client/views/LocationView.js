@@ -53,13 +53,13 @@ Agora.Views.LocationView = Backbone.View.extend({
 
 
 
-    var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+    var searchButton = $('<img id="pathSearchButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/search.png" width="13px" height="13px"></img>');
 
     searchButton.on('click', function() { 
       // that.$el.empty();
       // that.$el.append($('<span class="channelName">&nbsp&nbspLocation:&nbsp</span>'));
 
-      // var searchButton = $('<img id="pathSearchButton" src="/resources/images/search.png" width="13px" height="13px"></img>');
+      // var searchButton = $('<img id="pathSearchButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/search.png" width="13px" height="13px"></img>');
 
       // that.$el.append(searchButton);
 
@@ -119,7 +119,7 @@ Agora.Views.LocationView = Backbone.View.extend({
 
     //SUBTREE BUTTON
     this.$el.append( $('<strong><span class="pathWrapper"></span></strong>') );
-    var $treeButton = $('<img class="treeButton" src="/resources/images/treeIcon.png"></img>');
+    var $treeButton = $('<img class="treeButton" src="https://s3-us-west-2.amazonaws.com/agora-static-storage/treeIcon.png"></img>');
     $treeButton[0].onclick = function() {
 
       $.ajax({
