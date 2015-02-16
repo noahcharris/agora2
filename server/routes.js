@@ -136,7 +136,7 @@ var coolOff = function() {
                   if (err) {
                     console.log('error deleting from topics after cooling: ', err);
                   } else {
-                    console.log('successfully cooled post heat')
+                    //console.log('successfully cooled post heat')
                   }
                   
                     
@@ -170,7 +170,7 @@ var coolOff = function() {
                   if (err) {
                     console.log('error deleting from topics after cooling: ', err);
                   } else {
-                    console.log('successfully cooled visit heat')
+                    //console.log('successfully cooled visit heat')
                   }
               });
 
@@ -202,7 +202,7 @@ var coolOff = function() {
                   if (err) {
                     console.log('error deleting from topics after cooling: ', err);
                   } else {
-                    console.log('successfully cooled vote heat')
+                    //console.log('successfully cooled vote heat')
                   }
               });
 
@@ -405,7 +405,7 @@ function dealWithImage(keyString) {
   request('http://52.10.3.29:80/resizeImage?keyString='+keyString
     +'&secret='+workerSecret, function(err, response, body) {
       if (!err && response.statusCode == 200) {
-        console.log(body);
+        //console.log(body);
       } else {
         console.log('request error: ', err);
       }
@@ -714,8 +714,8 @@ module.exports.getHotTopics = function(request, response) {
   var channel = queryArgs.channel;
   var page = queryArgs.page;
 
-  console.log('location: ', location);
-  console.log('channel: ', channel);
+  // console.log('location: ', location);
+  // console.log('channel: ', channel);
 
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
@@ -981,16 +981,16 @@ module.exports.locationSearch = function(request, response) {
 
     var queryArgs = url.parse(request.url, true).query;
 
-    var input;
-    if (queryArgs.input != '') {
-      var parsedInput = queryArgs.input.split(' ');
-      for (var i=0; i < parsedInput.length ;i++) {
-        parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
-      }
-      input = parsedInput.join(' ');
-    } else {
-      input = '';
-    }
+    var input = queryArgs.input;
+    // if (queryArgs.input != '') {
+    //   var parsedInput = queryArgs.input.split(' ');
+    //   for (var i=0; i < parsedInput.length ;i++) {
+    //     parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+    //   }
+    //   input = parsedInput.join(' ');
+    // } else {
+    //   input = '';
+    // }
 
     if (queryArgs.onlyCities) {
       client.query("SELECT * FROM locations WHERE name ILIKE $1 AND isCity = true;",
@@ -1036,16 +1036,16 @@ module.exports.channelSearch = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  var input;
-  if (queryArgs.input != '') {
-    var parsedInput = queryArgs.input.split(' ');
-    for (var i=0; i < parsedInput.length ;i++) {
-      parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
-    }
-    input = parsedInput.join(' ');
-  } else {
-    input = '';
-  }
+  var input = queryArgs.input;
+  // if (queryArgs.input != '') {
+  //   var parsedInput = queryArgs.input.split(' ');
+  //   for (var i=0; i < parsedInput.length ;i++) {
+  //     parsedInput[i] = parsedInput[i][0].toUpperCase() + parsedInput[i].slice(1,parsedInput[i].length);
+  //   }
+  //   input = parsedInput.join(' ');
+  // } else {
+  //   input = '';
+  // }
 
   client.query("SELECT * FROM channels WHERE name ILIKE $1;",
       ['%' + input + '%'],
@@ -2194,11 +2194,6 @@ module.exports.changeLocation = function(request, response) {
 
 module.exports.addContact = function(request, response) {
 
-  console.log(request.body.username);
-  console.log(request.body.contact);
-  console.log(request.body.token);
-  console.log(request.cookies['login']);
-
 
 
 
@@ -2799,7 +2794,7 @@ module.exports.registerUser = function(request, response) {
 
                                                                     try {
                                                                       var mailOptions = {
-                                                                          from: 'Agora ✔ <agora.reporter@gmail.com>', // sender address
+                                                                          from: 'Egora ✔ <agora.reporter@gmail.com>', // sender address
                                                                           to: request.body.email, // list of receivers
                                                                           subject: 'Hello ✔', // Subject line
                                                                           text: 'KEY', // plaintext body
@@ -3053,7 +3048,7 @@ module.exports.getInvites = function(request, response) {
 
                 var returnArray = [];
 
-                for (var i=0; i < 15 ;i++) {
+                for (var i=0; i < 10 ;i++) {
 
                   var rString = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
                   returnArray.push({ code:rString });

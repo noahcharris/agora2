@@ -776,7 +776,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       for (var i=0; i < translationData.length ;i++) {
         if (translationData[i]['en'] === input) {
-          
+
           if (translationData[i][lang] !== '') {
             return translationData[i][lang];
           }
@@ -1172,13 +1172,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
               $('#notificationsButton')[0].onclick = function() {
 
-                console.log(that.app.get('notificationsDisplayed'));
-                console.log($('#notificationsDisplay'));
 
 
                   if (!that.app.get('notificationsDisplayed')) {
 
-                      console.log('whaaaa');
 
                       that.app.set('notificationsDisplayed', true);
                       contactRequestTemplate = _.template( $('#contactRequestTemplate').html() );
@@ -1247,7 +1244,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
 
-                        console.log($notificationBox);
                         $('#notificationsDisplay').append($notificationBox);
 
                         $notificationBox.css('bottom', cssAdjust+'px');
@@ -1271,7 +1267,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                           var $notificationBox = $( newMessageTemplate(that.newMessages[i]) );
                         }
 
-                        console.log($notificationBox);
 
                         (function() {
 
@@ -1356,7 +1351,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
                       //TOPIC ACTIVITY
-                      console.log(that.topicActivity);
 
                       for (var i=0; i < that.topicActivity.length ;i++) {
 
@@ -1422,16 +1416,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
                       };//end topic activity for loop
-
-
-
-
-
-
-
-
-
-
 
 
 
