@@ -953,8 +953,6 @@ module.exports.userSearch = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-  console.log('user search input: ', queryArgs.input);
-
   client.query("SELECT type, username, location, origin, image, about FROM users WHERE username ILIKE $1 LIMIT 200;",
       [queryArgs.input + '%'],
       function(err, result) {
@@ -1070,7 +1068,6 @@ module.exports.channelSearch = function(request, response) {
 module.exports.getLocationSubtree = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
-  console.log('searching for loaction subtrees for: ', queryArgs.location);
 
   client.query("SELECT * FROM locations WHERE parent = $1;",
       [queryArgs.location],
@@ -3181,7 +3178,6 @@ module.exports.authenticateTwitter = function(req, response) {
   //NAME CONFLICT WITH REQUEST MODULE!!!!!!
 module.exports.twitterCallback = function(req, response) {
 
-  console.log('whaa');
 
   //console.log(req.body);
   client.query("SELECT * FROM twitterJoin WHERE token = $1;",[req.query.oauth_token],
@@ -3831,6 +3827,8 @@ module.exports.createTopic = function(request, response) {
 
       response.end('error');
 
+    } else if (fields.link[0].length > 666) {
+      response.end('link is tooo loooooong');
     } else {
 
       var temp;

@@ -124,10 +124,10 @@ Agora.Views.SignupView = Backbone.View.extend({
             alert(that.app.translate('password confirmation does not match'));
           } else if ($('#signupEmailInput').val() === '') {
             alert(that.app.translate('please enter an email'));
-          } else if (!flag1) {
-            alert(that.app.translate('please enter a valid origin'));
-          } else if (!flag2) {
-            alert(that.app.translate('please enter a valid current location')); 
+          // } else if (!flag1) {
+          //   alert(that.app.translate('please enter a valid origin'));
+          // } else if (!flag2) {
+          //   alert(that.app.translate('please enter a valid current location')); 
           } else if (!$('.g-recaptcha-response').val()) {
             alert(that.app.translate('please complete CAPTCHA'));
           } else {
@@ -174,7 +174,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
                 } else {
                   alert(that.app.translate(data));
-                  grecaptcha.reset();
+                  // grecaptcha.reset();
+                  grecaptcha.reload_internal('t');
                 }
 
                 //log user in
@@ -265,6 +266,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
       console.log('searchParameter: ', searchParameter);
 
+      console.log('fjdlska;fdsfjlsajfkldsaf;sajf');
+
       //SHOULD MAYBE THROTTLE THIS ???????
 
       if (searchParameter.length > 2) {
@@ -273,8 +276,7 @@ Agora.Views.SignupView = Backbone.View.extend({
           url: 'http://egora.co:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
-            input: searchParameter,
-            noHubs: true
+            input: searchParameter
           },
           crossDomain: true,
           success: function(data) {
@@ -339,7 +341,6 @@ Agora.Views.SignupView = Backbone.View.extend({
         // url: 'http://localhost:80/locationSearch',
         data: {
           input: searchParameter,
-          noHubs: true
         },
         crossDomain: true,
         success: function(data) {

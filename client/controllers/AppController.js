@@ -983,12 +983,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         $('#sidebarContainer').css('-webkit-transition-duration', that.params.transition+'s');
         $('#sidebarContainer').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
           //debugger;
-          if (currentView && currentView.close) {
-            currentView.close();
-          }
-          currentView = null;
-          $('#sidebarContainer').unbind();
         });
+
+        //move this outside of transitionend to fix a bug
+        if (currentView && currentView.close) {
+          currentView.close();
+        }
+        currentView = null;
+        $('#sidebarContainer').unbind();
+        
+
         
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
         var sideWidth = $(window).width() - mapWidth;
