@@ -168,6 +168,8 @@ Agora.Views.SignupView = Backbone.View.extend({
 
                   that.app.trigger('reloadSidebarContacts');
                   that.app.trigger('reloadSidebarMessageChains');
+                  
+                  that.app.get('mapController').goToPath(data.location);
 
                   that.app.get('content2').show(new Agora.Views.AboutView(that.app));
 

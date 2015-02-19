@@ -1481,6 +1481,7 @@ module.exports.getNotifications = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
   var notifications = {}; //master notifications object to send back at the end
 
+
   client.query("SELECT * FROM securityJoin WHERE username = $1;",
     [queryArgs.username],
     function(err, result) {
@@ -1808,7 +1809,7 @@ module.exports.login = function(request, response) {
                           // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
                           response.cookie('login',request.body.username+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
                           //console.log('Login successful for user: ', request.body.username);
-                          response.json({ login: true, token: token, username: theUsername });
+                          response.json({ login: true, token: token, username: theUsername, location: data[0].location });
                       }
                   });//end security join insert
                 }
@@ -1857,7 +1858,7 @@ module.exports.login = function(request, response) {
                                   // response.cookie('login','noahcharris12938987439', { maxAge: 600000, httpOnly: true });
                                   response.cookie('login',theUsername+'/'+cookie, { maxAge: 30000000, httpOnly: true, secure: true });
                                   //console.log('Login successful for user: ', request.body.username);
-                                  response.json({ login: true, token: token, username: theUsername });
+                                  response.json({ login: true, token: token, username: theUsername, location: result.rows[0].location });
                               }
                           });//end security join insert
                         }
@@ -1962,8 +1963,19 @@ module.exports.checkLogin = function(request, response) {
 
 
             if (request.cookies && request.cookies['login'] && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+              var token = result.rows[0].token;
+
+              client.query("SELECT * FROM users WHERE username=$1;", [request.cookies['login'].split('/')[0]],
+                function(err ,result) {
+                  if (err) console.log('error selecting from users table: ', err);
+
+                  response.json({ login: true, token: token, username: request.cookies['login'].split('/')[0],
+                                  location: result.rows[0].location });
+
+              });
               //respond with token
-              response.json({ login: true, token: result.rows[0].token, username: request.cookies['login'].split('/')[0] });
+
 
             } else {
               console.log('unauthorized access');
@@ -2855,7 +2867,7 @@ module.exports.registerUser = function(request, response) {
 
                                                                     // console.log('Login successful for user: ', request.body.username);
 
-                                                                    response.json({ login: true, token: token });
+                                                                    response.json({ login: true, token: token, location: request.body.location });
 
 
                                                                   }

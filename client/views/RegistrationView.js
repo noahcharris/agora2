@@ -106,6 +106,8 @@ Agora.Views.RegistrationView = Backbone.View.extend({
 
             that.app.get('cacheManager').start();
 
+            that.app.get('mapController').goToPath(data.location);
+
 
           } else {
             alert(that.app.translate(data));

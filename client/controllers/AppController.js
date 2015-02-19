@@ -425,6 +425,10 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
           that.get('cacheManager').start();
 
+          console.log('whaaaa: ', data.location);
+
+          that.get('mapController').goToPath(data.location);
+
 
         } else {
           console.log('no session detected');
@@ -1436,6 +1440,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
             }//end if notification
+
           }/**/ else {
             console.log('data: ', data);
           }
