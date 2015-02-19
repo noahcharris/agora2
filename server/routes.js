@@ -139,19 +139,16 @@ var coolOff = function() {
                     //console.log('successfully cooled post heat')
                   }
                   
-                    
-
               });
-
 
           });
 
         })();
 
-
       }
 
-  });
+  });//end heatPostJoin cooling
+
 
   client.query("SELECT * FROM heatVisitJoin WHERE visitedAt < now() - interval '1 hour';",
     function(err, result) {
@@ -179,11 +176,9 @@ var coolOff = function() {
 
         })();
 
-
-
       }
 
-  });
+  });//end heatVisitJoin cooling
 
   client.query("SELECT * FROM heatVoteJoin WHERE votedAt < now() - interval '1 hour';",
     function(err, result) {
@@ -211,17 +206,41 @@ var coolOff = function() {
 
         })();
 
-
-
-
       }
 
-  });
+  });//end heatVoteJoin cooling
 
 
 };
+
+
+var coolRank = function() {
+  
+    //COOL ALL TOPICS OFF BY ONE OR TEN PROPORTIONATELY ( PROBABLY NEED TO REQORK THIS SHIATTT )
+    client.query("UPDATE topics SET rank = rank - 10 WHERE rank > 100", function(err, result) {
+      if (err) console.log('error decreasing topic rank: ', err);
+    });
+
+    client.query("UPDATE topics SET rank = rank - 1 WHERE rank <= 100 AND rank > 0", function(err, result) {
+      if (err) console.log('error decreasing topic rank: ', err);
+    });
+
+    client.query("UPDATE topics SET rank = rank - 50 WHERE rank > 500", function(err, result) {
+      if (err) console.log('error decreasing topic rank: ', err);
+    });
+
+    client.query("UPDATE topics SET rank = rank - 100 WHERE rank > 1000", function(err, result) {
+      if (err) console.log('error decreasing topic rank: ', err);
+    });
+
+};
+
+
 // currently set to 1 minute
 setInterval(coolOff, 60000);
+
+//decrease rank every hour
+setInterval(coolRank, 3600000)
 
 //end heatbot stuff
 
