@@ -127,7 +127,7 @@ var coolOff = function() {
 
         (function(){
           var x = result.rows[i];
-          client.query("UPDATE topics SET heat = heat - 3 WHERE id = $1;", [x.id],
+          client.query("UPDATE topics SET rank = rank - 3 WHERE id = $1;", [x.id],
             function(err, thet) {
               if (err) console.log('error cooling topics: ', err);
 
@@ -161,7 +161,7 @@ var coolOff = function() {
 
         (function(){
           var x = result.rows[i];
-          client.query("UPDATE topics SET heat = heat - 1 WHERE id = $1;", [x.id],
+          client.query("UPDATE topics SET rank = rank - 1 WHERE id = $1;", [x.id],
             function(err, thet) {
               if (err) console.log('error cooling topics: ', err);
 
@@ -193,7 +193,7 @@ var coolOff = function() {
 
         (function(){
           var x = result.rows[i];
-          client.query("UPDATE topics SET heat = heat - 2 WHERE id = $1;", [x.id],
+          client.query("UPDATE topics SET rank = rank - 2 WHERE id = $1;", [x.id],
             function(err, thet) {
               if (err) console.log('error cooling topics: ', err);
 
@@ -1312,7 +1312,7 @@ module.exports.getHeatPoints = function(request, response) {
   var queryArgs = url.parse(request.url, true).query;
 
   client.query("SELECT location From topics "
-    +"WHERE location LIKE $1 AND channel LIKE $2 ORDER BY heat DESC LIMIT 100;",
+    +"WHERE location LIKE $1 AND channel LIKE $2 ORDER BY rank DESC LIMIT 100;",
     [queryArgs.location+'%', queryArgs.channel+'%'], function(err, result) {
       if (err) {
         console.log('error selecting for heatPoints');
@@ -3408,7 +3408,7 @@ function addVisitHeat(username, topicId) {
 
         if (!result.rows.length) {
 
-          client.query("UPDATE topics SET heat = heat + 1 WHERE id = $1;",
+          client.query("UPDATE topics SET rank = rank + 1 WHERE id = $1;",
             [topicId], function(err, result) {
             if (err) {
               console.log('error adding heat to topic: ', err);
@@ -3444,7 +3444,7 @@ function addPostHeat(username, topicId, heat) {
 
         if (!result.rows.length) {
 
-          client.query("UPDATE topics SET heat = heat + "+heat+" WHERE id = $1;",
+          client.query("UPDATE topics SET rank = rank + "+heat+" WHERE id = $1;",
             [topicId], function(err, result) {
             if (err) {
               console.log('error adding heat to topic');
@@ -3480,7 +3480,7 @@ function addVoteHeat(username, topicId, heat) {
 
         if (!result.rows.length) {
 
-          client.query("UPDATE topics SET heat = heat + "+heat+" WHERE id = $1;",
+          client.query("UPDATE topics SET rank = rank + "+heat+" WHERE id = $1;",
             [topicId], function(err, result) {
             if (err) {
               console.log('error adding heat to topic');
