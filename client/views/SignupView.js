@@ -67,6 +67,10 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
 
+    //Hide the about button, we can use it as a honeypot and i think it just confuses users
+    this.$el.children('#signupAboutInput').hide();
+
+
     this.$el.children('button#registrationButton').on('click', function() {
 
           var temp1 = that.app.get('mapController').get('cities');
@@ -168,7 +172,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
                   that.app.trigger('reloadSidebarContacts');
                   that.app.trigger('reloadSidebarMessageChains');
-                  
+
                   that.app.get('mapController').goToPath(data.location);
 
                   that.app.get('content2').show(new Agora.Views.AboutView(that.app));
