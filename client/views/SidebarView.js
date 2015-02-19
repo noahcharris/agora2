@@ -113,7 +113,7 @@ Agora.Views.SidebarView = Backbone.View.extend({
 
       this.$el.append($('<div id="topButton"><span class="tabLabel">'+topPrefix+'</span></div>'));
       this.$el.append($('<div id="newButton"><span class="tabLabel">'+newPrefix+'</span></div>'));
-      this.$el.append($('<div id="hotButton"><span class="tabLabel">'+hotPrefix+'</span></div>'));
+      this.$el.append($('<div id="hotButton"><span class="tabLabel">'+/*hotPrefix+*/'</span></div>'));
       this.$el.append($('<div id="friendsButton"><span class="tabLabel">'+friendsPrefix+'</span></div>'));
       this.$el.append($('<ul class="sidebarTopicInnerList"></ul>'));
       var location = that.app.get('mapController').get('location');

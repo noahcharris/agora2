@@ -500,26 +500,29 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     var topicsRightArrowObject = {
       'Topics-Top': 'Topics-New',
-      'Topics-New': 'Topics-Hot',
-      'Topics-Hot': 'Topics-Top'
+      'Topics-New': /*'Topics-Hot',
+      'Topics-Hot':*/ 'Topics-Top'
     }
+    // var topicsLeftArrowObject = {
+    //   'Topics-Top': 'Topics-Hot',
+    //   'Topics-New': 'Topics-Top',
+    //   'Topics-Hot': 'Topics-New'
+    // }
     var topicsLeftArrowObject = {
-      'Topics-Top': 'Topics-Hot',
-      'Topics-New': 'Topics-Top',
-      'Topics-Hot': 'Topics-New'
+      'Topics-Top': 'Topics-New',
+      'Topics-New': 'Topics-Top'
     }
 
     var loginTopicsRightArrowObject = {
       'Topics-Top': 'Topics-New',
-      'Topics-New': 'Topics-Hot',
-      'Topics-Hot': 'Topics-Contacts',
+      'Topics-New':/* 'Topics-Hot',
+      'Topics-Hot':*/ 'Topics-Contacts',
       'Topics-Contacts': 'Topics-Top'
     }
     var loginTopicsLeftArrowObject = {
       'Topics-Top': 'Topics-Contacts',
       'Topics-New': 'Topics-Top',
-      'Topics-Hot': 'Topics-New',
-      'Topics-Contacts': 'Topics-Hot'
+      'Topics-Contacts': 'Topics-New',
     }
 
     var changeColor = function(destination) {
