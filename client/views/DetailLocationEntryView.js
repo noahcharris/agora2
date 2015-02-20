@@ -28,6 +28,7 @@ Agora.Views.DetailLocationEntryView = Backbone.View.extend({
 
     if (this.app.get('mapController').get('location') === this.model.name)
       $goTo.hide();
+    $goTo.hide();
 
     this.$el.children('#profileColumnWrapper').children('#profilePicture').attr('src', this.model.image);
 
