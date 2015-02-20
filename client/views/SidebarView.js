@@ -300,13 +300,31 @@ Agora.Views.SidebarView = Backbone.View.extend({
               that.app.get('content2').show(that.app.get('detailView'), model);
 
             } else if (model.type === 'Location') {
-              // show location detail
+              // show location detail and go to location
               that.app.get('detailView').displayed = 'Locations';
               that.app.get('content2').show(that.app.get('detailView'), model);
+
+              that.app.get('sidebarView').displayed = 'Topics-Top';
+              that.app.trigger('reloadSidebarTopics', model.name);
+              that.app.get('content1').show(that.app.get('sidebarView'));
+              // that.app.get('content2').hide();
+              that.app.get('mapController').goToPath(model.name);
+
+
             } else if (model.type === 'Channel') {
-              // show channe ldetail
+              // show channe ldetail and go to channel
               that.app.get('detailView').displayed = 'Channels';
               that.app.get('content2').show(that.app.get('detailView'), model);
+
+              that.app.set('channel', model.name);
+              that.app.get('channelView').render();
+              that.app.trigger('reloadSidebarTopics', that.app.get('mapController').get('location'));
+              that.app.get('sidebarView').displayed = 'Topics-Top';
+              that.app.get('content1').show(that.app.get('sidebarView'));
+              // that.app.get('content2').hide();
+
+
+
             }
 
 

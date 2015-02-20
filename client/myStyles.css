@@ -2265,6 +2265,15 @@ ul#recentlyVisited {
   top:24%; 
 }
 
+#resendVerificationButton {
+  width:110px;
+  height:32px;
+  background-color:rgba(101, 148, 214, 0.38);
+  position:absolute;
+  left:0px;
+  top:30%; 
+}
+
 
 
 /* ## TOPIC CREATION ##*/
