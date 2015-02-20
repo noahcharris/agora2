@@ -31,11 +31,15 @@ Agora.Views.SettingsView = Backbone.View.extend({
     var inviteCodesLabel = this.app.translate('Invite Codes');
     var twitterLabel = this.app.translate('Link Twitter');
 
+    // TODO - not translated yet
+    var resendVerificationLabel = 'Resend Verification Email';
+
 
     this.$el.html( this.template( {menuLabel: menuLabel, recentlyVisitedLabel: recentlyVisitedLabel,
       viewProfileLabel: viewProfileLabel, editProfileLabel: editProfileLabel, createLocationLabel: createLocationLabel,
       createChannelLabel: createChannelLabel, changePasswordLabel: changePasswordLabel, changeLocationLabel: changeLocationLabel,
-      changeEmailLabel: changeEmailLabel, inviteCodesLabel: inviteCodesLabel, twitterLabel: twitterLabel } ) );
+      changeEmailLabel: changeEmailLabel, inviteCodesLabel: inviteCodesLabel, twitterLabel: twitterLabel,
+      resendVerificationLabel: resendVerificationLabel } ) );
 
 
     this.$el.append($('<img src="https://s3-us-west-2.amazonaws.com/agora-static-storage/x.png" class="x"></img>'));
@@ -89,14 +93,13 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     };
-    this.$el.children('#buttonBox').append($viewProfileButton);
 
     var $editProfileButton = this.$el.children('#editProfileButton');
     $editProfileButton[0].onclick = function() {
       that.app.get('detailView').displayed = 'Edit Profile';
       that.app.get('content2').show(new Agora.Views.EditProfileView(that.app));
     };
-    this.$el.children('#buttonBox').append($editProfileButton);
+
     this.$el.children('#buttonBox').append('<br/>');
 
     var $locationCreationButton = this.$el.children('#createLocationButton');
@@ -130,7 +133,6 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    this.$el.children('#buttonBox').append($locationCreationButton);
 
     var $channelCreationButton = this.$el.children('#createChannelButton');
     $channelCreationButton.on('click', function() {
@@ -163,28 +165,24 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
     });
-    this.$el.children('#buttonBox').append($channelCreationButton);
 
     var $changePasswordButton = this.$el.children('#changePasswordButton');
     $changePasswordButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangePassword';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Password'));
     });
-    this.$el.children('#buttonBox').append($changePasswordButton);
 
     var $changeLocationButton = this.$el.children('#changeLocationButton');
     $changeLocationButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeLocation';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Location'));
     });
-    this.$el.children('#buttonBox').append($changeLocationButton);
 
     var $changeEmailButton = this.$el.children('#changeEmailButton');
     $changeEmailButton.on('click', function() {
       that.app.get('detailView').displayed = 'ChangeEmail';
       that.app.get('content2').show(new Agora.Views.ChangeView(that.app, 'Email'));
     });
-    this.$el.children('#buttonBox').append($changeEmailButton);
 
 
     var $inviteCodesButton = this.$el.children('#inviteCodesButton');
@@ -192,14 +190,49 @@ Agora.Views.SettingsView = Backbone.View.extend({
       that.app.get('detailView').displayed = 'Invite';
       that.app.get('content2').show(new Agora.Views.InviteView(that.app));
     });
-    this.$el.children('#buttonBox').append($inviteCodesButton);
 
     var $twitterButton = this.$el.children('#twitterButton');
     $twitterButton.on('click', function() {
       that.app.get('detailView').displayed = 'Twitter';
       that.app.get('content2').show(new Agora.Views.TwitterView(that.app));
     });
-    this.$el.children('#buttonBox').append($twitterButton);
+
+    var $resendVerificationButton = this.$el.children('#resendVerificationButton');
+    $resendVerificationButton.on('click', function() {
+
+      $.ajax({
+        url: 'https://egora.co:443/resendVerification',
+        // url: 'http://localhost/topicTree',
+        method: 'GET',
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        data: {
+          username: that.app.get('username'),
+          token: that.app.get('token')
+        },
+        success: function(data) {
+
+          //TODO - translation
+          alert(data.message);
+
+        },
+        error: function() {
+          console.log('ajax error');
+        }
+      });
+
+
+    });
+
+
+
+
+
+
+
+
 
 
     //get recently visited topics

@@ -3034,6 +3034,95 @@ module.exports.checkVerification = function(request, response) {
 
 
 
+module.exports.resendVerification = function(request, response) {
+
+
+  var queryArgs = url.parse(request.url, true).query;
+
+  client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    [queryArgs.username],
+    function(err, result) {
+      if (err) {
+        console.log('error selecting from securityJoin: ', err);
+      } else {
+
+        if (result.rows.length && request.cookies && request.cookies['login'] && queryArgs.token === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+
+
+          client.query("SELECT * FROM users WHERE username = $1 AND verified = false;", [queryArgs.username],
+            function(err, result) {
+              if (err) console.log('error selecting from users: ', err);
+
+              if (result.rows.length) {
+                //resend the verification email
+
+                var email = result.rows[0].email;
+
+                  //GENERATE EMAIL VERIFICATION SECRET, INSERT INTO JOIN AND SEND EMAIL
+                  var secret = Math.floor(Math.random()*100000000001);
+                  client.query("INSERT INTO emailVerificationJoin (username, secret, registeredAt) "
+                    +"VALUES ($1, $2, now());",
+                    [queryArgs.username, secret],
+                    function(err, result) {
+                      if (err) {
+                        console.log('error inserting into emailVerificationJoin: ', err);
+                      } else {
+
+                        try {
+                          var mailOptions = {
+                              from: 'Egora ✔ <agora.reporter@gmail.com>', // sender address
+                              to: email, // list of receivers
+                              subject: 'Hello ✔', // Subject line
+                              text: 'KEY', // plaintext body
+                              html: '<b><a href="https://egora.co:443/verifyUser?username='+queryArgs.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                          };
+
+                          transporter.sendMail(mailOptions, function(error, info){
+                              if(error){
+                                  console.log(error);
+                              }else{
+                                response.json({verified: false, message: 'Resent verification email.'})
+                              }
+                          });
+                          
+                        } catch (e) {
+                          console.log('error sending verification email: ', e);
+                          response.json({verified: false, message: 'Error sending verification email.'})
+                        }
+
+
+
+                      }
+                  });
+
+
+
+
+
+              } else {
+                //user is already verified
+                response.json({ verified: true, message: 'User is already verified.' });
+              }
+
+          });//end select from users table
+
+
+        } else {
+          response.end('not authorized');
+        }
+
+      }
+  });//end securityJoin select
+
+
+
+
+};
+
+
+
+
+
 module.exports.getInvites = function(request, response) {
 
 

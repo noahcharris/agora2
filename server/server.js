@@ -198,6 +198,7 @@ app.get('/validateLocation', routes.validateLocation);
 app.post('/registerUser', routes.registerUser);
 app.get('/verifyUser', routes.verifyUser);
 app.get('/checkVerification', routes.checkVerification);
+app.get('/resendVerification', routes.resendVerification);
 
 app.get('/getInvites', routes.getInvites);
 

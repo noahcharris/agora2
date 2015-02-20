@@ -40,6 +40,8 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     });
 
 
+    //no translation here yet
+    var $imageLink = $('<input id="imageLinkInput" type="text">Image Link</input>');
 
     var $imageInput = $('<input type="file" id="imageInput"></input>');
     var $imagePreview = $('<br/><img height="150px" width="150px"></img>');
@@ -53,6 +55,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
     });
 
 
+    //this.$el.append($imageLink);
 
     this.$el.append($imageInput);
     this.$el.append($imagePreview);
@@ -96,6 +99,8 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   fd.append( 'link', that.$el.children('input#topicCreationLink').val() );
                   fd.append( 'contents', that.$el.children('textarea#topicCreationContent').val() );
                   fd.append( 'location', that.app.get('mapController').get('location') );
+
+                  fd.append( 'image', that.$el.children('input#imageLinkInput').val() );
                   //this is not utilized..
                   fd.append( 'origin', that.app.get('origin') );
                   fd.append( 'channel', that.app.get('channel') );
