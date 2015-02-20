@@ -231,6 +231,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     this.app.trigger('reloadSidebarTopics', 'World');
 
     this.updateHeatPoints();
+    
+    this.clearAllHighlights();
 
   },
 
@@ -509,9 +511,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
   removeHighlightWorld: function() {
     var countries = this.get('countries') || {};
     for (var key in countries._layers) {
-
       countries.resetStyle(countries._layers[key]);
-
     }
 
   },
@@ -589,7 +589,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     }
   },
   removeHighlightCity: function(cityName) {
-    var cities = this.get('cities') || {};
     if (this.cityMarker)
       this.get('map').removeLayer(this.cityMarker);
 
@@ -617,6 +616,31 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     if (this.placeMarker)
       this.get('map').removeLayer(this.placeMarker);
   },
+
+
+
+  clearAllHighlights: function() {
+    if (this.placeMarker)
+      this.get('map').removeLayer(this.placeMarker);
+
+    if (this.cityMarker)
+      this.get('map').removeLayer(this.cityMarker);
+
+    var states = this.get('states') || {};
+    for (var key in states._layers) {
+      states.resetStyle(states._layers[key]);
+    }
+
+    var countries = this.get('countries') || {};
+    for (var key in countries._layers) {
+      countries.resetStyle(countries._layers[key]);
+    }
+
+
+  },
+
+
+
 
 
   closeMapPopup: function() {
@@ -772,6 +796,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     }
 
+    this.clearAllHighlights();
 
 
   },
