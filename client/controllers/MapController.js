@@ -223,7 +223,6 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     this.get('map').fitBounds(worldBounds);
     this.set('location', 'World');   //location is set to '' for world, which is automatically added by locationview
-    this.updateHeatPoints();
 
     this.router.navigate('World#'+this.app.get('channel'), { trigger:false });
 
@@ -249,6 +248,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     var that = this;
 
     that.heatMarkerLayer.clearLayers();
+    console.log('updating heat points');
 
 
     //HEATPOINTSSSSSS 

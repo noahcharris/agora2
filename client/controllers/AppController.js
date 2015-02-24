@@ -324,7 +324,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         that.set('mobile', false);
         $('#sidebarContainer').show();
         $('#map').css('width', '70%');
-        $('#mobileSelectionBarWrapper').css('height', '0px');
 
 
         var mapWidth = $(that.get('mapController').get('map').getContainer()).width();
@@ -348,7 +347,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       } else {
 
         that.set('mobile', true);
-        $('#mobileSelectionBarWrapper').css('height', '40px');
 
         //need a variable which determines whether topics or map is selected if 'mobile'
 
@@ -480,9 +478,16 @@ Agora.Controllers.AppController = Backbone.Model.extend({
         } else if (that.get('expanded')) {
           that.get('content2').hide();
         } else {
+
+
           that.changeChannel('All');
           that.get('sidebarView').displayed = 'Topics-Top';
           that.get('mapController').showWorld();
+
+          //turn off ajax loader
+          $('body').children('#loader').hide();
+
+
         }
 
       } 
@@ -753,6 +758,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     this.set('channel', channel);
     this.get('channelView').render();
+    this.get('mapController').updateHeatPoints();
 
   },
 
@@ -960,7 +966,6 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       currentView = view;
       if (view) {
-        //MODEL 2 FUUUUCCKKCKCKCKCK
         view[renderMethod](model, extra);
         $(el).html(view.el);
         if (view.onShow)
