@@ -4221,14 +4221,14 @@ module.exports.createComment = function(request, response) {
 
 
 
-    client.query("SELECT * FROM securityJoin WHERE username = $1;",
-      [fields.username[0]],
-      function(err, result) {
-        if (err) {
-          console.log('error selecting from securityJoin: ', err);
-        } else {
+    // client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    //   [fields.username[0]],
+    //   function(err, result) {
+    //     if (err) {
+    //       console.log('error selecting from securityJoin: ', err);
+    //     } else {
 
-          if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+    //       if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
               addPostHeat(fields.username[0], fields.topicId[0], 3);
 
@@ -4399,12 +4399,12 @@ module.exports.createComment = function(request, response) {
               }
 
 
-          } else {
-            response.end('not authorized');
-          }
+    //       } else {
+    //         response.end('not authorized');
+    //       }
 
-        }
-    });//end securityJoin select
+    //     }
+    // });//end securityJoin select
 
 
     
@@ -4464,14 +4464,14 @@ module.exports.createResponse = function(request, response) {
 
 
 
-    client.query("SELECT * FROM securityJoin WHERE username = $1;",
-      [fields.username[0]],
-      function(err, result) {
-        if (err) {
-          console.log('error selecting from securityJoin: ', err);
-        } else {
+    // client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    //   [fields.username[0]],
+    //   function(err, result) {
+    //     if (err) {
+    //       console.log('error selecting from securityJoin: ', err);
+    //     } else {
 
-          if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+    //       if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                         addPostHeat(fields.username[0], fields.topicId[0], 3);
                       
@@ -4636,12 +4636,12 @@ module.exports.createResponse = function(request, response) {
                         }
 
 
-          } else {
-            response.end('not authorized');
-          }
+    //       } else {
+    //         response.end('not authorized');
+    //       }
 
-        }
-    });//end securityJoin select
+    //     }
+    // });//end securityJoin select
 
 
   }
@@ -4696,14 +4696,14 @@ module.exports.createReply = function(request, response) {
     } else {
 
 
-    client.query("SELECT * FROM securityJoin WHERE username = $1;",
-      [fields.username[0]],
-      function(err, result) {
-        if (err) {
-          console.log('error selecting from securityJoin: ', err);
-        } else {
+    // client.query("SELECT * FROM securityJoin WHERE username = $1;",
+    //   [fields.username[0]],
+    //   function(err, result) {
+    //     if (err) {
+    //       console.log('error selecting from securityJoin: ', err);
+    //     } else {
 
-          if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
+    //       if (result.rows.length && request.cookies && request.cookies['login'] && fields.token[0] === result.rows[0].token && request.cookies['login'].split('/')[1] === result.rows[0].cookie) {
 
                       
                     addPostHeat(fields.username[0], fields.topicId[0], 3);
@@ -4870,12 +4870,12 @@ module.exports.createReply = function(request, response) {
                   }
 
 
-          } else {
-            response.end('not authorized');
-          }
+    //       } else {
+    //         response.end('not authorized');
+    //       }
 
-        }
-    });//end securityJoin select
+    //     }
+    // });//end securityJoin select
 
 
 

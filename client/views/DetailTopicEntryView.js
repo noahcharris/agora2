@@ -745,135 +745,139 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
 
   openInputBox: function(data) {
     var that = this;
-    if (this.app.get('login')) {
 
-        this.responding = true;
-        this.responseData = data;
-        $('textarea#inputTextArea').val('');
-        if (data.type === 'Reply') {
-          $('textarea#inputTextArea').val('@'+data.username);
-        }
-        $('#inputBox').css('height', '100px');
 
-        setTimeout(function() {
-          $('#inputBox').children('#inputHeadlineTextArea').focus();
-        }, 700);
+      this.responding = true;
+      this.responseData = data;
+      $('textarea#inputTextArea').val('');
+      if (data.type === 'Reply') {
+        $('textarea#inputTextArea').val('@'+data.username);
+      }
+      $('#inputBox').css('height', '100px');
 
-        var ajaxing = false;
-        var sendHandler = function() {
+      setTimeout(function() {
+        $('#inputBox').children('#inputHeadlineTextArea').focus();
+      }, 700);
 
-          if ($('textarea#inputTextArea').val() === '' && $('textarea#inputHeadlineTextArea').val() === '') {
-            alert(that.app.translate('you must provide either a headline or contents'));
-          } else {
+      var ajaxing = false;
+      var sendHandler = function() {
 
-              if (!ajaxing) {
+        if ($('textarea#inputTextArea').val() === '' && $('textarea#inputHeadlineTextArea').val() === '') {
+          alert(that.app.translate('you must provide either a headline or contents'));
+        } else {
 
-                  ajaxing = true;
+            var username;
+            if (!that.app.get('login')) {
+              username = 'Anon';
+            } else {
+              username = that.app.get('username');
+            }
 
-                  var fd = new FormData();    
-                  fd.append( 'file', $('#imageInput')[0].files[0] );
-                  fd.append( 'username', that.app.get('username') );
-                  fd.append( 'token', that.app.get('token') );
+            if (!ajaxing) {
 
-                  fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
+                ajaxing = true;
 
-                  fd.append( 'link', 'link');
+                var fd = new FormData();    
+                fd.append( 'file', $('#imageInput')[0].files[0] );
+                fd.append( 'username', username );
+                fd.append( 'token', that.app.get('token') );
 
-                  fd.append( 'contents', $('textarea#inputTextArea').val() );
+                fd.append( 'headline', $('textarea#inputHeadlineTextArea').val() );
 
-                  fd.append( 'location', data.location );
-                  fd.append( 'channel', data.channel );
+                fd.append( 'link', 'link');
 
-                  fd.append( 'topicId', data.topicId );
-                  fd.append( 'commentId', data.commentId );
-                  fd.append( 'responseId', data.responseId );
-                  fd.append( 'OP', data.OP);
+                fd.append( 'contents', $('textarea#inputTextArea').val() );
 
-                  //whaaaa
-                  var thet = this;
+                fd.append( 'location', data.location );
+                fd.append( 'channel', data.channel );
 
-                  $.ajax({
-                    url: 'https://egora.co:443/' + data.urlSuffix,
-                    // url: 'http://localhost/' + data.urlSuffix,
-                    method: 'POST',
-                    crossDomain: true,
-                    xhrFields: {
-                      withCredentials: true
-                    },
-                    contentType: false,
-                    processData: false,
-                    data: fd,
-                    success: function(msg) {
+                fd.append( 'topicId', data.topicId );
+                fd.append( 'commentId', data.commentId );
+                fd.append( 'responseId', data.responseId );
+                fd.append( 'OP', data.OP);
 
-                      if (msg[0] === 'e') {
-                        alert(that.app.translate('please make sure your file is not bigger than 10MB'));
-                      } else {
+                //whaaaa
+                var thet = this;
 
-                        alert(that.app.translate('submission successful'));
-                        $('#inputBox').css('height', '0px');
-                        //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
+                $.ajax({
+                  url: 'https://egora.co:443/' + data.urlSuffix,
+                  // url: 'http://localhost/' + data.urlSuffix,
+                  method: 'POST',
+                  crossDomain: true,
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  contentType: false,
+                  processData: false,
+                  data: fd,
+                  success: function(msg) {
 
-                        //that.app.trigger('reloadSidebarTopics');
-                        //just reload fuck it
-                        setTimeout(function() {
+                    if (msg[0] === 'e') {
+                      alert(that.app.translate('please make sure your file is not bigger than 10MB'));
+                    } else {
 
-                          ajaxing = false;
+                      alert(that.app.translate('submission successful'));
+                      $('#inputBox').css('height', '0px');
+                      //WHOAH CAN I DIRECTLY APPEND HERE AND SPOOF IT?? YESSSSS
 
-                          $.ajax({
-                            url: 'http://egora.co/topicTree',
-                            // url: 'http://localhost/topicTree',
-                            method: 'GET',
-                            crossDomain: true,
-                            data: {
-                              //these two models are different scope!
-                              topicId: that.model.id
-                            },
-                            success: function(model) {
+                      //that.app.trigger('reloadSidebarTopics');
+                      //just reload fuck it
+                      setTimeout(function() {
 
-                              that.app.get('content2').show(that.app.get('detailView'), model);
-                            },
-                            error: function() {
-                              alert(that.app.translate('server error'));
-                            }
-                          });
+                        ajaxing = false;
 
-                        }, 1000);
+                        $.ajax({
+                          url: 'http://egora.co/topicTree',
+                          // url: 'http://localhost/topicTree',
+                          method: 'GET',
+                          crossDomain: true,
+                          data: {
+                            //these two models are different scope!
+                            topicId: that.model.id
+                          },
+                          success: function(model) {
 
-                      }
+                            that.app.get('content2').show(that.app.get('detailView'), model);
+                          },
+                          error: function() {
+                            alert(that.app.translate('server error'));
+                          }
+                        });
 
-                    },
-                    error: function() {
-                      alert(that.app.translate('server error'));
-                      ajaxing = false;
+                      }, 1000);
+
                     }
-                  });
 
-              }
-          }//end headline/contents check
+                  },
+                  error: function() {
+                    alert(that.app.translate('server error'));
+                    ajaxing = false;
+                  }
+                });
+
+            }
+        }//end headline/contents check
 
 
-        };//end post button handler
+      };//end post button handler
 
-        this.enterHandler = function(e) {
+      this.enterHandler = function(e) {
 
-          if (e.keyCode === 13 && $('#inputTextArea').is(':focus') && $('#inputTextArea').val() !== '') {
+        if (e.keyCode === 13 && $('#inputTextArea').is(':focus') && $('#inputTextArea').val() !== '') {
 
-            sendHandler();
-
-          }
-
-        };
-
-        $(window).keypress(this.enterHandler);
-
-        console.log(this.$el);
-        this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
           sendHandler();
-        };
+
+        }
+
+      };
+
+      $(window).keypress(this.enterHandler);
+
+      console.log(this.$el);
+      this.$el.children('#inputBox').children('#inputBoxButton')[0].onclick = function() {
+        sendHandler();
+      };
       
-    } else {
-      alert(that.app.translate('you must be logged in to post a reply'));
-    }
 
 
 
