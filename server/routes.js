@@ -221,7 +221,7 @@ var coolRank = function() {
       if (err) console.log('error decreasing topic rank: ', err);
     });
 
-    client.query("UPDATE topics SET rank = rank - 1 WHERE rank <= 100 AND rank > 0", function(err, result) {
+    client.query("UPDATE topics SET rank = rank - 1 WHERE rank <= 100 AND rank > 10", function(err, result) {
       if (err) console.log('error decreasing topic rank: ', err);
     });
 
