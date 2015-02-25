@@ -37,10 +37,12 @@ for (var i=0; i < feeds.length ;i++) {
         feeds[i].name = feeds[i].name || 'RSSBot';
 
 
+          //CHECK IF USER EXISTS FOR NAME IF NOT CREATE IT
+
+
               (function() {
 
                     var feed = feeds[i];
-
 
                     var options = {};
 
