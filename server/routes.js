@@ -774,8 +774,6 @@ module.exports.getTopicTree = function(request, response) {
 
   var queryArgs = url.parse(request.url, true).query;
 
-
-
   client.query("SELECT * FROM topicTreeCache WHERE topicId = $1;",
     [queryArgs.topicId], function(err, result) {
       if (err)
@@ -793,8 +791,6 @@ module.exports.getTopicTree = function(request, response) {
       } else {
         //NO CACHE, GOTTA BUILD
 
-
-                  //woooo treebuilder 2.0
 
                   var count = 0;
                   var topic = null;
@@ -898,10 +894,7 @@ module.exports.getTopicTree = function(request, response) {
 
                     return resultTree;
 
-                  };
-
-
-
+                  };//end buildSequence
 
 
       }
