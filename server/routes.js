@@ -3988,7 +3988,7 @@ module.exports.createTopic = function(request, response) {
                                                           //insert and fetch id here, then upload the image to amazon
 
                                                           client.query("INSERT INTO topics (type, username, headline, link, contents, location, locations, channel, createdAt, rank, heat)"
-                                                          +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 0, 30);",
+                                                          +"VALUES ('Topic', $1, $2, $3, $4, $5, $6, $7, now(), 10, 0);",
                                                           [xssValidator(fields.username[0]), xssValidator(fields.headline[0]), xssValidator(fields.link[0]), xssValidator(fields.contents[0]), xssValidator(fields.location[0]), "{\""+xssValidator(fields.location[0])+"\"}", xssValidator(fields.channel[0])],
                                                           function(err, result) {
 
