@@ -85,9 +85,11 @@ for (var i=0; i < feeds.length ;i++) {
                                     //already there
                                   } else {
 
+                                    //TODO FIX THE DATE, SHOULD BE ABLE TO CONVERT THE PROVIDED ONE INSTEAD OF USING now()
+
                                     client.query("INSERT INTO topics (type, username, headline, contents, link, location, channel, createdAt, rank)"
-                                      +" VALUES ('Topic', '"+feed.name+"', $1, $2, $3, '"+feed.location+"', '"+feed.channel+"', $4, 0);",
-                                      [x.title, x.description, x.link, x.date], function(err, result) {
+                                      +" VALUES ('Topic', '"+feed.name+"', $1, $2, $3, '"+feed.location+"', '"+feed.channel+"', now(), 0);",
+                                      [x.title, x.description, x.link], function(err, result) {
                                         if (err) {
                                           console.log(err);
                                         } else {

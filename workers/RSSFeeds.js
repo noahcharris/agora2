@@ -10,6 +10,11 @@ module.exports.feeds = [{
   location: 'World/United States/California/San Francisco',
   channel: 'All/News'
 },{
+  url: 'http://www.sfgate.com/rss/feed/Food-Dining-550.php',
+  name: 'SF FoodBot',
+  location: 'World/United States/California/San Francisco',
+  channel: 'All/Food'
+},{
   url: 'http://old.seattletimes.com/rss/home.xml',
   name: 'Seattle Times',
   location: 'World/United States/Washington/Seattle',
@@ -19,11 +24,6 @@ module.exports.feeds = [{
   name: 'Portland City Hall Watch',
   location: 'World/United States/Oregon/Portland',
   channel: 'All/News'
-},{
-  url: '',
-  name: '',
-  location: '',
-  channel: ''
 },{
   url: '',
   name: '',
