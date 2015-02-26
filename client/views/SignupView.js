@@ -44,6 +44,9 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
     this.$el.children('#signupCodeInput').attr('placeholder', codeLabel);
+    this.$el.children('#signupCodeInput').hide();
+
+
     this.$el.children('#signupUsernameInput').attr('placeholder', usernameLabel);
     this.$el.children('#signupPasswordInput').attr('placeholder', passwordLabel);
     this.$el.children('#signupConfirmPasswordInput').attr('placeholder', confirmPasswordLabel);

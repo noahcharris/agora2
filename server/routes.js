@@ -2781,17 +2781,18 @@ module.exports.registerUser = function(request, response) {
 
 
                                   //CHECK INVITE CODE
-                                  client.query("SELECT * FROM inviteJoin WHERE code=$1;", [request.body.code], 
-                                    function(err, result) {
-                                      if (err) console.log('error checking invite code: ', err);
-                                      if (result.rows.length) {
-                                        //delete the entry from inviteJoin
-                                        client.query("DELETE FROM inviteJoin WHERE code=$1;", [request.body.code],
-                                        function(err, result) {
-                                          if (err) {
-                                            console.log('error deleting inviteJoin entry: ', err);
-                                          } else {
+                                  // client.query("SELECT * FROM inviteJoin WHERE code=$1;", [request.body.code], 
+                                  //   function(err, result) {
+                                  //     if (err) console.log('error checking invite code: ', err);
+                                  //     if (result.rows.length) {
+                                  //       //delete the entry from inviteJoin
+                                  //       client.query("DELETE FROM inviteJoin WHERE code=$1;", [request.body.code],
+                                  //       function(err, result) {
+                                  //         if (err) {
+                                  //           console.log('error deleting inviteJoin entry: ', err);
+                                  //         } else {
                                             //INVITE STUFF COMPLETE
+
                                                     //REGISTER THE USER
                                                     bcrypt.genSalt(10, function(err, salt) {
                                                       bcrypt.hash(request.body.password, salt, function(err, hash) {
@@ -2875,14 +2876,15 @@ module.exports.registerUser = function(request, response) {
                                                     });//end bcrypt async thing
 
 
-                                          }
-                                        });//end invite code delete
+                                  //INVITE CODE STUFF
+                                  //         }
+                                  //       });//end invite code delete
 
 
-                                      } else {
-                                        response.end('invalid invite code');
-                                      }
-                                  });//end invite code check
+                                  //     } else {
+                                  //       response.end('invalid invite code');
+                                  //     }
+                                  // });//end invite code check
 
 
 
