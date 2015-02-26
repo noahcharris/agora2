@@ -42,7 +42,8 @@ function addCity(name, parent, lat, long) {
 
 };
 
-addCity('World/United States/Kentucky/Lexington', 'World/United States/Kentucky', 38.0297, -84.4947);
+// addCity('World/United States/Kentucky/Lexington', 'World/United States/Kentucky', 38.0297, -84.4947);
+addCity('World/United States/California/Oakland', 'World/United States/California', 37.8044, -122.2708);
 
 
 

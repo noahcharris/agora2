@@ -19,6 +19,15 @@ var cities = {
       "city": "World/United States/Kentucky/Lexington"
     }
   },{
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-122.2708, 37.8044]
+    },
+    "type": "Feature",
+    "properties": {
+      "city": "World/United States/California/Oakland"
+    }
+  },{
 		"geometry": {
 			"type": "Point",
 			"coordinates": [-57.757113, -64.211721]
