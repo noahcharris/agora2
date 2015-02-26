@@ -9,6 +9,15 @@ var cities = {
     "properties": {
       "city": "World/United States/Alaska/Adak"
     }
+  },{
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-84.4947, 38.0297]
+    },
+    "type": "Feature",
+    "properties": {
+      "city": "World/United States/Kentucky/Lexington"
+    }
   }, {
     "geometry": {
       "type": "Point",

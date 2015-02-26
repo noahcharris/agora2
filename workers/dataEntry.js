@@ -13,30 +13,36 @@ var cityData = require('../client/resources/cities.js');
 var statesData = require('../client/resources/us-states.js');
 var channelData = require('../client/resources/channels.js');
 
-countries = countryData.countries.features;
-cities = cityData.cities.features;
-states = statesData.states.features;
+// countries = countryData.countries.features;
+// cities = cityData.cities.features;
+// states = statesData.states.features;
 // channels = channelData.channels;
 
-
+countries = [];
+cities = [];
+states = [];
+channels = [];
 
 
 
 
 function addCity(name, parent, lat, long) {
 
-  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, isCity, image, hasStates) "
-    +"VALUES ('Location', 'false', $1, $2, $3, $4, 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');", [name, parent, lat, long],
+  client.query("INSERT INTO locations (type, isUserCreated, name, parent, latitude, longitude, pointGeometry, isCity, image, hasStates) "
+    +"VALUES ('Location', 'false', $1, $2, $3, $4, ST_GeomFromText('POINT("+long+" "+lat+")', 4269), 'true', 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg', 'false');", [name, parent, lat, long],
     function(err, result) {
-      if (err) throw err;
-    })
+      if (err) {
+        throw err;
+      } else {
+        console.log('added city');
+      }
 
-    //TODO alter cities files
+  });
 
 
 };
 
-
+addCity('World/United States/Kentucky/Lexington', 'World/United States/Kentucky', 38.0297, -84.4947);
 
 
 
@@ -44,17 +50,17 @@ function addCity(name, parent, lat, long) {
 
 
 //INSERT WORLD
-client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, image) "
-  +"VALUES ('Location', false, false, false, false, $1, 0, true, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
-  ['World'],
-  function(err, result) {
-    if (err) {
-      console.log('error inserting into locations: ', err);
-    } else {
-      console.log('inserted world');
+// client.query("INSERT INTO locations (type, isusercreated, isCountry, isState, isCity, name, population, public, image) "
+//   +"VALUES ('Location', false, false, false, false, $1, 0, true, 'https://s3-us-west-2.amazonaws.com/agora-static-storage/defaultlocation.jpg');",
+//   ['World'],
+//   function(err, result) {
+//     if (err) {
+//       console.log('error inserting into locations: ', err);
+//     } else {
+//       console.log('inserted world');
 
-    }
-});
+//     }
+// });
 
 
 
@@ -73,15 +79,6 @@ for (var i=0; i < countries.length ;i++) {
       }
   });
 
-//   // client.query("UPDATE locations SET parent = 'World' WHERE name = $1;",
-//   //   [countries[i].properties.name],
-//   //   function(err, result) {
-//   //     if (err) {
-//   //       console.log('error updating locations: ', err);
-//   //     } else {
-
-//   //     }
-//   // });
 
 
 
@@ -111,28 +108,7 @@ for (var i=0; i < cities.length ;i++) {
   
 
 
-  // client.query("UPDATE locations SET parent = $1 WHERE name = $2;",
-  //   [parent, cities[i].properties.city],
-  //   function(err, result) {
-  //     if (err) {
-  //       console.log('error updating locations: ', err);
-  //     } else {
 
-  //     }
-  // });
-
-  // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
-  //   +"= ("+cities[i].geometry.coordinates[1]+", "+cities[i].geometry.coordinates[0]+", ST_GeomFromText('POINT("+cities[i].geometry.coordinates[0]+" "+cities[i].geometry.coordinates[1]+")', 4269) ) "
-  //   +"WHERE name = $1;",[cities[i].properties.city], function(err, result) {
-  //     if (err) console.log('error updating locations: ', err);
-  //     console.log('finished updating locations');
-  // });
-
-  // client.query("UPDATE locations SET (latitude, longitude, pointGeometry) "
-  // +"= (null, null, null);", function(err, result) {
-  //   if (err) console.log('error updating locations: ', err);
-  //   console.log('finished updating locations');
-  // });
 
 
 
@@ -155,15 +131,6 @@ for (var i=0; i < states.length ;i++) {
   });
 
 
-// client.query("UPDATE locations SET parent = 'World/United States' WHERE name = $1;",
-//     [states[i].properties.name],
-//     function(err, result) {
-//       if (err) {
-//         console.log('error updating locations: ', err);
-//       } else {
-
-//       }
-//   });
 
 };
 

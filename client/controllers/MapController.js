@@ -14,7 +14,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     cities: null,
     places: null
   },
-
+  
   initialize: function(appController) {
     var that = this;
 
