@@ -314,6 +314,8 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     //USE LOGO OR LOGO2 DEPENDING ON ZOOM LEVEL
 
+
+      
     if (that.get('map').getZoom() < 9) {
       var greenIcon = L.icon({
           iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo.png',
@@ -330,9 +332,9 @@ Agora.Controllers.MapController = Backbone.Model.extend({
           iconUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo2.png',
           shadowUrl: 'https://s3-us-west-2.amazonaws.com/agora-static-storage/logo2.png',
 
-          iconSize:     [200, 200], // size of the icon
+          iconSize:     [100, 100], // size of the icon
           shadowSize:   [0, 0], // size of the shadow
-          iconAnchor:   [100, 100], // point of the icon which will correspond to marker's location
+          iconAnchor:   [50, 50], // point of the icon which will correspond to marker's location
           shadowAnchor: [4, 62],  // the same for the shadow
           popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       });
