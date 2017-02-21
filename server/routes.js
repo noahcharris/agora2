@@ -855,8 +855,9 @@ module.exports.getTopicTree = function(request, response) {
                   function buildSequence(topic, comments, responses, replies) {
 
 
+
                     var responses = responses.slice(0);
-                    var resultTree = topic;
+                    var resultTree = topic || {};
                     resultTree.comments = [];
                     for (var i=0; i < comments.length ;i++) {
                       comments[i].responses = [];

@@ -5,6 +5,8 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 
+var routes = require('./routes.js');
+
 var mailer = require('nodemailer');
 
 var session = require('express-session');
@@ -34,7 +36,7 @@ require('crashreporter').configure({
     mailTo: 'noah.christopher.harris@gmail.com'
 });
 
-var routes = require('./routes.js');
+
 
 app = express();
 
