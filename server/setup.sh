@@ -33,16 +33,17 @@ sudo npm install body-parser;
 sudo npm install client-sessions;
 sudo npm install cookie-parser;
 sudo npm install cookie-session;
-
-sudo npm install serve-favicon
-
+sudo npm install serve-favicon;
 sudo npm install pg;
-sudo npm install bcrypt;
+sudo npm install bcryptjs;
 sudo npm install s3;
 sudo npm install multiparty;
 sudo npm install underscore;
+sudo npm install nodemailer;
 
 sudo npm install time-eventloop;
+
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365;
 
 
 

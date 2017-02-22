@@ -5,7 +5,7 @@ var pg = require('pg');
 var nodemailer = require('nodemailer');
 var url = require('url');
 var qs = require('querystring')
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var s3 = require('s3');
 var multiparty = require('multiparty');
 var cookie = require('cookie');
@@ -51,7 +51,7 @@ var q = 'tasks';
 //####################
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
 // var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
-var conString = 'postgres://keybornCat:prairiePiratesPicnic@agora-production-server.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/mahDb';
+var conString = 'postgres://keybornCat:prairiePiratesPicnic@agora-production-server.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/YLMdatabase';
 //var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
 var client = new pg.Client(conString);
 client.connect();
