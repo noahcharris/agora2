@@ -19,22 +19,22 @@ var favicon = require('serve-favicon');
 var timeEventLoop = require('time-eventloop');
 timeEventLoop.start(/* { options } */);
 
-require('crashreporter').configure({
-    outDir: '/home/ec2-user/crashes',
-    maxCrashFile: 1000,
-    mailEnabled: true,
-    mailTransportName: 'SMTP',
-    mailTransportConfig: {
-        service: 'Gmail',
-        auth: {
-            user: 'agora.reporter@gmail.com',
-            pass: 'fieldsoffallensoldiers'
-        }
-    },
-    mailSubject: 'advanced.js crashreporter test',
-    mailFrom: 'crashreporter <agora.reporter@gmail.com>',
-    mailTo: 'noah.christopher.harris@gmail.com'
-});
+// require('crashreporter').configure({
+//     outDir: '/home/ec2-user/crashes',
+//     maxCrashFile: 1000,
+//     mailEnabled: true,
+//     mailTransportName: 'SMTP',
+//     mailTransportConfig: {
+//         service: 'Gmail',
+//         auth: {
+//             user: 'agora.reporter@gmail.com',
+//             pass: 'fieldsoffallensoldiers'
+//         }
+//     },
+//     mailSubject: 'advanced.js crashreporter test',
+//     mailFrom: 'crashreporter <agora.reporter@gmail.com>',
+//     mailTo: 'noah.christopher.harris@gmail.com'
+// });
 
 
 
