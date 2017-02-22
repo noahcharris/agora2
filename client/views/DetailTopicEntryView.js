@@ -141,7 +141,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
     $upvote[0].onclick = function() {
 
       $.ajax({
-        url: 'https://egora.co:443/upvoteTopic',
+        url: 'https://54.202.31.15:443/upvoteTopic',
         // url: 'http://localhost/upvoteTopic',
         method: 'POST',
         crossDomain: true,
@@ -265,7 +265,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
         $upvote[0].onclick = function() {
 
           $.ajax({
-            url: 'https://egora.co:443/upvoteComment',
+            url: 'https://54.202.31.15:443/upvoteComment',
             // url: 'http://localhost/upvoteComment',
             method: 'POST',
             crossDomain: true,
@@ -384,7 +384,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
           var x = comments[i].responses[j].id;
           $upvote[0].onclick = function() {
             $.ajax({
-              url: 'https://egora.co:443/upvoteResponse',
+              url: 'https://54.202.31.15:443/upvoteResponse',
               // url: 'http://localhost/upvoteResponse',
               method: 'POST',
               crossDomain: true,
@@ -559,7 +559,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
             var x = comments[i].responses[j].replies[k].id;
             $upvote[0].onclick = function() {
               $.ajax({
-                url: 'https://egora.co:443/upvoteReply',
+                url: 'https://54.202.31.15:443/upvoteReply',
                 // url: 'http://localhost/upvoteReply',
                 method: 'POST',
                 crossDomain: true,
@@ -713,7 +713,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
   goToUser: function(user) {
     var that = this;
     $.ajax({
-      url: 'http://egora.co:80/user',
+      url: 'http://54.202.31.15:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -800,7 +800,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                 var thet = this;
 
                 $.ajax({
-                  url: 'https://egora.co:443/' + data.urlSuffix,
+                  url: 'https://54.202.31.15:443/' + data.urlSuffix,
                   // url: 'http://localhost/' + data.urlSuffix,
                   method: 'POST',
                   crossDomain: true,
@@ -827,7 +827,7 @@ Agora.Views.DetailTopicEntryView = Backbone.View.extend({
                         ajaxing = false;
 
                         $.ajax({
-                          url: 'http://egora.co/topicTree',
+                          url: 'http://54.202.31.15/topicTree',
                           // url: 'http://localhost/topicTree',
                           method: 'GET',
                           crossDomain: true,

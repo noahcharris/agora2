@@ -55,7 +55,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
       //THIS ONE ADDS A RANDOM QUERY VARIABLE TO THE REQUEST TO REFRESH THE IMAGE
       $.ajax({
-        url: 'http://egora.co:80/user',
+        url: 'http://54.202.31.15:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -107,7 +107,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
 
       $.ajax({
-        url: 'https://egora.co:443/checkVerification',
+        url: 'https://54.202.31.15:443/checkVerification',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -138,7 +138,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $channelCreationButton.on('click', function() {
 
       $.ajax({
-        url: 'https://egora.co:443/checkVerification',
+        url: 'https://54.202.31.15:443/checkVerification',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -201,7 +201,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
     $resendVerificationButton.on('click', function() {
 
       $.ajax({
-        url: 'https://egora.co:443/resendVerification',
+        url: 'https://54.202.31.15:443/resendVerification',
         // url: 'http://localhost/topicTree',
         method: 'GET',
         crossDomain: true,
@@ -237,7 +237,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
     //get recently visited topics
     $.ajax({
-      url: 'https://egora.co:443/recentlyVisited',
+      url: 'https://54.202.31.15:443/recentlyVisited',
       // url: 'http://localhost/topicTree',
       method: 'GET',
       crossDomain: true,
@@ -276,7 +276,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               //get specific topic tree from server
               $.ajax({
-                url: 'http://egora.co:80/topicTree',
+                url: 'http://54.202.31.15:80/topicTree',
                 // url: 'http://localhost/topicTree',
                 method: 'GET',
                 crossDomain: true,
@@ -297,7 +297,7 @@ Agora.Views.SettingsView = Backbone.View.extend({
 
               //register the topic visit with the server
               $.ajax({
-                url: 'https://egora.co:443/visitedTopic',
+                url: 'https://54.202.31.15:443/visitedTopic',
                 // url: 'http://localhost/topicTree',
                 method: 'POST',
                 crossDomain: true,

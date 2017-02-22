@@ -109,7 +109,7 @@ Agora.Views.TopicCreationView = Backbone.View.extend({
                   
 
                   $.ajax({
-                    url: 'https://egora.co:443/createTopic',
+                    url: 'https://54.202.31.15:443/createTopic',
                     // url: 'http://localhost/createTopic',
                     method: 'POST',
                     crossDomain: true,

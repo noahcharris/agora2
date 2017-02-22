@@ -255,7 +255,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
     //∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
 
     $.ajax({
-      url: 'http://egora.co:80/heatPoints',
+      url: 'http://54.202.31.15:80/heatPoints',
       crossDomain: true,
       data: {
         location: this.get('location'),
@@ -440,7 +440,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
       //USER-CREATED PLACE
 
       $.ajax({
-        url: 'http://egora.co:80/placeLatLng',
+        url: 'http://54.202.31.15:80/placeLatLng',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -771,7 +771,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
       //MAKE AN AJAX CALL TO GET LAT AND LNG OF THE PLACE
       $.ajax({
-        url: 'http://egora.co:80/placeLatLng',
+        url: 'http://54.202.31.15:80/placeLatLng',
         crossDomain: true,
         method: 'GET',
         data: {
@@ -861,7 +861,7 @@ Agora.Controllers.MapController = Backbone.Model.extend({
 
     $.ajax({
       //this is not for 'placing' points, it is retrieving points of 'Places'
-      url: 'http://egora.co:80/placePoints',
+      url: 'http://54.202.31.15:80/placePoints',
       method: 'GET',
       data: { 
         latitude: latitude,

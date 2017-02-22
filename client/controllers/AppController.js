@@ -172,11 +172,11 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username;
       if (secure) {
         //only send token and username if we are on SSL!!
-        url = 'https://egora.co:443' + urlPath;
+        url = 'https://54.202.31.15:443' + urlPath;
         token = that.get('token');
         username = that.get('username');
       } else {
-        url = 'http://egora.co:80' + urlPath;
+        url = 'http://54.202.31.15:80' + urlPath;
       }
 
       $.ajax({
@@ -227,7 +227,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var username = that.get('username');
 
       $.ajax({
-        url: 'https://egora.co:443/contacts',
+        url: 'https://54.202.31.15:443/contacts',
         //url: 'http://localhost:80/contacts',
         crossDomain: true,
         method: 'GET',
@@ -273,7 +273,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'https://egora.co:443/messages',
+        url: 'https://54.202.31.15:443/messages',
         //url: 'http://localhost:80/messages',
         crossDomain: true,
         method: 'GET',
@@ -401,12 +401,12 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
     //CHECK INITIAL LOGIN STATE
     $.ajax({
-      url: 'https://egora.co:443/checkLogin',
+      url: 'http://54.202.31.15:80/checkLogin',
       //url: 'http://localhost:80' + urlPath,
-      crossDomain: true,
-      xhrFields: {
-        withCredentials: true
-      },
+      //crossDomain: true,
+      // xhrFields: {
+      //   withCredentials: true
+      // },
       method: 'GET',
       success: function(data) {
         if (data.login) {
@@ -652,7 +652,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://egora.co:80/user',
+      url: 'http://54.202.31.15:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,
@@ -693,7 +693,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://egora.co:80/location',
+      url: 'http://54.202.31.15:80/location',
       crossDomain: true,
       data: {
         location: location,
@@ -720,7 +720,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
     var that = this;
 
     $.ajax({
-      url: 'http://egora.co:80/channel',
+      url: 'http://54.202.31.15:80/channel',
       crossDomain: true,
       data: {
         channel: channel,
@@ -1130,7 +1130,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
 
       $.ajax({
-        url: 'https://egora.co:443/notifications',
+        url: 'https://54.202.31.15:443/notifications',
         // url: 'http://localhost:80/notifications',
         method: 'GET',
         crossDomain: true,
@@ -1225,7 +1225,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             var thet = this;
 
                             $.ajax({
-                              url: 'http://egora.co:80/user',
+                              url: 'http://54.202.31.15:80/user',
                               //url: 'http://localhost:80/user',
                               method: 'GET',
                               crossDomain: true,
@@ -1317,7 +1317,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                                 that.app.get('content1').show(that.app.get('sidebarView'));
 
                                 $.ajax({
-                                  url: 'https://egora.co:443/messageChain',
+                                  url: 'https://54.202.31.15:443/messageChain',
                                   // url: 'http://localhost/messageChain',
                                   method: 'GET',
                                   crossDomain: true,
@@ -1399,7 +1399,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
                             //call to clear topicActivity
 
                             $.ajax({
-                              url: 'https://egora.co:443/clearActivity',
+                              url: 'https://54.202.31.15:443/clearActivity',
                               // url: 'http://localhost:80/sendContactRequest',
                               method: 'POST',
                               crossDomain: true,
@@ -1468,7 +1468,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
 
       // $.ajax({
       //   // url: 'http://localhost:80/updateUserProfile',
-      //   url: 'https://egora.co:443/refreshToken',
+      //   url: 'https://54.202.31.15:443/refreshToken',
       //   method: 'POST',
       //   crossDomain: true,
       //   xhrFields: {
@@ -1510,7 +1510,7 @@ Agora.Controllers.AppController = Backbone.Model.extend({
       var that = this;
 
       $.ajax({
-        url: 'https://egora.co:443/messageChain',
+        url: 'https://54.202.31.15:443/messageChain',
         // url: 'http://localhost/messageChain',
         method: 'GET',
         crossDomain: true,

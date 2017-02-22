@@ -100,7 +100,7 @@ app.use(function(request, response, next) {
 
 
 
-var accessList = ['http://egora.co', 'http://www.egora.co'];
+var accessList = ['http://54.202.31.15', 'http://www.54.202.31.15'];
 app.use(function(request, response, next) {
 
   //need to read origin, check it against a list, and return allow access
@@ -250,14 +250,15 @@ app.use(express.static(__dirname + '/../client'));
 //   }
 // }
 
-// var options = {
-//   ca: ca,
-//   key: fs.readFileSync(__dirname + '/agoraSSL.key'),
-//   cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
-// };
+var options = {
+  //ca: ca,
+  key: fs.readFileSync(__dirname + '/agoraSSL.key'),
+  cert: fs.readFileSync(__dirname + '/agoraSSL.crt'),
+  passphrase: '12345'
+};
 
 http.createServer(app).listen(80);
-//https.createServer(options, app).listen(443);
+https.createServer(options, app).listen(443);
 console.log('---------------------------------------------------');  
 console.log('-- express server listening on ports 80 and 443  --');
 console.log('---------------------------------------------------');

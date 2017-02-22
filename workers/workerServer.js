@@ -53,7 +53,7 @@ app.use(function(request, response, next) {
 
 app.use(function(request, response, next) {
 
-  response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
+  response.setHeader('Access-Control-Allow-Origin', 'http://54.202.31.15');
   response.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 

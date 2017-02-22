@@ -61,7 +61,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
         } else {
           
           $.ajax({
-            url: 'https://egora.co:443/changePassword',
+            url: 'https://54.202.31.15:443/changePassword',
             // url: 'http://localhost:80/user',
             method: 'POST',
             crossDomain: true,
@@ -120,7 +120,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       this.$el.append($changeLocationDoneButton);
 
       $.ajax({
-        url: 'http://egora.co:80/user',
+        url: 'http://54.202.31.15:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -146,7 +146,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       $changeLocationDoneButton.on('click', function() {
 
         $.ajax({
-          url: 'https://egora.co:443/changeLocation',
+          url: 'https://54.202.31.15:443/changeLocation',
           // url: 'http://localhost:80/user',
           method: 'POST',
           crossDomain: true,
@@ -186,7 +186,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
         if (searchParameter.length > 2) {
 
           $.ajax({
-            url: 'http://egora.co:80/locationSearch',
+            url: 'http://54.202.31.15:80/locationSearch',
             // url: 'http://localhost:80/locationSearch',
             data: {
               input: searchParameter
@@ -267,7 +267,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
       //load current email in
 
       $.ajax({
-        url: 'https://egora.co:443/userEmail',
+        url: 'https://54.202.31.15:443/userEmail',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,
@@ -301,7 +301,7 @@ Agora.Views.ChangeView = Backbone.View.extend({
 
 
         $.ajax({
-          url: 'https://egora.co:443/changeEmail',
+          url: 'https://54.202.31.15:443/changeEmail',
           // url: 'http://localhost:80/user',
           method: 'POST',
           crossDomain: true,

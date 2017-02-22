@@ -30,7 +30,7 @@ Agora.Router = Backbone.Router.extend({
     //SHOW THE TOPIC, AT THE TOP OF ITS ORIGIN
     var that = this;
     $.ajax({
-      url: 'http://egora.co:80/topicTree',
+      url: 'http://54.202.31.15:80/topicTree',
       // url: 'http://localhost/topicTree',
       method: 'GET',
       crossDomain: true,
@@ -117,7 +117,7 @@ Agora.Router = Backbone.Router.extend({
   user: function(username) {
     var that = this;
     $.ajax({
-      url: 'http://egora.co:80/user',
+      url: 'http://54.202.31.15:80/user',
       // url: 'http://localhost:80/user',
       method: 'GET',
       crossDomain: true,

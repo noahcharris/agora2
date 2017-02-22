@@ -36,7 +36,7 @@ Agora.Views.PlacementView = Backbone.View.extend({
         } else {
 
               $.ajax({
-                url: 'https://egora.co:443/createLocation',
+                url: 'https://54.202.31.15:443/createLocation',
                 crossDomain: true,
                 xhrFields: {
                   withCredentials: true

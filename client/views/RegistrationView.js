@@ -71,7 +71,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
       $('#loginPasswordInput').val('');
 
       $.ajax({
-        url: 'https://egora.co:443/login',
+        url: 'https://54.202.31.15:443/login',
         // url: 'http://localhost/login',
         crossDomain: true,
         xhrFields: {
@@ -144,7 +144,7 @@ Agora.Views.RegistrationView = Backbone.View.extend({
     $('#logoutButton').on('click', function() {
       
       $.ajax({
-        url: 'https://egora.co:443/logout',
+        url: 'https://54.202.31.15:443/logout',
         // url: 'http://localhost/login',
         crossDomain: true,
         xhrFields: {

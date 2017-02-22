@@ -177,7 +177,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
               } else {
 
                 $.ajax({
-                  url: 'http://egora.co:80/placeLatLng',
+                  url: 'http://54.202.31.15:80/placeLatLng',
                   crossDomain: true,
                   method: 'GET',
                   data: {
@@ -314,7 +314,7 @@ Agora.Views.SidebarEntryView = Backbone.View.extend({
     var $username = that.$el.children('.sidebarFloatClear').children('.contentAndToFromWrapper').children('.sidebarToFromWrapper').children('.topString').children('.sidebarUsername');
     $username.on('click', function(e) {
       $.ajax({
-        url: 'http://egora.co:80/user',
+        url: 'http://54.202.31.15:80/user',
         // url: 'http://localhost:80/user',
         method: 'GET',
         crossDomain: true,

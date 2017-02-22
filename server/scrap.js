@@ -11,7 +11,7 @@ client.query("SELECT * FROM topics WHERE (location = $1 AND channel = $2) ORDER 
 
 
 
-response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
+response.setHeader('Access-Control-Allow-Origin', 'http://54.202.31.15');
 
 
 

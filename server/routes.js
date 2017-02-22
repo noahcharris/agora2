@@ -51,7 +51,7 @@ var q = 'tasks';
 //####################
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
 // var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
-var conString = 'postgres://keybornCat:prairiePiratesPicnic@ylmdb.cvrkjvh3ggp7.us-west-2.rds.amazonaws.com:5432:5432/YLMdatabase';
+var conString = 'postgres://keybornCat:prairiePiratesPicnic@ylmdb.cvrkjvh3ggp7.us-west-2.rds.amazonaws.com:5432/YLMdatabase';
 //var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
 var client = new pg.Client(conString);
 client.connect();
@@ -470,7 +470,7 @@ module.exports.test = function(request, response) {
   response.end('heyyy');
 
   //need a list of servers that I can iterate through to set all the servers
-  //response.setHeader('Access-Control-Allow-Origin', 'http://egora.co');
+  //response.setHeader('Access-Control-Allow-Origin', 'http://54.202.31.15');
 
   // response.cookie('stealty',666, { maxAge: 900000, httpOnly: true, secure: true });
 
@@ -584,6 +584,9 @@ module.exports.getTopTopicsDay = function(request, response) {
   //PAGINATION OFFSET
   var offset = 15*(page - 1);
 
+  console.log('querying'+location+channel+page);
+  console.log('wheeee');
+
   client.query("SELECT * FROM topics WHERE (location LIKE $1 AND channel LIKE $2) "
     +" ORDER BY rank DESC LIMIT 15 OFFSET $3;",
     //!!!! the concatenated % allows postgres to match, so the cascading effect occurs
@@ -593,6 +596,8 @@ module.exports.getTopTopicsDay = function(request, response) {
         console.log('error selecting from topics: ', err);
         response.end('error');
       } else {
+        console.log('finished');
+        console.log(result.rows);
         response.json(result.rows);
       }
   });
@@ -2821,7 +2826,7 @@ module.exports.registerUser = function(request, response) {
                                                                           to: request.body.email, // list of receivers
                                                                           subject: 'Hello ✔', // Subject line
                                                                           text: 'KEY', // plaintext body
-                                                                          html: '<b><a href="https://egora.co:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                                                                          html: '<b><a href="https://54.202.31.15:443/verifyUser?username='+request.body.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
                                                                       };
 
                                                                       transporter.sendMail(mailOptions, function(error, info){
@@ -3070,7 +3075,7 @@ module.exports.resendVerification = function(request, response) {
                               to: email, // list of receivers
                               subject: 'Hello ✔', // Subject line
                               text: 'KEY', // plaintext body
-                              html: '<b><a href="https://egora.co:443/verifyUser?username='+queryArgs.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
+                              html: '<b><a href="https://54.202.31.15:443/verifyUser?username='+queryArgs.username+'&secret='+secret+'">Verify yo self!</a> ✔</b>' // html body
                           };
 
                           transporter.sendMail(mailOptions, function(error, info){
@@ -3242,7 +3247,7 @@ module.exports.authenticateTwitter = function(req, response) {
                                         // OAuth1.0 - 3-legged server side flow 
                                       
                                           var oauth =
-                                            { callback: 'https://egora.co/twitterCallback'
+                                            { callback: 'https://54.202.31.15/twitterCallback'
                                             , consumer_key: 'VhHhBs93xuxzZfouKSZHKiuMi'
                                             , consumer_secret: 'ktOFf2FFA3TfHcKi22L27PPotQeHxKNsV5y5OcWzraYkXRD09Q'
                                             }

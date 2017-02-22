@@ -15,7 +15,7 @@ module.exports = {
 
   'First Test Agora' : function(browser) {
     browser 
-      .url('http://egora.co')
+      .url('http://54.202.31.15')
       .waitForElementVisible('body', 1000)
       .click('#registrationButton')
       .waitForElementVisible('#loginUsernameInput', 1000)

@@ -142,10 +142,10 @@ Agora.Views.SignupView = Backbone.View.extend({
 
             $.ajax({
 
-              url: 'https://egora.co:443/registerUser',
+              url: 'http://54.202.31.15:80/registerUser',
               // url: 'https://localhost:443/registerUser',
               method: 'POST',
-              crossDomain: true,
+              //crossDomain: true,
               xhrFields: {
                 withCredentials: true
               },
@@ -213,7 +213,7 @@ Agora.Views.SignupView = Backbone.View.extend({
 
 
     $.ajax({
-      url: 'http://egora.co:80/validateUsername',
+      url: 'http://54.202.31.15:80/validateUsername',
       // url: 'http://localhost:80/locationSearch',
       data: {
         username: that.$el.children('input#signupUsernameInput').val()
@@ -243,7 +243,7 @@ Agora.Views.SignupView = Backbone.View.extend({
   //   var input = $usernameInput.val();
 
   //   $.ajax({
-  //     url: 'http://egora.co:80/checkUsername',
+  //     url: 'http://54.202.31.15:80/checkUsername',
   //     // url: 'http://localhost:80/locationSearch',
   //     data: {
   //       username: input
@@ -282,7 +282,7 @@ Agora.Views.SignupView = Backbone.View.extend({
       if (searchParameter.length > 2) {
 
         $.ajax({
-          url: 'http://egora.co:80/locationSearch',
+          url: 'http://54.202.31.15:80/locationSearch',
           // url: 'http://localhost:80/locationSearch',
           data: {
             input: searchParameter
@@ -346,7 +346,7 @@ Agora.Views.SignupView = Backbone.View.extend({
     if (searchParameter.length > 2) {
 
       $.ajax({
-        url: 'http://egora.co:80/locationSearch',
+        url: 'http://54.202.31.15:80/locationSearch',
         // url: 'http://localhost:80/locationSearch',
         data: {
           input: searchParameter,
