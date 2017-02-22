@@ -51,7 +51,7 @@ var q = 'tasks';
 //####################
 //var conString = 'postgres://noahharris@localhost:5432/noahharris';
 // var conString = 'postgres://noahharris:mypassword@agora2db.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/thebestdb';
-var conString = 'postgres://keybornCat:prairiePiratesPicnic@agora-production-server.cfm6lqsulycg.us-west-2.rds.amazonaws.com:5432/YLMdatabase';
+var conString = 'postgres://keybornCat:prairiePiratesPicnic@ylmdb.cvrkjvh3ggp7.us-west-2.rds.amazonaws.com:5432:5432/YLMdatabase';
 //var conString = 'postgres://awsuser:secretly@agoradb.cxod0usrhuqb.us-west-1.rds.amazonaws.com:5432/mydb';
 var client = new pg.Client(conString);
 client.connect();
