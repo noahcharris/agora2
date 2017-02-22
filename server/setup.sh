@@ -40,10 +40,14 @@ sudo npm install s3;
 sudo npm install multiparty;
 sudo npm install underscore;
 sudo npm install nodemailer;
+sudo npm install gm;
+sudo npm install crashreporter;
 
 sudo npm install time-eventloop;
 
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365;
+
+ssh -i YLMserverkey.pem ec2-user@ec2-54-202-31-15.us-west-2.compute.amazonaws.com
 
 
 
